@@ -2,8 +2,7 @@
 {
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
 
     public class TerminatingHousekeepingStrategy : HousekeepingStrategy
     {

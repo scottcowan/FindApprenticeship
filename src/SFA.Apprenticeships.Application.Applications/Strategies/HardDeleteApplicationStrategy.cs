@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Applications.Strategies
 {
-    using System;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
+    using System;
 
     public class HardDeleteApplicationStrategy : IHardDeleteApplicationStrategy
     {

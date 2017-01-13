@@ -1,14 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancies
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Messaging;
     using Entities;
     using Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class VacancySummaryProcessor : IVacancySummaryProcessor
     {

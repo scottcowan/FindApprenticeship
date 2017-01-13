@@ -1,15 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancies
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
     using Vacancy;
 
     public class VacancyStatusProcessor : IVacancyStatusProcessor
@@ -43,12 +42,14 @@
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var query = new ApprenticeshipVacancyQuery() {
+            var query = new ApprenticeshipVacancyQuery()
+            {
                 RequestedPage = 1,
                 DesiredStatuses = new List<VacancyStatus>() { VacancyStatus.Live },
                 LatestClosingDate = deadline,
                 EditedInRaa = false,
-                PageSize = 1000 };
+                PageSize = 1000
+            };
 
             int resultCount;
 
@@ -62,7 +63,7 @@
             {
                 var eligibleForClosure = new VacancyEligibleForClosure(vacancy.VacancyId);
                 _serviceBus.PublishMessage(eligibleForClosure);
-                counter ++;
+                counter++;
             }
 
             stopwatch.Stop();
@@ -80,7 +81,7 @@
         public void ProcessVacancyClosure(VacancyEligibleForClosure vacancyEligibleForClosure)
         {
             var vacancy = _vacancyReadRepository.Get(vacancyEligibleForClosure.VacancyId);
-            
+
             switch (vacancy.Status)
             {
                 case VacancyStatus.Live:

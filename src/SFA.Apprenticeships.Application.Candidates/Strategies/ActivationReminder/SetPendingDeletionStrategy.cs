@@ -4,8 +4,7 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
     using UserAccount.Entities;
 
     public class SetPendingDeletionStrategy : HousekeepingStrategy

@@ -1,11 +1,10 @@
 namespace SFA.Apprenticeships.Application.Communications.Housekeeping
 {
-    using System.Diagnostics;
-    using System.Linq;
     using Candidates.Configuration;
     using Domain.Interfaces.Messaging;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
+    using System.Diagnostics;
+    using System.Linq;
 
     public class RootCommunicationHousekeeper : IRootCommunicationHousekeeper
     {

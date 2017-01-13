@@ -2,9 +2,8 @@
 {
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Interfaces;
     using Interfaces.Communications;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SendMobileVerificationCodeReminderStrategy : HousekeepingStrategy
     {

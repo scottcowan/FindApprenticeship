@@ -1,16 +1,15 @@
 namespace SFA.Apprenticeships.Application.Candidates
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
     using Configuration;
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
 
     public class CandidateProcessor : ICandidateProcessor
     {
@@ -47,7 +46,7 @@ namespace SFA.Apprenticeships.Application.Candidates
 
             var message = string.Format("Querying candidates for housekeeping took {0}", stopwatch.Elapsed);
 
-            var count = _serviceBus.PublishMessages(candidateIds.Select(cid => new CandidateHousekeeping {CandidateId = cid}));
+            var count = _serviceBus.PublishMessages(candidateIds.Select(cid => new CandidateHousekeeping { CandidateId = cid }));
 
             stopwatch.Stop();
 
@@ -73,7 +72,7 @@ namespace SFA.Apprenticeships.Application.Candidates
         private IEnumerable<Guid> GetPotentiallyDormantUsers()
         {
             var configuration = _configurationService.Get<HousekeepingConfiguration>();
-            var lastValidLoginHours = configuration.DormantAccountStrategy.SendReminderAfterCycles*
+            var lastValidLoginHours = configuration.DormantAccountStrategy.SendReminderAfterCycles *
                                       configuration.HousekeepingCycleInHours;
             var lastValidLogin = DateTime.UtcNow.AddHours(-lastValidLoginHours);
 
@@ -83,7 +82,7 @@ namespace SFA.Apprenticeships.Application.Candidates
         private IEnumerable<Guid> GetDormantUsersPotentiallyEligibleForSoftDelete()
         {
             var configuration = _configurationService.Get<HousekeepingConfiguration>();
-            var potentiallyDormantHours = configuration.DormantAccountStrategy.SendFinalReminderAfterCycles*
+            var potentiallyDormantHours = configuration.DormantAccountStrategy.SendFinalReminderAfterCycles *
                                           configuration.HousekeepingCycleInHours;
             var dormantAfterDateTime = DateTime.UtcNow.AddHours(-potentiallyDormantHours);
 

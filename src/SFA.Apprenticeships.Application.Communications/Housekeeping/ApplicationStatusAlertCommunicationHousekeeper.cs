@@ -1,12 +1,11 @@
 namespace SFA.Apprenticeships.Application.Communications.Housekeeping
 {
+    using Candidates.Configuration;
+    using Domain.Interfaces.Repositories;
+    using Interfaces;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Candidates.Configuration;
-    using Domain.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class ApplicationStatusAlertCommunicationHousekeeper : IApplicationStatusAlertCommunicationHousekeeper
     {
