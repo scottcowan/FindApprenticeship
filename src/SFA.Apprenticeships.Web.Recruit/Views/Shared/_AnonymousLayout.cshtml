@@ -41,7 +41,7 @@
     {
         <div id="planned-outage-message" class="sfa-maintenance-banner">
             <p>@Html.Raw(ViewBag.PlannedOutageMessage)</p>
-            <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })" class="maintenance-close">
+            <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })" class="sfa-maintenance-close">
                 Dismiss
             </a>
         </div>
