@@ -6,6 +6,8 @@
         public const string VacancyReferenceNumberUriFormat = "/vacancy/reference/{0}";
         public const string VacancyGuidUriFormat = "/vacancy/guid/{0}";
 
+        public const string PublicVacancySummariesUriFormat = "/public/vacancysummaries?page={0}&pageSize={1}";
+
         public const string EditWageVacancyIdUriFormat = "/vacancy/{0}/wage";
 
         public const string LinkEmployerUri = "/employer/link";

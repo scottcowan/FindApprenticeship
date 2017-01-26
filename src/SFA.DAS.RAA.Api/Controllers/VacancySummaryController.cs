@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
+    using System.Web.Http.Description;
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
@@ -24,6 +25,7 @@
         }
 
         [Route("vacancysummaries")]
+        [ResponseType(typeof(VacancySummary))]
         [HttpGet]
         public IEnumerable<VacancySummary> GetAll(VacanciesSummaryFilterTypes filterType = VacanciesSummaryFilterTypes.All, int page = 1)
         {

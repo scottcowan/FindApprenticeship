@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
         private static readonly VacancyMappers Mapper = new VacancyMappers();
         private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
 
-        private const string CoreQuery = @"SELECT COUNT(*) OVER () AS TotalResultCount,
+        public const string CoreQuery = @"SELECT COUNT(*) OVER () AS TotalResultCount,
 		                    v.VacancyId,
 		                    v.VacancyOwnerRelationshipId,
 		                    v.VacancyReferenceNumber,
