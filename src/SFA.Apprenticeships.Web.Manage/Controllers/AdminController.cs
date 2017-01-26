@@ -504,6 +504,12 @@
         {
             var response = _adminMediator.GetStandard();
 
+            var occupations = response.ViewModel.Select(s => new OccupationViewModel()
+            {
+                FullName = s.Name,
+                Id = s.Id
+            });
+
             var standards = new List<EditStandardViewModel>();
 
             foreach(var standardSector in response.ViewModel.SelectMany(s => s.Sectors).OrderBy(s => s.Name))
@@ -520,7 +526,13 @@
                 }));
             }
 
-            return View(standards);
+            var viewModel = new EditStandardsViewModel()
+            {
+                Standards = standards,
+                Occupations = occupations
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]

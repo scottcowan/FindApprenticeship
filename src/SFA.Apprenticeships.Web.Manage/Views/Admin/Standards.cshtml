@@ -2,7 +2,8 @@
 @using SFA.Apprenticeships.Domain.Entities.Raa.Reference
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Manage.Constants
-@model List<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.EditStandardViewModel>
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.EditStandardsViewModel
 @{
     ViewBag.Title = "Standards";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,11 +13,18 @@
     .highlight-row {
         background-color: #dee0e2;
     }
+
+    .new-item {
+        background-color: rgb(222, 235, 255);
+    }
 </style>
 
 <h1 id="heading" class="heading-xlarge">Standards</h1>
 
-@Html.RouteLink("Download Standards", ManagementRouteNames.AdminStandardsCsv)
+<div class="grid-row">
+    @Html.RouteLink("Download Standards", ManagementRouteNames.AdminStandardsCsv, null, new { @class = "column-one-third" })
+    <a href="" class="column-one-third" data-bind="click: addItem">Add new standard</a>
+</div>
 
 <div class="grid-row" data-bind="visible: message" style="display: none;">
     <div class="column-two-thirds">
@@ -28,9 +36,12 @@
     </div>
 </div>
 
-<div>
-    <input type="text" placeholder="Type to search" data-bind="value: searchText, valueUpdate: 'keyup'" />
-    <button style="display: none;" class="button no-handler" data-bind="css : { 'disabled' : busy }, visible : changedItems().length > 0, click: saveChanges">
+<div class="grid-row sfa-medium-bottom-margin sfa-medium-top-margin">
+    <input type="text" placeholder="Type to search" data-bind="value: searchText, valueUpdate: 'keyup'" class="column-one-third" />
+    <label class="column-one-third">
+        <input type="checkbox" data-bind="checked: showChanged" /> Show modified
+    </label>
+    <button style="display: none;" class="button no-handler column-one-third" data-bind="css : { 'disabled' : busy }, visible : changedItems().length > 0, click: saveChanges">
         <span data-bind="visible: !busy()">Save changes to <span data-bind="text: changedItems().length"></span> item(s)</span>
         <span data-bind="visible: busy">Saving</span>
     </button>
@@ -38,33 +49,35 @@
 
 <table>
     <thead>
-    <tr>
-        <th>ID</th>
-        <th>SSAT1</th>
-        <th>Standard Sector</th>
-        <th>Standard</th>
-        <th></th>
-    </tr>
+        <tr>
+            <th>ID</th>
+            <th>SSAT1</th>
+            <th>Standard Sector</th>
+            <th>Standard</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
     </thead>
 
     <tbody data-bind="template: { name: 'standard', foreach: standards, as: 'standard' }">
-        @foreach (var standard in Model)
+        @foreach (var standard in Model.Standards)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => standard.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => standard.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => standard.StandardSectorName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => standard.StandardName)
-                    </td>
-                    <td></td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => standard.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => standard.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => standard.StandardSectorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => standard.StandardName)
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
         }
     </tbody>
 </table>
@@ -73,13 +86,17 @@
     @Scripts.Render("~/bundles/knockout")
 
     <script type="text/html" id="standard">
-        <tr data-bind="css : { 'highlight-row' : standard.Changed() }">
+        <tr data-bind="css : { 'highlight-row' : standard.Changed(), 'new-item' : !standard.Id() }">
             <td data-bind="text: standard.Id"></td>
-            <td data-bind="text: standard.Name"></td>
+            <td><select data-bind="options: $root.SsatList, optionsText: 'FullName', value: standard.Name"></select></td>
             <td data-bind="text: standard.StandardSectorName"></td>
-            <td data-bind="text: standard.StandardName"></td>
+            <td><input type="text" data-bind="value: standard.StandardName" /></td>
             <td>
                 <select data-bind="options: $root.statuses, optionsText: 'name', value: standard.StatusText"></select>
+            </td>
+            <td>
+                <a href="" data-bind="click: $root.delete, visible: !Id()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                <a href="" data-bind="click: $root.save, visible: !Id()"><i class="fa fa-check" aria-hidden="true"></i></a>
             </td>
         </tr>
     </script>
@@ -90,6 +107,8 @@
                 { name: 'Active', value: @((int) FrameworkStatusType.Active) },
                 { name: 'Ceased', value: @((int) FrameworkStatusType.Ceased) }
             ];
+
+            var ssatList = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Occupations)));
 
             var mappings = {
                 create: function(options) {
@@ -106,12 +125,32 @@
 
                     mapped.StatusText = ko.observable(status);
 
+                    var ssat;
+                    for (var i = 0; i < ssatList().length; i++) {
+                        if (options.data.SsatName == ssatList()[i].FullName()) {
+                            mapped.SsatName = ko.observable(ssatList()[i]);
+                            mapped.SsatCode = ko.observable(ssatList()[i].CodeName);
+                            break;
+                        }
+                    }
+
                     mapped.Changed = ko.observable(false);
 
                     mapped.StatusText.subscribe(function(newValue) {
                         for (var i = 0; i < statuses.length; i++) {
                             if (statuses[i].name === newValue.name) {
                                 mapped.Status(statuses[i].value);
+                                return;
+                            }
+                        }
+                    });
+
+                    mapped.SsatId = ko.observable();
+
+                    mapped.Name.subscribe(function(newValue) {
+                        for (var i = 0; i < ssatList().length; i++) {
+                            if (ssatList()[i].FullName === newValue.FullName) {
+                                mapped.SsatId(ssatList()[i].Id);
                                 return;
                             }
                         }
@@ -126,43 +165,52 @@
 
                 self.busy = ko.observable(false);
                 self.statuses = ko.observableArray(statuses);
+                self.SsatList = ssatList;
 
-                self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)), mappings);
+                self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Standards)), mappings);
 
                 self.dataChange = function(item) {
                     item.Changed(true);
                 }
 
                 self.searchText = ko.observable();
+                self.showChanged = ko.observable(false);
 
                 self.message = ko.observable();
 
                 self.standards = ko.computed(function() {
-                    if (self.searchText() != null) {
-                        var filter = self.searchText().toLowerCase();
-
+                    if (self.showChanged()) {
                         return ko.utils.arrayFilter(self.data(),
                             function(item) {
-                                var match = false;
-
-                                var id = item.Id();
-                                if (id != null) match = match || id.toString().toLowerCase().indexOf(filter) > -1;
-
-                                var name = item.Name();
-                                if (name != null) match = match || name.toLowerCase().indexOf(filter) > -1;
-
-                                var standardName = item.StandardName();
-                                if (standardName != null)
-                                    match = match || standardName.toLowerCase().indexOf(filter) > -1;
-
-                                var standardSectorName = item.StandardSectorName();
-                                if (standardSectorName != null)
-                                    match = match || standardSectorName.toLowerCase().indexOf(filter) > -1;
-
-                                return match;
+                                return item.Changed();
                             });
                     } else {
-                        return self.data();
+                        if (self.searchText() != null) {
+                            var filter = self.searchText().toLowerCase();
+
+                            return ko.utils.arrayFilter(self.data(),
+                                function(item) {
+                                    var match = false;
+
+                                    var id = item.Id();
+                                    if (id != null) match = match || id.toString().toLowerCase().indexOf(filter) > -1;
+
+                                    var name = item.Name().FullName();
+                                    if (name != null) match = match || name.toLowerCase().indexOf(filter) > -1;
+
+                                    var standardName = item.StandardName();
+                                    if (standardName != null)
+                                        match = match || standardName.toLowerCase().indexOf(filter) > -1;
+
+                                    var standardSectorName = item.StandardSectorName();
+                                    if (standardSectorName != null)
+                                        match = match || standardSectorName.toLowerCase().indexOf(filter) > -1;
+
+                                    return match;
+                                });
+                        } else {
+                            return self.data();
+                        }
                     }
                 });
 
@@ -177,14 +225,18 @@
                 for (var i = 0; i < self.data().length; i++) {
                     var mapped = self.data()[i];
 
-                    (function(mapped) {
-                        for (var item in mapped) {
-                            if (item !== 'Status' && item !== 'Changed' && mapped.hasOwnProperty(item) && item.indexOf('_') === -1) {
-                                mapped[item].subscribe(function(newValue) { self.dataChange(mapped); });
-                            }
-                        }
-                    }(mapped));
+                    subscribeObject(mapped);
+                }
 
+                function subscribeObject(mapped) {
+                    for (var item in mapped) {
+                        if (item !== 'Status' &&
+                            item !== 'Changed' &&
+                            mapped.hasOwnProperty(item) &&
+                            item.indexOf('_') === -1) {
+                            mapped[item].subscribe(function(newValue) { self.dataChange(mapped); });
+                        }
+                    }
                 }
 
                 // functions
@@ -193,8 +245,9 @@
 
                     // clear existing message
                     self.message(null);
+
                     var df = [];
-                    
+
                     var changedItems = self.changedItems();
 
                     for (var i = 0; i < changedItems.length; i++) {
@@ -225,6 +278,43 @@
                         // add error state
                         self.message('Failed to save');
                     });
+                }
+
+                self.addItem = function() {
+                    //clear search first
+                    self.searchText(null);
+
+                    var newItem = ko.mapping.fromJS(@Html.Raw(Json.Encode(new EditStandardViewModel())), mappings);
+                    newItem.Id(null);
+
+                    subscribeObject(newItem);
+
+                    self.data.splice(0, 0, newItem);
+                }
+
+                self.delete = function(item) {
+                    // should only delete new items that aren't saved
+                    if (!item.Id()) {
+                        self.data.remove(item);
+                    }
+                }
+
+                self.save = function(item) {
+                    // validate
+                    if (item.FullName() && item.FullName() !== '') {
+                        self.message(null);
+
+                        $.ajax({
+                            method: 'POST',
+                            url: '@Url.Action("CreateFramework")',
+                            data: ko.mapping.toJS(item)
+                        }).done(function(data) {
+                            item.Id(data.Id);
+                            item.Changed(false);
+                        }).fail(function() {
+                            self.message('Failed to save');
+                        });
+                    }
                 }
 
                 return self;
