@@ -43,7 +43,7 @@
 
             var apiClient = _apiClientProvider.GetApiClient();
 
-            var apiVacancyResult = await apiClient.EditVacancyWageWithHttpMessagesAsync(wageUpdate, vacancyReferenceNumber: editWageViewModel.VacancyReferenceNumber);
+            var apiVacancyResult = await apiClient.VacancyManagement.EditWageByVacancyReferenceWithHttpMessagesAsync(wageUpdate, editWageViewModel.VacancyReferenceNumber.ToString());
             if (apiVacancyResult.Response.IsSuccessStatusCode)
             {
                 return new ServiceResult<EditWageViewModel>(VacancyManagementServiceCodes.EditWage.Ok, editWageViewModel);

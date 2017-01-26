@@ -722,7 +722,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
                 try
                 {
-                    var apiVacancyResult = await apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber);
+                    var apiVacancyResult = await apiClient.VacancyOperations.GetByReferenceNumberWithHttpMessagesAsync(vacancyReferenceNumber.ToString());
                     var apiVacancy = apiVacancyResult.Body;
                     vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
                 }
