@@ -9,6 +9,6 @@
         public const string EditWageVacancyIdUriFormat = "/vacancy/{0}/wage";
 
         public const string LinkEmployerUri = "/employer/link";
-        public const string LinkEmployerEdsUrnUriFormat = "/employer/{0}/link";
+        public const string LinkEmployerEdsUrnUriFormat = "/employer/edsurn/{0}/link";
     }
 }
