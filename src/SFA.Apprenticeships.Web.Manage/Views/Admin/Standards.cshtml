@@ -89,7 +89,9 @@
         <tr data-bind="css : { 'highlight-row' : standard.Changed(), 'new-item' : !standard.Id() }">
             <td data-bind="text: standard.Id"></td>
             <td><select data-bind="options: $root.SsatList, optionsText: 'FullName', value: standard.Name"></select></td>
-            <td data-bind="text: standard.StandardSectorName"></td>
+            <td>
+                <select style="width:200px;" data-bind="options: $root.Sectors, optionsText: 'FullName', value: standard.StandardSectorName"></select>
+            </td>
             <td><input type="text" data-bind="value: standard.StandardName" /></td>
             <td>
                 <select data-bind="options: $root.statuses, optionsText: 'name', value: standard.StatusText"></select>
@@ -109,6 +111,7 @@
             ];
 
             var ssatList = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Occupations)));
+            var sectors = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Sectors)));
 
             var mappings = {
                 create: function(options) {
@@ -125,11 +128,18 @@
 
                     mapped.StatusText = ko.observable(status);
 
-                    var ssat;
                     for (var i = 0; i < ssatList().length; i++) {
-                        if (options.data.SsatName == ssatList()[i].FullName()) {
-                            mapped.SsatName = ko.observable(ssatList()[i]);
-                            mapped.SsatCode = ko.observable(ssatList()[i].CodeName);
+                        if (options.data.Name === ssatList()[i].FullName()) {
+                            mapped.Name = ko.observable(ssatList()[i]);
+                            mapped.Code = ko.observable(ssatList()[i].CodeName);
+                            break;
+                        }
+                    }
+
+                    for (var i = 0; i < sectors().length; i++) {
+                        if (options.data.StandardSectorName === sectors()[i].FullName()) {
+                            mapped.StandardSectorName = ko.observable(sectors()[i]);
+                            mapped.StandardSectorId = ko.observable(sectors()[i].Id());
                             break;
                         }
                     }
@@ -156,6 +166,15 @@
                         }
                     });
 
+                    mapped.StandardSectorName.subscribe(function(newValue) {
+                        for (var i = 0; i < sectors().length; i++) {
+                            if (sectors()[i].FullName === newValue.FullName) {
+                                mapped.StandardSectorId(ssatList()[i].Id);
+                                return;
+                            }
+                        }
+                    });
+
                     return mapped;
                 }
             };
@@ -166,6 +185,7 @@
                 self.busy = ko.observable(false);
                 self.statuses = ko.observableArray(statuses);
                 self.SsatList = ssatList;
+                self.Sectors = sectors;
 
                 self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Standards)), mappings);
 

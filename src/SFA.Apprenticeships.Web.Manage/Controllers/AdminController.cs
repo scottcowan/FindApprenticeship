@@ -510,6 +510,12 @@
                 Id = s.Id
             });
 
+            var sectors = response.ViewModel.SelectMany(s => s.Sectors).OrderBy(s => s.Name).Select(s => new SectorViewModel()
+            {
+                Id = s.Id,
+                FullName = s.Name
+            });
+
             var standards = new List<EditStandardViewModel>();
 
             foreach(var standardSector in response.ViewModel.SelectMany(s => s.Sectors).OrderBy(s => s.Name))
@@ -520,8 +526,8 @@
                 {
                     Id = s.Id,
                     Name = ssat1.Name,
-                    StandardSectorName = s.Name,
-                    StandardName = standardSector.Name,
+                    StandardSectorName = standardSector.Name,
+                    StandardName = s.Name,
                     Status = s.Status
                 }));
             }
@@ -529,7 +535,8 @@
             var viewModel = new EditStandardsViewModel()
             {
                 Standards = standards,
-                Occupations = occupations
+                Occupations = occupations,
+                Sectors = sectors
             };
 
             return View(viewModel);

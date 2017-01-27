@@ -383,6 +383,7 @@
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\OccupationViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\QAActionResult.cs" />
+    <Compile Include="ViewModels\Vacancy\SectorViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\StandardViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ContactDetailsAndVacancyHistoryViewModel.cs" />
