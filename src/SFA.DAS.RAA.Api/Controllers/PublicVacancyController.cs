@@ -3,8 +3,10 @@
     using System;
     using System.Web.Http;
     using System.Web.Http.Description;
+    using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
+    using Mappers;
     using Models;
     using Providers;
     using Strategies;
@@ -12,6 +14,8 @@
     [RoutePrefix("public/vacancy")]
     public class PublicVacancyController : ApiController
     {
+        private static readonly IMapper _apiMappers = new ApiMappers();
+
         private readonly IVacancyProvider _vacancyProvider;
 
         public PublicVacancyController(IVacancyReadRepository vacancyReadRepository)
@@ -20,27 +24,27 @@
         }
 
         [Route("{id}")]
-        [ResponseType(typeof(Vacancy))]
+        [ResponseType(typeof(PublicVacancy))]
         [HttpGet]
         public IHttpActionResult GetById(int id)
         {
-            return Ok(_vacancyProvider.Get(new VacancyIdentifier(id)));
+            return Ok(_apiMappers.Map<Vacancy, PublicVacancy>(_vacancyProvider.Get(new VacancyIdentifier(id))));
         }
 
         [Route("reference/{reference}")]
-        [ResponseType(typeof(Vacancy))]
+        [ResponseType(typeof(PublicVacancy))]
         [HttpGet]
         public IHttpActionResult GetByReferenceNumber(string reference)
         {
-            return Ok(_vacancyProvider.Get(new VacancyIdentifier(reference)));
+            return Ok(_apiMappers.Map<Vacancy, PublicVacancy>(_vacancyProvider.Get(new VacancyIdentifier(reference))));
         }
 
         [Route("guid/{guid}")]
-        [ResponseType(typeof(Vacancy))]
+        [ResponseType(typeof(PublicVacancy))]
         [HttpGet]
         public IHttpActionResult GetByGuid(Guid guid)
         {
-            return Ok(_vacancyProvider.Get(new VacancyIdentifier(guid)));
+            return Ok(_apiMappers.Map<Vacancy, PublicVacancy>(_vacancyProvider.Get(new VacancyIdentifier(guid))));
         }
     }
 }

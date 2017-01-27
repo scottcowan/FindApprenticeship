@@ -16,7 +16,7 @@
         }
 
         [Route("vacancysummaries")]
-        [ResponseType(typeof(VacancySummariesPage))]
+        [ResponseType(typeof(PublicVacancySummariesPage))]
         [HttpGet]
         public IHttpActionResult GetAllLiveVacancySummaries(int page = 1, int pageSize = 25)
         {

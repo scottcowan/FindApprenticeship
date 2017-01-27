@@ -178,7 +178,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Comparers\DbPublicVacancySummaryComparer.cs" />
+    <Compile Include="Comparers\DbVacancySummaryComparer.cs" />
     <Compile Include="Comparers\DbVacancyComparer.cs" />
+    <Compile Include="Comparers\DbPublicVacancyComparer.cs" />
     <Compile Include="Comparers\IMultiEqualityComparer.cs" />
     <Compile Include="Comparers\VacancyComparer.cs" />
     <Compile Include="Constants\UriFormats.cs" />

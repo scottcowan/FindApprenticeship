@@ -34,7 +34,7 @@
 
         private static Vacancy GetLiveVacancy(Vacancy vacancy)
         {
-            return vacancy.Status == VacancyStatus.Live ? vacancy : null;
+            return vacancy?.Status == VacancyStatus.Live ? vacancy : null;
         }
     }
 }

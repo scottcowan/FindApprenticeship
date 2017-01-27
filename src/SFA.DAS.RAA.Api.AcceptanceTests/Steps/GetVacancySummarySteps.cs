@@ -32,11 +32,11 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [Then(@"I see (.*) vacancy summaries on page (.*) from a total of (.*) and (.*) total pages")]
         public void ThenISeeVacancySummariesAndTotalPages(int expectedCount, int expectedPage, int expectedTotalCount, int expectedPageCount)
         {
-            var responseVacancySummaries = ScenarioContext.Current.Get<VacancySummariesPage>("responseVacancySummaries");
+            var responseVacancySummaries = ScenarioContext.Current.Get<PublicVacancySummariesPage>("responseVacancySummaries");
 
             responseVacancySummaries.Should().NotBeNull();
-            responseVacancySummaries.VacancySummaries.Should().NotBeNullOrEmpty();
-            responseVacancySummaries.VacancySummaries.Count.Should().Be(expectedCount);
+            responseVacancySummaries.PublicVacancySummaries.Should().NotBeNullOrEmpty();
+            responseVacancySummaries.PublicVacancySummaries.Count.Should().Be(expectedCount);
             responseVacancySummaries.TotalCount.Should().Be(expectedTotalCount);
             responseVacancySummaries.CurrentPage.Should().Be(expectedPage);
             responseVacancySummaries.TotalPages.Should().Be(expectedPageCount);
@@ -68,7 +68,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                         ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
                     }
 
-                    var responseVacancySummaries = JsonConvert.DeserializeObject<VacancySummariesPage>(content);
+                    var responseVacancySummaries = JsonConvert.DeserializeObject<PublicVacancySummariesPage>(content);
                     ScenarioContext.Current.Add("responseVacancySummaries", responseVacancySummaries);
                 }
             }

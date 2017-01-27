@@ -4,6 +4,6 @@
 
     public interface IGetAllLiveVacancySummariesStrategy
     {
-        VacancySummariesPage GetAllLiveVacancySummaries(int page, int pageSize);
+        PublicVacancySummariesPage GetAllLiveVacancySummaries(int page, int pageSize);
     }
 }
