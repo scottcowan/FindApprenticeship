@@ -44,7 +44,7 @@
                 CurrentPage = page,
                 TotalCount = resultsCount,
                 TotalPages = resultsCount == 0 ? 1 : (int)Math.Ceiling((double)resultsCount / (double)pageSize),
-                PublicVacancySummaries = _apiMappers.Map<IList<VacancySummary>, IList<PublicVacancySummary>>(liveVacancySummaries)
+                VacancySummaries = _apiMappers.Map<IList<VacancySummary>, IList<PublicVacancySummary>>(liveVacancySummaries)
             };
             return vacancySummariesPage;
         }

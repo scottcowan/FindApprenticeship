@@ -9,6 +9,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Api.Models;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
+    using Comparers;
     using Constants;
     using Extensions;
     using Factories;
@@ -32,14 +33,27 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [Then(@"I see (.*) vacancy summaries on page (.*) from a total of (.*) and (.*) total pages")]
         public void ThenISeeVacancySummariesAndTotalPages(int expectedCount, int expectedPage, int expectedTotalCount, int expectedPageCount)
         {
-            var responseVacancySummaries = ScenarioContext.Current.Get<PublicVacancySummariesPage>("responseVacancySummaries");
+            var vacancySummaries = ScenarioContext.Current.Get<List<DbVacancySummary>>("vacancySummaries");
+            var responseVacancySummaries = ScenarioContext.Current.Get<VacancySummariesPage>("responseVacancySummaries");
 
             responseVacancySummaries.Should().NotBeNull();
-            responseVacancySummaries.PublicVacancySummaries.Should().NotBeNullOrEmpty();
-            responseVacancySummaries.PublicVacancySummaries.Count.Should().Be(expectedCount);
+            responseVacancySummaries.VacancySummaries.Should().NotBeNullOrEmpty();
+            responseVacancySummaries.VacancySummaries.Count.Should().Be(expectedCount);
             responseVacancySummaries.TotalCount.Should().Be(expectedTotalCount);
             responseVacancySummaries.CurrentPage.Should().Be(expectedPage);
             responseVacancySummaries.TotalPages.Should().Be(expectedPageCount);
+
+            var comparer = new DbPublicVacancySummaryComparer();
+            for (var i = 0; i < vacancySummaries.Count; i++)
+            {
+                var vacancySummary = vacancySummaries[i];
+                var responseVacancySummary = responseVacancySummaries.VacancySummaries[i];
+
+                vacancySummary.Should().NotBeNull();
+                responseVacancySummary.Should().NotBeNull();
+
+                comparer.Equals(vacancySummary, responseVacancySummary).Should().BeTrue();
+            }
         }
 
         private static async Task GetVacancySummaries(string vacancySummariesUri, int page, int totalCount, int pageSize)
@@ -48,6 +62,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 .With(v => v.TotalResultCount, totalCount)
                 .With(v => v.VacancyStatusId, VacancyStatus.Live)
                 .CreateMany(pageSize).ToList();
+
+            ScenarioContext.Current.Add("vacancySummaries", vacancySummaries);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
                     m => m.Query<DbVacancySummary>(It.Is<string>(s => s.StartsWith(VacancySummaryRepository.CoreQuery)), It.IsAny<object>(), null, null))
@@ -68,7 +84,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                         ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
                     }
 
-                    var responseVacancySummaries = JsonConvert.DeserializeObject<PublicVacancySummariesPage>(content);
+                    var responseVacancySummaries = JsonConvert.DeserializeObject<VacancySummariesPage>(content);
                     ScenarioContext.Current.Add("responseVacancySummaries", responseVacancySummaries);
                 }
             }

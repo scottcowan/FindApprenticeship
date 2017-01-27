@@ -4,6 +4,6 @@
 
     public class PublicVacancySummariesPage : Page
     {
-        public IList<PublicVacancySummary> PublicVacancySummaries { get; set; }
+        public IList<PublicVacancySummary> VacancySummaries { get; set; }
     }
 }
