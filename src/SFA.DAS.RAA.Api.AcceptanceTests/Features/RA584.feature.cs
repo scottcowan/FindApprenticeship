@@ -69,12 +69,12 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get first page of live vacancy summaries")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get second page of live vacancy summaries")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA584")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA584")]
-        public virtual void GetFirstPageOfLiveVacancySummaries()
+        public virtual void GetSecondPageOfLiveVacancySummaries()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get first page of live vacancy summaries", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get second page of live vacancy summaries", new string[] {
                         "RA584"});
 #line 7
 this.ScenarioSetup(scenarioInfo);
@@ -84,6 +84,66 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 10
  testRunner.And("I see 5 vacancy summaries on page 2 from a total of 13 and 3 total pages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get public live vacancy")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA584")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA584")]
+        public virtual void GetPublicLiveVacancy()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get public live vacancy", new string[] {
+                        "RA584"});
+#line 13
+this.ScenarioSetup(scenarioInfo);
+#line 14
+ testRunner.When("I request the public vacancy details for the vacancy with reference number: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 15
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 16
+ testRunner.And("I see the public vacancy details for the vacancy with reference number: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get public closed vacancy")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA584")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA584")]
+        public virtual void GetPublicClosedVacancy()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get public closed vacancy", new string[] {
+                        "RA584"});
+#line 19
+this.ScenarioSetup(scenarioInfo);
+#line 20
+ testRunner.When("I request the public vacancy details for the vacancy with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
+ testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 22
+ testRunner.And("I do not see the public vacancy details for the vacancy with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get public not found vacancy")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA584")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA584")]
+        public virtual void GetPublicNotFoundVacancy()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get public not found vacancy", new string[] {
+                        "RA584"});
+#line 25
+this.ScenarioSetup(scenarioInfo);
+#line 26
+ testRunner.When("I request the public vacancy details for the vacancy with guid: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
+ testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 28
+ testRunner.And("I do not see the public vacancy details for the vacancy with guid: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

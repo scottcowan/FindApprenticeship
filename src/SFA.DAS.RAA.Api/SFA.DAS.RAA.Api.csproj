@@ -241,6 +241,7 @@
     <Compile Include="Controllers\EmployerController.cs" />
     <Compile Include="Controllers\PublicVacancySummaryController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
+    <Compile Include="Controllers\PublicVacancyController.cs" />
     <Compile Include="Controllers\VacancyManagementController.cs" />
     <Compile Include="Controllers\VacancyController.cs" />
     <Compile Include="Constants\VacancyMessages.cs" />
@@ -273,6 +274,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Strategies\EditWageStrategy.cs" />
     <Compile Include="Strategies\GetAllLiveVacancySummariesStrategy.cs" />
+    <Compile Include="Strategies\GetPublicVacancyStrategies.cs" />
     <Compile Include="Strategies\IEditWageStrategy.cs" />
     <Compile Include="Strategies\IGetAllLiveVacancySummariesStrategy.cs" />
     <Compile Include="Strategies\ILinkEmployerStrategy.cs" />
