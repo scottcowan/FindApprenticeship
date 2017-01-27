@@ -37,13 +37,13 @@
                 RequestedPage = page,
                 DesiredStatuses = new[] { VacancyStatus.Live }
             };
-            int resultsCount;
-            var liveVacancySummaries = _getVacancySummaryStrategies.GetWithStatus(query, out resultsCount);
+            int totalRecords;
+            var liveVacancySummaries = _getVacancySummaryStrategies.GetWithStatus(query, out totalRecords);
             var vacancySummariesPage = new PublicVacancySummariesPage
             {
                 CurrentPage = page,
-                TotalCount = resultsCount,
-                TotalPages = resultsCount == 0 ? 1 : (int)Math.Ceiling((double)resultsCount / (double)pageSize),
+                TotalCount = totalRecords,
+                TotalPages = totalRecords == 0 ? 1 : (int)Math.Ceiling((double)totalRecords / (double)pageSize),
                 VacancySummaries = _apiMappers.Map<IList<VacancySummary>, IList<PublicVacancySummary>>(liveVacancySummaries)
             };
             return vacancySummariesPage;
