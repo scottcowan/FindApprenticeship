@@ -272,7 +272,9 @@
     <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Strategies\EditWageStrategy.cs" />
+    <Compile Include="Strategies\GetAllLiveVacancySummariesStrategy.cs" />
     <Compile Include="Strategies\IEditWageStrategy.cs" />
+    <Compile Include="Strategies\IGetAllLiveVacancySummariesStrategy.cs" />
     <Compile Include="Strategies\ILinkEmployerStrategy.cs" />
     <Compile Include="Strategies\LinkEmployerStrategy.cs" />
     <Compile Include="Validators\EmployerProviderSiteLinkRequestValidator.cs" />

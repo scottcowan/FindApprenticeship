@@ -5,12 +5,12 @@
 
     public class VacancySummariesPage
     {
-        public IList<VacancySummary> VacancySummaries { get; set; }
-
         public int TotalCount { get; set; }
 
         public int CurrentPage { get; set; }
 
         public int TotalPages { get; set; }
+
+        public IList<VacancySummary> VacancySummaries { get; set; }
     }
 }

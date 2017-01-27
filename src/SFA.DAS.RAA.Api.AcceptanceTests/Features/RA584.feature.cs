@@ -79,11 +79,11 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.When("I request page 1 of the list of 13 live vacancy summaries with page size: 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request page 2 of the list of 13 live vacancy summaries with page size: 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 10
- testRunner.And("I see 5 vacancy summaries on page 1 from a total of 13 and 3 total pages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I see 5 vacancy summaries on page 2 from a total of 13 and 3 total pages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
