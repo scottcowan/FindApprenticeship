@@ -179,6 +179,28 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get all LocalAuthorities")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetAllLocalAuthorities")]
+        public virtual void GetAllLocalAuthorities()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get all LocalAuthorities", new string[] {
+                        "RA578",
+                        "GetAllLocalAuthorities"});
+#line 37
+this.ScenarioSetup(scenarioInfo);
+#line 38
+ testRunner.Given("I request all local authorities", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 39
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 40
+ testRunner.And("I see all local authority information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get LocalAuthority by id")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
@@ -188,13 +210,13 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get LocalAuthority by id", new string[] {
                         "RA578",
                         "GetLocalAuthorityById"});
-#line 37
+#line 43
 this.ScenarioSetup(scenarioInfo);
-#line 38
+#line 44
  testRunner.Given("I request the local authority with id: 160", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 39
+#line 45
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 40
+#line 46
  testRunner.And("I see the information for the local authority with id: 160", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -210,13 +232,13 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get LocalAuthority by id that doesn\'t exist", new string[] {
                         "RA578",
                         "GetLocalAuthorityById"});
-#line 43
+#line 49
 this.ScenarioSetup(scenarioInfo);
-#line 44
+#line 50
  testRunner.Given("I request the local authority with id: 999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 45
+#line 51
  testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 46
+#line 52
  testRunner.And("I do not see the information for the local authority with id: 999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -232,13 +254,13 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get LocalAuthority by code", new string[] {
                         "RA578",
                         "GetLocalAuthorityByCode"});
-#line 49
+#line 55
 this.ScenarioSetup(scenarioInfo);
-#line 50
+#line 56
  testRunner.Given("I request the local authority with code: 41UD", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 51
+#line 57
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 52
+#line 58
  testRunner.And("I see the information for the local authority with code: 41UD", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -254,14 +276,124 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get LocalAuthority by code that doesn\'t exist", new string[] {
                         "RA578",
                         "GetLocalAuthorityByCode"});
-#line 55
+#line 61
 this.ScenarioSetup(scenarioInfo);
-#line 56
+#line 62
  testRunner.Given("I request the local authority with code: XXXX", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 57
+#line 63
  testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 58
+#line 64
  testRunner.And("I do not see the information for the local authority with code: XXXX", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get all Regions")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetAllRegions")]
+        public virtual void GetAllRegions()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get all Regions", new string[] {
+                        "RA578",
+                        "GetAllRegions"});
+#line 67
+this.ScenarioSetup(scenarioInfo);
+#line 68
+ testRunner.Given("I request all regions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 69
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 70
+ testRunner.And("I see all region information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get Region by id")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetRegionById")]
+        public virtual void GetRegionById()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Region by id", new string[] {
+                        "RA578",
+                        "GetRegionById"});
+#line 73
+this.ScenarioSetup(scenarioInfo);
+#line 74
+ testRunner.Given("I request the region with id: 1007", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 75
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 76
+ testRunner.And("I see the information for the region with id: 1007", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get Region by id that doesn\'t exist")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetRegionById")]
+        public virtual void GetRegionByIdThatDoesntExist()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Region by id that doesn\'t exist", new string[] {
+                        "RA578",
+                        "GetRegionById"});
+#line 79
+this.ScenarioSetup(scenarioInfo);
+#line 80
+ testRunner.Given("I request the region with id: 9999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 81
+ testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 82
+ testRunner.And("I do not see the information for the region with id: 9999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get Region by code")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetRegionByCode")]
+        public virtual void GetRegionByCode()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Region by code", new string[] {
+                        "RA578",
+                        "GetRegionByCode"});
+#line 85
+this.ScenarioSetup(scenarioInfo);
+#line 86
+ testRunner.Given("I request the region with code: WM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 87
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 88
+ testRunner.And("I see the information for the region with code: WM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get Region by code that doesn\'t exist")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetRegionByCode")]
+        public virtual void GetRegionByCodeThatDoesntExist()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Region by code that doesn\'t exist", new string[] {
+                        "RA578",
+                        "GetRegionByCode"});
+#line 91
+this.ScenarioSetup(scenarioInfo);
+#line 92
+ testRunner.Given("I request the region with code: XX", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 93
+ testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 94
+ testRunner.And("I do not see the information for the region with code: XX", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

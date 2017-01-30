@@ -30,7 +30,7 @@
             ScenarioContext.Current.Add("localAuthorities", localAuthorities);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<LocalAuthority>(ReferenceRepository.GetLocalAuthoritiesSql, null, null, null))
+                m => m.Query(ReferenceRepository.GetLocalAuthoritiesSql, It.IsAny<Func<LocalAuthority, County, Region, LocalAuthority>>(), It.IsAny<object>(), "CountyId,RegionId", null, null))
                 .Returns(localAuthorities);
 
             var httpClient = FeatureContext.Current.TestServer().HttpClient;

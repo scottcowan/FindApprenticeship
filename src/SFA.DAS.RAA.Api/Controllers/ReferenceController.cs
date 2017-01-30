@@ -15,12 +15,14 @@
         private readonly IReferenceDataProvider _referenceDataProvider;
         private readonly IGetCountiesStrategy _getCountiesStrategy;
         private readonly IGetLocalAuthoritiesStrategy _getLocalAuthoritiesStrategy;
+        private readonly IGetRegionsStrategy _getRegionsStrategy;
 
-        public ReferenceController(IReferenceDataProvider referenceDataProvider, IGetCountiesStrategy getCountiesStrategy, IGetLocalAuthoritiesStrategy getLocalAuthoritiesStrategy)
+        public ReferenceController(IReferenceDataProvider referenceDataProvider, IGetCountiesStrategy getCountiesStrategy, IGetLocalAuthoritiesStrategy getLocalAuthoritiesStrategy, IGetRegionsStrategy getRegionsStrategy)
         {
             _referenceDataProvider = referenceDataProvider;
             _getCountiesStrategy = getCountiesStrategy;
             _getLocalAuthoritiesStrategy = getLocalAuthoritiesStrategy;
+            _getRegionsStrategy = getRegionsStrategy;
         }
 
         /// <summary>
@@ -99,32 +101,42 @@
             return Ok(_getLocalAuthoritiesStrategy.GetLocalAuthority(localAuthorityCode: code));
         }
 
+        /// <summary>
+        /// Retrieves all region information for all regions
+        /// </summary>
+        /// <returns>The full list of regions</returns>
         [Route("regions")]
         [ResponseType(typeof(IEnumerable<Region>))]
         [HttpGet]
         public IHttpActionResult GetRegions()
         {
-            return Ok(_referenceDataProvider.GetRegions());
+            return Ok(_getRegionsStrategy.GetRegions());
         }
 
-        [Route("region")]
+        /// <summary>
+        /// Returns the information for the region identified by the primary identifier in the URL
+        /// </summary>
+        /// <param name="id">The region's primary identifier</param>
+        /// <returns>The region object</returns>
+        [Route("region/{id}")]
         [ResponseType(typeof(Region))]
         [HttpGet]
-        public IHttpActionResult GetRegion(int? regionId = null, string regionCode = null)
+        public IHttpActionResult GetRegion(int id)
         {
-            if (!regionId.HasValue && string.IsNullOrEmpty(regionCode))
-            {
-                throw new ArgumentException(ReferenceMessages.MissingRegionIdentifier);
-            }
+            return Ok(_getRegionsStrategy.GetRegion(id));
+        }
 
-            var region = regionId.HasValue ? _referenceDataProvider.GetRegionById(regionId.Value) : _referenceDataProvider.GetRegionByCode(regionCode);
-
-            if (region == null)
-            {
-                throw new KeyNotFoundException(ReferenceMessages.RegionNotFound);
-            }
-
-            return Ok(region);
+        /// <summary>
+        /// Returns the information for the region identified by the region's code in the URL
+        /// </summary>
+        /// <param name="code">The region's code</param>
+        /// <returns>The region object</returns>
+        [Route("region/code/{code}")]
+        [ResponseType(typeof(Region))]
+        [HttpGet]
+        public IHttpActionResult GetRegion(string code)
+        {
+            return Ok(_getRegionsStrategy.GetRegion(regionCode: code));
         }
     }
 }

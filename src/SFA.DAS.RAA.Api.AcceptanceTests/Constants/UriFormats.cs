@@ -24,5 +24,9 @@
         public const string GetLocalAuthoritiesUri = "reference/localauthorities";
         public const string LocalAuthorityIdUriFormat = "reference/localauthority/{0}";
         public const string LocalAuthorityCodeUriFormat = "reference/localauthority/code/{0}";
+
+        public const string GetRegionsUri = "reference/regions";
+        public const string RegionIdUriFormat = "reference/region/{0}";
+        public const string RegionCodeUriFormat = "reference/region/code/{0}";
     }
 }
