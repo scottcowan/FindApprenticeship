@@ -1,15 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference
 {
+    using Application.Interfaces;
+    using Common;
+    using Domain.Entities.Raa.Reference;
+    using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.ReferenceData;
+    using Domain.Raa.Interfaces.Repositories;
+    using Entities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Raa.Reference;
-    using Common;
-    using Domain.Entities.Raa.Vacancies;
-    using Domain.Raa.Interfaces.Repositories;
-    using Entities;
-    using Application.Interfaces;
-    using Domain.Entities.ReferenceData;
     using County = Domain.Entities.Raa.Reference.County;
     using LocalAuthority = Domain.Entities.Raa.Reference.LocalAuthority;
     using Region = Domain.Entities.Raa.Reference.Region;
@@ -80,7 +80,7 @@
             };
 
             var educationLevels = GetEducationLevels();
-            
+
             var dbStandards = _getOpenConnection.Query<Entities.Standard>(standardSql, sqlParams);
             var standards = dbStandards.Select(x =>
             {
@@ -125,7 +125,7 @@
 
             _logger.Debug("Got all sectors");
 
-            return sectors ;
+            return sectors;
         }
 
         public IList<ReleaseNote> GetReleaseNotes()
@@ -364,7 +364,7 @@
             _logger.Debug("Got all apprenticeship occupations");
 
             return dbOccupations;
-        } 
+        }
 
         private IList<ApprenticeshipFramework> GetApprenticeshipFrameworks()
         {
@@ -380,7 +380,7 @@
                 .Query<ApprenticeshipFramework>(frameworkSql, sqlParams);
 
             return dbFrameworks;
-        } 
+        }
 
         private IList<EducationLevel> GetEducationLevels()
         {
@@ -394,7 +394,7 @@
 
             var levels = _getOpenConnection
                 .Query<EducationLevel>(sectorSql, sqlParams);
-            
+
             _logger.Debug("Got all education levels");
 
             return levels;
@@ -483,5 +483,7 @@
 
             return category;
         }
+
+        public static string FrameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework ORDER BY FullName;";
     }
 }

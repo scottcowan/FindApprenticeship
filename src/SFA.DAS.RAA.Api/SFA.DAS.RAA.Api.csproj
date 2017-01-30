@@ -239,6 +239,7 @@
     <Compile Include="Constants\EmployerProviderSiteLinkMessages.cs" />
     <Compile Include="Constants\ReferenceMessages.cs" />
     <Compile Include="Controllers\EmployerController.cs" />
+    <Compile Include="Controllers\FrameworkController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\VacancyManagementController.cs" />
     <Compile Include="Controllers\VacancyController.cs" />
