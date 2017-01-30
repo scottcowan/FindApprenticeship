@@ -183,7 +183,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Comparers\DbPublicVacancySummaryComparer.cs" />
+    <Compile Include="Comparers\DbVacancySummaryComparer.cs" />
     <Compile Include="Comparers\DbVacancyComparer.cs" />
+    <Compile Include="Comparers\DbPublicVacancyComparer.cs" />
     <Compile Include="Comparers\IMultiEqualityComparer.cs" />
     <Compile Include="Comparers\VacancyComparer.cs" />
     <Compile Include="Constants\UriFormats.cs" />
@@ -191,15 +194,23 @@
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="Extensions\HttpClientExtensions.cs" />
     <Compile Include="Features\RA577.feature.cs">
+    <Compile Include="Features\RA578.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RA577.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\RA584.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RA584.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\RA607.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RA607.feature</DependentUpon>
     </Compile>
+    <Compile Include="Steps\GetRegionsSteps.cs" />
+    <Compile Include="Steps\GetLocalAuthoritySteps.cs" />
+    <Compile Include="Steps\GetCountiesSteps.cs" />
     <Compile Include="Models\ResponseMessage.cs" />
     <Compile Include="Steps\EditWageSteps.cs" />
     <Compile Include="Factories\ProviderFactory.cs" />
@@ -225,6 +236,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Steps\GetVacancyDetailsSteps.cs" />
+    <Compile Include="Steps\GetVacancySummarySteps.cs" />
     <Compile Include="Steps\HttpResponseSteps.cs" />
     <Compile Include="Steps\LinkEmployerSteps.cs" />
     <Compile Include="Steps\RA577Steps.cs" />
@@ -263,9 +275,11 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RA551.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\RA577.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>RA577.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\RA584.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>RA584.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\RA607.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

@@ -1,24 +1,51 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Locations
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
+
+    //TODO: Remove the existing Address entity, in favor of using this one.  This should be carried out after the DB migration
 
     /// <summary>
-    /// The rationale behind the creation of this class is that we will eventually move from the existing Address entity,
-    /// to this entity, throughout the entirety of the solution (RAA &amp; FAA).
-    /// TODO: Remove the existing Address entity, in favour of using this one.  This should be carried out after the DB migration
-    /// and private Beta release
+    /// SFA Approved standard postal address entity
     /// </summary>
     public class PostalAddress
     {
+        /// <summary>
+        /// The primary id of this address if specified by the validating entity
+        /// </summary>
         public int PostalAddressId { get; set; }
 
-#region SFA Data Standard compliance minimum field set
+        #region SFA Data Standard compliance minimum field set
+        /// <summary>
+        /// The first line of the address. Usually house number or name
+        /// </summary>
+        [Required]
         public string AddressLine1 { get; set; }
+        /// <summary>
+        /// The second line of the address. Usually street name
+        /// </summary>
         public string AddressLine2 { get; set; }
+        /// <summary>
+        /// The third line of the address
+        /// </summary>
         public string AddressLine3 { get; set; }
+        /// <summary>
+        /// The fourth line of the address
+        /// </summary>
         public string AddressLine4 { get; set; }
+        /// <summary>
+        /// The fifth line of the address
+        /// </summary>
         public string AddressLine5 { get; set; }
+        /// <summary>
+        /// The town or city the address belongs to
+        /// </summary>
+        [Required]
         public string Town { get; set; }
+        /// <summary>
+        /// The postcode
+        /// </summary>
+        [Required]
         public string Postcode { get; set; }
         /// <summary>
         /// AKA ValidationSourceKeyName.
@@ -36,13 +63,39 @@
         public string ValidationSourceKeyValue { get; set; }
 #endregion
 
+        /// <summary>
+        /// The date the address was validated
+        /// </summary>
         public DateTime DateValidated { get; set; }
+        /// <summary>
+        /// The primary identifier for the county of the address
+        /// </summary>
+        [Required]
         public int CountyId { get; set; }
+        /// <summary>
+        /// The name of the county
+        /// </summary>
+        [Required]
         public string County { get; set; }
+        /// <summary>
+        /// The primary identifier for the local authority the address is part of
+        /// </summary>
+        [Required]
         public int LocalAuthorityId { get; set; }
+        /// <summary>
+        /// The secondary code identifier for the local authority the address is part of
+        /// </summary>
+        [Required]
         public string LocalAuthorityCodeName { get; set; }
+        /// <summary>
+        /// The local authority's name
+        /// </summary>
+        [Required]
         public string LocalAuthority { get; set; }
-
+        /// <summary>
+        /// The global geopoint for the address
+        /// </summary>
+        [Required]
         public GeoPoint GeoPoint { get; set; }
 
         public override string ToString()

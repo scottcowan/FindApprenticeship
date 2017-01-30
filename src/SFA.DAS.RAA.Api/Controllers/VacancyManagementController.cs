@@ -26,7 +26,7 @@
         /// </summary>
         /// <param name="wageUpdate">Defines the changes to be made to a vacancies wage</param>
         /// <param name="id">The vacancies primary identifier</param>
-        /// <returns></returns>
+        /// <returns>The updated vacancy object</returns>
         [Route("{id}/wage")]
         [ResponseType(typeof(Vacancy))]
         [HttpPut]
@@ -42,7 +42,7 @@
         /// </summary>
         /// <param name="wageUpdate">Defines the changes to be made to a vacancies wage</param>
         /// <param name="reference">The vacancies secondary reference number identifier</param>
-        /// <returns></returns>
+        /// <returns>The updated vacancy object</returns>
         [Route("reference/{reference}/wage")]
         [ResponseType(typeof(Vacancy))]
         [HttpPut]
@@ -58,7 +58,7 @@
         /// </summary>
         /// <param name="wageUpdate">Defines the changes to be made to a vacancies wage</param>
         /// <param name="uid">The vacancies secondary GUID identifier</param>
-        /// <returns></returns>
+        /// <returns>The updated vacancy object</returns>
         [Route("guid/{guid}/wage")]
         [ResponseType(typeof(Vacancy))]
         [HttpPut]
