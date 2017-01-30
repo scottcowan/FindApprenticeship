@@ -276,6 +276,7 @@
     <Compile Include="Models\Page.cs" />
     <Compile Include="Models\PublicVacancy.cs" />
     <Compile Include="Models\PublicVacancySummary.cs" />
+    <Compile Include="Models\PublicWage.cs" />
     <Compile Include="Models\VacancyIdentifier.cs" />
     <Compile Include="Models\PublicVacancySummariesPage.cs" />
     <Compile Include="Models\VacancySummariesPage.cs" />

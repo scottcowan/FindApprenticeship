@@ -26,6 +26,10 @@
             {
                 page = 1;
             }
+            if (pageSize < 1)
+            {
+                pageSize = 1;
+            }
             if (pageSize > 50)
             {
                 pageSize = 50;

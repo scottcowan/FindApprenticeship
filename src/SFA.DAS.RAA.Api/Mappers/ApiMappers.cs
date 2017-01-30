@@ -1,8 +1,10 @@
 ﻿namespace SFA.DAS.RAA.Api.Mappers
 {
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Domain.Entities.Vacancies;
     using Apprenticeships.Infrastructure.Common.Mappers;
     using Models;
+    using VacancySummary = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class ApiMappers : MapperEngine
     {
@@ -10,6 +12,10 @@
         {
             //Note that we only map from the domain object to the public version, not the other way round
             //However adding the reverse mapping causes a test to fail if we add a new vacancy property and don't include or ignore it in the public version
+            Mapper.CreateMap<Wage, PublicWage>();
+            Mapper.CreateMap<PublicWage, Wage>()
+                .ForMember(dest => dest.ReasonForType, opt => opt.Ignore());
+
             Mapper.CreateMap<VacancySummary, PublicVacancySummary>();
             Mapper.CreateMap<PublicVacancySummary, VacancySummary>()
                 .ForMember(dest => dest.VacancyOwnerRelationshipId, opt => opt.Ignore())
@@ -31,7 +37,9 @@
                 .ForMember(dest => dest.NewApplicationCount, opt => opt.Ignore())
                 .ForMember(dest => dest.ApplicantCount, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
-                .ForMember(dest => dest.IsMultiLocation, opt => opt.Ignore());
+                .ForMember(dest => dest.IsMultiLocation, opt => opt.Ignore())
+                .ForMember(dest => dest.AnonymousAboutTheEmployer, opt => opt.Ignore())
+                .ForMember(dest => dest.EmployerLocation, opt => opt.Ignore());
 
             Mapper.CreateMap<Vacancy, PublicVacancy>();
             Mapper.CreateMap<PublicVacancy, Vacancy>()
@@ -93,7 +101,10 @@
                 .ForMember(dest => dest.NewApplicationCount, opt => opt.Ignore())
                 .ForMember(dest => dest.ApplicantCount, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
-                .ForMember(dest => dest.IsMultiLocation, opt => opt.Ignore());
+                .ForMember(dest => dest.IsMultiLocation, opt => opt.Ignore())
+                .ForMember(dest => dest.AnonymousAboutTheEmployer, opt => opt.Ignore())
+                .ForMember(dest => dest.EmployerLocation, opt => opt.Ignore())
+                .ForMember(dest => dest.LocalAuthorityCode, opt => opt.Ignore());
         }
     }
 }

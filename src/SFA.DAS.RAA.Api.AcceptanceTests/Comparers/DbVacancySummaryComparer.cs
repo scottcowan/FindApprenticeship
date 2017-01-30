@@ -114,119 +114,12 @@
 
         public int GetHashCode(DbVacancySummary object1)
         {
-            var hashCode = (object1.AddressLine1 != null ? object1.AddressLine1.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object1.AddressLine2 != null ? object1.AddressLine2.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object1.AddressLine3 != null ? object1.AddressLine3.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object1.AddressLine4 != null ? object1.AddressLine4.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object1.AddressLine5 != null ? object1.AddressLine5.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ object1.ApplicantCount.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.ApplicationClosingDate.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.ApplyOutsideNAVMS.GetHashCode();
-            hashCode = (hashCode * 397) ^ (int)object1.ApprenticeshipLevel;
-            hashCode = (hashCode * 397) ^ object1.CountyId;
-            hashCode = (hashCode * 397) ^ object1.CreatedDate.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.DateFirstSubmitted.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.DateQAApproved.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.DateSubmitted.GetHashCode();
-            hashCode = (hashCode * 397) ^ (object1.EmployerAnonymousName != null ? object1.EmployerAnonymousName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ object1.EmployerId;
-            hashCode = (hashCode * 397) ^ (object1.EmployerLocation != null ? object1.EmployerLocation.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object1.EmployerName != null ? object1.EmployerName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object1.ExpectedDuration != null ? object1.ExpectedDuration.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object1.FrameworkCodeName != null ? object1.FrameworkCodeName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ object1.GeocodeEasting.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.GeocodeNorthing.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.HoursPerWeek.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.Latitude.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.Longitude.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.NewApplicantCount.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.NoOfOfflineApplicants.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.NumberOfPositions.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.OriginalContractOwnerId.GetHashCode();
-            hashCode = (hashCode * 397) ^ (object1.PostCode != null ? object1.PostCode.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object1.QAUserName != null ? object1.QAUserName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (int)object1.RegionalTeam;
-            hashCode = (hashCode * 397) ^ (object1.SectorCodeName != null ? object1.SectorCodeName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object1.ShortDescription != null ? object1.ShortDescription.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ object1.StandardId.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.StartedToQADateTime.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.SubmissionCount;
-            hashCode = (hashCode * 397) ^ (object1.Title != null ? object1.Title.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object1.Town != null ? object1.Town.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (int)object1.TrainingTypeId;
-            hashCode = (hashCode * 397) ^ object1.UpdatedDateTime.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.VacancyGuid.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.VacancyId;
-            hashCode = (hashCode * 397) ^ object1.VacancyLocationTypeId.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.VacancyOwnerRelationshipId;
-            hashCode = (hashCode * 397) ^ object1.VacancyReferenceNumber;
-            hashCode = (hashCode * 397) ^ (int)object1.VacancyStatusId;
-            hashCode = (hashCode * 397) ^ (int)object1.VacancyTypeId;
-            hashCode = (hashCode * 397) ^ object1.WageLowerBound.GetHashCode();
-            hashCode = (hashCode * 397) ^ (object1.WageText != null ? object1.WageText.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ object1.WageType;
-            hashCode = (hashCode * 397) ^ (object1.WageTypeReason != null ? object1.WageTypeReason.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ object1.WageUnitId.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.WageUpperBound.GetHashCode();
-            hashCode = (hashCode * 397) ^ object1.WeeklyWage.GetHashCode();
-            hashCode = (hashCode * 397) ^ (object1.WorkingWeek != null ? object1.WorkingWeek.GetHashCode() : 0);
-            return hashCode;
+            return 0;
         }
 
         public int GetHashCode(VacancySummary object2)
         {
-            //VacancySummary
-            var hashCode = (object2.Address != null ? object2.Address.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object2.AnonymousAboutTheEmployer != null ? object2.AnonymousAboutTheEmployer.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ object2.ApplicantCount;
-            hashCode = (hashCode * 397) ^ (int)object2.ApprenticeshipLevel;
-            hashCode = (hashCode * 397) ^ object2.ClosingDate.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.ContractOwnerId;
-            hashCode = (hashCode * 397) ^ object2.CreatedDate.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.DateFirstSubmitted.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.DateQAApproved.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.DateStartedToQA.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.DateSubmitted.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.DeliveryOrganisationId.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.Duration.GetHashCode();
-            hashCode = (hashCode * 397) ^ (int)object2.DurationType;
-            hashCode = (hashCode * 397) ^ (object2.EmployerAnonymousName != null ? object2.EmployerAnonymousName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object2.EmployerAnonymousReason != null ? object2.EmployerAnonymousReason.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ object2.EmployerId;
-            hashCode = (hashCode * 397) ^ (object2.EmployerLocation != null ? object2.EmployerLocation.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object2.EmployerName != null ? object2.EmployerName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object2.ExpectedDuration != null ? object2.ExpectedDuration.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object2.FrameworkCodeName != null ? object2.FrameworkCodeName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ object2.IsAnonymousEmployer.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.NewApplicationCount;
-            hashCode = (hashCode * 397) ^ object2.NoOfOfflineApplicants;
-            hashCode = (hashCode * 397) ^ object2.NumberOfPositions.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.OfflineVacancy.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.OriginalContractOwnerId;
-            hashCode = (hashCode * 397) ^ object2.ParentVacancyId.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.PossibleStartDate.GetHashCode();
-            hashCode = (hashCode * 397) ^ (object2.ProviderTradingName != null ? object2.ProviderTradingName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object2.QAUserName != null ? object2.QAUserName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (int)object2.RegionalTeam;
-            hashCode = (hashCode * 397) ^ (object2.SectorCodeName != null ? object2.SectorCodeName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object2.ShortDescription != null ? object2.ShortDescription.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ object2.StandardId.GetHashCode();
-            hashCode = (hashCode * 397) ^ (int)object2.Status;
-            hashCode = (hashCode * 397) ^ object2.SubmissionCount;
-            hashCode = (hashCode * 397) ^ (object2.Title != null ? object2.Title.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (int)object2.TrainingType;
-            hashCode = (hashCode * 397) ^ object2.UpdatedDateTime.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.VacancyGuid.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.VacancyId;
-            hashCode = (hashCode * 397) ^ (int)object2.VacancyLocationType;
-            hashCode = (hashCode * 397) ^ object2.VacancyManagerId.GetHashCode();
-            hashCode = (hashCode * 397) ^ object2.VacancyOwnerRelationshipId;
-            hashCode = (hashCode * 397) ^ object2.VacancyReferenceNumber;
-            hashCode = (hashCode * 397) ^ (int)object2.VacancyType;
-            hashCode = (hashCode * 397) ^ (object2.Wage != null ? object2.Wage.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (object2.WorkingWeek != null ? object2.WorkingWeek.GetHashCode() : 0);
-
-            return hashCode;
+            return 0;
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿namespace SFA.DAS.RAA.Api.Controllers
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Http;
     using System.Web.Http.Description;
     using Apprenticeships.Domain.Entities.Raa;
-    using Apprenticeships.Domain.Entities.Raa.Vacancies;
-    using Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories.Models;
     using Apprenticeships.Web.Common.Extensions;
     using Models;
