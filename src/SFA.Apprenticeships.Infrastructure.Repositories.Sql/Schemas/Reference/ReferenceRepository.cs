@@ -92,7 +92,8 @@
                     Id = x.StandardId,
                     Name = x.FullName,
                     ApprenticeshipSectorId = x.StandardSectorId,
-                    Status = (FrameworkStatusType)x.ApprenticeshipFrameworkStatusTypeId
+                    Status = (FrameworkStatusType)x.ApprenticeshipFrameworkStatusTypeId,
+                    LarsCode = x.LarsCode
                 };
                 return std;
             }).ToList();
@@ -417,6 +418,14 @@
             var dbStandard = dbStandards.Single();
 
             dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)standard.Status;
+            dbStandard.LarsCode = standard.LarsCode;
+            dbStandard.StandardSectorId = standard.ApprenticeshipSectorId;
+            
+
+            // get new education level
+            var educationLevels = GetEducationLevels();
+            var level = educationLevels.Single(s => int.Parse(s.CodeName) == (int)standard.ApprenticeshipLevel);
+            dbStandard.EducationLevelId = level.EducationLevelId;
 
             var result = _getOpenConnection.UpdateSingle(dbStandard);
 
@@ -482,6 +491,30 @@
             category.Id = (int)result;
 
             return category;
+        }
+
+        public Standard InsertStandard(Standard standard)
+        {
+            _logger.Debug($"Inserting new standard");
+
+            // get new education level
+            var educationLevels = GetEducationLevels();
+            var level = educationLevels.Single(s => int.Parse(s.CodeName) == (int)standard.ApprenticeshipLevel);
+
+            var dbStandard = new Entities.Standard
+            {
+                ApprenticeshipFrameworkStatusTypeId = (int) standard.Status,
+                LarsCode = standard.LarsCode,
+                StandardSectorId = standard.ApprenticeshipSectorId,
+                EducationLevelId = level.EducationLevelId,
+                FullName = standard.Name
+        };
+
+            var result = _getOpenConnection.Insert(dbStandard);
+
+            standard.Id = (int)result;
+
+            return standard;
         }
     }
 }

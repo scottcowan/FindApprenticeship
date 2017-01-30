@@ -79,5 +79,6 @@
         public const string AdminUpdateStandard = "AdminUpdateStandard";
         public const string AdminUpdateFramework = "AdminUpdateFramework";
         public const string AdminCreateFramework = "AdminCreateFramework";
+        public const string AdminCreateStandard = "AdminCreateStandard";
     }
 }

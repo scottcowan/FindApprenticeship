@@ -215,5 +215,10 @@
         {
             return _referenceRepository.InsertFramework(entity);
         }
+
+        public Standard InsertStandard(Standard standard)
+        {
+            return _referenceRepository.InsertStandard(standard);
+        }
     }
 }

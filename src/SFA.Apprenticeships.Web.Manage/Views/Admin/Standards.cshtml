@@ -53,7 +53,9 @@
             <th>ID</th>
             <th>SSAT1</th>
             <th>Standard Sector</th>
+            <th>Code</th>
             <th>Standard</th>
+            <th>Level</th>
             <th>Status</th>
             <th></th>
         </tr>
@@ -73,7 +75,13 @@
                     @Html.DisplayFor(modelItem => standard.StandardSectorName)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => standard.LarsCode)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => standard.StandardName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => standard.ApprenticeshipLevel)
                 </td>
                 <td></td>
                 <td></td>
@@ -88,11 +96,17 @@
     <script type="text/html" id="standard">
         <tr data-bind="css : { 'highlight-row' : standard.Changed(), 'new-item' : !standard.Id() }">
             <td data-bind="text: standard.Id"></td>
-            <td><select data-bind="options: $root.SsatList, optionsText: 'FullName', value: standard.Name"></select></td>
+            <td><select style="width: 200px;" data-bind="options: $root.SsatList, optionsText: 'FullName', value: standard.Name"></select></td>
             <td>
-                <select style="width:200px;" data-bind="options: $root.Sectors, optionsText: 'FullName', value: standard.StandardSectorName"></select>
+                <select style="width:100px;" data-bind="options: $root.Sectors, optionsText: 'FullName', value: standard.StandardSectorName"></select>
             </td>
-            <td><input type="text" data-bind="value: standard.StandardName" /></td>
+            <td>
+                <input style="width: 50px;" type="number" data-bind="value: standard.LarsCode, valueUpdate: 'keyup'"/>
+            </td>
+            <td><input type="text" data-bind="value: standard.StandardName, valueUpdate: 'keyup'" /></td>
+            <td>
+                <select data-bind="options: $root.EducationLevels, optionsText: 'name', value: standard.ApprenticeshipLevelName"></select>
+            </td>
             <td>
                 <select data-bind="options: $root.statuses, optionsText: 'name', value: standard.StatusText"></select>
             </td>
@@ -108,6 +122,13 @@
             var statuses = [
                 { name: 'Active', value: @((int) FrameworkStatusType.Active) },
                 { name: 'Ceased', value: @((int) FrameworkStatusType.Ceased) }
+            ];
+
+            var educationLevels = [
+                @foreach (var level in Enum.GetValues(typeof(ApprenticeshipLevel)))
+                {
+                    @: { name: '@(level.ToString())', value: @((int)level) },
+                }
             ];
 
             var ssatList = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Occupations)));
@@ -144,35 +165,30 @@
                         }
                     }
 
+                    for (var i = 0; i < educationLevels.length; i++) {
+                        if (options.data.ApprenticeshipLevel === educationLevels[i].value) {
+                            mapped.ApprenticeshipLevelName = ko.observable(educationLevels[i]);
+                            mapped.ApprenticeshipLevel = ko.observable(educationLevels[i].value);
+                            break;
+                        }
+                    }
+
                     mapped.Changed = ko.observable(false);
 
                     mapped.StatusText.subscribe(function(newValue) {
-                        for (var i = 0; i < statuses.length; i++) {
-                            if (statuses[i].name === newValue.name) {
-                                mapped.Status(statuses[i].value);
-                                return;
-                            }
-                        }
+                        mapped.Status(newValue.value);
                     });
 
-                    mapped.SsatId = ko.observable();
-
                     mapped.Name.subscribe(function(newValue) {
-                        for (var i = 0; i < ssatList().length; i++) {
-                            if (ssatList()[i].FullName === newValue.FullName) {
-                                mapped.SsatId(ssatList()[i].Id);
-                                return;
-                            }
-                        }
+                        mapped.SsatId(newValue.Id());
                     });
 
                     mapped.StandardSectorName.subscribe(function(newValue) {
-                        for (var i = 0; i < sectors().length; i++) {
-                            if (sectors()[i].FullName === newValue.FullName) {
-                                mapped.StandardSectorId(ssatList()[i].Id);
-                                return;
-                            }
-                        }
+                        mapped.StandardSectorId(newValue.Id());
+                    });
+                    
+                    mapped.ApprenticeshipLevelName.subscribe(function(newValue) {
+                        mapped.ApprenticeshipLevel(newValue.value);
                     });
 
                     return mapped;
@@ -186,6 +202,7 @@
                 self.statuses = ko.observableArray(statuses);
                 self.SsatList = ssatList;
                 self.Sectors = sectors;
+                self.EducationLevels = educationLevels;
 
                 self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Standards)), mappings);
 
@@ -222,9 +239,12 @@
                                     if (standardName != null)
                                         match = match || standardName.toLowerCase().indexOf(filter) > -1;
 
-                                    var standardSectorName = item.StandardSectorName();
+                                    var standardSectorName = item.StandardSectorName().FullName();
                                     if (standardSectorName != null)
                                         match = match || standardSectorName.toLowerCase().indexOf(filter) > -1;
+
+                                    var larsCode = item.LarsCode();
+                                    if (larsCode != null) match = match || larsCode.toString().toLowerCase().indexOf(filter) > -1;
 
                                     return match;
                                 });
@@ -321,12 +341,12 @@
 
                 self.save = function(item) {
                     // validate
-                    if (item.FullName() && item.FullName() !== '') {
+                    if (item.StandardName() && item.StandardName() !== '' && item.LarsCode() && item.LarsCode() !== '') {
                         self.message(null);
 
                         $.ajax({
                             method: 'POST',
-                            url: '@Url.Action("CreateFramework")',
+                            url: '@Url.Action("CreateStandard")',
                             data: ko.mapping.toJS(item)
                         }).done(function(data) {
                             item.Id(data.Id);

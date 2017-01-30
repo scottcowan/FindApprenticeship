@@ -45,7 +45,8 @@
         MediatorResponse<List<Category>> GetFrameworks();
         MediatorResponse<byte[]> GetFrameworksBytes();
         MediatorResponse<byte[]> GetStandardsBytes();
-        MediatorResponse<EditCategoryViewModel> UpdateFramework(EditCategoryViewModel entity);
+        MediatorResponse<EditCategoryViewModel> UpdateFramework(EditCategoryViewModel category);
         MediatorResponse<EditCategoryViewModel> InsertFramework(EditCategoryViewModel category);
+        MediatorResponse<Standard> InsertStandard(Standard standard);
     }
 }

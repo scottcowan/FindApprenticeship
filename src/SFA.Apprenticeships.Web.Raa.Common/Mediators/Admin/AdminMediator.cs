@@ -548,6 +548,15 @@
             return GetMediatorResponse(AdminMediatorCodes.UpdateStandard.Ok, standard);
         }
 
+        public MediatorResponse<Standard> InsertStandard(Standard standard)
+        {
+            var dbStandard = _referenceDataProvider.InsertStandard(standard);
+
+            standard.Id = dbStandard.Id;
+
+            return GetMediatorResponse(AdminMediatorCodes.UpdateStandard.Ok, standard);
+        }
+
         public MediatorResponse<List<Category>> GetFrameworks()
         {
             var viewModel = _referenceDataProvider.GetFrameworks().ToList();

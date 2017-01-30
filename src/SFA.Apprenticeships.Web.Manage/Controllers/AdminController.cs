@@ -526,9 +526,13 @@
                 {
                     Id = s.Id,
                     Name = ssat1.Name,
+                    SsatId = ssat1.Id,
                     StandardSectorName = standardSector.Name,
+                    StandardSectorId = standardSector.Id,
                     StandardName = s.Name,
-                    Status = s.Status
+                    Status = s.Status,
+                    ApprenticeshipLevel = s.ApprenticeshipLevel,
+                    LarsCode = s.LarsCode
                 }));
             }
 
@@ -545,12 +549,39 @@
         [HttpPost]
         public JsonResult UpdateStandard(EditStandardViewModel standard)
         {
-            var entity = new Standard() { Id = standard.Id, Status = standard.Status };
+            var entity = new Standard()
+            {
+                Id = standard.Id,
+                Status = standard.Status,
+                ApprenticeshipLevel = standard.ApprenticeshipLevel,
+                LarsCode = standard.LarsCode,
+                Name = standard.Name,
+                ApprenticeshipSectorId = standard.StandardSectorId
+            };
             
             var response = _adminMediator.UpdateStandard(entity);
             
             // always return success here as an exception will return of it's own accord
             return Json(new {status = "Ok"});
+        }
+
+        [HttpPost]
+        public JsonResult CreateStandard(EditStandardViewModel standard)
+        {
+            var entity = new Standard()
+            {
+                Id = standard.Id,
+                Status = standard.Status,
+                ApprenticeshipLevel = standard.ApprenticeshipLevel,
+                LarsCode = standard.LarsCode,
+                Name = standard.StandardName,
+                ApprenticeshipSectorId = standard.StandardSectorId
+            };
+
+            var response = _adminMediator.InsertStandard(entity);
+
+            // always return success here as an exception will return of it's own accord
+            return Json(response.ViewModel);
         }
 
         [HttpGet]
