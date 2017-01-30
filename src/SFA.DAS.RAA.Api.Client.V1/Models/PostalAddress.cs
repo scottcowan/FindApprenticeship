@@ -7,13 +7,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
     using System.Linq;
 
     /// <summary>
-    /// The rationale behind the creation of this class is that we will
-    /// eventually move from the existing Address entity,
-    /// to this entity, throughout the entirety of the solution (RAA &amp;amp;
-    /// FAA).
-    /// TODO: Remove the existing Address entity, in favour of using this one.
-    /// This should be carried out after the DB migration
-    /// and private Beta release
+    /// SFA Approved standard postal address entity
     /// </summary>
     public partial class PostalAddress
     {
@@ -25,6 +19,26 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// Initializes a new instance of the PostalAddress class.
         /// </summary>
+        /// <param name="addressLine1">The first line of the address. Usually
+        /// house number or name</param>
+        /// <param name="town">The town or city the address belongs to</param>
+        /// <param name="postcode">The postcode</param>
+        /// <param name="countyId">The primary identifier for the county of
+        /// the address</param>
+        /// <param name="county">The name of the county</param>
+        /// <param name="localAuthorityId">The primary identifier for the
+        /// local authority the address is part of</param>
+        /// <param name="localAuthorityCodeName">The secondary code identifier
+        /// for the local authority the address is part of</param>
+        /// <param name="localAuthority">The local authority's name</param>
+        /// <param name="geoPoint">The global geopoint for the address</param>
+        /// <param name="postalAddressId">The primary id of this address if
+        /// specified by the validating entity</param>
+        /// <param name="addressLine2">The second line of the address. Usually
+        /// street name</param>
+        /// <param name="addressLine3">The third line of the address</param>
+        /// <param name="addressLine4">The fourth line of the address</param>
+        /// <param name="addressLine5">The fifth line of the address</param>
         /// <param name="validationSourceCode">AKA ValidationSourceKeyName.
         /// As at 13/01/2015, the SFA Data Standard for Postal Addresses list
         /// valid validating bodies as:
@@ -35,7 +49,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// Delivery Point Reference Number (UDPRN)
         /// For GeoPlace, this is the Unique Property ReferenceNumber (UPRN)
         /// PostCode anywhere uses PAF data, so this is the UDPRN.</param>
-        public PostalAddress(int? postalAddressId = default(int?), string addressLine1 = default(string), string addressLine2 = default(string), string addressLine3 = default(string), string addressLine4 = default(string), string addressLine5 = default(string), string town = default(string), string postcode = default(string), string validationSourceCode = default(string), string validationSourceKeyValue = default(string), System.DateTime? dateValidated = default(System.DateTime?), int? countyId = default(int?), string county = default(string), int? localAuthorityId = default(int?), string localAuthorityCodeName = default(string), string localAuthority = default(string), GeoPoint geoPoint = default(GeoPoint))
+        /// <param name="dateValidated">The date the address was
+        /// validated</param>
+        public PostalAddress(string addressLine1, string town, string postcode, int countyId, string county, int localAuthorityId, string localAuthorityCodeName, string localAuthority, GeoPoint geoPoint, int? postalAddressId = default(int?), string addressLine2 = default(string), string addressLine3 = default(string), string addressLine4 = default(string), string addressLine5 = default(string), string validationSourceCode = default(string), string validationSourceKeyValue = default(string), System.DateTime? dateValidated = default(System.DateTime?))
         {
             PostalAddressId = postalAddressId;
             AddressLine1 = addressLine1;
@@ -57,41 +73,51 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
+        /// Gets or sets the primary id of this address if specified by the
+        /// validating entity
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "PostalAddressId")]
         public int? PostalAddressId { get; set; }
 
         /// <summary>
+        /// Gets or sets the first line of the address. Usually house number
+        /// or name
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AddressLine1")]
         public string AddressLine1 { get; set; }
 
         /// <summary>
+        /// Gets or sets the second line of the address. Usually street name
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AddressLine2")]
         public string AddressLine2 { get; set; }
 
         /// <summary>
+        /// Gets or sets the third line of the address
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AddressLine3")]
         public string AddressLine3 { get; set; }
 
         /// <summary>
+        /// Gets or sets the fourth line of the address
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AddressLine4")]
         public string AddressLine4 { get; set; }
 
         /// <summary>
+        /// Gets or sets the fifth line of the address
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AddressLine5")]
         public string AddressLine5 { get; set; }
 
         /// <summary>
+        /// Gets or sets the town or city the address belongs to
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Town")]
         public string Town { get; set; }
 
         /// <summary>
+        /// Gets or sets the postcode
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Postcode")]
         public string Postcode { get; set; }
@@ -117,39 +143,89 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         public string ValidationSourceKeyValue { get; set; }
 
         /// <summary>
+        /// Gets or sets the date the address was validated
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "DateValidated")]
         public System.DateTime? DateValidated { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary identifier for the county of the address
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CountyId")]
-        public int? CountyId { get; set; }
+        public int CountyId { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the county
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "County")]
         public string County { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary identifier for the local authority the
+        /// address is part of
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "LocalAuthorityId")]
-        public int? LocalAuthorityId { get; set; }
+        public int LocalAuthorityId { get; set; }
 
         /// <summary>
+        /// Gets or sets the secondary code identifier for the local authority
+        /// the address is part of
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "LocalAuthorityCodeName")]
         public string LocalAuthorityCodeName { get; set; }
 
         /// <summary>
+        /// Gets or sets the local authority's name
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "LocalAuthority")]
         public string LocalAuthority { get; set; }
 
         /// <summary>
+        /// Gets or sets the global geopoint for the address
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "GeoPoint")]
         public GeoPoint GeoPoint { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (AddressLine1 == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "AddressLine1");
+            }
+            if (Town == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Town");
+            }
+            if (Postcode == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Postcode");
+            }
+            if (County == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "County");
+            }
+            if (LocalAuthorityCodeName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "LocalAuthorityCodeName");
+            }
+            if (LocalAuthority == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "LocalAuthority");
+            }
+            if (GeoPoint == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "GeoPoint");
+            }
+            if (this.GeoPoint != null)
+            {
+                this.GeoPoint.Validate();
+            }
+        }
     }
 }

@@ -19,6 +19,8 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// </param>
         /// <param name='page'>
         /// </param>
+        /// <param name='pageSize'>
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -31,6 +33,6 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<VacancySummary>>> GetAllWithHttpMessagesAsync(string filterType = default(string), int? page = default(int?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<VacancySummariesPage>> GetVacancySummariesWithHttpMessagesAsync(string filterType = default(string), int? page = default(int?), int? pageSize = default(int?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

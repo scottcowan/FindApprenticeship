@@ -12,6 +12,9 @@ namespace SFA.DAS.RAA.Api.Client.V1
     /// </summary>
     public static partial class ReferenceExtensions
     {
+            /// <summary>
+            /// Retrieves all county information for all counties
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -20,6 +23,9 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IReference)s).GetCountiesAsync(), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Retrieves all county information for all counties
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -34,36 +40,81 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 }
             }
 
+            /// <summary>
+            /// Returns the information for the county identified by the primary
+            /// identifier in the URL
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='countyId'>
+            /// <param name='id'>
+            /// The county's primary identifier
             /// </param>
-            /// <param name='countyCode'>
-            /// </param>
-            public static County GetCounty(this IReference operations, int? countyId = default(int?), string countyCode = default(string))
+            public static County GetCountyById(this IReference operations, int id)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IReference)s).GetCountyAsync(countyId, countyCode), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IReference)s).GetCountyByIdAsync(id), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Returns the information for the county identified by the primary
+            /// identifier in the URL
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='countyId'>
-            /// </param>
-            /// <param name='countyCode'>
+            /// <param name='id'>
+            /// The county's primary identifier
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<County> GetCountyAsync(this IReference operations, int? countyId = default(int?), string countyCode = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<County> GetCountyByIdAsync(this IReference operations, int id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetCountyWithHttpMessagesAsync(countyId, countyCode, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetCountyByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
+            /// <summary>
+            /// Returns the information for the county identified by the county's code in
+            /// the URL
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='code'>
+            /// The county's code
+            /// </param>
+            public static County GetCountyByCode(this IReference operations, string code)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IReference)s).GetCountyByCodeAsync(code), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns the information for the county identified by the county's code in
+            /// the URL
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='code'>
+            /// The county's code
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<County> GetCountyByCodeAsync(this IReference operations, string code, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetCountyByCodeWithHttpMessagesAsync(code, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves all local authority information for all counties
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -72,6 +123,9 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IReference)s).GetLocalAuthoritiesAsync(), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Retrieves all local authority information for all counties
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -86,36 +140,81 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 }
             }
 
+            /// <summary>
+            /// Returns the information for the local authority identified by the primary
+            /// identifier in the URL
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='localAuthorityId'>
+            /// <param name='id'>
+            /// The local authority's primary identifier
             /// </param>
-            /// <param name='localAuthorityCode'>
-            /// </param>
-            public static LocalAuthority GetLocalAuthority(this IReference operations, int? localAuthorityId = default(int?), string localAuthorityCode = default(string))
+            public static LocalAuthority GetLocalAuthorityById(this IReference operations, int id)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IReference)s).GetLocalAuthorityAsync(localAuthorityId, localAuthorityCode), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IReference)s).GetLocalAuthorityByIdAsync(id), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Returns the information for the local authority identified by the primary
+            /// identifier in the URL
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='localAuthorityId'>
-            /// </param>
-            /// <param name='localAuthorityCode'>
+            /// <param name='id'>
+            /// The local authority's primary identifier
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<LocalAuthority> GetLocalAuthorityAsync(this IReference operations, int? localAuthorityId = default(int?), string localAuthorityCode = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<LocalAuthority> GetLocalAuthorityByIdAsync(this IReference operations, int id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetLocalAuthorityWithHttpMessagesAsync(localAuthorityId, localAuthorityCode, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetLocalAuthorityByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
+            /// <summary>
+            /// Returns the information for the local authority identified by the county's
+            /// code in the URL
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='code'>
+            /// The local authority's code
+            /// </param>
+            public static LocalAuthority GetLocalAuthorityByCode(this IReference operations, string code)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IReference)s).GetLocalAuthorityByCodeAsync(code), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns the information for the local authority identified by the county's
+            /// code in the URL
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='code'>
+            /// The local authority's code
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<LocalAuthority> GetLocalAuthorityByCodeAsync(this IReference operations, string code, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetLocalAuthorityByCodeWithHttpMessagesAsync(code, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves all region information for all regions
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -124,6 +223,9 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IReference)s).GetRegionsAsync(), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Retrieves all region information for all regions
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -138,31 +240,73 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 }
             }
 
+            /// <summary>
+            /// Returns the information for the region identified by the primary
+            /// identifier in the URL
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='regionId'>
+            /// <param name='id'>
+            /// The region's primary identifier
             /// </param>
-            /// <param name='regionCode'>
-            /// </param>
-            public static Region GetRegion(this IReference operations, int? regionId = default(int?), string regionCode = default(string))
+            public static Region GetRegionById(this IReference operations, int id)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IReference)s).GetRegionAsync(regionId, regionCode), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IReference)s).GetRegionByIdAsync(id), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Returns the information for the region identified by the primary
+            /// identifier in the URL
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='regionId'>
-            /// </param>
-            /// <param name='regionCode'>
+            /// <param name='id'>
+            /// The region's primary identifier
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Region> GetRegionAsync(this IReference operations, int? regionId = default(int?), string regionCode = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Region> GetRegionByIdAsync(this IReference operations, int id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetRegionWithHttpMessagesAsync(regionId, regionCode, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetRegionByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns the information for the region identified by the region's code in
+            /// the URL
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='code'>
+            /// The region's code
+            /// </param>
+            public static Region GetRegionByCode(this IReference operations, string code)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IReference)s).GetRegionByCodeAsync(code), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns the information for the region identified by the region's code in
+            /// the URL
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='code'>
+            /// The region's code
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<Region> GetRegionByCodeAsync(this IReference operations, string code, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetRegionByCodeWithHttpMessagesAsync(code, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

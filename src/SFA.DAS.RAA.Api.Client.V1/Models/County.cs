@@ -6,6 +6,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// The information related to a UK county
+    /// </summary>
     public partial class County
     {
         /// <summary>
@@ -16,7 +19,12 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// Initializes a new instance of the County class.
         /// </summary>
-        public County(int? countyId = default(int?), string codeName = default(string), string shortName = default(string), string fullName = default(string))
+        /// <param name="countyId">The county's primary identifier</param>
+        /// <param name="codeName">The county's code identifier</param>
+        /// <param name="shortName">The shortened name of the county. Usually
+        /// the same as the code</param>
+        /// <param name="fullName">The county's full name</param>
+        public County(int countyId, string codeName, string shortName, string fullName)
         {
             CountyId = countyId;
             CodeName = codeName;
@@ -25,24 +33,50 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
+        /// Gets or sets the county's primary identifier
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CountyId")]
-        public int? CountyId { get; set; }
+        public int CountyId { get; set; }
 
         /// <summary>
+        /// Gets or sets the county's code identifier
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CodeName")]
         public string CodeName { get; set; }
 
         /// <summary>
+        /// Gets or sets the shortened name of the county. Usually the same as
+        /// the code
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ShortName")]
         public string ShortName { get; set; }
 
         /// <summary>
+        /// Gets or sets the county's full name
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "FullName")]
         public string FullName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (CodeName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CodeName");
+            }
+            if (ShortName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ShortName");
+            }
+            if (FullName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "FullName");
+            }
+        }
     }
 }

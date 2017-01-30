@@ -8,12 +8,12 @@ namespace SFA.DAS.RAA.Api.Client.V1
     using Models;
 
     /// <summary>
-    /// VacancySummaryOperations operations.
+    /// PublicVacancySummaryOperations operations.
     /// </summary>
-    public partial class VacancySummaryOperations : Microsoft.Rest.IServiceOperations<ApiClient>, IVacancySummaryOperations
+    public partial class PublicVacancySummaryOperations : Microsoft.Rest.IServiceOperations<ApiClient>, IPublicVacancySummaryOperations
     {
         /// <summary>
-        /// Initializes a new instance of the VacancySummaryOperations class.
+        /// Initializes a new instance of the PublicVacancySummaryOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -21,7 +21,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public VacancySummaryOperations(ApiClient client)
+        public PublicVacancySummaryOperations(ApiClient client)
         {
             if (client == null) 
             {
@@ -35,15 +35,21 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// </summary>
         public ApiClient Client { get; private set; }
 
-        /// <param name='filterType'>
-        /// Possible values include: 'All', 'Live', 'Submitted', 'Rejected',
-        /// 'ClosingSoon', 'Closed', 'Draft', 'NewApplications', 'Withdrawn',
-        /// 'Completed', 'SubmittedToday', 'SubmittedYesterday',
-        /// 'SubmittedMoreThan48Hours', 'Resubmitted'
-        /// </param>
+        /// <summary>
+        /// Endpoint to retrieve a page of Live vacancy summaries. Note that this
+        /// endpoint will only return live vacancies and will return a more cut down
+        /// vacancy object.
+        /// This includes only the public facing vacancy data. If you need the full
+        /// vacancy information for a vacancy you have access too, use the non public
+        /// end point.
+        /// </summary>
         /// <param name='page'>
+        /// The page of vacancies required. If this is less than 1 or greater than the
+        /// total number of pages, it will be set to 1 or the last page respectively
         /// </param>
         /// <param name='pageSize'>
+        /// The number of vacancies to return per page up to a maximum of 50. Values
+        /// larger than this will be set to 50
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -60,7 +66,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<VacancySummariesPage>> GetVacancySummariesWithHttpMessagesAsync(string filterType = default(string), int? page = default(int?), int? pageSize = default(int?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<PublicVacancySummariesPage>> GetAllLiveVacancySummariesWithHttpMessagesAsync(int? page = default(int?), int? pageSize = default(int?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -69,20 +75,15 @@ namespace SFA.DAS.RAA.Api.Client.V1
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("filterType", filterType);
                 tracingParameters.Add("page", page);
                 tracingParameters.Add("pageSize", pageSize);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetVacancySummaries", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetAllLiveVacancySummaries", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "vacancysummaries").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "public/vacancysummaries").ToString();
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
-            if (filterType != null)
-            {
-                _queryParameters.Add(string.Format("filterType={0}", System.Uri.EscapeDataString(filterType)));
-            }
             if (page != null)
             {
                 _queryParameters.Add(string.Format("page={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(page, this.Client.SerializationSettings).Trim('"'))));
@@ -158,7 +159,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.HttpOperationResponse<VacancySummariesPage>();
+            var _result = new Microsoft.Rest.HttpOperationResponse<PublicVacancySummariesPage>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -167,7 +168,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<VacancySummariesPage>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<PublicVacancySummariesPage>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {

@@ -45,7 +45,7 @@
         [Route("county/{id}")]
         [ResponseType(typeof(County))]
         [HttpGet]
-        public IHttpActionResult GetCounty(int id)
+        public IHttpActionResult GetCountyById(int id)
         {
             return Ok(_getCountiesStrategy.GetCounty(id));
         }
@@ -58,7 +58,7 @@
         [Route("county/code/{code}")]
         [ResponseType(typeof(County))]
         [HttpGet]
-        public IHttpActionResult GetCounty(string code)
+        public IHttpActionResult GetCountyByCode(string code)
         {
             return Ok(_getCountiesStrategy.GetCounty(countyCode: code));
         }
@@ -83,7 +83,7 @@
         [Route("localauthority/{id}")]
         [ResponseType(typeof(LocalAuthority))]
         [HttpGet]
-        public IHttpActionResult GetLocalAuthority(int id)
+        public IHttpActionResult GetLocalAuthorityById(int id)
         {
             return Ok(_getLocalAuthoritiesStrategy.GetLocalAuthority(id));
         }
@@ -96,7 +96,7 @@
         [Route("localauthority/code/{code}")]
         [ResponseType(typeof(LocalAuthority))]
         [HttpGet]
-        public IHttpActionResult GetLocalAuthority(string code)
+        public IHttpActionResult GetLocalAuthorityByCode(string code)
         {
             return Ok(_getLocalAuthoritiesStrategy.GetLocalAuthority(localAuthorityCode: code));
         }
@@ -121,7 +121,7 @@
         [Route("region/{id}")]
         [ResponseType(typeof(Region))]
         [HttpGet]
-        public IHttpActionResult GetRegion(int id)
+        public IHttpActionResult GetRegionById(int id)
         {
             return Ok(_getRegionsStrategy.GetRegion(id));
         }
@@ -134,7 +134,7 @@
         [Route("region/code/{code}")]
         [ResponseType(typeof(Region))]
         [HttpGet]
-        public IHttpActionResult GetRegion(string code)
+        public IHttpActionResult GetRegionByCode(string code)
         {
             return Ok(_getRegionsStrategy.GetRegion(regionCode: code));
         }

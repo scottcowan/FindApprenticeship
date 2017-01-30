@@ -48,6 +48,16 @@ namespace SFA.DAS.RAA.Api.Client.V1
         public virtual IEmployer Employer { get; private set; }
 
         /// <summary>
+        /// Gets the IPublicVacancyOperations.
+        /// </summary>
+        public virtual IPublicVacancyOperations PublicVacancyOperations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPublicVacancySummaryOperations.
+        /// </summary>
+        public virtual IPublicVacancySummaryOperations PublicVacancySummaryOperations { get; private set; }
+
+        /// <summary>
         /// Gets the IReference.
         /// </summary>
         public virtual IReference Reference { get; private set; }
@@ -269,6 +279,8 @@ namespace SFA.DAS.RAA.Api.Client.V1
         private void Initialize()
         {
             this.Employer = new Employer(this);
+            this.PublicVacancyOperations = new PublicVacancyOperations(this);
+            this.PublicVacancySummaryOperations = new PublicVacancySummaryOperations(this);
             this.Reference = new Reference(this);
             this.VacancyOperations = new VacancyOperations(this);
             this.VacancyManagement = new VacancyManagement(this);
