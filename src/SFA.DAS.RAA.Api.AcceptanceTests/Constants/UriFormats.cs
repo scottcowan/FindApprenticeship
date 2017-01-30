@@ -16,5 +16,7 @@
 
         public const string LinkEmployerUri = "/employer/link";
         public const string LinkEmployerEdsUrnUriFormat = "/employer/edsurn/{0}/link";
+
+        public const string GetCountiesUri = "reference/counties";
     }
 }

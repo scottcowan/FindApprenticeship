@@ -288,10 +288,12 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Strategies\EditWageStrategy.cs" />
     <Compile Include="Strategies\GetAllLiveVacancySummariesStrategy.cs" />
+    <Compile Include="Strategies\GetCountiesStrategy.cs" />
     <Compile Include="Strategies\GetPublicVacancyStrategies.cs" />
     <Compile Include="Strategies\GetVacancySummariesStrategy.cs" />
     <Compile Include="Strategies\IEditWageStrategy.cs" />
     <Compile Include="Strategies\IGetAllLiveVacancySummariesStrategy.cs" />
+    <Compile Include="Strategies\IGetCountiesStrategy.cs" />
     <Compile Include="Strategies\IGetVacancySummariesStrategy.cs" />
     <Compile Include="Strategies\ILinkEmployerStrategy.cs" />
     <Compile Include="Strategies\LinkEmployerStrategy.cs" />

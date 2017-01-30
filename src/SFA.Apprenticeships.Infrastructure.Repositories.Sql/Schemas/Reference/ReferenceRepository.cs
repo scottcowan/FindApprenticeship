@@ -17,6 +17,8 @@
 
     public class ReferenceRepository : IReferenceRepository
     {
+        public const string GetCountiesSql = "SELECT * FROM dbo.County ORDER BY FullName";
+
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -174,9 +176,7 @@
         {
             _logger.Debug("Getting all counties");
 
-            const string sectorSql = "SELECT * FROM dbo.County ORDER BY FullName";
-
-            var counties = _getOpenConnection.Query<County>(sectorSql);
+            var counties = _getOpenConnection.Query<County>(GetCountiesSql);
 
             _logger.Debug($"Got {counties.Count} counties");
 

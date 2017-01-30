@@ -18,6 +18,10 @@
             _referenceDataProvider = referenceDataProvider;
         }
 
+        /// <summary>
+        /// Retrieves all county information
+        /// </summary>
+        /// <returns></returns>
         [Route("counties")]
         [ResponseType(typeof(IEnumerable<County>))]
         [HttpGet]
@@ -25,6 +29,7 @@
         {
             return Ok(_referenceDataProvider.GetCounties());
         }
+
 
         [Route("county")]
         [ResponseType(typeof(County))]
