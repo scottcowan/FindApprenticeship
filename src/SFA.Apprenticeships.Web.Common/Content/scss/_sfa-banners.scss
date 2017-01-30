@@ -1,11 +1,11 @@
-﻿// ==========================================================================
+﻿.js-enabled #global-cookie-message, #global-cookie-message  {
+    display:block !important; // Overrides GDS style as the cookie message is currently handled server side without JS
+}
+
+// ==========================================================================
 // This is a clone of #global-cookie-message, copied from _header.scss in the
 // govuk_template package.
 // ==========================================================================
-
-.js-enabled .sfa-maintenance-banner {
-  display: none; /* shown with JS, always on for non-JS */
-}
 
 .sfa-maintenance-banner {
   width: 100%;
@@ -24,4 +24,7 @@
 
 .sfa-maintenance-banner .sfa-maintenance-close {
     font-weight: bold;
+    display:block;
+    margin:0 auto;
+    max-width:960px;
 }

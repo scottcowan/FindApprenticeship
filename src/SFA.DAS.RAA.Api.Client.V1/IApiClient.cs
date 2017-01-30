@@ -43,82 +43,30 @@ namespace SFA.DAS.RAA.Api.Client.V1
         Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
 
-            /// <summary>
-        /// Endpoint for linking an employer to a provider site.
+        /// <summary>
+        /// Gets the IEmployer.
         /// </summary>
-        /// <param name='employerProviderSiteLinkRequest'>
-        /// Defines the provider site to link to as well as additional
-        /// employer information. Note that you can specify the employer
-        /// identifier in either the URL or the POST body
-        /// </param>
-        /// <param name='edsUrn'>
-        /// The employer's secondary identifier.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<EmployerProviderSiteLink>> LinkEmployerWithHttpMessagesAsync(EmployerProviderSiteLinkRequest employerProviderSiteLinkRequest, int edsUrn, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <param name='vacancyId'>
-        /// </param>
-        /// <param name='vacancyReferenceNumber'>
-        /// </param>
-        /// <param name='vacancyGuid'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<Vacancy>> GetVacancyWithHttpMessagesAsync(int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        IEmployer Employer { get; }
 
         /// <summary>
-        /// Endpoint for changing the wage of a Live or Closed vacancy. The
-        /// wage can only be increased from its current level.
-        /// You must supply either the vacancyId, vacancyReferenceNumber or
-        /// vacancyGuid as query string parameters to identify the vacancy
-        /// you would like to change.
-        /// The API key used must be authorized to modify the vacancy
+        /// Gets the IReference.
         /// </summary>
-        /// <param name='wageUpdate'>
-        /// Defines the changes to be made to a vacancies wage
-        /// </param>
-        /// <param name='vacancyId'>
-        /// The vacancies primary identifier
-        /// </param>
-        /// <param name='vacancyReferenceNumber'>
-        /// The vacancies secondary reference number identifier
-        /// </param>
-        /// <param name='vacancyGuid'>
-        /// The vacancies secondary GUID identifier
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<Vacancy>> EditVacancyWageWithHttpMessagesAsync(WageUpdate wageUpdate, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        IReference Reference { get; }
 
-        /// <param name='filterType'>
-        /// Possible values include: 'All', 'Live', 'Submitted', 'Rejected',
-        /// 'ClosingSoon', 'Closed', 'Draft', 'NewApplications', 'Withdrawn',
-        /// 'Completed', 'SubmittedToday', 'SubmittedYesterday',
-        /// 'SubmittedMoreThan48Hours', 'Resubmitted'
-        /// </param>
-        /// <param name='page'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<VacancySummary>>> GetAllWithHttpMessagesAsync(string filterType = default(string), int? page = default(int?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Gets the IVacancyOperations.
+        /// </summary>
+        IVacancyOperations VacancyOperations { get; }
+
+        /// <summary>
+        /// Gets the IVacancyManagement.
+        /// </summary>
+        IVacancyManagement VacancyManagement { get; }
+
+        /// <summary>
+        /// Gets the IVacancySummaryOperations.
+        /// </summary>
+        IVacancySummaryOperations VacancySummaryOperations { get; }
 
     }
 }

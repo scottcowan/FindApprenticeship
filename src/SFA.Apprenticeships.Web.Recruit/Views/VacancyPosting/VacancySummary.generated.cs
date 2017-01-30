@@ -119,7 +119,7 @@ Write(Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView));
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"column-one-half\"");
+WriteLiteral(" class=\"column-two-thirds inline sfa-xlarge-top-margin\"");
 
 WriteLiteral(">\r\n");
 
@@ -164,14 +164,14 @@ WriteLiteral(" class=\"button no-autosave\"");
 
 WriteLiteral(" name=\"VacancySummary\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1249), Tuple.Create("\"", 1273)
+WriteAttribute("value", Tuple.Create(" value=\"", 1280), Tuple.Create("\"", 1304)
             
             #line 31 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                                    , Tuple.Create(Tuple.Create("", 1257), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+                                    , Tuple.Create(Tuple.Create("", 1288), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 1257), false)
+, 1288), false)
 );
 
 WriteLiteral(">");
@@ -218,14 +218,14 @@ WriteLiteral("        ");
             #line hidden
             
             #line 36 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber}, new {@class = "no-autosave"}));
+       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber}, new {@class = "no-autosave button sfa-button-secondary"}));
 
             
             #line default
             #line hidden
             
             #line 36 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                                                                                                                                                                      
+                                                                                                                                                                                                  
         }
 
             

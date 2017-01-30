@@ -164,7 +164,7 @@
 
                 try
                 {
-                    var apiVacancyResult = await apiClient.LinkEmployerWithHttpMessagesAsync(employerProviderSiteLinkRequest, Convert.ToInt32(viewModel.Employer.EdsUrn));
+                    var apiVacancyResult = await apiClient.Employer.LinkEmployerByEdsUrnWithHttpMessagesAsync(employerProviderSiteLinkRequest, Convert.ToInt32(viewModel.Employer.EdsUrn));
                     var employerProviderSiteLink = apiVacancyResult.Body;
                     vacancyOwnerRelationship = ApiClientMappers.Map<EmployerProviderSiteLink, VacancyOwnerRelationship>(employerProviderSiteLink);
                 }

@@ -1,6 +1,5 @@
 ﻿namespace SFA.DAS.RAA.Api.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
@@ -9,7 +8,6 @@
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories.Models;
     using Apprenticeships.Web.Common.Extensions;
-    using Swashbuckle.Swagger.Annotations;
 
     [Authorize(Roles = Roles.Provider)]
     public class VacancySummaryController : ApiController
@@ -26,7 +24,7 @@
         }
 
         [Route("vacancysummaries")]
-        [SwaggerOperation("GetAll")]
+        [HttpGet]
         public IEnumerable<VacancySummary> GetAll(VacanciesSummaryFilterTypes filterType = VacanciesSummaryFilterTypes.All, int page = 1)
         {
             //TODO: Strategy

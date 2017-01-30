@@ -162,7 +162,7 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebActivatorEx.2.1.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -360,6 +360,8 @@
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesMode.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesSearchViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\EditCategoryViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\EditFrameworksViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EditLinkViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
@@ -375,8 +377,10 @@
     <Compile Include="ViewModels\VacancyPosting\VacancyLocationAddressViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\Employer\EmployerViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\EditStandardViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\IPartialVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\OccupationViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\QAActionResult.cs" />
     <Compile Include="ViewModels\Vacancy\StandardViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
@@ -488,6 +492,11 @@
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\EmployerQuestions.generated.cs">
       <DependentUpon>EmployerQuestions.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_OtherInformation.generated.cs">
+      <DependentUpon>_OtherInformation.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -626,6 +635,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>VacancyPreviewHeader.generated.cs</LastGenOutput>
     </Content>
+    <None Include="Views\Shared\DisplayTemplates\Vacancy\_OtherInformation.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_OtherInformation.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Shared\DisplayTemplates\Vacancy\_VacancyDetails.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_VacancyDetails.generated.cs</LastGenOutput>

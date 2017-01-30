@@ -534,7 +534,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var standards = GetStandards();
             var sectors = GetSectors();
             viewModel.SectorsAndFrameworks = sectorsAndFrameworks;
-            viewModel.Standards = standards;
+            viewModel.Standards = standards.Where(w => w.Status == FrameworkStatusType.Active).ToList();
             viewModel.Sectors = sectors;
             viewModel.AutoSaveTimeoutInSeconds =
                     _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
@@ -722,7 +722,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
                 try
                 {
-                    var apiVacancyResult = await apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber);
+                    var apiVacancyResult = await apiClient.VacancyOperations.GetByReferenceNumberWithHttpMessagesAsync(vacancyReferenceNumber.ToString());
                     var apiVacancy = apiVacancyResult.Body;
                     vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
                 }
@@ -785,17 +785,30 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 viewModel.Contact = vacancy.GetContactInformation(providerSite);
             }
 
-            viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
-                ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
-                : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName).FullName;
+            if (vacancy.FrameworkStatus == FrameworkStatusType.Active ||
+                vacancy.StandardStatus == FrameworkStatusType.Active)
+            {
+                viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
+                    ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
+                    : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
+                        .FullName;
 
-            viewModel.SectorName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.SectorCodeName)
-                ? viewModel.TrainingDetailsViewModel.SectorCodeName
-                : _referenceDataService.GetCategoryByCode(viewModel.TrainingDetailsViewModel.SectorCodeName).FullName;
+                viewModel.SectorName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.SectorCodeName)
+                    ? viewModel.TrainingDetailsViewModel.SectorCodeName
+                    : _referenceDataService.GetCategoryByCode(viewModel.TrainingDetailsViewModel.SectorCodeName)
+                        .FullName;
 
-            var standard = GetStandard(vacancy.StandardId);
+                var standard = GetStandard(vacancy.StandardId);
 
-            viewModel.StandardName = standard == null ? "" : standard.Name;
+                viewModel.StandardName = standard == null ? "" : standard.Name;
+            }
+            else
+            {
+                vacancy.StandardId = null;
+                if (viewModel.TrainingDetailsViewModel != null)
+                    viewModel.TrainingDetailsViewModel.StandardId = null;
+            }
+            
             if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
             {
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
@@ -1623,6 +1636,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             vacancy.ThingsToConsiderComment = viewModel.ThingsToConsiderComment;
             vacancy.DesiredQualifications = viewModel.DesiredQualifications;
             vacancy.DesiredQualificationsComment = viewModel.DesiredQualificationsComment;
+            vacancy.OtherInformation = viewModel.OtherInformation;
+            vacancy.OtherInformationComment = viewModel.OtherInformationComment;
 
             AddQAInformation(vacancy);
 

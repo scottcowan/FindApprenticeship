@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     public class Vacancy : IVacancyWage
     {
         [Write(false)]
-        public DateTime DateQAApproved { get; set; }
+        public DateTime? DateQAApproved { get; set; }
 
         [Write(false)]
         public DateTime? DateFirstSubmitted { get; set; }
@@ -179,6 +179,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public string OtherInformation { get; set; }
 
         [Write(false)]
+        public string OtherInformationComment { get; set; }
+
+        [Write(false)]
         public string PersonalQualities { get; set; }
 
         [Write(false)]
@@ -318,5 +321,11 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         [Write(false)]
         public bool? IsMultiLocation { get; set; }
+
+        [Write(false)]
+        public FrameworkStatusType? FrameworkStatus { get; set; }
+
+        [Write(false)]
+        public FrameworkStatusType? StandardStatus { get; set; }
     }
 }

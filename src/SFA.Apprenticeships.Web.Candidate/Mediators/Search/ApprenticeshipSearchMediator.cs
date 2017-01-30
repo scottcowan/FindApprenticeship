@@ -35,6 +35,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
         private readonly ApprenticeshipSearchViewModelServerValidator _searchRequestValidator;
         private readonly ApprenticeshipSearchViewModelLocationValidator _searchLocationValidator;
         private readonly IApprenticeshipVacancyProvider _apprenticeshipVacancyProvider;
+        private readonly IGoogleMapsProvider _googleMapsProvider;
 
         private readonly string[] _blacklistedCategoryCodes;
 
@@ -46,7 +47,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             IReferenceDataService referenceDataService,
             ApprenticeshipSearchViewModelServerValidator searchRequestValidator,
             ApprenticeshipSearchViewModelLocationValidator searchLocationValidator,
-            IApprenticeshipVacancyProvider apprenticeshipVacancyProvider)
+            IApprenticeshipVacancyProvider apprenticeshipVacancyProvider, IGoogleMapsProvider googleMapsProvider)
             : base(configService, userDataProvider)
         {
             _configService = configService;
@@ -56,6 +57,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
             _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
+            _googleMapsProvider = googleMapsProvider;
             _blacklistedCategoryCodes = configService.Get<CommonWebConfiguration>().BlacklistedCategoryCodes.Split(',');
         }
 
@@ -124,9 +126,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
         protected SelectList GetSearchFields(bool addRefineOption = false, string selectedValue = "All")
         {
+            var allDisplayName = addRefineOption && selectedValue == "All" ? "-- Refine search --" : "All";
+
             var searchFieldsOptions = new List<object>
             {
-                new { FieldName = ApprenticeshipSearchField.All.ToString(), DisplayName = "All"},
+                new { FieldName = ApprenticeshipSearchField.All.ToString(), DisplayName = allDisplayName},
                 new { FieldName = ApprenticeshipSearchField.JobTitle.ToString(), DisplayName = "Job title"},
                 new { FieldName = ApprenticeshipSearchField.Description.ToString(), DisplayName = "Description"},
                 new { FieldName = ApprenticeshipSearchField.Employer.ToString(), DisplayName = "Employer"},
@@ -138,11 +142,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             if (searchFactors != null && searchFactors.ProviderFactors != null && searchFactors.ProviderFactors.Enabled)
             {
                 searchFieldsOptions.Insert(4, new { FieldName = ApprenticeshipSearchField.Provider.ToString(), DisplayName = "Training Provider" });
-            }
-
-            if (addRefineOption && selectedValue == "All")
-            {
-                searchFieldsOptions.Add(new { FieldName = selectedValue, DisplayName = "-- Refine search --" });
             }
 
             var searchFields = new SelectList(
@@ -331,6 +330,12 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             if (candidateId.HasValue)
             {
                 SetSavedVacancyStatuses(candidateId.Value, results);
+            }
+
+            //Populate Google static maps URL
+            foreach (var vacancy in results.Vacancies)
+            {
+                vacancy.GoogleStaticMapsUrl = _googleMapsProvider.GetStaticMapsUrl(vacancy.Location);
             }
 
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.Ok, results);
