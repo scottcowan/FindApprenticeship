@@ -49,18 +49,34 @@
             await GetVacancy("/vacancy", 0, 0, Guid.Empty);
         }
 
+        [When(@"I request the public vacancy details for the vacancy with id: (.*)")]
+        public async Task WhenIRequestThePublicVacancyDetailsForTheVacancyWithId(int vacancyId)
+        {
+            var vacancyUri = string.Format(UriFormats.PublicVacancyIdUriFormat, vacancyId);
+            await GetVacancy(vacancyUri, vacancyId, 0, Guid.Empty);
+        }
+
+        [When(@"I request the public vacancy details for the vacancy with reference number: (.*)")]
+        public async Task WhenIRequestThePublicVacancyDetailsForTheVacancyWithReferenceNumber(int vacancyReferenceNumber)
+        {
+            var vacancyUri = string.Format(UriFormats.PublicVacancyReferenceNumberUriFormat, vacancyReferenceNumber * 100000);
+            await GetVacancy(vacancyUri, vacancyReferenceNumber, vacancyReferenceNumber * 100000, Guid.Empty);
+        }
+
+        [When(@"I request the public vacancy details for the vacancy with guid: (.*)")]
+        public async Task WhenIRequestThePublicVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
+        {
+            var vacancyUri = string.Format(UriFormats.PublicVacancyGuidUriFormat, vacancyGuid);
+            var vacancyId = Convert.ToInt32(vacancyGuid.ToString().Substring(0, 1));
+            await GetVacancy(vacancyUri, vacancyId, 0, vacancyGuid);
+        }
+
         [Then(@"I see the vacancy details for the vacancy with id: (.*)")]
         public void ThenISeeTheVacancyDetailsForTheVacancyWithId(int vacancyId)
         {
             var vacancy = ScenarioContext.Current.Get<DbVacancy>($"vacancyId: {vacancyId}");
             var vacancyUri = string.Format(UriFormats.VacancyIdUriFormat, vacancyId);
-            var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
-
-            vacancy.Should().NotBeNull();
-            responseVacancy.Should().NotBeNull();
-
-            var comparer = new DbVacancyComparer();
-            comparer.Equals(vacancy, responseVacancy).Should().BeTrue();
+            ValidateVacancy(vacancy, vacancyUri, new DbVacancyComparer());
         }
 
         [Then(@"I see the vacancy details for the vacancy with reference number: (.*)")]
@@ -68,13 +84,7 @@
         {
             var vacancy = ScenarioContext.Current.Get<DbVacancy>($"vacancyReferenceNumber: {vacancyReferenceNumber * 100000}");
             var vacancyUri = string.Format(UriFormats.VacancyReferenceNumberUriFormat, vacancyReferenceNumber * 100000);
-            var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
-
-            vacancy.Should().NotBeNull();
-            responseVacancy.Should().NotBeNull();
-
-            var comparer = new DbVacancyComparer();
-            comparer.Equals(vacancy, responseVacancy).Should().BeTrue();
+            ValidateVacancy(vacancy, vacancyUri, new DbVacancyComparer());
         }
 
         [Then(@"I see the vacancy details for the vacancy with guid: (.*)")]
@@ -82,13 +92,31 @@
         {
             var vacancy = ScenarioContext.Current.Get<DbVacancy>($"vacancyGuid: {vacancyGuid}");
             var vacancyUri = string.Format(UriFormats.VacancyGuidUriFormat, vacancyGuid);
-            var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
+            ValidateVacancy(vacancy, vacancyUri, new DbVacancyComparer());
+        }
 
-            vacancy.Should().NotBeNull();
-            responseVacancy.Should().NotBeNull();
+        [Then(@"I see the public vacancy details for the vacancy with id: (.*)")]
+        public void ThenISeeThePublicVacancyDetailsForTheVacancyWithId(int vacancyId)
+        {
+            var vacancy = ScenarioContext.Current.Get<DbVacancy>($"vacancyId: {vacancyId}");
+            var vacancyUri = string.Format(UriFormats.PublicVacancyIdUriFormat, vacancyId);
+            ValidateVacancy(vacancy, vacancyUri, new DbPublicVacancyComparer());
+        }
 
-            var comparer = new DbVacancyComparer();
-            comparer.Equals(vacancy, responseVacancy).Should().BeTrue();
+        [Then(@"I see the public vacancy details for the vacancy with reference number: (.*)")]
+        public void ThenISeeThePublicVacancyDetailsForTheVacancyWithReferenceNumber(int vacancyReferenceNumber)
+        {
+            var vacancy = ScenarioContext.Current.Get<DbVacancy>($"vacancyReferenceNumber: {vacancyReferenceNumber * 100000}");
+            var vacancyUri = string.Format(UriFormats.PublicVacancyReferenceNumberUriFormat, vacancyReferenceNumber * 100000);
+            ValidateVacancy(vacancy, vacancyUri, new DbPublicVacancyComparer());
+        }
+
+        [Then(@"I see the public vacancy details for the vacancy with guid: (.*)")]
+        public void ThenISeeThePublicVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
+        {
+            var vacancy = ScenarioContext.Current.Get<DbVacancy>($"vacancyGuid: {vacancyGuid}");
+            var vacancyUri = string.Format(UriFormats.PublicVacancyGuidUriFormat, vacancyGuid);
+            ValidateVacancy(vacancy, vacancyUri, new DbPublicVacancyComparer());
         }
 
         [Then(@"I do not see the vacancy details for the vacancy with id: (.*)")]
@@ -122,6 +150,30 @@
             responseVacancy.Should().BeNull();
         }
 
+        [Then(@"I do not see the public vacancy details for the vacancy with id: (.*)")]
+        public void ThenIDoNotSeeThePublicVacancyDetailsForTheVacancyWithId(int vacancyId)
+        {
+            var vacancyUri = string.Format(UriFormats.PublicVacancyIdUriFormat, vacancyId);
+            var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
+            responseVacancy.Should().BeNull();
+        }
+
+        [Then(@"I do not see the public vacancy details for the vacancy with reference number: (.*)")]
+        public void ThenIDoNotSeeThePublicVacancyDetailsForTheVacancyWithReferenceNumber(int vacancyReferenceNumber)
+        {
+            var vacancyUri = string.Format(UriFormats.PublicVacancyReferenceNumberUriFormat, vacancyReferenceNumber * 100000);
+            var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
+            responseVacancy.Should().BeNull();
+        }
+
+        [Then(@"I do not see the public vacancy details for the vacancy with guid: (.*)")]
+        public void ThenIDoNotSeeThePublicVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
+        {
+            var vacancyUri = string.Format(UriFormats.PublicVacancyGuidUriFormat, vacancyGuid);
+            var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
+            responseVacancy.Should().BeNull();
+        }
+
         private static async Task GetVacancy(string vacancyUri, int vacancyId, int vacancyReferenceNumber, Guid vacancyGuid)
         {
             var vacancy1 = new Fixture().Build<DbVacancy>()
@@ -135,7 +187,7 @@
                 .With(v => v.VacancyId, 2)
                 .With(v => v.VacancyReferenceNumber, 200000)
                 .With(v => v.VacancyGuid, new Guid("20000000-0000-0000-0000-000000000000"))
-                .With(v => v.VacancyStatusId, (int)VacancyStatus.Live)
+                .With(v => v.VacancyStatusId, (int)VacancyStatus.Closed)
                 .With(v => v.ContractOwnerID, -1)
                 .Create();
 
@@ -189,6 +241,16 @@
                     ScenarioContext.Current.Add(vacancyUri, responseVacancy);
                 }
             }
+        }
+
+        private static void ValidateVacancy(DbVacancy vacancy, string vacancyUri, IMultiEqualityComparer<DbVacancy, Vacancy> comparer)
+        {
+            var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
+
+            vacancy.Should().NotBeNull();
+            responseVacancy.Should().NotBeNull();
+
+            comparer.Equals(vacancy, responseVacancy).Should().BeTrue();
         }
     }
 }

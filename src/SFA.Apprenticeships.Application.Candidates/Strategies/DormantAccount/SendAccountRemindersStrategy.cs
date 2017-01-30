@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies.DormantAccount
 {
-    using System;
     using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using Interfaces;
     using Interfaces.Communications;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using System;
 
     public class SendAccountRemindersStrategy : HousekeepingStrategy
     {
@@ -96,7 +95,7 @@
             var lastLoginInDays = lastLoginDelta.Days;
             var lastLoginInDaysFormatted = lastLoginInCycles >= configuration.SendFinalReminderAfterCycles ? "almost a year" : string.Format("{0} days", lastLoginInDays);
 
-            var pendingDeletionAfterHours = configuration.SetPendingDeletionAfterCycles*
+            var pendingDeletionAfterHours = configuration.SetPendingDeletionAfterCycles *
                                             Configuration.HousekeepingCycleInHours;
 
             var tomorrow = DateTime.UtcNow.AddDays(1);

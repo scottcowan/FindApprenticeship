@@ -1,12 +1,36 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Locations
 {
+    using System.ComponentModel.DataAnnotations;
+
+    /// <summary>
+    /// A global geographic coordinate
+    /// </summary>
     public class GeoPoint
     {
+        /// <summary>
+        /// Longitude component of a lat/long pair
+        /// </summary>
+        [Required]
         public double Longitude { get; set; }
+        /// <summary>
+        /// Latitude component of a lat/long pair
+        /// </summary>
+        [Required]
         public double Latitude { get; set; }
+        /// <summary>
+        /// Easting component of a northing/easting pair
+        /// </summary>
+        [Required]
         public int Easting { get; set; }
+        /// <summary>
+        /// Northing component of a northing/easting pair
+        /// </summary>
+        [Required]
         public int Northing { get; set; }
 
+        /// <summary>
+        /// Represents an undefined geopoint
+        /// </summary>
         public static GeoPoint NotSet => new GeoPoint
         {
             Latitude = double.NaN,
