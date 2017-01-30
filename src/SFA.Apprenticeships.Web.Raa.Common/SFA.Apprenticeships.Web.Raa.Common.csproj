@@ -235,7 +235,6 @@
     <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
     <Compile Include="Mediators\Admin\IAdminMediator.cs" />
     <Compile Include="Providers\ApiClientProvider.cs" />
-    <Compile Include="Providers\IApiClientProvider.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelMessages.cs" />
     <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelValidator.cs" />

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Api
 {
     using DAS.RAA.Api.Client.V1;
 

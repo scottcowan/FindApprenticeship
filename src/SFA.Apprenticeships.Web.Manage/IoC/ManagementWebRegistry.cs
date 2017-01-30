@@ -38,6 +38,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Mediators.Reporting;
     using Raa.Common.Providers;
     using Application.Interfaces;
+    using Application.Interfaces.Api;
     using Application.Interfaces.Security;
     using Application.Provider.Strategies;
     using Application.Vacancy;

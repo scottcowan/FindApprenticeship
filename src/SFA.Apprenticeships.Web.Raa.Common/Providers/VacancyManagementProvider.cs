@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using Application.Interfaces;
+    using Application.Interfaces.Api;
     using Application.Interfaces.Service;
     using Application.Vacancy;
     using Domain.Entities.Raa.Vacancies;

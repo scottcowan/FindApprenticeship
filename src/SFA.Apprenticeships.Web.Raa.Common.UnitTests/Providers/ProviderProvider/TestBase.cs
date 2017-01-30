@@ -7,6 +7,7 @@
     using NUnit.Framework;
     using Common.Providers;
     using Application.Interfaces;
+    using Application.Interfaces.Api;
     using Web.Common.Configuration;
 
     public class TestBase

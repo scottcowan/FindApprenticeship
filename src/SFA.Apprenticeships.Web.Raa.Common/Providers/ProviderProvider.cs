@@ -14,6 +14,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Application.Interfaces.Api;
     using DAS.RAA.Api.Client.V1.Models;
     using Microsoft.Rest;
     using ViewModels.Employer;

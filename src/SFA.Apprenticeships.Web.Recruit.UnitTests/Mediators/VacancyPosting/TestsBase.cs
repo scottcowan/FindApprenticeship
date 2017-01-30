@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using Apprenticeships.Application.Interfaces;
+    using Apprenticeships.Application.Interfaces.Api;
     using Apprenticeships.Application.Interfaces.Applications;
     using Apprenticeships.Application.Interfaces.Employers;
     using Apprenticeships.Application.Interfaces.Locations;

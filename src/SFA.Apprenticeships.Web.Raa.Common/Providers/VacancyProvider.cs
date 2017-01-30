@@ -32,6 +32,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Application.Interfaces.Api;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;

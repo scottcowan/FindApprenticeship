@@ -3,6 +3,7 @@
 namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvider
 {
     using Application.Interfaces;
+    using Application.Interfaces.Api;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
