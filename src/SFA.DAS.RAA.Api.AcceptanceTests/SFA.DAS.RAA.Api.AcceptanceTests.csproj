@@ -135,6 +135,10 @@
       <HintPath>..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SFA.DAS.RAA.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SFA.DAS.RAA.Api\bin\SFA.DAS.RAA.Api.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -193,12 +197,12 @@
     <Compile Include="DependencyResolution\AcceptanceTestsRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="Extensions\HttpClientExtensions.cs" />
-    <Compile Include="Features\RA577.feature.cs" >
+    <Compile Include="Features\RA577.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RA577.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\RA578.feature.cs" >
+    <Compile Include="Features\RA578.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RA578.feature</DependentUpon>
@@ -283,6 +287,10 @@
     <None Include="Features\RA577.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RA577.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\RA578.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>RA578.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\RA584.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

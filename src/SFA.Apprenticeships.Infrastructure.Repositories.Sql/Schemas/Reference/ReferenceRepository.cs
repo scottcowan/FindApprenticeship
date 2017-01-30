@@ -29,6 +29,8 @@
         public const string GetRegionByIdSql = "SELECT LocalAuthorityGroupID AS RegionId, CodeName, ShortName, FullName FROM[dbo].[LocalAuthorityGroup] WHERE LocalAuthorityGroupTypeID = 4 AND LocalAuthorityGroupID = @RegionId";
         public const string GetRegionByCodeSql = "SELECT LocalAuthorityGroupID AS RegionId, CodeName, ShortName, FullName FROM[dbo].[LocalAuthorityGroup] WHERE LocalAuthorityGroupTypeID = 4 AND CodeName = @RegionCode";
 
+        public static string GetFrameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework ORDER BY FullName;";
+
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -477,7 +479,5 @@
 
             return category;
         }
-
-        public static string FrameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework ORDER BY FullName;";
     }
 }

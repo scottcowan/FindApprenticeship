@@ -11,6 +11,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Models;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
 
@@ -42,39 +44,18 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 
         private async Task GetAllFrameworks()
         {
-            var framework1 = new Fixture().Build<ApprenticeshipOccupation>()
-                .With(v => v.CodeName, "990")
-                .With(v => v.FullName, "Test Framework")
-                .With(v => v.ShortName, "990")
-                .With(v => v.ApprenticeshipOccupationId, 01)
-                .Create();
+            const string requestUri = UriFormats.GetFrameworksUri;
 
-            var framework2 = new Fixture().Build<ApprenticeshipOccupation>()
-                .With(v => v.CodeName, "996")
-                .With(v => v.FullName, "Another Test Framework")
-                .With(v => v.ShortName, "996")
-                .With(v => v.ApprenticeshipOccupationId, 02)
-                .Create();
+            var frameworks = new Fixture().CreateMany<ApprenticeshipFramework>(3).ToList();
 
-            ScenarioContext.Current.Add($"framework1 : {framework1.CodeName}", framework1);
-            ScenarioContext.Current.Add($"framework2 : {framework2.CodeName}", framework2);
-
-            //ScenarioContext.Current.Add($"framework1 : {framework1.FullName}", framework1);
-            //ScenarioContext.Current.Add($"framework2 : {framework2.FullName}", framework2);
-
-            //ScenarioContext.Current.Add($"framework1 : {framework1.ShortName}", framework1);
-            //ScenarioContext.Current.Add($"framework2 : {framework2.ShortName}", framework2);
-
-            //ScenarioContext.Current.Add($"framework1 : {framework1.ApprenticeshipOccupationId}", framework1);
-            //ScenarioContext.Current.Add($"framework2 : {framework2.ApprenticeshipOccupationId}", framework2);
+            ScenarioContext.Current.Add("counties", frameworks);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<ApprenticeshipOccupation>(ReferenceRepository.FrameworkSql, null, null, null))
-                .Returns(new[] { framework1, framework2 });
+                m => m.Query<ApprenticeshipFramework>(ReferenceRepository.GetFrameworkSql, null, null, null))
+                .Returns(frameworks);
 
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
 
-            string requestUri = "/frameworks";
             using (var response = await httpClient.GetAsync(requestUri))
             {
                 ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseStatusCode, response.StatusCode);
@@ -87,12 +68,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                         ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
                     }
 
-                    //var responseCategory = JsonConvert.DeserializeObject<Category>(content);
-                    //if (responseCategory != null && new VacancyComparer().Equals(responseCategory, new Category()))
-                    //{
-                    //    responseCategory = null;
-                    //}
-                    ScenarioContext.Current.Add(requestUri, response);
+                    var apprenticeshipFrameworks = JsonConvert.DeserializeObject<IList<ApprenticeshipFramework>>(content);
+                    ScenarioContext.Current.Add("apprenticeshipFrameworks", apprenticeshipFrameworks);
                 }
             }
         }
