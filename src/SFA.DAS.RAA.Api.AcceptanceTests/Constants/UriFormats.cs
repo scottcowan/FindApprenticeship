@@ -20,5 +20,9 @@
         public const string GetCountiesUri = "reference/counties";
         public const string CountyIdUriFormat = "reference/county/{0}";
         public const string CountyCodeUriFormat = "reference/county/code/{0}";
+
+        public const string GetLocalAuthoritiesUri = "reference/localauthorities";
+        public const string LocalAuthorityIdUriFormat = "reference/localauthority/{0}";
+        public const string LocalAuthorityCodeUriFormat = "reference/localauthority/code/{0}";
     }
 }

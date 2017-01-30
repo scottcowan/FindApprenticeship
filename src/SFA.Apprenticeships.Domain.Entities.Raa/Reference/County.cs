@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
 {
+    using System.ComponentModel.DataAnnotations;
+
     /// <summary>
     /// The information related to a UK county
     /// </summary>
@@ -8,21 +10,25 @@
         /// <summary>
         /// The county's primary identifier
         /// </summary>
+        [Required]
         public int CountyId { get; set; }
 
         /// <summary>
         /// The county's code identifier
         /// </summary>
+        [Required]
         public string CodeName { get; set; }
 
         /// <summary>
         /// The shortened name of the county. Usually the same as the code
         /// </summary>
+        [Required]
         public string ShortName { get; set; }
 
         /// <summary>
         /// The county's full name
         /// </summary>
+        [Required]
         public string FullName { get; set; }
 
         protected bool Equals(County other)

@@ -72,10 +72,12 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get all Counties")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetAllCounties")]
         public virtual void GetAllCounties()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get all Counties", new string[] {
-                        "RA578"});
+                        "RA578",
+                        "GetAllCounties"});
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
@@ -91,17 +93,43 @@ this.ScenarioSetup(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get County by id")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetCountyById")]
         public virtual void GetCountyById()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get County by id", ((string[])(null)));
-#line 12
-this.ScenarioSetup(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get County by id", new string[] {
+                        "RA578",
+                        "GetCountyById"});
 #line 13
- testRunner.Given("I request the county with id: 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 14
- testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Given("I request the county with id: 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 15
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 16
  testRunner.And("I see the information for the county with id: 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get County by id that doesn\'t exist")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetCountyById")]
+        public virtual void GetCountyByIdThatDoesntExist()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get County by id that doesn\'t exist", new string[] {
+                        "RA578",
+                        "GetCountyById"});
+#line 19
+this.ScenarioSetup(scenarioInfo);
+#line 20
+ testRunner.Given("I request the county with id: 999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 21
+ testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 22
+ testRunner.And("I do not see the information for the county with id: 999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -109,17 +137,131 @@ this.ScenarioSetup(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get County by code")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetCountyByCode")]
         public virtual void GetCountyByCode()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get County by code", ((string[])(null)));
-#line 18
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get County by code", new string[] {
+                        "RA578",
+                        "GetCountyByCode"});
+#line 25
 this.ScenarioSetup(scenarioInfo);
-#line 19
+#line 26
  testRunner.Given("I request the county with code: DER", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 20
+#line 27
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 21
+#line 28
  testRunner.And("I see the information for the county with code: DER", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get County by code that doesn\'t exist")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetCountyByCode")]
+        public virtual void GetCountyByCodeThatDoesntExist()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get County by code that doesn\'t exist", new string[] {
+                        "RA578",
+                        "GetCountyByCode"});
+#line 31
+this.ScenarioSetup(scenarioInfo);
+#line 32
+ testRunner.Given("I request the county with code: XXX", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 33
+ testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 34
+ testRunner.And("I do not see the information for the county with code: XXX", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get LocalAuthority by id")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetLocalAuthorityById")]
+        public virtual void GetLocalAuthorityById()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get LocalAuthority by id", new string[] {
+                        "RA578",
+                        "GetLocalAuthorityById"});
+#line 37
+this.ScenarioSetup(scenarioInfo);
+#line 38
+ testRunner.Given("I request the local authority with id: 160", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 39
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 40
+ testRunner.And("I see the information for the local authority with id: 160", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get LocalAuthority by id that doesn\'t exist")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetLocalAuthorityById")]
+        public virtual void GetLocalAuthorityByIdThatDoesntExist()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get LocalAuthority by id that doesn\'t exist", new string[] {
+                        "RA578",
+                        "GetLocalAuthorityById"});
+#line 43
+this.ScenarioSetup(scenarioInfo);
+#line 44
+ testRunner.Given("I request the local authority with id: 999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 45
+ testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 46
+ testRunner.And("I do not see the information for the local authority with id: 999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get LocalAuthority by code")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetLocalAuthorityByCode")]
+        public virtual void GetLocalAuthorityByCode()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get LocalAuthority by code", new string[] {
+                        "RA578",
+                        "GetLocalAuthorityByCode"});
+#line 49
+this.ScenarioSetup(scenarioInfo);
+#line 50
+ testRunner.Given("I request the local authority with code: 41UD", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 51
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 52
+ testRunner.And("I see the information for the local authority with code: 41UD", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get LocalAuthority by code that doesn\'t exist")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA578")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetLocalAuthorityByCode")]
+        public virtual void GetLocalAuthorityByCodeThatDoesntExist()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get LocalAuthority by code that doesn\'t exist", new string[] {
+                        "RA578",
+                        "GetLocalAuthorityByCode"});
+#line 55
+this.ScenarioSetup(scenarioInfo);
+#line 56
+ testRunner.Given("I request the local authority with code: XXXX", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 57
+ testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 58
+ testRunner.And("I do not see the information for the local authority with code: XXXX", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

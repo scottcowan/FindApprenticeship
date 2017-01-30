@@ -5,9 +5,7 @@
     using System.Net;
     using System.Threading.Tasks;
     using Apprenticeships.Domain.Entities.Raa.Reference;
-    using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference;
-    using Comparers;
     using Constants;
     using Extensions;
     using Factories;
@@ -101,6 +99,22 @@
             responseCounty.Equals(countyWithCode).Should().BeTrue();
         }
 
+        [Then(@"I do not see the information for the county with id: (.*)")]
+        public void ThenIDoNotSeeTheInformationForTheCountyWithId(int countyId)
+        {
+            var countyUri = string.Format(UriFormats.CountyIdUriFormat, countyId);
+            var responseCounty = ScenarioContext.Current.Get<County>(countyUri);
+            responseCounty.Should().BeNull();
+        }
+
+        [Then(@"I do not see the information for the county with code: (.*)")]
+        public void ThenIDoNotSeeTheInformationForTheCountyWithCode(string countyCode)
+        {
+            var countyUri = string.Format(UriFormats.CountyCodeUriFormat, countyCode);
+            var responseCounty = ScenarioContext.Current.Get<County>(countyUri);
+            responseCounty.Should().BeNull();
+        }
+
         private async Task GetCounty(string countyUri)
         {
             var countyWithId = new Fixture().Build<County>().With(c => c.CountyId, 4).Create();
@@ -110,11 +124,19 @@
             ScenarioContext.Current.Add("countyWithCode", countyWithCode);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<County>(It.Is<string>(sql => sql.StartsWith("SELECT * FROM dbo.County")), It.Is<object>(o => o.GetHashCode() == new { countyId = 4 }.GetHashCode()), null, null))
+                m => m.Query<County>(ReferenceRepository.GetCountyByIdSql, It.IsAny<object>(), null, null))
+                .Returns(new List<County>());
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<County>(ReferenceRepository.GetCountyByCodeSql, It.IsAny<object>(), null, null))
+                .Returns(new List<County>());
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<County>(ReferenceRepository.GetCountyByIdSql, It.Is<object>(o => o.GetHashCode() == new { countyId = countyWithId.CountyId }.GetHashCode()), null, null))
                 .Returns(new [] { countyWithId });
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<County>(It.Is<string>(sql => sql.StartsWith("SELECT * FROM dbo.County")), It.Is<object>(o => o.GetHashCode() == new { countyCode = "DER" }.GetHashCode()), null, null))
+                m => m.Query<County>(ReferenceRepository.GetCountyByCodeSql, It.Is<object>(o => o.GetHashCode() == new { countyCode = countyWithCode.CodeName }.GetHashCode()), null, null))
                 .Returns(new [] { countyWithCode });
 
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
@@ -133,6 +155,10 @@
                     }
 
                     var responseCounty = JsonConvert.DeserializeObject<County>(content);
+                    if (responseCounty != null && new County().Equals(responseCounty))
+                    {
+                        responseCounty = null;
+                    }
                     ScenarioContext.Current.Add(countyUri, responseCounty);
                 }
             }

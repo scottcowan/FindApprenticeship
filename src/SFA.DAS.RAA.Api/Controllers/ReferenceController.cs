@@ -14,11 +14,13 @@
     {
         private readonly IReferenceDataProvider _referenceDataProvider;
         private readonly IGetCountiesStrategy _getCountiesStrategy;
+        private readonly IGetLocalAuthoritiesStrategy _getLocalAuthoritiesStrategy;
 
-        public ReferenceController(IReferenceDataProvider referenceDataProvider, IGetCountiesStrategy getCountiesStrategy)
+        public ReferenceController(IReferenceDataProvider referenceDataProvider, IGetCountiesStrategy getCountiesStrategy, IGetLocalAuthoritiesStrategy getLocalAuthoritiesStrategy)
         {
             _referenceDataProvider = referenceDataProvider;
             _getCountiesStrategy = getCountiesStrategy;
+            _getLocalAuthoritiesStrategy = getLocalAuthoritiesStrategy;
         }
 
         /// <summary>
@@ -59,32 +61,42 @@
             return Ok(_getCountiesStrategy.GetCounty(countyCode: code));
         }
 
+        /// <summary>
+        /// Retrieves all local authority information for all counties
+        /// </summary>
+        /// <returns>The full list of local authorities</returns>
         [Route("localauthorities")]
         [ResponseType(typeof(IEnumerable<LocalAuthority>))]
         [HttpGet]
         public IHttpActionResult GetLocalAuthorities()
         {
-            return Ok(_referenceDataProvider.GetLocalAuthorities());
+            return Ok(_getLocalAuthoritiesStrategy.GetLocalAuthorities());
         }
 
-        [Route("localauthority")]
+        /// <summary>
+        /// Returns the information for the local authority identified by the primary identifier in the URL
+        /// </summary>
+        /// <param name="id">The local authority's primary identifier</param>
+        /// <returns>The local authority object</returns>
+        [Route("localauthority/{id}")]
         [ResponseType(typeof(LocalAuthority))]
         [HttpGet]
-        public IHttpActionResult GetLocalAuthority(int? localAuthorityId = null, string localAuthorityCode = null)
+        public IHttpActionResult GetLocalAuthority(int id)
         {
-            if (!localAuthorityId.HasValue && string.IsNullOrEmpty(localAuthorityCode))
-            {
-                throw new ArgumentException(ReferenceMessages.MissingLocalAuthorityIdentifier);
-            }
+            return Ok(_getLocalAuthoritiesStrategy.GetLocalAuthority(id));
+        }
 
-            var localAuthority = localAuthorityId.HasValue ? _referenceDataProvider.GetLocalAuthorityById(localAuthorityId.Value) : _referenceDataProvider.GetLocalAuthorityByCode(localAuthorityCode);
-
-            if (localAuthority == null)
-            {
-                throw new KeyNotFoundException(ReferenceMessages.LocalAuthorityNotFound);
-            }
-
-            return Ok(localAuthority);
+        /// <summary>
+        /// Returns the information for the local authority identified by the county's code in the URL
+        /// </summary>
+        /// <param name="code">The local authority's code</param>
+        /// <returns>The local authority object</returns>
+        [Route("localauthority/code/{code}")]
+        [ResponseType(typeof(LocalAuthority))]
+        [HttpGet]
+        public IHttpActionResult GetLocalAuthority(string code)
+        {
+            return Ok(_getLocalAuthoritiesStrategy.GetLocalAuthority(localAuthorityCode: code));
         }
 
         [Route("regions")]
