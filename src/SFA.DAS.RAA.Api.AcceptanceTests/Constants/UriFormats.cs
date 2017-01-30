@@ -18,5 +18,7 @@
         public const string LinkEmployerEdsUrnUriFormat = "/employer/edsurn/{0}/link";
 
         public const string GetCountiesUri = "reference/counties";
+        public const string CountyIdUriFormat = "reference/county/{0}";
+        public const string CountyCodeUriFormat = "reference/county/code/{0}";
     }
 }
