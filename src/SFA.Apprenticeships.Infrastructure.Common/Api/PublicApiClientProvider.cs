@@ -1,10 +1,10 @@
-namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+namespace SFA.Apprenticeships.Infrastructure.Common.Api
 {
     using System;
     using Application.Interfaces;
     using Application.Interfaces.Api;
+    using Configuration;
     using DAS.RAA.Api.Client.V1;
-    using Infrastructure.Common.Configuration;
     using Microsoft.Rest;
 
     public class ApiClientProvider : IApiClientProvider
@@ -21,6 +21,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var baseUrl = _configurationService.Get<ApiConfiguration>().ApiBaseUrl;
             var apiClient = new ApiClient(new Uri(baseUrl), new TokenCredentials("", "bearer"));
             return apiClient;
+        }
+
+        public bool IsEnabled()
+        {
+            return _configurationService.Get<ApiConfiguration>().IsEnabled;
         }
     }
 }

@@ -3,12 +3,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using System;
     using System.Security.Claims;
     using Application.Interfaces;
+    using Application.Interfaces.Api;
     using DAS.RAA.Api.Client.V1;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.RaaApi;
     using Domain.Raa.Interfaces.Repositories;
+    using Infrastructure.Common.Configuration;
     using Microsoft.Rest;
-    using Web.Common.Configuration;
     using ClaimTypes = Domain.Entities.Raa.ClaimTypes;
 
     public class ApiClientProvider : IApiClientProvider
@@ -28,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         public IApiClient GetApiClient()
         {
-            var baseUrl = _configurationService.Get<CommonWebConfiguration>().RaaApiBaseUrl;
+            var baseUrl = _configurationService.Get<ApiConfiguration>().ApiBaseUrl;
             var apiKey = _currentUserService.GetClaimValue(ClaimTypes.RaaApiKey);
             if (string.IsNullOrEmpty(apiKey))
             {
@@ -50,6 +51,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             }
             var apiClient = new ApiClient(new Uri(baseUrl), new TokenCredentials(apiKey, "bearer"));
             return apiClient;
+        }
+
+        public bool IsEnabled()
+        {
+            return _configurationService.Get<ApiConfiguration>().IsEnabled;
         }
     }
 }

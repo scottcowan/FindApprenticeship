@@ -717,7 +717,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         {
             Vacancy vacancy;
 
-            if (_configurationService.Get<CommonWebConfiguration>().Features.RaaApiEnabled)
+            if (_apiClientProvider.IsEnabled())
             {
                 var apiClient = _apiClientProvider.GetApiClient();
 

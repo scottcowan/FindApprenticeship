@@ -5,5 +5,7 @@
     public interface IApiClientProvider
     {
         IApiClient GetApiClient();
+
+        bool IsEnabled();
     }
 }

@@ -4,6 +4,6 @@
     {
         public string ApiBaseUrl { get; set; }
 
-        public bool ApiEnabled { get; set; }
+        public bool IsEnabled { get; set; }
     }
 }

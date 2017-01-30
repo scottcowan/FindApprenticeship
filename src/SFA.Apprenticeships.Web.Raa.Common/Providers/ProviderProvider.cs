@@ -150,7 +150,7 @@
         {
             VacancyOwnerRelationship vacancyOwnerRelationship;
             
-            if (_configurationService.Get<CommonWebConfiguration>().Features.RaaApiEnabled)
+            if (_apiClientProvider.IsEnabled())
             {
                 var providerSite = _providerService.GetProviderSite(viewModel.ProviderSiteId);
 
