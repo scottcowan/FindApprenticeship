@@ -7,7 +7,7 @@
     </ConfigurationSettings>
     <Certificates>
       <Certificate name="NasClientCertificate" thumbprint="B4CB6B341C2261DAEAA59685D60B71A9C56BC21B" thumbprintAlgorithm="sha1" />
-      <Certificate name="SSLWebCandidate" thumbprint="EFA011C475FE15FB1596A33A33764DC2D2A89D31" thumbprintAlgorithm="sha1" />
+      <Certificate name="SSLWebCandidate" thumbprint="AC59831E63E359932D80F7C6D4F8DD87318E8A28" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>
   <NetworkConfiguration>
