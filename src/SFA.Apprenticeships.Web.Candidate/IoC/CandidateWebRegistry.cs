@@ -50,6 +50,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using System.Web;
+    using Application.Interfaces.Vacancy;
     using Application.Provider.Strategies;
     using Common.Providers;
 

@@ -30,6 +30,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Application.Interfaces.Vacancy;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -385,11 +386,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                         {
                             //No matching VOR exists for the new provider and provider site so create it.
                             //We do this because changing the provider site id for a VOR could make any non transfered vacancies associated with it unavailable to any provider
+                            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
                             existingVacancyOwnerRelationship = existingVacancyOwnerRelationship ?? new VacancyOwnerRelationship { ProviderSiteId = vacancyTransferViewModel.ProviderSiteId, EmployerId = vacancyOwnerRelationship.EmployerId };
                             existingVacancyOwnerRelationship.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
                             existingVacancyOwnerRelationship.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
                             existingVacancyOwnerRelationship.StatusType = VacancyOwnerRelationshipStatusTypes.Live;
-                            existingVacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(existingVacancyOwnerRelationship);
+                            existingVacancyOwnerRelationship = await _providerService.SaveVacancyOwnerRelationship(existingVacancyOwnerRelationship, employer.EdsUrn);
                         }
 
                         vacancy.VacancyOwnerRelationshipId = existingVacancyOwnerRelationship.VacancyOwnerRelationshipId;

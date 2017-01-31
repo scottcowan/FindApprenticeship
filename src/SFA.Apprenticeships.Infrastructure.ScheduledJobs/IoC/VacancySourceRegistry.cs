@@ -3,6 +3,7 @@
     using Application.Application;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
+    using Application.Interfaces.Vacancy;
     using Application.Vacancies;
     using Application.Vacancy;
     using Domain.Entities.Vacancies;

@@ -6,6 +6,7 @@
     using Application.Interfaces;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
+    using Application.Interfaces.Vacancy;
     using Application.ReferenceData;
     using Application.Vacancies.Entities;
     using Application.Vacancy;

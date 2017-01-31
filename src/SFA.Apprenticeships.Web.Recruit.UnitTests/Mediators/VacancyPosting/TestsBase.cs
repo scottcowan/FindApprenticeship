@@ -10,6 +10,7 @@
     using Apprenticeships.Application.Interfaces.ReferenceData;
     using Apprenticeships.Application.Interfaces.Users;
     using Apprenticeships.Application.Interfaces.Vacancies;
+    using Apprenticeships.Application.Interfaces.Vacancy;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Apprenticeships.Application.Vacancy;
     using Common.Configuration;
@@ -100,8 +101,7 @@
                 _mockUserProfileService.Object,
                 MockGeoCodingService.Object,
                 MockLocalAuthorityService.Object,
-                _mockVacancySummaryService.Object,
-                new Mock<IApiClientProvider>().Object);
+                _mockVacancySummaryService.Object);
         }
 
         protected IVacancyPostingMediator GetMediator()

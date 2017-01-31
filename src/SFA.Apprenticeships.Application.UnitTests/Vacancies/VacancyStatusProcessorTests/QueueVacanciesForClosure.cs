@@ -9,6 +9,7 @@
     using Domain.Interfaces.Messaging;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
+    using Interfaces.Vacancy;
     using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;

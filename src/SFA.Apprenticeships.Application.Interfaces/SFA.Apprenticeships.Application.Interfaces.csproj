@@ -160,6 +160,8 @@
     <Compile Include="Vacancies\TraineeshipSearchResponse.cs" />
     <Compile Include="Vacancies\ICandidateVacancyService.cs" />
     <Compile Include="VacancyPosting\IVacancyPostingService.cs" />
+    <Compile Include="Vacancy\IVacancyManagementService.cs" />
+    <Compile Include="Vacancy\IVacancySummaryService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">

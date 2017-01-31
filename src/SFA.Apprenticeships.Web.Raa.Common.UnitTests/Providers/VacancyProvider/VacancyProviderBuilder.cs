@@ -10,6 +10,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
+    using Application.Interfaces.Vacancy;
     using Application.Interfaces.VacancyPosting;
     using Application.Vacancy;
     using Domain.Entities.Raa.Users;
@@ -65,8 +66,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
                 _userProfileService.Object,
                 _mockGeoCodeLookupService.Object,
                 _mockLocalAuthorityLookupService.Object,
-                _mockVacancySummaryService.Object,
-                new Mock<IApiClientProvider>().Object);
+                _mockVacancySummaryService.Object);
         }
 
         public IVacancyPostingProvider BuildVacancyPostingProvider()
@@ -86,8 +86,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
                 _userProfileService.Object,
                 _mockGeoCodeLookupService.Object,
                 _mockLocalAuthorityLookupService.Object,
-                _mockVacancySummaryService.Object,
-                new Mock<IApiClientProvider>().Object);
+                _mockVacancySummaryService.Object);
         }
 
         public Mock<IVacancyPostingService> VacancyPostingService => _vacancyPostingService;

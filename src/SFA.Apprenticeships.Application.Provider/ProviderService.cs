@@ -11,6 +11,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
     using Domain.Entities.Exceptions;
     using Strategies;
 
@@ -142,9 +143,9 @@
             return _getVacancyOwnerRelationshipStrategy.GetVacancyOwnerRelationship(providerSiteId, employerId, liveOnly);
         }
 
-        public VacancyOwnerRelationship SaveVacancyOwnerRelationship(VacancyOwnerRelationship vacancyOwnerRelationship)
+        public Task<VacancyOwnerRelationship> SaveVacancyOwnerRelationship(VacancyOwnerRelationship vacancyOwnerRelationship, string edsUrn)
         {
-            return _vacancyOwnerRelationshipWriteRepository.Save(vacancyOwnerRelationship);
+            return new Task<VacancyOwnerRelationship>(() => _vacancyOwnerRelationshipWriteRepository.Save(vacancyOwnerRelationship));
         }
 
         public IEnumerable<VacancyOwnerRelationship> GetVacancyOwnerRelationships(int providerSiteId)

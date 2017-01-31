@@ -6,7 +6,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories.Models;
     using System.Collections.Generic;
-    using Domain.Entities.Raa.Vacancies;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// For maintaining provider profiles, sites, etc.
@@ -43,7 +43,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         VacancyOwnerRelationship GetVacancyOwnerRelationship(int providerSiteId, string edsUrn, bool liveOnly);
 
-        VacancyOwnerRelationship SaveVacancyOwnerRelationship(VacancyOwnerRelationship vacancyOwnerRelationship);
+        Task<VacancyOwnerRelationship> SaveVacancyOwnerRelationship(VacancyOwnerRelationship vacancyOwnerRelationship, string edsUrn);
 
         IEnumerable<VacancyOwnerRelationship> GetVacancyOwnerRelationships(int providerSiteId);
 

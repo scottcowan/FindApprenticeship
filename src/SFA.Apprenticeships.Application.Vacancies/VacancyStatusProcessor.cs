@@ -9,6 +9,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using Interfaces.Vacancy;
     using Vacancy;
 
     public class VacancyStatusProcessor : IVacancyStatusProcessor

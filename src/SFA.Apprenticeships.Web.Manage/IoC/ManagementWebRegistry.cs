@@ -40,6 +40,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Application.Interfaces;
     using Application.Interfaces.Api;
     using Application.Interfaces.Security;
+    using Application.Interfaces.Vacancy;
     using Application.Provider.Strategies;
     using Application.Vacancy;
     using Infrastructure.Security;

@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Vacancy
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Service;
+    using Interfaces.Vacancy;
     using Moq;
     using NUnit.Framework;
 
@@ -20,7 +21,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Vacancy
             mockVacancySummaryService.Setup(x => x.GetById(It.IsAny<int>())).Returns(new VacancySummary());
             mockDeleteVacancyStrategy.Setup(x => x.Execute(It.IsAny<VacancySummary>())).Returns(new StrategyResult("code"));
 
-            var sut = new VacancyManagementService(null, mockDeleteVacancyStrategy.Object, mockVacancySummaryService.Object);
+            var sut = new VacancyManagementService(mockDeleteVacancyStrategy.Object, mockVacancySummaryService.Object);
              
             // Act
             sut.Delete(1);
@@ -38,7 +39,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Vacancy
 
             mockVacancySummaryService.Setup(x => x.GetById(It.IsAny<int>())).Returns(new VacancySummary());
 
-            var sut = new VacancyManagementService(null, null, mockVacancySummaryService.Object);
+            var sut = new VacancyManagementService(null, mockVacancySummaryService.Object);
 
             // Act
             var result = sut.FindSummary(1);
@@ -58,7 +59,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Vacancy
 
             mockVacancySummaryService.Setup(x => x.GetById(It.IsAny<int>())).Returns(null as VacancySummary);
 
-            var sut = new VacancyManagementService(null, null, mockVacancySummaryService.Object);
+            var sut = new VacancyManagementService(null, mockVacancySummaryService.Object);
 
             // Act
             var result = sut.FindSummary(1);

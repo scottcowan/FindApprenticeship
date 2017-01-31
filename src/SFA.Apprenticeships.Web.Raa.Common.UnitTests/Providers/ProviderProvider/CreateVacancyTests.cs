@@ -35,8 +35,8 @@
             };
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(Task.FromResult(apprenticeshipVacancy));
-            MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(vacancyOwnerRelationship))
-                .Returns(vacancyOwnerRelationship);
+            MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(vacancyOwnerRelationship, edsErn))
+                .Returns(Task.FromResult(vacancyOwnerRelationship));
             MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn, false))
                 .Returns(vacancyOwnerRelationship);
             MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
@@ -61,7 +61,7 @@
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
-            MockProviderService.Verify(s => s.SaveVacancyOwnerRelationship(vacancyOwnerRelationship), Times.Once);
+            MockProviderService.Verify(s => s.SaveVacancyOwnerRelationship(vacancyOwnerRelationship, edsErn), Times.Once);
             MockVacancyPostingService.Verify(
                 s =>
                     s.UpdateVacancy(
@@ -90,8 +90,8 @@
             };
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(Task.FromResult(nullApprenticeshipVacancy));
-            MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(providerSiteEmployerLink))
-                .Returns(providerSiteEmployerLink);
+            MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(providerSiteEmployerLink, edsErn))
+                .Returns(Task.FromResult(providerSiteEmployerLink));
             MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn, false))
                 .Returns(providerSiteEmployerLink);
             MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
@@ -114,7 +114,7 @@
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
-            MockProviderService.Verify(s => s.SaveVacancyOwnerRelationship(providerSiteEmployerLink), Times.Once);
+            MockProviderService.Verify(s => s.SaveVacancyOwnerRelationship(providerSiteEmployerLink, edsErn), Times.Once);
             MockVacancyPostingService.Verify(
                 s =>
                     s.CreateVacancy(
@@ -142,8 +142,8 @@
             };
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(Task.FromResult(apprenticeshipVacancy));
-            MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(vacancyOwnerRelationship))
-                .Returns(vacancyOwnerRelationship);
+            MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(vacancyOwnerRelationship, edsErn))
+                .Returns(Task.FromResult(vacancyOwnerRelationship));
             MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn, false))
                 .Returns(vacancyOwnerRelationship);
             MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
@@ -167,7 +167,7 @@
             });
 
             // Assert
-            MockProviderService.Verify(s => s.SaveVacancyOwnerRelationship(It.Is<VacancyOwnerRelationship>(vor => vor.StatusType == VacancyOwnerRelationshipStatusTypes.Live)));
+            MockProviderService.Verify(s => s.SaveVacancyOwnerRelationship(It.Is<VacancyOwnerRelationship>(vor => vor.StatusType == VacancyOwnerRelationshipStatusTypes.Live), edsErn));
         }
     }
 }

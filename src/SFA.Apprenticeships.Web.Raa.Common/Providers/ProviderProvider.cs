@@ -14,9 +14,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Application.Interfaces.Api;
-    using DAS.RAA.Api.Client.V1.Models;
-    using Microsoft.Rest;
     using ViewModels.Employer;
     using ViewModels.Provider;
     using Web.Common.Converters;
@@ -26,19 +23,17 @@
     {
         private static readonly IMapper ProviderMappers = new ProviderMappers();
 
-        private readonly ILogService _logService;
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
         private readonly IConfigurationService _configurationService;
 
-        public ProviderProvider(IProviderService providerService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IEmployerService employerService, ILogService logService)
+        public ProviderProvider(IProviderService providerService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IEmployerService employerService)
         {
             _providerService = providerService;
             _configurationService = configurationService;
             _vacancyPostingService = vacancyPostingService;
             _employerService = employerService;
-            _logService = logService;
         }
 
         public ProviderViewModel GetProviderViewModel(string ukprn, bool errorIfNotFound = true)
@@ -144,41 +139,11 @@
 
         public async Task<VacancyOwnerRelationshipViewModel> ConfirmVacancyOwnerRelationship(VacancyOwnerRelationshipViewModel viewModel)
         {
-            VacancyOwnerRelationship vacancyOwnerRelationship;
-            
-            if (_apiClientProvider.IsEnabled())
-            {
-                var providerSite = _providerService.GetProviderSite(viewModel.ProviderSiteId);
-
-                var employerProviderSiteLinkRequest = new EmployerProviderSiteLinkRequest
-                {
-                    ProviderSiteEdsUrn = Convert.ToInt32(providerSite.EdsUrn),
-                    EmployerDescription = viewModel.EmployerDescription,
-                    EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl
-                };
-
-                var apiClient = _apiClientProvider.GetApiClient();
-
-                try
-                {
-                    var apiVacancyResult = await apiClient.Employer.LinkEmployerByEdsUrnWithHttpMessagesAsync(employerProviderSiteLinkRequest, Convert.ToInt32(viewModel.Employer.EdsUrn));
-                    var employerProviderSiteLink = apiVacancyResult.Body;
-                    vacancyOwnerRelationship = ApiClientMappers.Map<EmployerProviderSiteLink, VacancyOwnerRelationship>(employerProviderSiteLink);
-                }
-                catch (HttpOperationException ex)
-                {
-                    _logService.Info(ex.ToString());
-                    return null;
-                }
-            }
-            else
-            {
-                vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn, false);
-                vacancyOwnerRelationship.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
-                vacancyOwnerRelationship.EmployerDescription = viewModel.EmployerDescription;
-                vacancyOwnerRelationship.StatusType = VacancyOwnerRelationshipStatusTypes.Live;
-                vacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(vacancyOwnerRelationship);
-            }
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn, false);
+            vacancyOwnerRelationship.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
+            vacancyOwnerRelationship.EmployerDescription = viewModel.EmployerDescription;
+            vacancyOwnerRelationship.StatusType = VacancyOwnerRelationshipStatusTypes.Live;
+            vacancyOwnerRelationship = await _providerService.SaveVacancyOwnerRelationship(vacancyOwnerRelationship, viewModel.Employer.EdsUrn);
 
             var vacancy = await GetVacancy(viewModel);
             if (vacancy != null)
