@@ -1,17 +1,23 @@
-﻿namespace SFA.Apprenticeships.Application.VacancyPosting
+﻿namespace SFA.DAS.RAA.Api.Service.V1.VacancyPosting
 {
-    using Domain.Entities.Raa.Locations;
-    using Domain.Entities.Raa.Vacancies;
-    using Domain.Raa.Interfaces.Repositories.Models;
-    using Interfaces.VacancyPosting;
-    using Strategies;
-    //TODO: rename project to SFA.Management.Application.VacancyPosting?
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Apprenticeships.Application.Interfaces;
+    using Apprenticeships.Application.Interfaces.Api;
+    using Apprenticeships.Application.Interfaces.VacancyPosting;
+    using Apprenticeships.Application.VacancyPosting.Strategies;
+    using Apprenticeships.Domain.Entities.Raa.Locations;
+    using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Domain.Raa.Interfaces.Repositories.Models;
+    using Mappers;
+    using Microsoft.Rest;
+    using ApiVacancy = Client.V1.Models.Vacancy;
 
-    public class VacancyPostingService : IVacancyPostingService
+    public class ApiVacancyPostingService : IVacancyPostingService
     {
+        private static readonly IMapper ApiClientMappers = new ApiClientMappers();
+
         private readonly ICreateVacancyStrategy _createVacancyStrategy;
         private readonly IUpdateVacancyStrategy _updateVacancyStrategy;
         private readonly IArchiveVacancyStrategy _archiveVacancyStrategy;
@@ -20,8 +26,10 @@
         private readonly IGetVacancySummaryStrategies _getVacancySummaryStrategies;
         private readonly IQaVacancyStrategies _qaVacancyStrategies;
         private readonly IVacancyLocationsStrategies _vacancyLocationsStrategies;
+        private readonly IApiClientProvider _apiClientProvider;
+        private readonly ILogService _logService;
 
-        public VacancyPostingService(
+        public ApiVacancyPostingService(
             ICreateVacancyStrategy createVacancyStrategy,
             IUpdateVacancyStrategy updateVacancyStrategy,
             IArchiveVacancyStrategy archiveVacancyStrategy,
@@ -29,7 +37,9 @@
             IGetVacancyStrategies getVacancyStrategies,
             IGetVacancySummaryStrategies getVacancySummaryStrategies,
             IQaVacancyStrategies qaVacancyStrategies,
-            IVacancyLocationsStrategies vacancyLocationsStrategies)
+            IVacancyLocationsStrategies vacancyLocationsStrategies, 
+            IApiClientProvider apiClientProvider, 
+            ILogService logService)
         {
             _createVacancyStrategy = createVacancyStrategy;
             _updateVacancyStrategy = updateVacancyStrategy;
@@ -39,6 +49,8 @@
             _getVacancySummaryStrategies = getVacancySummaryStrategies;
             _qaVacancyStrategies = qaVacancyStrategies;
             _vacancyLocationsStrategies = vacancyLocationsStrategies;
+            _apiClientProvider = apiClientProvider;
+            _logService = logService;
         }
 
         public Vacancy CreateVacancy(Vacancy vacancy)
@@ -61,19 +73,70 @@
             return _getNextVacancyReferenceNumberStrategy.GetNextVacancyReferenceNumber();
         }
 
-        public Task<Vacancy> GetVacancyByReferenceNumber(int vacancyReferenceNumber)
+        public async Task<Vacancy> GetVacancyByReferenceNumber(int vacancyReferenceNumber)
         {
-            return new Task<Vacancy>(() => _getVacancyStrategies.GetVacancyByReferenceNumber(vacancyReferenceNumber));
+            if (_apiClientProvider.IsEnabled())
+            {
+                var apiClient = _apiClientProvider.GetApiClient();
+
+                try
+                {
+                    var apiVacancyResult = await apiClient.VacancyOperations.GetByReferenceNumberWithHttpMessagesAsync(vacancyReferenceNumber.ToString());
+                    var apiVacancy = apiVacancyResult.Body;
+                    return ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
+                }
+                catch (HttpOperationException ex)
+                {
+                    _logService.Info(ex.ToString());
+                    return null;
+                }
+            }
+
+            return _getVacancyStrategies.GetVacancyByReferenceNumber(vacancyReferenceNumber);
         }
 
-        public Task<Vacancy> GetVacancy(Guid vacancyGuid)
+        public async Task<Vacancy> GetVacancy(Guid vacancyGuid)
         {
-            return new Task<Vacancy>(() => _getVacancyStrategies.GetVacancyByGuid(vacancyGuid));
+            if (_apiClientProvider.IsEnabled())
+            {
+                var apiClient = _apiClientProvider.GetApiClient();
+
+                try
+                {
+                    var apiVacancyResult = await apiClient.VacancyOperations.GetByGuidWithHttpMessagesAsync(vacancyGuid);
+                    var apiVacancy = apiVacancyResult.Body;
+                    return ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
+                }
+                catch (HttpOperationException ex)
+                {
+                    _logService.Info(ex.ToString());
+                    return null;
+                }
+            }
+
+            return _getVacancyStrategies.GetVacancyByGuid(vacancyGuid);
         }
 
-        public Task<Vacancy> GetVacancy(int vacancyId)
+        public async Task<Vacancy> GetVacancy(int vacancyId)
         {
-            return new Task<Vacancy>(() => _getVacancyStrategies.GetVacancyById(vacancyId));
+            if (_apiClientProvider.IsEnabled())
+            {
+                var apiClient = _apiClientProvider.GetApiClient();
+
+                try
+                {
+                    var apiVacancyResult = await apiClient.VacancyOperations.GetByIdWithHttpMessagesAsync(vacancyId);
+                    var apiVacancy = apiVacancyResult.Body;
+                    return ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
+                }
+                catch (HttpOperationException ex)
+                {
+                    _logService.Info(ex.ToString());
+                    return null;
+                }
+            }
+
+            return _getVacancyStrategies.GetVacancyById(vacancyId);
         }
 
         public IList<VacancySummary> GetWithStatus(VacancySummaryByStatusQuery query, out int totalRecords)
@@ -130,8 +193,8 @@
         {
             return _updateVacancyStrategy.UpdateVacancyWithNewProvider(vacancy);
         }
-		
-		public IList<RegionalTeamMetrics> GetRegionalTeamsMetrics(VacancySummaryByStatusQuery query)
+
+        public IList<RegionalTeamMetrics> GetRegionalTeamsMetrics(VacancySummaryByStatusQuery query)
         {
             return _getVacancySummaryStrategies.GetRegionalTeamMetrics(query);
         }

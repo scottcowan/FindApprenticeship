@@ -24,15 +24,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
     using Infrastructure.Raa.Extensions;
-    using Mappers;
-    using Microsoft.Rest;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Application.Interfaces.Api;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -42,7 +39,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
-    using ApiVacancy = DAS.RAA.Api.Client.V1.Models.Vacancy;
     using ApprenticeshipLevel = Domain.Entities.Raa.Vacancies.ApprenticeshipLevel;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using VacancyLocationType = Domain.Entities.Raa.Vacancies.VacancyLocationType;
@@ -51,8 +47,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
-        private static readonly IMapper ApiClientMappers = new ApiClientMappers();
-
         private readonly ILogService _logService;
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IReferenceDataService _referenceDataService;
@@ -69,7 +63,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         private readonly IGeoCodeLookupService _geoCodingService;
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
         private readonly IVacancySummaryService _vacancySummaryService;
-        private readonly IApiClientProvider _apiClientProvider;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
@@ -78,7 +71,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
             ICurrentUserService currentUserService, IUserProfileService userProfileService,
             IGeoCodeLookupService geocodingService, ILocalAuthorityLookupService localAuthLookupService,
-            IVacancySummaryService vacancySummaryService, IApiClientProvider apiClientProvider)
+            IVacancySummaryService vacancySummaryService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -96,7 +89,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _geoCodingService = geocodingService;
             _localAuthorityLookupService = localAuthLookupService;
             _vacancySummaryService = vacancySummaryService;
-            _apiClientProvider = apiClientProvider;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions)
@@ -715,28 +707,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         public async Task<VacancyViewModel> GetVacancy(int vacancyReferenceNumber)
         {
-            Vacancy vacancy;
-
-            if (_apiClientProvider.IsEnabled())
-            {
-                var apiClient = _apiClientProvider.GetApiClient();
-
-                try
-                {
-                    var apiVacancyResult = await apiClient.VacancyOperations.GetByReferenceNumberWithHttpMessagesAsync(vacancyReferenceNumber.ToString());
-                    var apiVacancy = apiVacancyResult.Body;
-                    vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
-                }
-                catch (HttpOperationException ex)
-                {
-                    _logService.Info(ex.ToString());
-                    return null;
-                }
-            }
-            else
-            {
-                vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-            }
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (vacancy == null)
                 return null;

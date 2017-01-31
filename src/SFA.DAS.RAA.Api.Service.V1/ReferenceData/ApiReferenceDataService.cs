@@ -5,105 +5,97 @@
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.ReferenceData;
     using Apprenticeships.Application.Interfaces.ReferenceData;
-    using Apprenticeships.Application.ReferenceData;
 
     public class ApiReferenceDataService : IReferenceDataService
     {
-        private readonly IReferenceDataProvider _referenceDataProvider;
-
-        public ApiReferenceDataService(IReferenceDataProvider referenceDataProvider)
-        {
-            _referenceDataProvider = referenceDataProvider;
-        }
-
         public IEnumerable<Category> GetCategories()
         {
-            return _referenceDataProvider.GetCategories();
+            throw new System.NotImplementedException();
         }
 
         public Category GetSubCategoryByName(string subCategoryName)
         {
-            return _referenceDataProvider.GetSubCategoryByName(subCategoryName);
+            throw new System.NotImplementedException();
         }
 
         public Category GetCategoryByName(string categoryName)
         {
-            return _referenceDataProvider.GetCategoryByName(categoryName);
+            throw new System.NotImplementedException();
         }
 
         public Category GetSubCategoryByCode(string subCategoryCode)
         {
-            return _referenceDataProvider.GetSubCategoryByCode(subCategoryCode);
+            throw new System.NotImplementedException();
         }
 
         public Category GetCategoryByCode(string categoryCode)
         {
-            return _referenceDataProvider.GetCategoryByCode(categoryCode);
+            throw new System.NotImplementedException();
         }
 
         public IEnumerable<Category> GetFrameworks()
         {
-            return _referenceDataProvider.GetFrameworks();
+            throw new System.NotImplementedException();
         }
 
         public IEnumerable<Sector> GetSectors()
         {
-            return _referenceDataProvider.GetSectors();
+            throw new System.NotImplementedException();
         }
 
         public IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication)
         {
-            return _referenceDataProvider.GetReleaseNotes(dasApplication);
+            throw new System.NotImplementedException();
         }
 
         public IEnumerable<County> GetCounties()
         {
-            return _referenceDataProvider.GetCounties();
+            throw new System.NotImplementedException();
         }
 
         public County GetCountyById(int countyId)
         {
-            return _referenceDataProvider.GetCountyById(countyId);
+            throw new System.NotImplementedException();
         }
 
         public County GetCountyByCode(string countyCode)
         {
-            return _referenceDataProvider.GetCountyByCode(countyCode);
+            throw new System.NotImplementedException();
         }
 
         public County GetCountyByName(string countyName)
         {
-            return _referenceDataProvider.GetCountyByName(countyName);
+            throw new System.NotImplementedException();
         }
 
         public IEnumerable<LocalAuthority> GetLocalAuthorities()
         {
-            return _referenceDataProvider.GetLocalAuthorities();
+            throw new System.NotImplementedException();
         }
 
         public LocalAuthority GetLocalAuthorityById(int localAuthorityId)
         {
-            return _referenceDataProvider.GetLocalAuthorityById(localAuthorityId);
+            throw new System.NotImplementedException();
         }
 
-        public LocalAuthority GetLocalAuthorityByCode(string localAuthorityCodeName)
+        public LocalAuthority GetLocalAuthorityByCode(string localAuthorityCode)
         {
-            return _referenceDataProvider.GetLocalAuthorityByCode(localAuthorityCodeName);
+            throw new System.NotImplementedException();
         }
 
         public IEnumerable<Region> GetRegions()
         {
-            return _referenceDataProvider.GetRegions();
+            throw new System.NotImplementedException();
         }
 
         public Region GetRegionById(int regionId)
         {
-            return _referenceDataProvider.GetRegionById(regionId);
+            throw new System.NotImplementedException();
         }
 
         public Region GetRegionByCode(string regionCode)
         {
-            return _referenceDataProvider.GetRegionByCode(regionCode);
+            throw new System.NotImplementedException();
         }
     }
 }

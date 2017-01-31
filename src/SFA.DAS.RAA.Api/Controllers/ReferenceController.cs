@@ -1,25 +1,20 @@
 ﻿namespace SFA.DAS.RAA.Api.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Web.Http;
     using System.Web.Http.Description;
-    using Apprenticeships.Application.ReferenceData;
     using Apprenticeships.Domain.Entities.Raa.Reference;
-    using Constants;
     using Strategies;
 
     [RoutePrefix("reference")]
     public class ReferenceController : ApiController
     {
-        private readonly IReferenceDataProvider _referenceDataProvider;
         private readonly IGetCountiesStrategy _getCountiesStrategy;
         private readonly IGetLocalAuthoritiesStrategy _getLocalAuthoritiesStrategy;
         private readonly IGetRegionsStrategy _getRegionsStrategy;
 
-        public ReferenceController(IReferenceDataProvider referenceDataProvider, IGetCountiesStrategy getCountiesStrategy, IGetLocalAuthoritiesStrategy getLocalAuthoritiesStrategy, IGetRegionsStrategy getRegionsStrategy)
+        public ReferenceController(IGetCountiesStrategy getCountiesStrategy, IGetLocalAuthoritiesStrategy getLocalAuthoritiesStrategy, IGetRegionsStrategy getRegionsStrategy)
         {
-            _referenceDataProvider = referenceDataProvider;
             _getCountiesStrategy = getCountiesStrategy;
             _getLocalAuthoritiesStrategy = getLocalAuthoritiesStrategy;
             _getRegionsStrategy = getRegionsStrategy;
