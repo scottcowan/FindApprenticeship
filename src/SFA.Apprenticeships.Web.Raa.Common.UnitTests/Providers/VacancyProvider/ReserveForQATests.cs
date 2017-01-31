@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
@@ -12,7 +13,7 @@
     public class ReserveForQATests
     {
         [Test]
-        public void ShouldReserveAndReturnTheVacancyIfItsPossibleToReserveItForQA()
+        public async Task ShouldReserveAndReturnTheVacancyIfItsPossibleToReserveItForQA()
         {
             const int vacancyReferenceNumber = 1;
             const string userName = "userName";
@@ -20,7 +21,7 @@
             var vacancyProviderBuilder = VacancyProviderTestHelper.GetBasicVacancyProviderBuilder(userName, vacancyReferenceNumber);
             var provider = vacancyProviderBuilder.Build();
 
-            var result = provider.ReserveVacancyForQA(vacancyReferenceNumber);
+            var result = await provider.ReserveVacancyForQA(vacancyReferenceNumber);
 
             vacancyProviderBuilder.VacancyPostingService.Verify(ps => ps.ReserveVacancyForQA(vacancyReferenceNumber),
                 Times.Once);
@@ -49,7 +50,7 @@
         }
 
         [Test]
-        public void ShouldReserveTheNextVacancyAvailableIfTheOriginalOneIsNotAvailable()
+        public async Task ShouldReserveTheNextVacancyAvailableIfTheOriginalOneIsNotAvailable()
         {
             const int vacancyReferenceNumber = 1;
             const int nextVacanyReferenceNumber = 2;
@@ -66,7 +67,7 @@
                 vacancyReferenceNumber, nextVacanyReferenceNumber);
             var provider = vacancyProviderBuilder.With(vacancyLockingService).Build();
 
-            var result = provider.ReserveVacancyForQA(vacancyReferenceNumber);
+            var result = await provider.ReserveVacancyForQA(vacancyReferenceNumber);
 
             result.VacancyReferenceNumber.Should().Be(nextVacanyReferenceNumber);
             vacancyProviderBuilder.VacancyPostingService.Verify(ps => ps.ReserveVacancyForQA(nextVacanyReferenceNumber),

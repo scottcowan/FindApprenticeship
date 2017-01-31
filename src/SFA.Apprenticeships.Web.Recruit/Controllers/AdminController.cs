@@ -16,6 +16,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Raa.Common.ViewModels.ProviderUser;
 
@@ -167,11 +168,11 @@
         }
 
         [HttpPost]
-        public ActionResult TransferVacancies(TransferVacanciesViewModel viewModel)
+        public async Task<ActionResult> TransferVacancies(TransferVacanciesViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var response = _adminMediator.GetVacancyDetails(viewModel);
+                var response = await _adminMediator.GetVacancyDetails(viewModel);
                 if (response.ViewModel.NotFoundVacancyNumbers.Any())
                 {
                     SetUserMessage("No vacancies found for the given vacancy reference numbers: " +

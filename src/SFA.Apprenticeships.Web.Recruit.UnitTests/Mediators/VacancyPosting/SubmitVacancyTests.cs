@@ -19,7 +19,7 @@
             var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Draft, VacancyType.Apprenticeship);
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(Task.FromResult(vvm));
-            VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<int>())).Returns(vvm);
+            VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<int>())).Returns(Task.FromResult(vvm));
             var mediator = GetMediator();
 
             var result = await mediator.SubmitVacancy(vvm.VacancyReferenceNumber, false);
@@ -34,7 +34,7 @@
             vvm.ResubmitOption = true;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(Task.FromResult(vvm));
-            VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<int>())).Returns(vvm);
+            VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<int>())).Returns(Task.FromResult(vvm));
             var mediator = GetMediator();
 
             var result = await mediator.SubmitVacancy(vvm.VacancyReferenceNumber, true);

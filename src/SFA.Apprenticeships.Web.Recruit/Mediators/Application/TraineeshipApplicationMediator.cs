@@ -11,6 +11,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Traineeship;
     using System;
+    using System.Threading.Tasks;
     using System.Web;
 
     public class TraineeshipApplicationMediator : MediatorBase, ITraineeshipApplicationMediator
@@ -33,18 +34,18 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             _logService = logService;
         }
 
-        public MediatorResponse<TraineeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public async Task<MediatorResponse<TraineeshipApplicationViewModel>> Review(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             if (applicationSelectionViewModel.ApplicationId == Guid.Empty)
             {
                 _logService.Info("Review vacancy failed: VacancyGuid is empty.");
                 return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Review.NoApplicationId, new TraineeshipApplicationViewModel(), ApplicationPageMessages.ApplicationNotFound, UserMessageLevel.Info);
             }
-            var viewModel = _applicationProvider.GetTraineeshipApplicationViewModel(applicationSelectionViewModel);
+            var viewModel = await _applicationProvider.GetTraineeshipApplicationViewModel(applicationSelectionViewModel);
             return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Review.Ok, viewModel);
         }
 
-        public MediatorResponse<TraineeshipApplicationViewModel> ReviewSaveAndExit(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
+        public async Task<MediatorResponse<TraineeshipApplicationViewModel>> ReviewSaveAndExit(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
             var validationResult = _traineeshipApplicationViewModelServerValidator.Validate(traineeshipApplicationViewModel);
 
@@ -60,12 +61,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             }
             catch (Exception)
             {
-                var viewModel = GetFailedUpdateTraineeshipApplicationViewModel(traineeshipApplicationViewModel.ApplicationSelection);
+                var viewModel = await GetFailedUpdateTraineeshipApplicationViewModel(traineeshipApplicationViewModel.ApplicationSelection);
                 return GetMediatorResponse(TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Error, viewModel, ApplicationViewModelMessages.UpdateNotesFailed, UserMessageLevel.Error);
             }
         }
 
-        public MediatorResponse<TraineeshipApplicationViewModel> View(string applicationCipherText)
+        public async Task<MediatorResponse<TraineeshipApplicationViewModel>> View(string applicationCipherText)
         {
             applicationCipherText = HttpUtility.UrlDecode(applicationCipherText);
             applicationCipherText = applicationCipherText?.Replace(' ', '+');
@@ -77,7 +78,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
                 ApplicationId = anomymisedApplicationLink.ApplicationId
             };
 
-            var viewModel = _applicationProvider.GetTraineeshipApplicationViewModel(applicationSelectionViewModel);
+            var viewModel = await _applicationProvider.GetTraineeshipApplicationViewModel(applicationSelectionViewModel);
 
             if (_dateTimeService.UtcNow > anomymisedApplicationLink.ExpirationDateTime)
             {
@@ -87,7 +88,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             return GetMediatorResponse(TraineeshipApplicationMediatorCodes.View.Ok, viewModel);
         }
 
-        public MediatorResponse<TraineeshipApplicationViewModel> ReviewSetToSubmitted(
+        public async Task<MediatorResponse<TraineeshipApplicationViewModel>> ReviewSetToSubmitted(
             TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
             var validationResult =
@@ -112,14 +113,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             catch (Exception)
             {
                 var viewModel =
-                    GetFailedUpdateTraineeshipApplicationViewModel(
+                    await GetFailedUpdateTraineeshipApplicationViewModel(
                         traineeshipApplicationViewModel.ApplicationSelection);
                 return GetMediatorResponse(TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Error, viewModel,
                     ApplicationViewModelMessages.UpdateNotesFailed, UserMessageLevel.Error);
             }
         }
 
-        public MediatorResponse<TraineeshipApplicationViewModel> PromoteToInProgress(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
+        public async Task<MediatorResponse<TraineeshipApplicationViewModel>> PromoteToInProgress(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
             var validationResult = _traineeshipApplicationViewModelServerValidator.Validate(traineeshipApplicationViewModel);
 
@@ -136,14 +137,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             }
             catch (Exception)
             {
-                var viewModel = GetFailedUpdateTraineeshipApplicationViewModel(traineeshipApplicationViewModel.ApplicationSelection);
+                var viewModel = await GetFailedUpdateTraineeshipApplicationViewModel(traineeshipApplicationViewModel.ApplicationSelection);
                 return GetMediatorResponse(TraineeshipApplicationMediatorCodes.PromoteToInProgress.Error, viewModel, ApplicationViewModelMessages.UpdateNotesFailed, UserMessageLevel.Error);
             }
         }
 
-        private TraineeshipApplicationViewModel GetFailedUpdateTraineeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel)
+        private async Task<TraineeshipApplicationViewModel> GetFailedUpdateTraineeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var viewModel = _applicationProvider.GetTraineeshipApplicationViewModel(applicationSelectionViewModel);
+            var viewModel = await _applicationProvider.GetTraineeshipApplicationViewModel(applicationSelectionViewModel);
             viewModel.Notes = viewModel.Notes;
             return viewModel;
         }

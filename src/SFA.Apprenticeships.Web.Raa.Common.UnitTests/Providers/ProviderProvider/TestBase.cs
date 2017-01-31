@@ -7,7 +7,6 @@
     using NUnit.Framework;
     using Common.Providers;
     using Application.Interfaces;
-    using Application.Interfaces.Api;
     using Web.Common.Configuration;
 
     public class TestBase
@@ -33,9 +32,7 @@
                 MockProviderService.Object,
                 MockConfigurationService.Object,
                 MockVacancyPostingService.Object,
-                MockEmployerService.Object,
-                new Mock<IApiClientProvider>().Object, 
-                new Mock<ILogService>().Object);
+                MockEmployerService.Object);
         }
     }
 }

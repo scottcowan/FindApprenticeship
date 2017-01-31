@@ -10,6 +10,7 @@
     using Mediators.Candidate;
     using Raa.Common.ViewModels.Candidate;
     using System;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
 
     public class CandidateController : ManagementControllerBase
@@ -71,36 +72,36 @@
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult Apprenticeship(Guid applicationId)
+        public async Task<ActionResult> Apprenticeship(Guid applicationId)
         {
-            var response = _candidateMediator.GetCandidateApprenticeshipApplication(applicationId);
+            var response = await _candidateMediator.GetCandidateApprenticeshipApplication(applicationId);
 
             return View(response.ViewModel);
         }
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult ApplicationFeedback(Guid applicationId)
+        public async Task<ActionResult> ApplicationFeedback(Guid applicationId)
         {
-            var response = _candidateMediator.GetCandidateApprenticeshipApplication(applicationId);
+            var response = await _candidateMediator.GetCandidateApprenticeshipApplication(applicationId);
 
             return View(response.ViewModel);
         }
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult Traineeship(Guid applicationId)
+        public async Task<ActionResult> Traineeship(Guid applicationId)
         {
-            var response = _candidateMediator.GetCandidateTraineeshipApplication(applicationId);
+            var response = await _candidateMediator.GetCandidateTraineeshipApplication(applicationId);
 
             return View(response.ViewModel);
         }
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult ApprenticeshipVacancy(int vacancyId, Guid applicationId)
+        public async Task<ActionResult> ApprenticeshipVacancy(int vacancyId, Guid applicationId)
         {
-            var response = _candidateMediator.GetCandidateApprenticeshipVacancyViewModel(vacancyId, applicationId);
+            var response = await _candidateMediator.GetCandidateApprenticeshipVacancyViewModel(vacancyId, applicationId);
             var candidateVacancyViewModel = response.ViewModel;
 
             SetLinks(candidateVacancyViewModel.Vacancy);
@@ -110,9 +111,9 @@
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult TraineeshipVacancy(int vacancyId, Guid applicationId)
+        public async Task<ActionResult> TraineeshipVacancy(int vacancyId, Guid applicationId)
         {
-            var response = _candidateMediator.GetCandidateTraineeshipVacancyViewModel(vacancyId, applicationId);
+            var response = await _candidateMediator.GetCandidateTraineeshipVacancyViewModel(vacancyId, applicationId);
             var candidateVacancyViewModel = response.ViewModel;
 
             SetLinks(candidateVacancyViewModel.Vacancy);

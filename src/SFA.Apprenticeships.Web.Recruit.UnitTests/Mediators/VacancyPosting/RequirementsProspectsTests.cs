@@ -51,7 +51,7 @@
 
             var vacancyRequirementsAndProspects = new VacancyRequirementsProspectsViewModel();
             VacancyPostingProvider.Setup(p => p.UpdateVacancy(It.IsAny<VacancyRequirementsProspectsViewModel>()))
-                .Returns(vacancyRequirementsAndProspects);
+                .Returns(Task.FromResult(vacancyRequirementsAndProspects));
 
             var mediator = GetMediator();
 
@@ -79,7 +79,7 @@
             VacancyPostingProvider.Setup(p => p.GetVacancy(_viewModel.VacancyReferenceNumber))
                 .Returns(Task.FromResult(newVacancyViewModel));
             VacancyPostingProvider.Setup(p => p.UpdateVacancy(It.IsAny<VacancyRequirementsProspectsViewModel>()))
-                .Returns(vacancyRequirementsAndProspects);
+                .Returns(Task.FromResult(vacancyRequirementsAndProspects));
 
             var mediator = GetMediator();
 

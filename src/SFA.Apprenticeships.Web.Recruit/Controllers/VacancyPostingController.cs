@@ -104,10 +104,10 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmEmployer(int providerSiteId, string edsUrn, Guid vacancyGuid, bool? comeFromPreview,
+        public async Task<ActionResult> ConfirmEmployer(int providerSiteId, string edsUrn, Guid vacancyGuid, bool? comeFromPreview,
             bool? useEmployerLocation)
         {
-            var response = _vacancyPostingMediator.GetEmployer(providerSiteId, edsUrn, vacancyGuid, comeFromPreview, useEmployerLocation);
+            var response = await _vacancyPostingMediator.GetEmployer(providerSiteId, edsUrn, vacancyGuid, comeFromPreview, useEmployerLocation);
 
             switch (response.Code)
             {
@@ -213,17 +213,17 @@
         #region Basic Details
 
         [HttpGet]
-        public ActionResult CreateVacancy(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions)
+        public async Task<ActionResult> CreateVacancy(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions)
         {
-            var response = _vacancyPostingMediator.GetNewVacancyViewModel(vacancyOwnerRelationshipId, vacancyGuid, numberOfPositions);
+            var response = await _vacancyPostingMediator.GetNewVacancyViewModel(vacancyOwnerRelationshipId, vacancyGuid, numberOfPositions);
 
             return View(response.ViewModel);
         }
 
         [HttpGet]
-        public ActionResult ReviewCreateVacancy(int vacancyReferenceNumber, bool? comeFromPreview)
+        public async Task<ActionResult> ReviewCreateVacancy(int vacancyReferenceNumber, bool? comeFromPreview)
         {
-            var response = _vacancyPostingMediator.GetNewVacancyViewModel(vacancyReferenceNumber, true, comeFromPreview);
+            var response = await _vacancyPostingMediator.GetNewVacancyViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -269,9 +269,9 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
         [HttpPost]
-        public ActionResult CreateVacancyAndExit(NewVacancyViewModel viewModel)
+        public async Task<ActionResult> CreateVacancyAndExit(NewVacancyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
+            var response = await _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
 
             Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 
@@ -313,12 +313,12 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
-        public ActionResult SingleOfflineApplicationUrl(NewVacancyViewModel viewModel)
+        public async Task<ActionResult> SingleOfflineApplicationUrl(NewVacancyViewModel viewModel)
         {
             var comeFromPreview = viewModel.ComeFromPreview;
 
             viewModel.OfflineVacancyType = OfflineVacancyType.SingleUrl;
-            var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
+            var response = await _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
 
             Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
                 new { response.ViewModel.VacancyReferenceNumber, comeFromPreview });
@@ -328,12 +328,12 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
-        public ActionResult MultipleOfflineApplicationUrls(NewVacancyViewModel viewModel)
+        public async Task<ActionResult> MultipleOfflineApplicationUrls(NewVacancyViewModel viewModel)
         {
             var comeFromPreview = viewModel.ComeFromPreview;
 
             viewModel.OfflineVacancyType = OfflineVacancyType.MultiUrl;
-            var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
+            var response = await _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
 
             Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
                 new { response.ViewModel.VacancyReferenceNumber, comeFromPreview });
@@ -368,9 +368,9 @@
         #region Training Details
 
         [HttpGet]
-        public ActionResult TrainingDetails(int vacancyReferenceNumber)
+        public async Task<ActionResult> TrainingDetails(int vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber, false, false);
+            var response = await _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber, false, false);
             var viewModel = response.ViewModel;
 
             switch (response.Code)
@@ -385,9 +385,9 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
-        public ActionResult TrainingDetails(TrainingDetailsViewModel viewModel)
+        public async Task<ActionResult> TrainingDetails(TrainingDetailsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+            var response = await _vacancyPostingMediator.UpdateVacancy(viewModel);
 
             return HandleTrainingDetails(response,
                 () => RedirectToRoute(RecruitmentRouteNames.VacancySummary,
@@ -398,9 +398,9 @@
         }
 
         [HttpPost]
-        public JsonResult AutoSaveTrainingDetails(TrainingDetailsViewModel viewModel)
+        public async Task<JsonResult> AutoSaveTrainingDetails(TrainingDetailsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+            var response = await _vacancyPostingMediator.UpdateVacancy(viewModel);
 
             switch (response.Code)
             {
@@ -414,9 +414,9 @@
         }
 
         [HttpGet]
-        public ActionResult ReviewTrainingDetails(int vacancyReferenceNumber, bool? comeFromPreview)
+        public async Task<ActionResult> ReviewTrainingDetails(int vacancyReferenceNumber, bool? comeFromPreview)
         {
-            var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber, true, comeFromPreview);
+            var response = await _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -437,18 +437,18 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
-        public ActionResult TrainingDetailsAndExit(TrainingDetailsViewModel viewModel)
+        public async Task<ActionResult> TrainingDetailsAndExit(TrainingDetailsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
+            var response = await _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
 
             return HandleTrainingDetails(response, () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome));
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
-        public ActionResult TrainingDetailsAndPreview(TrainingDetailsViewModel viewModel)
+        public async Task<ActionResult> TrainingDetailsAndPreview(TrainingDetailsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+            var response = await _vacancyPostingMediator.UpdateVacancy(viewModel);
 
             return HandleTrainingDetails(response,
                 () => RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
@@ -504,9 +504,9 @@
 
         //TODO: Check the naming of this method... it uses a FurtherVacancyDetailsViewModel, but is named VacancySummary
         [HttpGet]
-        public ActionResult VacancySummary(int vacancyReferenceNumber)
+        public async Task<ActionResult> VacancySummary(int vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, false, false);
+            var response = await _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, false, false);
             var viewModel = response.ViewModel;
 
             switch (response.Code)
@@ -520,9 +520,9 @@
         }
 
         [HttpGet]
-        public ActionResult ReviewVacancySummary(int vacancyReferenceNumber, bool? comeFromPreview)
+        public async Task<ActionResult> ReviewVacancySummary(int vacancyReferenceNumber, bool? comeFromPreview)
         {
-            var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, comeFromPreview);
+            var response = await _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -544,9 +544,9 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancySummary")]
         [HttpPost]
-        public ActionResult VacancySummary(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
+        public async Task<ActionResult> VacancySummary(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, acceptWarnings);
+            var response = await _vacancyPostingMediator.UpdateVacancy(viewModel, acceptWarnings);
 
             return HandleVacancySummary(response,
                 () => RedirectToRoute(RecruitmentRouteNames.VacancyRequirementsProspects,
@@ -557,9 +557,9 @@
         }
 
         [HttpPost]
-        public JsonResult AutoSaveVacancySummary(FurtherVacancyDetailsViewModel viewModel)
+        public async Task<JsonResult> AutoSaveVacancySummary(FurtherVacancyDetailsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, true);
+            var response = await _vacancyPostingMediator.UpdateVacancy(viewModel, true);
 
             switch (response.Code)
             {
@@ -574,18 +574,18 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancySummary")]
         [HttpPost]
-        public ActionResult VacancySummaryAndExit(FurtherVacancyDetailsViewModel viewModel)
+        public async Task<ActionResult> VacancySummaryAndExit(FurtherVacancyDetailsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
+            var response = await _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
 
             return HandleVacancySummary(response, () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome));
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancySummary")]
         [HttpPost]
-        public ActionResult VacancySummaryAndPreview(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
+        public async Task<ActionResult> VacancySummaryAndPreview(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, acceptWarnings);
+            var response = await _vacancyPostingMediator.UpdateVacancy(viewModel, acceptWarnings);
 
             return HandleVacancySummary(response,
                 () => RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
@@ -619,9 +619,9 @@
         #region Requirements and Prospects
 
         [HttpGet]
-        public ActionResult VacancyRequirementsProspects(int vacancyReferenceNumber, bool? comeFromPreview)
+        public async Task<ActionResult> VacancyRequirementsProspects(int vacancyReferenceNumber, bool? comeFromPreview)
         {
-            var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, false, comeFromPreview);
+            var response = await _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, false, comeFromPreview);
             var viewModel = response.ViewModel;
 
             switch (response.Code)
@@ -635,9 +635,9 @@
         }
 
         [HttpGet]
-        public ActionResult ReviewVacancyRequirementsProspects(int vacancyReferenceNumber)
+        public async Task<ActionResult> ReviewVacancyRequirementsProspects(int vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, true, true);
+            var response = await _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, true, true);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -667,9 +667,9 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancyRequirementsProspects")]
         [HttpPost]
-        public ActionResult VacancyRequirementsProspectsAndExit(VacancyRequirementsProspectsViewModel viewModel)
+        public async Task<ActionResult> VacancyRequirementsProspectsAndExit(VacancyRequirementsProspectsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
+            var response = await _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
 
             return HandleVacancyRequirementsProspects(response);
         }
@@ -733,9 +733,9 @@
         #region Vacancy Questions
 
         [HttpGet]
-        public ActionResult VacancyQuestions(int vacancyReferenceNumber, bool? comeFromPreview)
+        public async Task<ActionResult> VacancyQuestions(int vacancyReferenceNumber, bool? comeFromPreview)
         {
-            var response = _vacancyPostingMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber, false, comeFromPreview);
+            var response = await _vacancyPostingMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber, false, comeFromPreview);
             var viewModel = response.ViewModel;
 
             switch (response.Code)
@@ -748,9 +748,9 @@
             }
         }
 
-        public ActionResult ReviewVacancyQuestions(int vacancyReferenceNumber, bool? comeFromPreview)
+        public async Task<ActionResult> ReviewVacancyQuestions(int vacancyReferenceNumber, bool? comeFromPreview)
         {
-            var response = _vacancyPostingMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber, true, comeFromPreview);
+            var response = await _vacancyPostingMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -772,9 +772,9 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancyQuestions")]
         [HttpPost]
-        public ActionResult VacancyQuestions(VacancyQuestionsViewModel viewModel)
+        public async Task<ActionResult> VacancyQuestions(VacancyQuestionsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+            var response = await _vacancyPostingMediator.UpdateVacancy(viewModel);
 
             return HandleVacancyQuestions(response, () => RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                 new
@@ -785,17 +785,17 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancyQuestions")]
         [HttpPost]
-        public ActionResult VacancyQuestionsAndExit(VacancyQuestionsViewModel viewModel)
+        public async Task<ActionResult> VacancyQuestionsAndExit(VacancyQuestionsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
+            var response = await _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
 
             return HandleVacancyQuestions(response, () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome));
         }
 
         [HttpPost]
-        public JsonResult AutoSaveVacancyQuestions(VacancyQuestionsViewModel viewModel)
+        public async Task<JsonResult> AutoSaveVacancyQuestions(VacancyQuestionsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+            var response = await _vacancyPostingMediator.UpdateVacancy(viewModel);
 
             switch (response.Code)
             {
@@ -934,9 +934,9 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmNewEmployer(int providerSiteId, string edsErn, Guid vacancyGuid, bool? comeFromPreview)
+        public async Task<ActionResult> ConfirmNewEmployer(int providerSiteId, string edsErn, Guid vacancyGuid, bool? comeFromPreview)
         {
-            var response = _vacancyPostingMediator.GetEmployer(providerSiteId, edsErn, vacancyGuid, comeFromPreview, null);
+            var response = await _vacancyPostingMediator.GetEmployer(providerSiteId, edsErn, vacancyGuid, comeFromPreview, null);
 
             switch (response.Code)
             {
@@ -997,9 +997,9 @@
         }
 
         [HttpGet]
-        public ActionResult Locations(int providerSiteId, int employerId, Guid vacancyGuid, bool? comeFromPreview, bool? isAnonymousEmployer)
+        public async Task<ActionResult> Locations(int providerSiteId, int employerId, Guid vacancyGuid, bool? comeFromPreview, bool? isAnonymousEmployer)
         {
-            var response = _vacancyPostingMediator.GetLocationAddressesViewModel(providerSiteId, employerId, User.GetUkprn(), vacancyGuid,
+            var response = await _vacancyPostingMediator.GetLocationAddressesViewModel(providerSiteId, employerId, User.GetUkprn(), vacancyGuid,
                 comeFromPreview, isAnonymousEmployer);
 
             switch (response.Code)
@@ -1078,9 +1078,9 @@
         }
 
         [HttpGet]
-        public ActionResult SearchAddresses(LocationSearchViewModel viewModel)
+        public async Task<ActionResult> SearchAddresses(LocationSearchViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.SearchLocations(viewModel, (List<VacancyLocationAddressViewModel>)TempData["AlreadyAddedLocations"]);
+            var response = await _vacancyPostingMediator.SearchLocations(viewModel, (List<VacancyLocationAddressViewModel>)TempData["AlreadyAddedLocations"]);
 
             ModelState.Clear();
 
@@ -1118,9 +1118,9 @@
         [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
         [FillParamterFromActionName(SubmitButtonActionName = "AddLocations", ParameterNames = new[] { "locationIndex", "postcodeSearch" }, ParameterTypes = new[] { TypeCode.Int32, TypeCode.String })]
         [HttpPost]
-        public ActionResult UseLocation(LocationSearchViewModel viewModel, int locationIndex, string postcodeSearch)
+        public async Task<ActionResult> UseLocation(LocationSearchViewModel viewModel, int locationIndex, string postcodeSearch)
         {
-            var response = _vacancyPostingMediator.UseLocation(viewModel, locationIndex, postcodeSearch);
+            var response = await _vacancyPostingMediator.UseLocation(viewModel, locationIndex, postcodeSearch);
 
             switch (response.Code)
             {
@@ -1148,9 +1148,9 @@
         }
 
         [HttpGet]
-        public ActionResult ManageDates(int vacancyReferenceNumber)
+        public async Task<ActionResult> ManageDates(int vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, false, false);
+            var response = await _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, false, false);
             SetUserMessage(response.Message);
 
             switch (response.Code)
@@ -1176,9 +1176,9 @@
         }
 
         [HttpPost]
-        public ActionResult CloseVacancy(FurtherVacancyDetailsViewModel viewModel)
+        public async Task<ActionResult> CloseVacancy(FurtherVacancyDetailsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.CloseVacancy(viewModel);
+            var response = await _vacancyPostingMediator.CloseVacancy(viewModel);
             ModelState.Clear();
             SetUserMessage(response.Message);
 
@@ -1199,11 +1199,11 @@
         }
 
         [HttpPost]
-        public ActionResult ManageDates(int vacancyReferenceNumber, FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
+        public async Task<ActionResult> ManageDates(int vacancyReferenceNumber, FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
         {
             viewModel.VacancyReferenceNumber = vacancyReferenceNumber;
 
-            var response = _vacancyPostingMediator.UpdateVacancyDates(viewModel, acceptWarnings);
+            var response = await _vacancyPostingMediator.UpdateVacancyDates(viewModel, acceptWarnings);
 
             ModelState.Clear();
             SetUserMessage(response.Message);
@@ -1231,9 +1231,9 @@
         }
 
         [HttpPost]
-        public JsonResult AutoSaveManageDates(FurtherVacancyDetailsViewModel viewModel)
+        public async Task<JsonResult> AutoSaveManageDates(FurtherVacancyDetailsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancyDates(viewModel, true);
+            var response = await _vacancyPostingMediator.UpdateVacancyDates(viewModel, true);
 
             switch (response.Code)
             {
