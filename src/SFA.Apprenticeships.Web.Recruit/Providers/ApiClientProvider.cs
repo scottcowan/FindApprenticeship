@@ -1,4 +1,4 @@
-namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
     using System;
     using System.Security.Claims;
@@ -39,7 +39,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 {
                     ukprn = ukprnoverride;
                 }
-                var apiUser = _raaApiUserRepository.GetUser(Convert.ToInt32(ukprn));
+                var apiUser = _raaApiUserRepository.GetUserByReferencedEntitySurrogateId(Convert.ToInt32(ukprn));
                 if (apiUser == null || ReferenceEquals(apiUser, RaaApiUser.UnknownApiUser))
                 {
                     var message = $"No RAA API key found for current principal {_currentUserService.CurrentUserName}";

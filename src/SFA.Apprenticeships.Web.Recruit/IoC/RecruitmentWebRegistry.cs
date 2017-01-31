@@ -58,6 +58,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using System.Web;
     using Application.Interfaces.Api;
     using Application.Interfaces.Vacancy;
+    using Providers;
     using CandidateRepository = Infrastructure.Repositories.Mongo.Candidates.CandidateRepository;
     using ISubmitContactMessageStrategy = Application.UserAccount.Strategies.ProviderUserAccount.ISubmitContactMessageStrategy;
     using SubmitContactMessageStrategy = Application.UserAccount.Strategies.ProviderUserAccount.SubmitContactMessageStrategy;

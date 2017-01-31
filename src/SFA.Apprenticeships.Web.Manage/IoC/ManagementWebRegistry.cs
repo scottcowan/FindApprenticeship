@@ -25,9 +25,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Raa.Common.Mappers;
     using StructureMap;
     using StructureMap.Configuration.DSL;
-    using Application.Interfaces.ReferenceData;
     using Application.Location;
-    using Application.ReferenceData;
     using Application.VacancyPosting.Strategies;
     using Domain.Interfaces.Repositories;
     using Infrastructure.Raa.Mappers;

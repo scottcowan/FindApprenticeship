@@ -2,7 +2,8 @@ MERGE INTO [RaaApi].[UserType] AS Target
 USING (VALUES 
   (0, 'UNK', 'UNK', 'Unknown'),
   (1, 'PVD', 'PVD', 'Provider'),
-  (2, 'EMP', 'EMP', 'Employer')
+  (2, 'EMP', 'EMP', 'Employer'),
+  (3, 'ACY', 'ACY', 'Agency')
 ) 
 
 AS Source (UserTypeId, CodeName, ShortName, FullName) 
