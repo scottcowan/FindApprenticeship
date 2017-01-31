@@ -6,11 +6,11 @@
     using System.Security.Cryptography;
     using Application.Interfaces;
     using Common;
-    using Configuration;
     using Domain.Entities.Raa.Api;
     using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Entities;
+    using Infrastructure.Common.Configuration;
 
     public class ApiUserRepository : IApiUserRepository
     {
