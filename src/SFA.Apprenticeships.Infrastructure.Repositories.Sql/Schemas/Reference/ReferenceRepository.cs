@@ -414,7 +414,7 @@
             dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)standard.Status;
             dbStandard.LarsCode = standard.LarsCode;
             dbStandard.StandardSectorId = standard.ApprenticeshipSectorId;
-            
+            dbStandard.FullName = standard.Name;
 
             // get new education level
             var educationLevels = GetEducationLevels();

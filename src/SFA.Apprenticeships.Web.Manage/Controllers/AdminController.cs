@@ -557,7 +557,7 @@
                 Status = standard.Status,
                 ApprenticeshipLevel = standard.ApprenticeshipLevel,
                 LarsCode = standard.LarsCode,
-                Name = standard.Name,
+                Name = standard.StandardName,
                 ApprenticeshipSectorId = standard.StandardSectorId
             };
             
