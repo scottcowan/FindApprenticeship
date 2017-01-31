@@ -145,7 +145,7 @@
 
         public Task<VacancyOwnerRelationship> SaveVacancyOwnerRelationship(VacancyOwnerRelationship vacancyOwnerRelationship, string edsUrn)
         {
-            return new Task<VacancyOwnerRelationship>(() => _vacancyOwnerRelationshipWriteRepository.Save(vacancyOwnerRelationship));
+            return Task.FromResult(_vacancyOwnerRelationshipWriteRepository.Save(vacancyOwnerRelationship));
         }
 
         public IEnumerable<VacancyOwnerRelationship> GetVacancyOwnerRelationships(int providerSiteId)

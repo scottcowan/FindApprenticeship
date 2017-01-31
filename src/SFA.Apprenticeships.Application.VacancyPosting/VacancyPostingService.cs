@@ -63,17 +63,17 @@
 
         public Task<Vacancy> GetVacancyByReferenceNumber(int vacancyReferenceNumber)
         {
-            return new Task<Vacancy>(() => _getVacancyStrategies.GetVacancyByReferenceNumber(vacancyReferenceNumber));
+            return Task.FromResult(_getVacancyStrategies.GetVacancyByReferenceNumber(vacancyReferenceNumber));
         }
 
         public Task<Vacancy> GetVacancy(Guid vacancyGuid)
         {
-            return new Task<Vacancy>(() => _getVacancyStrategies.GetVacancyByGuid(vacancyGuid));
+            return Task.FromResult(_getVacancyStrategies.GetVacancyByGuid(vacancyGuid));
         }
 
         public Task<Vacancy> GetVacancy(int vacancyId)
         {
-            return new Task<Vacancy>(() => _getVacancyStrategies.GetVacancyById(vacancyId));
+            return Task.FromResult(_getVacancyStrategies.GetVacancyById(vacancyId));
         }
 
         public IList<VacancySummary> GetWithStatus(VacancySummaryByStatusQuery query, out int totalRecords)
