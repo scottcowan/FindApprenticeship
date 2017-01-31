@@ -2,12 +2,12 @@
 
 namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
-    using Apprenticeships.Domain.Entities.ReferenceData;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.Entities;
     using Constants;
     using Extensions;
     using Factories;
+    using FluentAssertions;
     using Models;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
@@ -28,18 +28,11 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [Then(@"I see all the latest frameworks")]
         public void ThenISeeAllTheLatestFrameworks()
         {
-            //var vacancy = ScenarioContext.Current.Get<Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>($"vacancyId: {vacancyId}");
-            var framework = ScenarioContext.Current.Get<Category>($"");
-            var frameworks = ScenarioContext.Current.Get<Category>();
-            //var vacancyUri = string.Format(UriFormats.VacancyIdUriFormat, vacancyId);
-            //var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
+            var frameworks = ScenarioContext.Current.Get<List<ApprenticeshipFramework>>("frameworks");
+            var responseframeworks = ScenarioContext.Current.Get<IList<ApprenticeshipFramework>>("responseFrameworks");
 
-            //vacancy.Should().NotBeNull();
-            //responseVacancy.Should().NotBeNull();
-
-            //var comparer = new DbVacancyComparer();
-            //comparer.Equals(vacancy, responseVacancy).Should().BeTrue();
-            var test = frameworks;
+            responseframeworks.Should().NotBeNullOrEmpty();
+            responseframeworks.Count.Should().Be(frameworks.Count);
         }
 
         private async Task GetAllFrameworks()
@@ -75,8 +68,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                         ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
                     }
 
-                    var apprenticeshipFrameworks = JsonConvert.DeserializeObject<IList<ApprenticeshipFramework>>(content);
-                    ScenarioContext.Current.Add("apprenticeshipFrameworks", apprenticeshipFrameworks);
+                    var responseFrameworks = JsonConvert.DeserializeObject<IList<ApprenticeshipFramework>>(content);
+                    ScenarioContext.Current.Add("responseFrameworks", responseFrameworks);
                 }
             }
         }
