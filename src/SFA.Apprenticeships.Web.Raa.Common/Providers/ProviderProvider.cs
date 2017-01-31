@@ -19,29 +19,25 @@
     using Microsoft.Rest;
     using ViewModels.Employer;
     using ViewModels.Provider;
-    using Web.Common.Configuration;
     using Web.Common.Converters;
     using Vacancy = Domain.Entities.Raa.Vacancies.Vacancy;
 
     public class ProviderProvider : IProviderProvider, IProviderQAProvider
     {
         private static readonly IMapper ProviderMappers = new ProviderMappers();
-        private static readonly IMapper ApiClientMappers = new ApiClientMappers();
 
         private readonly ILogService _logService;
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
         private readonly IConfigurationService _configurationService;
-        private readonly IApiClientProvider _apiClientProvider;
 
-        public ProviderProvider(IProviderService providerService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IEmployerService employerService, IApiClientProvider apiClientProvider, ILogService logService)
+        public ProviderProvider(IProviderService providerService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IEmployerService employerService, ILogService logService)
         {
             _providerService = providerService;
             _configurationService = configurationService;
             _vacancyPostingService = vacancyPostingService;
             _employerService = employerService;
-            _apiClientProvider = apiClientProvider;
             _logService = logService;
         }
 
@@ -184,7 +180,7 @@
                 vacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(vacancyOwnerRelationship);
             }
 
-            var vacancy = GetVacancy(viewModel);
+            var vacancy = await GetVacancy(viewModel);
             if (vacancy != null)
             {
                 vacancy.VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyOwnerRelationshipId;
@@ -217,10 +213,10 @@
             return result;
         }
 
-        private Vacancy GetVacancy(VacancyOwnerRelationshipViewModel viewModel)
+        private async Task<Vacancy> GetVacancy(VacancyOwnerRelationshipViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyGuid) ??
-                          _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancy(viewModel.VacancyGuid) ??
+                          await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             return vacancy;
         }

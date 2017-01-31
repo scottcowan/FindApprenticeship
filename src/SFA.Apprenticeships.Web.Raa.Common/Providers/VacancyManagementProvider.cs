@@ -1,26 +1,20 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System.Threading.Tasks;
-    using Application.Interfaces;
     using Application.Interfaces.Api;
     using Application.Interfaces.Service;
     using Application.Vacancy;
     using Domain.Entities.Raa.Vacancies;
-    using Mappers;
     using ViewModels.VacancyManagement;
     using WageUpdate = DAS.RAA.Api.Client.V1.Models.WageUpdate;
 
     public class VacancyManagementProvider : IVacancyManagementProvider
     {
-        private static readonly IMapper ApiClientMappers = new ApiClientMappers();
-
         private readonly IVacancyManagementService _vacancyManagementService;
-        private readonly IApiClientProvider _apiClientProvider;
 
-        public VacancyManagementProvider(IVacancyManagementService vacancyManagementService, IApiClientProvider apiClientProvider)
+        public VacancyManagementProvider(IVacancyManagementService vacancyManagementService)
         {
             _vacancyManagementService = vacancyManagementService;
-            _apiClientProvider = apiClientProvider;
         }
 
         public IServiceResult Delete(int vacancyId)
