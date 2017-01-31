@@ -29,7 +29,7 @@
         }
 
         [Test]
-        public void ShouldReturnNullIfThereIsNotAnyAvailableVacancy()
+        public async Task ShouldReturnNullIfThereIsNotAnyAvailableVacancy()
         {
             const int vacancyReferenceNumber = 1;
             const string userName = "userName";
@@ -44,7 +44,7 @@
             var vacancyProviderBuilder = VacancyProviderTestHelper.GetBasicVacancyProviderBuilder(userName, vacancyReferenceNumber);
             var provider = vacancyProviderBuilder.With(vacancyLockingService).Build();
 
-            var result = provider.ReserveVacancyForQA(vacancyReferenceNumber);
+            var result = await provider.ReserveVacancyForQA(vacancyReferenceNumber);
 
             result.Should().BeNull();
         }

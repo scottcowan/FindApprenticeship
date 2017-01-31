@@ -26,7 +26,7 @@
     public class UpdateRequirementsProspectsViewModelTests
     {
         [Test]
-        public void ShouldReturnOKIfTheUserCanLockTheVacancy()
+        public async Task ShouldReturnOKIfTheUserCanLockTheVacancy()
         {
             //Arrange
             const string ukprn = "ukprn";
@@ -96,7 +96,7 @@
             var expectedResult = new QAActionResult<VacancyRequirementsProspectsViewModel>(QAActionResultCode.Ok, viewModel);
 
             //Act
-            var result = vacancyProvider.UpdateVacancyWithComments(viewModel);
+            var result = await vacancyProvider.UpdateVacancyWithComments(viewModel);
             
             //Assert
             vacancyPostingService.Verify(

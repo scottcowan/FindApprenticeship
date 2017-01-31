@@ -77,7 +77,7 @@
         }
 
         [Test]
-        public void TransferVacancy_IfNoRelationshipExists_CreateVacancyOwnerRelationship()
+        public async Task TransferVacancy_IfNoRelationshipExists_CreateVacancyOwnerRelationship()
         {
             const int newVorId = 1234;
 
@@ -106,8 +106,8 @@
                                 vor.ProviderSiteId == vacancyTransferViewModel.ProviderSiteId &&
                                 vor.EmployerDescription == _vacancyOwnerRelationship.EmployerDescription &&
                                 vor.EmployerWebsiteUrl == _vacancyOwnerRelationship.EmployerWebsiteUrl), It.IsAny<string>()))
-                .Returns<VacancyOwnerRelationship>(
-                    vor =>
+                .Returns<VacancyOwnerRelationship, string>(
+                    (vor, edsUrn) =>
                     {
                         vor.VacancyOwnerRelationshipId = newVorId;
                         return Task.FromResult(vor);
@@ -116,7 +116,7 @@
             var vacancyPostingProvider = GetVacancyPostingProvider();
 
             //Act
-            vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
+            await vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
 
             //Assert
             //A new VOR should have been created for the new provider and provider site

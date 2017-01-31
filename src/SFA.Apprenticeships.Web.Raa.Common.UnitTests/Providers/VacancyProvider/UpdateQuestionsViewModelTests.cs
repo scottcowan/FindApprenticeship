@@ -11,9 +11,7 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using ViewModels.Vacancy;
 
     [TestFixture]
@@ -21,7 +19,7 @@
     public class UpdateQuestionsViewModelTests
     {
         [Test]
-        public void ShouldReturnOKIfTheUserCanLockTheVacancy()
+        public async Task ShouldReturnOKIfTheUserCanLockTheVacancy()
         {
             //Arrange
             const string userName = "userName";
@@ -80,7 +78,7 @@
             var expectedResult = new QAActionResult<VacancyQuestionsViewModel>(QAActionResultCode.Ok, viewModel);
 
             //Act
-            var result = vacancyProvider.UpdateVacancyWithComments(viewModel);
+            var result = await vacancyProvider.UpdateVacancyWithComments(viewModel);
             
             //Assert
             vacancyPostingService.Verify(

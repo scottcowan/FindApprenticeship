@@ -25,11 +25,11 @@
         };
 
         [Test]
-        public void ShouldReturnOkAndExitIfCalledFromTheSaveAndExitAction()
+        public async Task ShouldReturnOkAndExitIfCalledFromTheSaveAndExitAction()
         {
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancyAndExit(_viewModel);
+            var result = await mediator.UpdateVacancyAndExit(_viewModel);
 
             result.Should()
                 .Match(

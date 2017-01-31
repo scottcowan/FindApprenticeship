@@ -118,7 +118,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act
-            var result = provider.GetNewVacancyViewModel(VacancyOwnerRelationshipId, vacancyGuid, null);
+            var result = await provider.GetNewVacancyViewModel(VacancyOwnerRelationshipId, vacancyGuid, null);
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);

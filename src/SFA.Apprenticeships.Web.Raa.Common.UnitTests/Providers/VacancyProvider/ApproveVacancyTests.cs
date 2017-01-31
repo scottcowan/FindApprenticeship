@@ -118,7 +118,7 @@
         }
 
         [Test]
-        public void ApproveVacancy()
+        public async Task ApproveVacancy()
         {
             //Arrange
             var vacancyReferenceNumber = 1;
@@ -146,7 +146,7 @@
                     .Build();
 
             //Act
-            var result = vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+            var result = await vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
             result.Should().Be(QAActionResultCode.Ok);
@@ -161,7 +161,7 @@
         }
 
         [Test]
-        public void ApproveVacancyShouldCallGeocodeServiceIfAddressIsNotGeocoded()
+        public async Task ApproveVacancyShouldCallGeocodeServiceIfAddressIsNotGeocoded()
         {
             //Arrange
             const int vacancyReferenceNumber = 1;
@@ -197,14 +197,14 @@
                     .Build();
 
             //Act
-            var result = vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+            var result = await vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
             geocodingService.Verify(s => s.GetGeoPointFor(address));
         }
 
         [Test]
-        public void ApproveVacancyShoulReturnErrorIfGeocodeServiceFails()
+        public async Task ApproveVacancyShoulReturnErrorIfGeocodeServiceFails()
         {
             //Arrange
             const int vacancyReferenceNumber = 1;
@@ -243,7 +243,7 @@
                     .Build();
 
             //Act
-            var result = vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+            var result = await vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
             result.Should().Be(QAActionResultCode.GeocodingFailure);
@@ -251,7 +251,7 @@
 
         [TestCase(1)]
         [TestCase(10)]
-        public void ApproveMultilocationVacancyShouldCallGeoCodeVacancyIfLocationIsNotGeocoded(int locationAddressCount)
+        public async Task ApproveMultilocationVacancyShouldCallGeoCodeVacancyIfLocationIsNotGeocoded(int locationAddressCount)
         {
             //Arrange
             const int vacancyReferenceNumber = 1;
@@ -297,7 +297,7 @@
                     .Build();
 
             //Act
-            vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+            await vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
             geocodingService.Verify(s => s.GetGeoPointFor(It.IsAny<PostalAddress>()), Times.Exactly(locationAddressCount));
@@ -306,7 +306,7 @@
 
         [TestCase(1)]
         [TestCase(10)]
-        public void ApproveMultilocationVacancyShouldReturnErrorIfGeoCodeVacancyFails(int locationAddressCount)
+        public async Task ApproveMultilocationVacancyShouldReturnErrorIfGeoCodeVacancyFails(int locationAddressCount)
         {
             //Arrange
             const int vacancyReferenceNumber = 1;
@@ -354,7 +354,7 @@
                     .Build();
 
             //Act
-            var result = vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+            var result = await vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
             result.Should().Be(QAActionResultCode.GeocodingFailure);
@@ -362,7 +362,7 @@
         }
 
         [Test]
-        public void ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
+        public async Task ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
         {
             const int vacanyReferenceNumber = 1;
             const string userName = "userName";
@@ -384,7 +384,7 @@
                     .With(currentUserService)
                     .Build();
 
-            var result = vacancyProvider.ApproveVacancy(vacanyReferenceNumber);
+            var result = await vacancyProvider.ApproveVacancy(vacanyReferenceNumber);
 
             result.Should().Be(QAActionResultCode.InvalidVacancy);
         }

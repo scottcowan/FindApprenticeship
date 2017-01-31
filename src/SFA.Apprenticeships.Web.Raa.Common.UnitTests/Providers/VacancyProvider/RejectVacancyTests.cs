@@ -17,7 +17,7 @@
     public class RejectVacancyTests
     {
         [Test]
-        public void RejectVacancy()
+        public async Task RejectVacancy()
         {
             //Arrange
             var vacancyReferenceNumber = 1;
@@ -45,7 +45,7 @@
                     .Build();
 
             //Act
-            var result = vacancyProvider.RejectVacancy(vacancyReferenceNumber);
+            var result = await vacancyProvider.RejectVacancy(vacancyReferenceNumber);
 
             //Assert
             result.Should().Be(QAActionResultCode.Ok);
@@ -60,7 +60,7 @@
         }
 
         [Test]
-        public void ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
+        public async Task ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
         {
             const int vacanyReferenceNumber = 1;
             const string userName = "userName";
@@ -82,7 +82,7 @@
                     .With(currentUserService)
                     .Build();
 
-            var result = vacancyProvider.RejectVacancy(vacanyReferenceNumber);
+            var result = await vacancyProvider.RejectVacancy(vacanyReferenceNumber);
 
             result.Should().Be(QAActionResultCode.InvalidVacancy);
         }

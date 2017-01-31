@@ -16,8 +16,7 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
 
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using ViewModels.Vacancy;
     using Web.Common.Configuration;
 
@@ -48,14 +47,19 @@
                     .Build();
 
             //Act
-            Action action = () => vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
+            Func<Task> action = async () => { await vacancyProvider.UpdateVacancyWithComments(newVacancyVM); };
 
             //Assert
             action.ShouldThrow<ArgumentNullException>();
         }
 
+        private async Task<Action> Test(VacancyProvider vacancyProvider, NewVacancyViewModel newVacancyVM)
+        {
+            return () => Task.Run(() => vacancyProvider.UpdateVacancyWithComments(newVacancyVM));
+        }
+
         [Test]
-        public void ShouldReturnOKIfTheUserCanLockTheVacancy()
+        public async Task ShouldReturnOKIfTheUserCanLockTheVacancy()
         {
             //Arrange
             const string ukprn = "ukprn";
@@ -121,7 +125,7 @@
             var expectedResult = new QAActionResult<NewVacancyViewModel>(QAActionResultCode.Ok, newVacancyVM);
 
             //Act
-            var result = vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
+            var result = await vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
             
             //Assert
             vacancyPostingService.Verify(
