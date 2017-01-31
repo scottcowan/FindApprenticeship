@@ -63,7 +63,7 @@
         }
 
         [Test]
-        public void GetConfirmEmployerShouldReturnAPoviderSiteEmployerViewModelWithMainLocationAsTrue()
+        public async Task GetConfirmEmployerShouldReturnAPoviderSiteEmployerViewModelWithMainLocationAsTrue()
         {
             const int providerSiteId = 101282923;
             const string edsUrn = "100608868";
@@ -71,7 +71,7 @@
 
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
-            var result = vacancyPostingController.ConfirmEmployer(providerSiteId, edsUrn, vacancyGuid, false, null);
+            var result = await vacancyPostingController.ConfirmEmployer(providerSiteId, edsUrn, vacancyGuid, false, null);
             result.Should().BeOfType<ViewResult>();
             var view = result as ViewResult;
             view.Model.Should().BeOfType<VacancyOwnerRelationshipViewModel>();
@@ -130,7 +130,7 @@
         }
 
         [Test]
-        public void AddLocationsShouldStoreLocationsInDB()
+        public async Task AddLocationsShouldStoreLocationsInDB()
         {
             const string providerSiteErn = "101282923";
             const string edsUrn = "100608868";
@@ -164,7 +164,7 @@
             Collection.Save(savedVacancy);
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
-            var result = vacancyPostingController.Locations(viewModel);
+            var result = await vacancyPostingController.Locations(viewModel);
             result.Should().BeOfType<RedirectToRouteResult>();
             var redirection = result as RedirectToRouteResult;
             redirection.RouteName.Should().Be("CreateVacancy");
