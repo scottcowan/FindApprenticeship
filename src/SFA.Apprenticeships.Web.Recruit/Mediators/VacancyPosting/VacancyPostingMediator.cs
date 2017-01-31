@@ -816,7 +816,7 @@
             return viewModel;
         }
 
-        public MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel, string ukprn)
+        public async Task<MediatorResponse<LocationSearchViewModel>> AddLocations(LocationSearchViewModel viewModel, string ukprn)
         {
             var validationResult = _locationSearchViewModelServerValidator.Validate(viewModel);
 
@@ -827,7 +827,7 @@
 
             try
             {
-                var locationSearchViewModel = _vacancyPostingProvider.AddLocations(viewModel);
+                var locationSearchViewModel = await _vacancyPostingProvider.AddLocations(viewModel);
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, locationSearchViewModel);
             }
             catch (CustomException ex) when (ex.Code == ErrorCodes.GeoCodeLookupProviderFailed)

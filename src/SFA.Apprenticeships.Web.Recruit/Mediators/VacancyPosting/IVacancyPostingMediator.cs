@@ -63,7 +63,7 @@
 
         Task<MediatorResponse<VacancyOwnerRelationshipViewModel>> CloneVacancy(int vacancyReferenceNumber);
 
-        MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel newVacancyViewModel, string ukprn);
+        Task<MediatorResponse<LocationSearchViewModel>> AddLocations(LocationSearchViewModel newVacancyViewModel, string ukprn);
 
         Task<MediatorResponse<LocationSearchViewModel>> GetLocationAddressesViewModel(int providerSiteId, int employerId, string ukprn, Guid vacancyGuid, bool? comeFromPreview, bool? isAnonymousEmployer);
 

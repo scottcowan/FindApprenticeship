@@ -159,7 +159,6 @@
     <Compile Include="Converters\ApprenticeshipVacancyConverterTests.cs" />
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverterTests.cs" />
     <Compile Include="Mappers\AddressToAddressViewModelTests.cs" />
-    <Compile Include="Mappers\ApiClientMappersTests.cs" />
     <Compile Include="Mappers\ApiUserMappersTest.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyDatesViewModelMapperTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyViewModelMapperTests.cs" />

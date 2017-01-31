@@ -1013,9 +1013,9 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "AddLocations")]
         [HttpPost]
-        public ActionResult Locations(LocationSearchViewModel viewModel)
+        public async Task<ActionResult> Locations(LocationSearchViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.AddLocations(viewModel, User.GetUkprn());
+            var response = await _vacancyPostingMediator.AddLocations(viewModel, User.GetUkprn());
 
             ModelState.Clear();
 
@@ -1042,9 +1042,9 @@
         }
 
         [HttpPost]
-        public JsonResult AutoSaveLocations(LocationSearchViewModel viewModel)
+        public async Task<JsonResult> AutoSaveLocations(LocationSearchViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.AddLocations(viewModel, User.GetUkprn());
+            var response = await _vacancyPostingMediator.AddLocations(viewModel, User.GetUkprn());
 
             ModelState.Clear();
 

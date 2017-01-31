@@ -247,6 +247,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.RAA.Api.UnitTests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.RAA.Api.Service.V1", "SFA.DAS.RAA.Api.Service.V1\SFA.DAS.RAA.Api.Service.V1.csproj", "{29D6341D-BB6D-438B-9FE3-595D661159BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.RAA.Api.Service.UnitTests", "SFA.DAS.RAA.Api.Service.UnitTests\SFA.DAS.RAA.Api.Service.UnitTests.csproj", "{7E9D2C6B-CBDE-4778-B139-036379E903F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Demo|Any CPU = Demo|Any CPU
@@ -1499,6 +1501,20 @@ Global
 		{29D6341D-BB6D-438B-9FE3-595D661159BA}.Release|Any CPU.Build.0 = Demo|Any CPU
 		{29D6341D-BB6D-438B-9FE3-595D661159BA}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{29D6341D-BB6D-438B-9FE3-595D661159BA}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Local|Any CPU.Build.0 = Local|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Release|Any CPU.ActiveCfg = Prod|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Release|Any CPU.Build.0 = Prod|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1616,9 +1632,10 @@ Global
 		{B0698001-39C3-437F-8F70-00CBAA0CF1D2} = {C352BC86-6214-4F6D-A267-ABF3F47B7077}
 		{50730AE1-D314-40E7-93B2-450F0C898CAE} = {C352BC86-6214-4F6D-A267-ABF3F47B7077}
 		{29D6341D-BB6D-438B-9FE3-595D661159BA} = {2EC3ADC0-EB51-4D4B-9B87-8D159C1326C4}
+		{7E9D2C6B-CBDE-4778-B139-036379E903F4} = {2EC3ADC0-EB51-4D4B-9B87-8D159C1326C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 	EndGlobalSection
 EndGlobal

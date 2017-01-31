@@ -39,7 +39,7 @@
         }
 
         [Test]
-        public void ShouldReturnErrorIfPostCodeAnywhereNotAccessible()
+        public async Task ShouldReturnErrorIfPostCodeAnywhereNotAccessible()
         {
             const string ukprn = "123567";
 
@@ -51,7 +51,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.AddLocations(viewModel, ukprn);
+            var result = await mediator.AddLocations(viewModel, ukprn);
 
             result.AssertMessage(VacancyPostingMediatorCodes.CreateVacancy.FailedGeoCodeLookup, ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);
 
