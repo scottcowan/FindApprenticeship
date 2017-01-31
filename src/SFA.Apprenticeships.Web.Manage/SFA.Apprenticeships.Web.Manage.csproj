@@ -1290,6 +1290,7 @@
     <Content Include="Views\Admin\DeleteProviderSiteRelationship.cshtml" />
     <Content Include="Views\Report\VacancyTrackerCsv.cshtml" />
     <None Include="Content\_assets\js\vendor\jquery.validate-vsdoc.js" />
+    <Content Include="Views\Admin\Sectors.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

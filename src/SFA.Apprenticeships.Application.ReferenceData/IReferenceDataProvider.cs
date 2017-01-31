@@ -49,5 +49,9 @@
 		void UpdateStandard(Standard standard);
         void UpdateFramework(Category entity);
         Category InsertFramework(Category entity);
+        Standard InsertStandard(Standard standard);
+        IEnumerable<Occupation> GetOccupations();
+        void UpdateSector(Sector sector);
+        Sector InsertSector(Sector sector);
     }
 }

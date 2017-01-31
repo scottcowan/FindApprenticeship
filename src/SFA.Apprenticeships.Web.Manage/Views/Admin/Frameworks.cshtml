@@ -130,7 +130,6 @@
 
                     mapped.StatusText = ko.observable(status);
 
-                    var ssat;
                     for (var i = 0; i < ssatList().length; i++) {
                         if (options.data.SsatName == ssatList()[i].FullName()) {
                             mapped.SsatName = ko.observable(ssatList()[i]);

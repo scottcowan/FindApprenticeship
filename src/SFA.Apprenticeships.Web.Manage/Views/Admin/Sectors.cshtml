@@ -1,11 +1,9 @@
 ﻿@using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Raa.Reference
-@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
-@using SFA.Apprenticeships.Web.Manage.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
-@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.EditStandardsViewModel
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.EditSectorsViewModel
 @{
-    ViewBag.Title = "Standards";
+    ViewBag.Title = "Sectors";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -19,11 +17,11 @@
     }
 </style>
 
-<h1 id="heading" class="heading-xlarge">Standards</h1>
+<h1 id="heading" class="heading-xlarge">Sectors</h1>
 
 <div class="grid-row">
-    @Html.RouteLink("Download Standards", ManagementRouteNames.AdminStandardsCsv, null, new { @class = "column-one-third" })
-    <a href="" class="column-one-third" data-bind="click: addItem">Add new standard</a>
+    @*@Html.RouteLink("Download Sectors", ManagementRouteNames.AdminSectorsCsv, null, new { @class = "column-one-third" })*@
+    <a href="" class="column-one-third" data-bind="click: addItem">Add new sector</a>
 </div>
 
 <div class="grid-row" data-bind="visible: message" style="display: none;">
@@ -51,39 +49,25 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Standard Sector</th>
-            <th>SSAT1</th>
-            <th>Code</th>
-            <th>Standard</th>
-            <th>Level</th>
-            <th>Status</th>
+            <th>Name</th>
+            <th>Occupation Name</th>
             <th></th>
         </tr>
     </thead>
 
-    <tbody data-bind="template: { name: 'standard', foreach: standards, as: 'standard' }">
-        @foreach (var standard in Model.Standards)
+    <tbody data-bind="template: { name: 'sector', foreach: sectors, as: 'sector' }">
+        @foreach (var sector in Model.Sectors)
             {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => standard.Id)
+                    @Html.DisplayFor(modelItem => sector.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => standard.StandardSectorName)
+                    @Html.DisplayFor(modelItem => sector.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => standard.Name)
+                    @Html.DisplayFor(modelItem => sector.Occupation.FullName)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => standard.LarsCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => standard.StandardName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => standard.ApprenticeshipLevel)
-                </td>
-                <td></td>
                 <td></td>
             </tr>
         }
@@ -93,22 +77,12 @@
 @section scripts {
     @Scripts.Render("~/bundles/knockout")
 
-    <script type="text/html" id="standard">
-        <tr data-bind="css : { 'highlight-row' : standard.Changed(), 'new-item' : !standard.Id() }">
-            <td data-bind="text: standard.Id"></td>
+    <script type="text/html" id="sector">
+        <tr data-bind="css : { 'highlight-row' : sector.Changed(), 'new-item' : !sector.Id() }">
+            <td data-bind="text: sector.Id"></td>
+            <td><input type="text" data-bind="value: sector.Name, valueUpdate: 'keyup'" /></td>
             <td>
-                <select style="width:100px;" data-bind="options: $root.Sectors, optionsText: 'FullName', value: standard.StandardSectorName"></select>
-            </td>
-            <td data-bind="text: standard.Name"></td>
-            <td>
-                <input style="width: 50px;" type="number" data-bind="value: standard.LarsCode, valueUpdate: 'keyup'"/>
-            </td>
-            <td><input type="text" data-bind="value: standard.StandardName, valueUpdate: 'keyup'" /></td>
-            <td>
-                <select data-bind="options: $root.EducationLevels, optionsText: 'name', value: standard.ApprenticeshipLevelName"></select>
-            </td>
-            <td>
-                <select data-bind="options: $root.statuses, optionsText: 'name', value: standard.StatusText"></select>
+                <select data-bind="options: $root.Occupations, optionsText: 'FullName', value: sector.Occupation"></select>
             </td>
             <td>
                 <a href="" data-bind="click: $root.delete, visible: !Id()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
@@ -119,19 +93,7 @@
 
     <script>
         var pageInit = function() {
-            var statuses = [
-                { name: 'Active', value: @((int) FrameworkStatusType.Active) },
-                { name: 'Ceased', value: @((int) FrameworkStatusType.Ceased) }
-            ];
-
-            var educationLevels = [
-                @foreach (var level in Enum.GetValues(typeof(ApprenticeshipLevel)))
-                {
-                    @: { name: '@(level.ToString())', value: @((int)level) },
-                }
-            ];
-
-            var ssatList = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Occupations)));
+            var occupations = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Occupations)));
             var sectors = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Sectors)));
 
             var mappings = {
@@ -139,45 +101,17 @@
                     var mapped = ko.mapping.fromJS(options.data);
                     mapped.Selected = ko.observable(false);
 
-                    var status = '';
-                    for (var i = 0; i < statuses.length; i++) {
-                        if (statuses[i].value === mapped.Status()) {
-                            status = statuses[i]; //.name;
-                            break;
-                        }
-                    }
+                    var occupation = options.data.Occupation ? options.data.Occupation.FullName : '';
+                    mapped.Occupation = ko.observable();
 
-                    mapped.StatusText = ko.observable(status);
-
-                    for (var i = 0; i < sectors().length; i++) {
-                        if (options.data.StandardSectorName === sectors()[i].FullName()) {
-                            mapped.StandardSectorName = ko.observable(sectors()[i]);
-                            mapped.StandardSectorId = ko.observable(sectors()[i].Id());
-                            break;
-                        }
-                    }
-
-                    for (var i = 0; i < educationLevels.length; i++) {
-                        if (options.data.ApprenticeshipLevel === educationLevels[i].value) {
-                            mapped.ApprenticeshipLevelName = ko.observable(educationLevels[i]);
-                            mapped.ApprenticeshipLevel = ko.observable(educationLevels[i].value);
+                    for (var i = 0; i < occupations().length; i++) {
+                        if (occupation === occupations()[i].FullName()) {
+                            mapped.Occupation(occupations()[i]);
                             break;
                         }
                     }
 
                     mapped.Changed = ko.observable(false);
-
-                    mapped.StatusText.subscribe(function(newValue) {
-                        mapped.Status(newValue.value);
-                    });
-
-                    mapped.StandardSectorName.subscribe(function(newValue) {
-                        mapped.StandardSectorId(newValue.Id());
-                    });
-                    
-                    mapped.ApprenticeshipLevelName.subscribe(function(newValue) {
-                        mapped.ApprenticeshipLevel(newValue.value);
-                    });
 
                     return mapped;
                 }
@@ -187,12 +121,10 @@
                 var self = this;
 
                 self.busy = ko.observable(false);
-                self.statuses = ko.observableArray(statuses);
-                self.SsatList = ssatList;
                 self.Sectors = sectors;
-                self.EducationLevels = educationLevels;
+                self.Occupations = occupations;
 
-                self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Standards)), mappings);
+                self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Sectors)), mappings);
 
                 self.dataChange = function(item) {
                     item.Changed(true);
@@ -203,7 +135,7 @@
 
                 self.message = ko.observable();
 
-                self.standards = ko.computed(function() {
+                self.sectors = ko.computed(function() {
                     if (self.showChanged()) {
                         return ko.utils.arrayFilter(self.data(),
                             function(item) {
@@ -223,16 +155,9 @@
                                     var name = item.Name();
                                     if (name != null) match = match || name.toLowerCase().indexOf(filter) > -1;
 
-                                    var standardName = item.StandardName();
-                                    if (standardName != null)
-                                        match = match || standardName.toLowerCase().indexOf(filter) > -1;
-
-                                    var standardSectorName = item.StandardSectorName().FullName();
-                                    if (standardSectorName != null)
-                                        match = match || standardSectorName.toLowerCase().indexOf(filter) > -1;
-
-                                    var larsCode = item.LarsCode();
-                                    if (larsCode != null) match = match || larsCode.toString().toLowerCase().indexOf(filter) > -1;
+                                    var occupationName = item.Occupation().FullName();
+                                    if (occupationName != null)
+                                        match = match || occupationName.toLowerCase().indexOf(filter) > -1;
 
                                     return match;
                                 });
@@ -245,7 +170,7 @@
                 self.changedItems = ko.computed(function() {
                     return ko.utils.arrayFilter(self.data(),
                         function(item) {
-                            return item.Changed();
+                            return item.Changed() && item.Id();
                         });
                 });
 
@@ -284,7 +209,7 @@
                             df.push($.Deferred(function(promise) {
                                 $.ajax({
                                     method: 'POST',
-                                    url: '@Url.Action("UpdateStandard")',
+                                    url: '@Url.Action("UpdateSector")',
                                     data: ko.mapping.toJS(item)
                                 }).done(function() {
                                     item.Changed(false);
@@ -312,7 +237,7 @@
                     //clear search first
                     self.searchText(null);
 
-                    var newItem = ko.mapping.fromJS(@Html.Raw(Json.Encode(new EditStandardViewModel())), mappings);
+                    var newItem = ko.mapping.fromJS(@Html.Raw(Json.Encode(new EditSectorViewModel())), mappings);
                     newItem.Id(null);
 
                     subscribeObject(newItem);
@@ -329,12 +254,12 @@
 
                 self.save = function(item) {
                     // validate
-                    if (item.StandardName() && item.StandardName() !== '' && item.LarsCode() && item.LarsCode() !== '') {
+                    if (item.Name() && item.Name() !== '') {
                         self.message(null);
 
                         $.ajax({
                             method: 'POST',
-                            url: '@Url.Action("CreateStandard")',
+                            url: '@Url.Action("CreateSector")',
                             data: ko.mapping.toJS(item)
                         }).done(function(data) {
                             item.Id(data.Id);
