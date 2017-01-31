@@ -3,6 +3,7 @@
 namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Domain.Entities.ReferenceData;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.Entities;
     using Constants;
@@ -30,11 +31,19 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [Then(@"I see all the latest frameworks")]
         public void ThenISeeAllTheLatestFrameworks()
         {
-            var frameworks = ScenarioContext.Current.Get<List<ApprenticeshipFramework>>("frameworks");
-            var responseframeworks = ScenarioContext.Current.Get<IList<ApprenticeshipFramework>>("responseFrameworks");
+            var occupations = ScenarioContext.Current.Get<List<ApprenticeshipOccupation>>("occupations");
+            var responseCategories = ScenarioContext.Current.Get<List<Category>>("responseCategories");
 
-            responseframeworks.Should().NotBeNullOrEmpty();
-            responseframeworks.Count.Should().Be(frameworks.Count);
+            responseCategories.Should().NotBeNullOrEmpty();
+            responseCategories.Count.Should().Be(occupations.Count);
+            for (int i = 0; i < responseCategories.Count; i++)
+            {
+                var occupation = occupations[i];
+                var responseCategory = responseCategories[i];
+                responseCategory.Id.Should().Be(occupation.ApprenticeshipOccupationId);
+                int statusAsInt = (int)responseCategory.Status;
+                statusAsInt.Should().Be(occupation.ApprenticeshipOccupationStatusTypeId);
+            }
         }
 
         private async Task GetAllFrameworks()
@@ -70,8 +79,10 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                         ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
                     }
 
-                    var responseFrameworks = JsonConvert.DeserializeObject<IList<ApprenticeshipFramework>>(content);
-                    ScenarioContext.Current.Add("responseFrameworks", responseFrameworks);
+                    //var responseFrameworks = JsonConvert.DeserializeObject<IList<ApprenticeshipFramework>>(content);
+                    //ScenarioContext.Current.Add("responseFrameworks", responseFrameworks);
+                    var responseCategories = JsonConvert.DeserializeObject<IList<Category>>(content);
+                    ScenarioContext.Current.Add("responseCategories", responseCategories);
                 }
             }
         }
@@ -86,13 +97,17 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         {
             const string requestUri = UriFormats.GetStandardssUri;
 
-            var occupations = new Fixture().CreateMany<ApprenticeshipOccupation>(3).ToList();
+            var occupations = new Fixture().Build<ApprenticeshipOccupation>()
+                .With(o => o.ApprenticeshipOccupationId, 5)
+                .CreateMany(1).ToList();
 
-            var educationLevelWithId1 = new Fixture().Build<EducationLevel>().With(c => c.EducationLevelId, 1)
-                .With(c => c.CodeName, "2")
+            var sectorWithId1 = new Fixture().Build<StandardSector>()
+                .With(ss => ss.StandardSectorId, 1)
+                .With(ss => ss.ApprenticeshipOccupationId, 5)
                 .Create();
-            var educationLevelWithId2 = new Fixture().Build<EducationLevel>().With(c => c.EducationLevelId, 2)
-                .With(c => c.CodeName, "2")
+            var sectorWithId2 = new Fixture().Build<StandardSector>()
+                .With(ss => ss.StandardSectorId, 2)
+                .With(ss => ss.ApprenticeshipOccupationId, 5)
                 .Create();
 
             var standardsWithId1 = new Fixture().Build<Standard>()
@@ -104,11 +119,11 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 .With(s => s.StandardSectorId, 2)
                 .Create();
 
-            var sectorWithId1 = new Fixture().Build<StandardSector>()
-                .With(ss => ss.StandardSectorId, 1)
+            var educationLevelWithId1 = new Fixture().Build<EducationLevel>().With(c => c.EducationLevelId, 1)
+                .With(c => c.CodeName, "2")
                 .Create();
-            var sectorWithId2 = new Fixture().Build<StandardSector>()
-                .With(ss => ss.StandardSectorId, 2)
+            var educationLevelWithId2 = new Fixture().Build<EducationLevel>().With(c => c.EducationLevelId, 2)
+                .With(c => c.CodeName, "2")
                 .Create();
 
             var standards = new List<Standard>();
@@ -165,10 +180,28 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         public void ThenISeeAllTheLatestStandards()
         {
             var occupations = ScenarioContext.Current.Get<List<ApprenticeshipOccupation>>("occupations");
+            var sectors = ScenarioContext.Current.Get<List<StandardSector>>("sectors");
+            var standards = ScenarioContext.Current.Get<List<Standard>>("standards");
+
             var responseStandardSubjectAreaTierOnes = ScenarioContext.Current.Get<IList<StandardSubjectAreaTierOne>>("responseStandardSubjectAreaTierOnes");
 
             responseStandardSubjectAreaTierOnes.Should().NotBeNullOrEmpty();
             responseStandardSubjectAreaTierOnes.Count.Should().Be(occupations.Count);
+            for (int i = 0; i < responseStandardSubjectAreaTierOnes.Count; i++)
+            {
+                var occupation = occupations[i];
+                var standardSubjectAreaTierOne = responseStandardSubjectAreaTierOnes[i];
+                //Ideally do a full compare
+                standardSubjectAreaTierOne.Id.Should().Be(occupation.ApprenticeshipOccupationId);
+                var ssat1Sectors = standardSubjectAreaTierOne.Sectors.ToList();
+                ssat1Sectors.Count.Should().Be(sectors.Count);
+                for (int j = 0; j < ssat1Sectors.Count; j++)
+                {
+                    var ssat1Sector = ssat1Sectors[j];
+                    //etc
+                    ssat1Sector.Standards.Count().Should().Be(1);
+                }
+            }
         }
     }
 }

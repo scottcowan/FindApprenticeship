@@ -1,4 +1,7 @@
 ﻿Feature: RA577
+Inorder to get create vacancies with standards and frameworks
+As a consumer
+I should be able to see the list of latest standards and frameworks
 
 @RA577 @GetFrameworks
 Scenario: Requesting for the latest frameworks

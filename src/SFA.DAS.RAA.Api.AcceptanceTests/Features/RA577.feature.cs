@@ -30,7 +30,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner(null, 0);
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "RA577", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "RA577", "Inorder to get create vacancies with standards and frameworks\r\nAs a consumer\r\nI s" +
+                    "hould be able to see the list of latest standards and frameworks", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -77,13 +78,13 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting for the latest frameworks", new string[] {
                         "RA577",
                         "GetFrameworks"});
-#line 4
-this.ScenarioSetup(scenarioInfo);
-#line 5
-testRunner.Given("On requesting for all frameworks", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 6
-testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 7
+this.ScenarioSetup(scenarioInfo);
+#line 8
+testRunner.Given("On requesting for all frameworks", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 9
+testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
 testRunner.And("I see all the latest frameworks", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -99,13 +100,13 @@ testRunner.And("I see all the latest frameworks", ((string)(null)), ((TechTalk.S
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting all standards", new string[] {
                         "RA577",
                         "GetStandards"});
-#line 10
-this.ScenarioSetup(scenarioInfo);
-#line 11
-testRunner.Given("On requesting for all standards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 12
-testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 13
+this.ScenarioSetup(scenarioInfo);
+#line 14
+testRunner.Given("On requesting for all standards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 15
+testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 16
 testRunner.And("I see all the latest standards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
