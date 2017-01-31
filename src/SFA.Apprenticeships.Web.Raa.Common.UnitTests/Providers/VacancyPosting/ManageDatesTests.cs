@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
+    using System.Threading.Tasks;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
@@ -38,7 +39,7 @@
                 Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30, null)
             };
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(apprenticeshipVacancy);
+                .Returns(Task.FromResult(apprenticeshipVacancy));
             MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(apprenticeshipVacancy))
@@ -75,7 +76,7 @@
                 Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30, null)
             };
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(apprenticeshipVacancy);
+                .Returns(Task.FromResult(apprenticeshipVacancy));
             MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(apprenticeshipVacancy))
@@ -127,7 +128,7 @@
             };
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(dbApprenticeshipVacancy);
+                .Returns(Task.FromResult(dbApprenticeshipVacancy));
             MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(dbApprenticeshipVacancy);
             MockMapper.Setup(m => m.Map<WageViewModel, Wage>(It.IsAny<WageViewModel>())).Returns(wage);
@@ -174,7 +175,7 @@
                 Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30, null)
             };
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(apprenticeshipVacancy);
+                .Returns(Task.FromResult(apprenticeshipVacancy));
             MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(apprenticeshipVacancy))
@@ -189,7 +190,7 @@
 
         [TestCase(0, VacancyApplicationsState.NoApplications)]
         [TestCase(1, VacancyApplicationsState.HasApplications)]
-        public void ShouldSetVacancyApplicationStateAfterUpdate(int applicationCount, VacancyApplicationsState expectedState)
+        public async Task ShouldSetVacancyApplicationStateAfterUpdate(int applicationCount, VacancyApplicationsState expectedState)
         {
             // Arrange.
             const int vacancyId = 1;
@@ -218,7 +219,7 @@
 
             MockVacancyPostingService.Setup(mock => mock
                 .GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(vacancy);
+                .Returns(Task.FromResult(vacancy));
 
             MockVacancyPostingService.Setup(mock => mock
                 .UpdateVacancy(It.IsAny<Vacancy>()))
@@ -234,7 +235,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var result = provider.UpdateVacancyDates(viewModel);
+            var result = await provider.UpdateVacancyDates(viewModel);
 
             // Assert.
             result.VacancyApplicationsState.Should().Be(expectedState);
@@ -242,7 +243,7 @@
 
         [TestCase(0, VacancyApplicationsState.NoApplications)]
         [TestCase(1, VacancyApplicationsState.HasApplications)]
-        public void ShouldGetVacancyApplicationState(int applicationCount, VacancyApplicationsState expectedState)
+        public async Task ShouldGetVacancyApplicationState(int applicationCount, VacancyApplicationsState expectedState)
         {
             // Arrange.
             const int vacancyId = 1;
@@ -271,7 +272,7 @@
 
             MockVacancyPostingService.Setup(mock => mock
                 .GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(vacancy);
+                .Returns(Task.FromResult(vacancy));
 
             MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(vacancy))
                 .Returns(viewModel);
@@ -283,7 +284,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var result = provider.GetVacancySummaryViewModel(vacancyReferenceNumber);
+            var result = await provider.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
             // Assert.
             result.VacancyApplicationsState.Should().Be(expectedState);

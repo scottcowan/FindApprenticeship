@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
@@ -73,7 +74,7 @@
 
             //Arrange: get AV, update retrieved AV with NVVM, save modified AV returning same modified AV, map AV to new NVVM with same properties as input
             vacancyPostingService.Setup(
-                vps => vps.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+                vps => vps.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(Task.FromResult(vacancy));
 
             vacancyPostingService.Setup(vps => vps.UpdateVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av);
 
@@ -109,7 +110,7 @@
         }
 
         [Test]
-        public void ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
+        public async Task ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
         {
             const int vacanyReferenceNumber = 1;
             const string userName = "userName";
@@ -122,7 +123,7 @@
 
             currentUserService.Setup(cus => cus.CurrentUserName).Returns(userName);
             vacancyPostingService.Setup(vps => vps.GetVacancyByReferenceNumber(vacanyReferenceNumber))
-                .Returns(new Vacancy {VacancyReferenceNumber = vacanyReferenceNumber});
+                .Returns(Task.FromResult(new Vacancy {VacancyReferenceNumber = vacanyReferenceNumber}));
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(userName, It.IsAny<Vacancy>()))
                 .Returns(false);
             
@@ -133,7 +134,7 @@
                     .With(currentUserService)
                     .Build();
 
-            var result = vacancyProvider.UpdateVacancyWithComments(requirementsProspectsViewModel);
+            var result = await vacancyProvider.UpdateVacancyWithComments(requirementsProspectsViewModel);
 
             result.Code.Should().Be(QAActionResultCode.InvalidVacancy);
             result.ViewModel.Should().BeNull();

@@ -7,6 +7,7 @@
     using Raa.Common.ViewModels.Admin;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     [TestFixture]
     [Parallelizable]
@@ -53,7 +54,7 @@
                 vps =>
                     vps.GetVacancyByReferenceNumber(
                         vacancyTransferViewModel.VacancyReferenceNumbers.FirstOrDefault()))
-                .Returns(_existingVacancy);
+                .Returns(Task.FromResult(_existingVacancy));
 
             MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_existingVacancy.VacancyOwnerRelationshipId, false)).Returns(_vacancyOwnerRelationship);
 
@@ -91,7 +92,7 @@
                 vps =>
                     vps.GetVacancyByReferenceNumber(
                         vacancyTransferViewModel.VacancyReferenceNumbers.FirstOrDefault()))
-                .Returns(_existingVacancy);
+                .Returns(Task.FromResult(_existingVacancy));
 
             MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_existingVacancy.VacancyOwnerRelationshipId, false)).Returns(_vacancyOwnerRelationship);
             

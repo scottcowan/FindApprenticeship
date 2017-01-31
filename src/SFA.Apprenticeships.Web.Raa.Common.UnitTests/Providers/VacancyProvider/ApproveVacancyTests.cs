@@ -14,6 +14,7 @@
     using Ploeh.AutoFixture;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Web.Common.Configuration;
 
     [TestFixture]
@@ -40,7 +41,7 @@
             var vacancyPostingService = new Mock<IVacancyPostingService>();
 
             vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(vacancy);
+                .Returns(Task.FromResult(vacancy));
             vacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(locationAddresses);
 
             //set up so that a bunch of vacancy reference numbers are created that are not the same as the one supplied above
@@ -132,7 +133,7 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
-            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(Task.FromResult(vacancy));
 
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(It.IsAny<string>(), It.IsAny<Vacancy>()))
                 .Returns(true);
@@ -182,7 +183,7 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
-            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(Task.FromResult(vacancy));
 
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(It.IsAny<string>(), It.IsAny<Vacancy>()))
                 .Returns(true);
@@ -225,7 +226,7 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
-            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(Task.FromResult(vacancy));
 
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(It.IsAny<string>(), It.IsAny<Vacancy>()))
                 .Returns(true);
@@ -277,7 +278,7 @@
             var geocodingService = new Mock<IGeoCodeLookupService>();
 
             vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(vacancy);
+                .Returns(Task.FromResult(vacancy));
             vacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(locationAddresses);
 
             //set up so that a bunch of vacancy reference numbers are created that are not the same as the one supplied above
@@ -332,7 +333,7 @@
             var geocodingService = new Mock<IGeoCodeLookupService>();
 
             vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(vacancy);
+                .Returns(Task.FromResult(vacancy));
             vacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(locationAddresses);
             geocodingService.Setup(s => s.GetGeoPointFor(It.IsAny<PostalAddress>()))
                 .Throws(new CustomException(Application.Interfaces.Locations.ErrorCodes.GeoCodeLookupProviderFailed));
@@ -372,7 +373,7 @@
 
             currentUserService.Setup(cus => cus.CurrentUserName).Returns(userName);
             vacancyPostingService.Setup(vps => vps.GetVacancyByReferenceNumber(vacanyReferenceNumber))
-                .Returns(new Vacancy { VacancyReferenceNumber = vacanyReferenceNumber });
+                .Returns(Task.FromResult(new Vacancy { VacancyReferenceNumber = vacanyReferenceNumber }));
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(userName, It.IsAny<Vacancy>()))
                 .Returns(false);
 

@@ -34,7 +34,7 @@
                 EmployerWebsiteUrl = "Url"
             };
 
-            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(Task.FromResult(apprenticeshipVacancy));
             MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(vacancyOwnerRelationship))
                 .Returns(vacancyOwnerRelationship);
             MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn, false))
@@ -89,7 +89,7 @@
                 EmployerWebsiteUrl = "Url"
             };
 
-            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(nullApprenticeshipVacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(Task.FromResult(nullApprenticeshipVacancy));
             MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(providerSiteEmployerLink))
                 .Returns(providerSiteEmployerLink);
             MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn, false))
@@ -141,7 +141,7 @@
                 StatusType = VacancyOwnerRelationshipStatusTypes.Deleted
             };
 
-            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(Task.FromResult(apprenticeshipVacancy));
             MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(vacancyOwnerRelationship))
                 .Returns(vacancyOwnerRelationship);
             MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn, false))

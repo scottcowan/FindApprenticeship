@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
@@ -48,7 +49,7 @@
             };
 
             MockVacancyPostingService.Setup(mock => mock.GetVacancyByReferenceNumber(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value))
-                .Returns(_existingVacancy);
+                .Returns(Task.FromResult(_existingVacancy));
             MockVacancyPostingService.Setup(mock => mock.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);
             MockReferenceDataService.Setup(mock => mock.GetSectors())
@@ -82,7 +83,7 @@
         }
 
         [Test]
-        public void ShouldUpdateIfVacancyReferenceIsPresent()
+        public async Task ShouldUpdateIfVacancyReferenceIsPresent()
         {
             // Arrange.
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
@@ -93,7 +94,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.UpdateVacancy(_validNewVacancyViewModelWithReferenceNumber);
+            var viewModel = await provider.UpdateVacancy(_validNewVacancyViewModelWithReferenceNumber);
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>
@@ -107,13 +108,13 @@
 
        
         [Test]
-        public void ShouldReturnANewVacancyIfVacancyGuidDoesNotExists()
+        public async Task ShouldReturnANewVacancyIfVacancyGuidDoesNotExists()
         {
             // Arrange
             var vacancyGuid = Guid.NewGuid();
             Vacancy vacancy = null;
             
-            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(vacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(Task.FromResult(vacancy));
             var provider = GetVacancyPostingProvider();
 
             // Act

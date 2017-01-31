@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using ViewModels.Admin;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
@@ -31,7 +32,7 @@
         MediatorResponse<ApiUserViewModel> SaveApiUser(ApiUserViewModel viewModel);
         MediatorResponse<ApiUserViewModel> ResetApiUserPassword(ApiUserViewModel viewModel);
         MediatorResponse<byte[]> GetApiUsersBytes();
-        MediatorResponse<TransferVacanciesResultsViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel);
+        Task<MediatorResponse<TransferVacanciesResultsViewModel>> GetVacancyDetails(TransferVacanciesViewModel viewModel);
         MediatorResponse<ManageVacancyTransferResultsViewModel> ManageVacanciesTransfers(ManageVacancyTransferViewModel vacancyTransferViewModel);
         MediatorResponse<ProviderUserSearchResultsViewModel> SearchProviderUsers(ProviderUserSearchViewModel searchViewModel, string ukprn);
         MediatorResponse<ProviderUserViewModel> GetProviderUser(int providerUserId);
