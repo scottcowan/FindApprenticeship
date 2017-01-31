@@ -88,6 +88,28 @@ testRunner.And("I see all the latest frameworks", ((string)(null)), ((TechTalk.S
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Requesting all standards")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA577")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA577")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetStandards")]
+        public virtual void RequestingAllStandards()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting all standards", new string[] {
+                        "RA577",
+                        "GetStandards"});
+#line 10
+this.ScenarioSetup(scenarioInfo);
+#line 11
+testRunner.Given("On requesting for all standards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 12
+testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 13
+testRunner.And("I see all the latest standards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

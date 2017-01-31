@@ -31,6 +31,9 @@
 
         public static string GetFrameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework ORDER BY FullName;";
         public static string GetOccupationSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
+        public static string GetSectorSql = "SELECT * FROM Reference.StandardSector ORDER BY FullName;";
+        public static string GetStandardSql = "SELECT * FROM Reference.Standard ORDER BY FullName;";
+        public static string GetEducationLevelSql = "SELECT * FROM Reference.EducationLevel;";
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
@@ -87,16 +90,9 @@
         {
             _logger.Debug("Getting all standards");
 
-            const string standardSql = "SELECT * FROM Reference.Standard ORDER BY FullName;";
-
-            //TODO: Does this need to be here? If not, test and remove.
-            var sqlParams = new
-            {
-            };
-
             var educationLevels = GetEducationLevels();
 
-            var dbStandards = _getOpenConnection.Query<Entities.Standard>(standardSql, sqlParams);
+            var dbStandards = _getOpenConnection.Query<Entities.Standard>(GetStandardSql);
             var standards = dbStandards.Select(x =>
             {
                 var level = educationLevels.FirstOrDefault(el => el.EducationLevelId == x.EducationLevelId);
@@ -119,14 +115,8 @@
         {
             _logger.Debug("Getting all sectors");
 
-            const string sectorSql = "SELECT * FROM Reference.StandardSector ORDER BY FullName;";
-
-            var sqlParams = new
-            {
-            };
-
             var dbSectors = _getOpenConnection
-                .Query<StandardSector>(sectorSql, sqlParams);
+                .Query<StandardSector>(GetSectorSql);
 
             //set the standards.
             var standards = GetStandards();
@@ -158,18 +148,12 @@
         {
             _logger.Debug("Getting all SSAT1s");
 
-            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation;";
-
-            var sqlParams = new
-            {
-            };
-
-            var dbStandardSubjectAreaTierOnes = _getOpenConnection
-                .Query<ApprenticeshipOccupation>(sectorSql, sqlParams);
+            var apprenticeshipOccupations = _getOpenConnection
+                .Query<ApprenticeshipOccupation>(GetOccupationSql);
 
             var sector = GetSectors();
 
-            var standardSubjectAreaTierOnes = dbStandardSubjectAreaTierOnes.Select(x =>
+            var standardSubjectAreaTierOnes = apprenticeshipOccupations.Select(x =>
             {
                 var appOcc = new StandardSubjectAreaTierOne
                 {
@@ -371,14 +355,8 @@
         {
             _logger.Debug("Getting all education levels");
 
-            const string sectorSql = "SELECT * FROM Reference.EducationLevel;";
-
-            var sqlParams = new
-            {
-            };
-
             var levels = _getOpenConnection
-                .Query<EducationLevel>(sectorSql, sqlParams);
+                .Query<EducationLevel>(GetEducationLevelSql);
 
             _logger.Debug("Got all education levels");
 

@@ -30,5 +30,6 @@
         public const string RegionCodeUriFormat = "reference/region/code/{0}";
 
         public const string GetFrameworksUri = "frameworks";
+        public const string GetStandardssUri = "standards";
     }
 }
