@@ -46,7 +46,7 @@
             return frameworks;
         }
 
-        public IList<Occupation> GetOccupations()
+        public IEnumerable<Occupation> GetOccupations()
         {
             var dbOccupations = GetApprenticeshipOccupations();
             var dbFrameworks = GetApprenticeshipFrameworks();
@@ -502,13 +502,55 @@
                 StandardSectorId = standard.ApprenticeshipSectorId,
                 EducationLevelId = level.EducationLevelId,
                 FullName = standard.Name
-        };
+            };
 
             var result = _getOpenConnection.Insert(dbStandard);
 
             standard.Id = (int)result;
 
             return standard;
+        }
+
+        public void UpdateSector(Sector sector)
+        {
+            _logger.Debug($"Updating sector with id={sector.Id}");
+
+            const string sectorSql = "SELECT * FROM Reference.StandardSector WHERE StandardSectorId = @id";
+
+            //TODO: Does this need to be here? If not, test and remove.
+            var sqlParams = new
+            {
+                sector.Id
+            };
+
+            var dbSectors = _getOpenConnection.Query<Entities.StandardSector>(sectorSql, sqlParams);
+
+            var dbSector = dbSectors.Single();
+
+            dbSector.ApprenticeshipOccupationId = sector.ApprenticeshipOccupationId;
+            dbSector.FullName = sector.Name;
+
+            var result = _getOpenConnection.UpdateSingle(dbSector);
+
+            if (!result)
+                throw new Exception($"Failed to save sector with id={sector.Id}");
+        }
+
+        public Sector InsertSector(Sector sector)
+        {
+            _logger.Debug($"Inserting new sector");
+
+            var dbStandard = new StandardSector()
+            {
+                FullName = sector.Name,
+                ApprenticeshipOccupationId = sector.ApprenticeshipOccupationId
+            };
+
+            var result = _getOpenConnection.Insert(dbStandard);
+
+            sector.Id = (int)result;
+
+            return sector;
         }
     }
 }

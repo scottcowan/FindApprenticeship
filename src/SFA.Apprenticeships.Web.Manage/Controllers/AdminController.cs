@@ -15,6 +15,7 @@
     using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
     using System.Web.Mvc;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Raa.Common.ViewModels.Vacancy;
@@ -510,7 +511,8 @@
                 Id = s.Id
             });
 
-            var sectors = response.ViewModel.SelectMany(s => s.Sectors).OrderBy(s => s.Name).Select(s => new SectorViewModel()
+            var sectorResponse = _adminMediator.GetSectors();
+            var sectors = sectorResponse.ViewModel.Select(s => new SectorViewModel()
             {
                 Id = s.Id,
                 FullName = s.Name
@@ -641,6 +643,45 @@
         {
             var response = _adminMediator.GetStandardsBytes();
             return File(response.ViewModel, "text/csv", "StandardsList.csv");
+        }
+
+        [HttpGet]
+        public ActionResult Sectors()
+        {
+            var response = _adminMediator.GetSectors();
+
+            var sectors = new List<EditSectorViewModel>();
+            var occupations = _adminMediator.GetOccupations().ViewModel.Where(w => w.Status == OccupationStatusType.Active).ToList();
+
+            sectors.AddRange(
+                response.ViewModel.Select(s => new EditSectorViewModel()
+                {
+                    Id = s.Id,
+                    Name =  s.Name, //CategoryPrefixes.GetOriginalFrameworkCode(s.CodeName),
+                    Occupation = occupations.SingleOrDefault(o => o.Id == s.ApprenticeshipOccupationId)
+                }));
+
+            sectors.RemoveAll(r => r.Occupation == null);
+
+            var viewModel = new EditSectorsViewModel() { Sectors = sectors, Occupations = occupations };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateSector(EditSectorViewModel sector)
+        {
+            var response = _adminMediator.UpdateSector(sector);
+
+            return Json(new { Status = "Ok" });
+        }
+
+        [HttpPost]
+        public JsonResult CreateSector(EditSectorViewModel sector)
+        {
+            var response = _adminMediator.InsertSector(sector);
+
+            return Json(response.ViewModel);
         }
     }
 }

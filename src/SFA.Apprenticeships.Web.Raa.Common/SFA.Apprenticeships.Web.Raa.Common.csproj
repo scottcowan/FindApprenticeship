@@ -377,6 +377,8 @@
     <Compile Include="ViewModels\VacancyPosting\VacancyLocationAddressViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\Employer\EmployerViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\EditSectorsViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\EditSectorViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EditStandardsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EditStandardViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\IPartialVacancyViewModel.cs" />

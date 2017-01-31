@@ -410,6 +410,12 @@
                 );
 
             routes.MapRoute(
+                name: ManagementRouteNames.AdminSectors,
+                url: "admin/sectors",
+                defaults: new { controller = "Admin", action = "Sectors" }
+                );
+
+            routes.MapRoute(
                name: ManagementRouteNames.AdminUpdateFramework,
                url: "admin/framework",
                defaults: new { controller = "Admin", action = "UpdateFramework" }
@@ -431,6 +437,18 @@
                name: ManagementRouteNames.AdminFrameworksCsv,
                url: "admin/frameworks/csv",
                defaults: new { controller = "Admin", action = "DownloadFrameworksCsv" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminUpdateSector,
+               url: "admin/sector",
+               defaults: new { controller = "Admin", action = "UpdateSector" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminCreateSector,
+               url: "admin/sector/create",
+               defaults: new { controller = "Admin", action = "CreateSector" }
                );
 
             routes.LowercaseUrls = true;

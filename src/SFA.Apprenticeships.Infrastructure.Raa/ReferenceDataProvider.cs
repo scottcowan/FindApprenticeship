@@ -220,5 +220,20 @@
         {
             return _referenceRepository.InsertStandard(standard);
         }
+
+        public IEnumerable<Occupation> GetOccupations()
+        {
+            return _referenceRepository.GetOccupations();
+        }
+
+        public void UpdateSector(Sector sector)
+        {
+            _referenceRepository.UpdateSector(sector);
+        }
+
+        public Sector InsertSector(Sector sector)
+        {
+            return _referenceRepository.InsertSector(sector);
+        }
     }
 }

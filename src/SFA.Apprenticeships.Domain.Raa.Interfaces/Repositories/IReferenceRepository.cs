@@ -4,12 +4,13 @@
     using Entities.Raa.Reference;
     using Entities.Raa.Vacancies;
     using Entities.ReferenceData;
+    using Occupation = Entities.Raa.Reference.Occupation;
 
     public interface IReferenceRepository
     {
         IList<Framework> GetFrameworks();
 
-        IList<Occupation> GetOccupations();
+        IEnumerable<Occupation> GetOccupations();
 
         IList<Standard> GetStandards();
 
@@ -43,5 +44,7 @@
         void UpdateFramework(Category category);
         Category InsertFramework(Category entity);
         Standard InsertStandard(Standard standard);
+        void UpdateSector(Sector sector);
+        Sector InsertSector(Sector sector);
     }
 }
