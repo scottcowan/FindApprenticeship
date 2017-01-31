@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
+    using System.Threading.Tasks;
     using Common.Constants;
     using Common.UnitTests.Mediators;
     using FluentAssertions;
@@ -14,7 +15,7 @@
     public class ReserveForQATests
     {
         [Test]
-        public void ShouldIncludeAMessageIfTheVacancyReservedIsNotTheRequestedOne()
+        public async Task ShouldIncludeAMessageIfTheVacancyReservedIsNotTheRequestedOne()
         {
             const int vacancyReferenceNumber = 1;
             const int anotherVacancyReferenceNumber = 2;
@@ -22,11 +23,11 @@
 
             var provider = new Mock<IVacancyQAProvider>();
 
-            provider.Setup(p => p.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(viewModel);
+            provider.Setup(p => p.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.ReserveVacancyForQA(vacancyReferenceNumber);
+            var result = await mediator.ReserveVacancyForQA(vacancyReferenceNumber);
 
             result.Code.Should().Be(VacancyMediatorCodes.ReserveVacancyForQA.NextAvailableVacancy);
             result.ViewModel.VacancyReferenceNumber.Should().NotBe(vacancyReferenceNumber);
@@ -37,35 +38,35 @@
         }
 
         [Test]
-        public void ShouldNotIncludeAnyMessageIfTheVacancyReservedIsTheRequestedOne()
+        public async Task ShouldNotIncludeAnyMessageIfTheVacancyReservedIsTheRequestedOne()
         {
             const int vacancyReferenceNumber = 1;
             var viewModel = VacancyMediatorTestHelper.GetValidVacancyViewModel(vacancyReferenceNumber);
 
             var provider = new Mock<IVacancyQAProvider>();
 
-            provider.Setup(p => p.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(viewModel);
+            provider.Setup(p => p.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.ReserveVacancyForQA(vacancyReferenceNumber);
+            var result = await mediator.ReserveVacancyForQA(vacancyReferenceNumber);
 
             result.AssertCodeAndMessage(VacancyMediatorCodes.ReserveVacancyForQA.Ok);
             result.ViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
         [Test]
-        public void ShouldReturnAMessageIfNoVacancyIsAvailable()
+        public async Task ShouldReturnAMessageIfNoVacancyIsAvailable()
         {
             const int vacancyReferenceNumber = 1;
             VacancyViewModel viewModel = null;
 
             var provider = new Mock<IVacancyQAProvider>();
-            provider.Setup(p => p.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(viewModel);
+            provider.Setup(p => p.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.ReserveVacancyForQA(vacancyReferenceNumber);
+            var result = await mediator.ReserveVacancyForQA(vacancyReferenceNumber);
 
             result.AssertMessage(VacancyMediatorCodes.ReserveVacancyForQA.NoVacanciesAvailable,
                 "All vacancies have been reviewed.", UserMessageLevel.Info);

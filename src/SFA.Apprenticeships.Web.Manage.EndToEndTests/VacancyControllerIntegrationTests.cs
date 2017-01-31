@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Common.Validators;
     using Common.ViewModels;
@@ -23,7 +24,7 @@
         //TODO: Alter these acceptance tests to use SQL repo
 
         [Test, Category("Acceptance")]
-        public void GetBasicDetailsWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
+        public async Task GetBasicDetailsWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -35,7 +36,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             //Act
-            var view = vacancyController.BasicDetails(vacancyReferenceNumber);
+            var view = await vacancyController.BasicDetails(vacancyReferenceNumber);
 
             // Assert
             view.Should().BeOfType<ViewResult>();
@@ -50,7 +51,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void GetBasicDetailsWithAVacancyWithErrorsShouldReturnTheVacancyWithAModelStateFilled()
+        public async Task GetBasicDetailsWithAVacancyWithErrorsShouldReturnTheVacancyWithAModelStateFilled()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -62,7 +63,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             //Act
-            var view = vacancyController.BasicDetails(vacancyReferenceNumber);
+            var view = await vacancyController.BasicDetails(vacancyReferenceNumber);
 
             // Assert
             view.Should().BeOfType<ViewResult>();
@@ -78,7 +79,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void PostBasicDetailsShouldRedirectToVacancyReviewIfVacancyIsCorrect()
+        public async Task PostBasicDetailsShouldRedirectToVacancyReviewIfVacancyIsCorrect()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -92,7 +93,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             // Act
-            var result = vacancyController.BasicDetails(vacancyViewModel);
+            var result = await vacancyController.BasicDetails(vacancyViewModel);
 
             // Assert
             result.Should().BeOfType<RedirectToRouteResult>();
@@ -104,7 +105,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void PostBasicDetailsWithErrorsShouldReturnTheViewWithModelStateFilled()
+        public async Task PostBasicDetailsWithErrorsShouldReturnTheViewWithModelStateFilled()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -118,7 +119,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             // Act
-            var view = vacancyController.BasicDetails(newVacancyViewModel);
+            var view = await vacancyController.BasicDetails(newVacancyViewModel);
 
             // Assert
             view.Should().BeOfType<ViewResult>();
@@ -134,7 +135,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void GetSummaryWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
+        public async Task GetSummaryWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -146,7 +147,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             //Act
-            var view = vacancyController.Summary(vacancyReferenceNumber);
+            var view = await vacancyController.Summary(vacancyReferenceNumber);
 
             // Assert
             view.Should().BeOfType<ViewResult>();
@@ -160,7 +161,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void GetSummaryWithAnIncorrectVacancyShouldReturnTheVacancyWithTheModelStateFilled()
+        public async Task GetSummaryWithAnIncorrectVacancyShouldReturnTheVacancyWithTheModelStateFilled()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -172,7 +173,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             //Act
-            var view = vacancyController.Summary(vacancyReferenceNumber);
+            var view = await vacancyController.Summary(vacancyReferenceNumber);
 
             // Assert
             view.Should().BeOfType<ViewResult>();
@@ -190,7 +191,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void PostSummaryWithACorrectVacancyShouldRedirectToPreviewPage()
+        public async Task PostSummaryWithACorrectVacancyShouldRedirectToPreviewPage()
         {
             const int vacancyReferenceNumber = 1;
             const string title = "Vacancy title";
@@ -203,7 +204,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             // Act
-            var result = vacancyController.Summary(vacancyViewModel);
+            var result = await vacancyController.Summary(vacancyViewModel);
 
             // Assert
             result.Should().BeOfType<RedirectToRouteResult>();
@@ -215,7 +216,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void PostSummaryWithAVacancyWithErrorsAndWarningsShouldReturnTheViewWithTheModelStateFilled()
+        public async Task PostSummaryWithAVacancyWithErrorsAndWarningsShouldReturnTheViewWithTheModelStateFilled()
         {
             const int vacancyReferenceNumber = 1;
 
@@ -224,7 +225,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             // Act
-            var view = vacancyController.Summary(vacancySummaryViewModel);
+            var view = await vacancyController.Summary(vacancySummaryViewModel);
 
             // Assert
             view.Should().BeOfType<ViewResult>();
@@ -242,7 +243,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void GetRequirementsAndProspectsWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
+        public async Task GetRequirementsAndProspectsWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -254,7 +255,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             //Act
-            var view = vacancyController.RequirementsAndProspects(vacancyReferenceNumber);
+            var view = await vacancyController.RequirementsAndProspects(vacancyReferenceNumber);
 
             // Assert
             view.Should().BeOfType<ViewResult>();
@@ -269,7 +270,7 @@
 
 
         [Test, Category("Acceptance")]
-        public void GetRequirementsProspectsWithAnIncorrectVacancyShouldReturnTheVacancyWithTheModelStateFilled()
+        public async Task GetRequirementsProspectsWithAnIncorrectVacancyShouldReturnTheVacancyWithTheModelStateFilled()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -281,7 +282,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             //Act
-            var view = vacancyController.RequirementsAndProspects(vacancyReferenceNumber);
+            var view = await vacancyController.RequirementsAndProspects(vacancyReferenceNumber);
 
             // Assert
             view.Should().BeOfType<ViewResult>();
@@ -296,7 +297,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void PostRequirementsAndProspectsWithACorrectVacancyShouldRedirectToPreviewPage()
+        public async Task PostRequirementsAndProspectsWithACorrectVacancyShouldRedirectToPreviewPage()
         {
             const int vacancyReferenceNumber = 1;
             const string title = "Vacancy title";
@@ -309,7 +310,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             // Act
-            var result = vacancyController.RequirementsAndProspects(vacancyViewModel);
+            var result = await vacancyController.RequirementsAndProspects(vacancyViewModel);
 
             // Assert
             result.Should().BeOfType<RedirectToRouteResult>();
@@ -322,7 +323,7 @@
 
         
         [Test, Category("Acceptance")]
-        public void PostRequirementsAndProspectsWithAVacancyWithErrorsAndWarningsShouldReturnTheViewWithTheModelStateFilled()
+        public async Task PostRequirementsAndProspectsWithAVacancyWithErrorsAndWarningsShouldReturnTheViewWithTheModelStateFilled()
         {
             const int vacancyReferenceNumber = 1;
 
@@ -331,7 +332,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             // Act
-            var view = vacancyController.RequirementsAndProspects(vacancySummaryViewModel);
+            var view = await vacancyController.RequirementsAndProspects(vacancySummaryViewModel);
 
             // Assert
             view.Should().BeOfType<ViewResult>();
@@ -349,7 +350,7 @@
         
 
         [Test, Category("Acceptance")]
-        public void GetQuestionsWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
+        public async Task GetQuestionsWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -361,7 +362,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             //Act
-            var view = vacancyController.Questions(vacancyReferenceNumber);
+            var view = await vacancyController.Questions(vacancyReferenceNumber);
 
             // Assert
             view.Should().BeOfType<ViewResult>();
@@ -375,7 +376,7 @@
         }
         
         [Test, Category("Acceptance")]
-        public void GetQuestionsWithAnIncorrectVacancyShouldReturnTheVacancyWithTheModelStateFilled()
+        public async Task GetQuestionsWithAnIncorrectVacancyShouldReturnTheVacancyWithTheModelStateFilled()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -387,7 +388,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             //Act
-            var view = vacancyController.Questions(vacancyReferenceNumber);
+            var view = await vacancyController.Questions(vacancyReferenceNumber);
 
             // Assert
             view.Should().BeOfType<ViewResult>();
@@ -402,7 +403,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void PostQuestionsWithACorrectVacancyShouldRedirectToPreviewPage()
+        public async Task PostQuestionsWithACorrectVacancyShouldRedirectToPreviewPage()
         {
             const int vacancyReferenceNumber = 1;
             const string title = "Vacancy title";
@@ -415,7 +416,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             // Act
-            var result = vacancyController.Questions(vacancyViewModel);
+            var result = await vacancyController.Questions(vacancyViewModel);
 
             // Assert
             result.Should().BeOfType<RedirectToRouteResult>();
@@ -427,7 +428,7 @@
         }
         
         [Test, Category("Acceptance")]
-        public void PostQuestionsWithAVacancyWithErrorsAndWarningsShouldReturnTheViewWithTheModelStateFilled()
+        public async Task PostQuestionsWithAVacancyWithErrorsAndWarningsShouldReturnTheViewWithTheModelStateFilled()
         {
             const int vacancyReferenceNumber = 1;
 
@@ -436,7 +437,7 @@
             var vacancyController = Container.GetInstance<VacancyController>();
 
             // Act
-            var view = vacancyController.Questions(vacancySummaryViewModel);
+            var view = await vacancyController.Questions(vacancySummaryViewModel);
 
             // Assert
             view.Should().BeOfType<ViewResult>();
@@ -452,7 +453,7 @@
 
 
         [Test, Category("Acceptance"), Ignore("Need to mock Url object")]
-        public void ReviewAVacancyInQAChangesStatusInDatabaseToReservedForQA()
+        public async Task ReviewAVacancyInQAChangesStatusInDatabaseToReservedForQA()
         {
             const int vacancyReferenceNumber = 1;
             const string title = "Vacancy title";
@@ -462,7 +463,7 @@
 
             var vacancyController = Container.GetInstance<VacancyController>();
 
-            vacancyController.Review(vacancyReferenceNumber);
+            await vacancyController.Review(vacancyReferenceNumber);
 
             var vacancyInDb =
                 Collection.FindOne(Query<MongoVacancy>.EQ(o => o.VacancyReferenceNumber,
@@ -474,7 +475,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void AcceptAVacancyInQAChangesStatusInDatabaseToLive()
+        public async Task AcceptAVacancyInQAChangesStatusInDatabaseToLive()
         {
             const int vacancyReferenceNumber = 1;
             const string title = "Vacancy title";
@@ -484,7 +485,7 @@
 
             var vacancyController = Container.GetInstance<VacancyController>();
 
-            vacancyController.Approve(vacancyReferenceNumber);
+            await vacancyController.Approve(vacancyReferenceNumber);
 
             var vacancyInDb =
                 Collection.FindOne(Query<MongoVacancy>.EQ(o => o.VacancyReferenceNumber,
@@ -494,7 +495,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void ShouldComeBackToDashboardAfterAcceptingTheVacancyIfTheresOnlyOneVacancyWaitingForQA()
+        public async Task ShouldComeBackToDashboardAfterAcceptingTheVacancyIfTheresOnlyOneVacancyWaitingForQA()
         {
             const int vacancyReferenceNumber = 1;
             const string title = "Vacancy title";
@@ -504,7 +505,7 @@
 
             var vacancyController = Container.GetInstance<VacancyController>();
 
-            var result = vacancyController.Approve(vacancyReferenceNumber);
+            var result = await vacancyController.Approve(vacancyReferenceNumber);
 
             result.Should().BeOfType<RedirectToRouteResult>();
             var redirection = result as RedirectToRouteResult;
@@ -512,7 +513,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void ShouldRedirectToTheNextVacancyAfterAcceptingTheVacancyIfTheresMoreThanOneVacancyWaitingForQA()
+        public async Task ShouldRedirectToTheNextVacancyAfterAcceptingTheVacancyIfTheresMoreThanOneVacancyWaitingForQA()
         {
             const int vacancyReferenceNumber = 1;
             const int secondVacancyReferenceNumber = 1;
@@ -525,7 +526,7 @@
 
             var vacancyController = Container.GetInstance<VacancyController>();
 
-            var result = vacancyController.Approve(vacancyReferenceNumber);
+            var result = await vacancyController.Approve(vacancyReferenceNumber);
 
             result.Should().BeOfType<RedirectToRouteResult>();
             var redirection = result as RedirectToRouteResult;
@@ -536,7 +537,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void RejectAVacancyInQAChangesStatusInDatabaseToRejectedByQA()
+        public async Task RejectAVacancyInQAChangesStatusInDatabaseToRejectedByQA()
         {
             const int vacancyReferenceNumber = 1;
             const string title = "Vacancy title";
@@ -546,7 +547,7 @@
 
             var vacancyController = Container.GetInstance<VacancyController>();
 
-            vacancyController.Reject(vacancyReferenceNumber);
+            await vacancyController.Reject(vacancyReferenceNumber);
 
             var vacancyInDb =
                 Collection.FindOne(Query<MongoVacancy>.EQ(o => o.VacancyReferenceNumber,
@@ -556,7 +557,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void ShouldComeBackToDashboardAfterRejectingTheVacancyIfTheresOnlyOneVacancyWaitingForQA()
+        public async Task ShouldComeBackToDashboardAfterRejectingTheVacancyIfTheresOnlyOneVacancyWaitingForQA()
         {
             const int vacancyReferenceNumber = 1;
             const string title = "Vacancy title";
@@ -566,7 +567,7 @@
 
             var vacancyController = Container.GetInstance<VacancyController>();
 
-            var result = vacancyController.Reject(vacancyReferenceNumber);
+            var result = await vacancyController.Reject(vacancyReferenceNumber);
 
             result.Should().BeOfType<RedirectToRouteResult>();
             var redirection = result as RedirectToRouteResult;
@@ -574,7 +575,7 @@
         }
 
         [Test, Category("Acceptance")]
-        public void ShouldRedirectToTheNextVacancyAfterRejectingTheVacancyIfTheresMoreThanOneVacancyWaitingForQA()
+        public async Task ShouldRedirectToTheNextVacancyAfterRejectingTheVacancyIfTheresMoreThanOneVacancyWaitingForQA()
         {
             const int vacancyReferenceNumber = 1;
             const int secondVacancyReferenceNumber = 1;
@@ -587,7 +588,7 @@
 
             var vacancyController = Container.GetInstance<VacancyController>();
 
-            var result = vacancyController.Reject(vacancyReferenceNumber);
+            var result = await vacancyController.Reject(vacancyReferenceNumber);
 
             result.Should().BeOfType<RedirectToRouteResult>();
             var redirection = result as RedirectToRouteResult;
