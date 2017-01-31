@@ -120,9 +120,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
             For<IUserAccountService>().Use<UserAccountService>();
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();
-            For<IReferenceDataService>().Use<ReferenceDataService>();
             For<ICandidateVacancyService>().Use<CandidateVacancyService>();
-            For<IProviderService>().Use<ProviderService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IEmployerService>().Use<EmployerService>();
             For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();

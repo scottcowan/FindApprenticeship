@@ -92,9 +92,6 @@
             For<ISiteMapVacancyProcessor>().Use<SiteMapVacancyProcessor>();
             For<ISiteMapVacancyProvider>().Use<SiteMapVacancyProvider>();
 
-            // reference data
-            For<IReferenceDataService>().Use<ReferenceDataService>();
-
             // application housekeeping
             For<IRootApplicationHousekeeper>().Use<RootApplicationHousekeeper>();
             For<IDraftApplicationForExpiredVacancyHousekeeper>().Use<DraftApplicationForExpiredVacancyHousekeeper>();
@@ -111,7 +108,6 @@
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
 
-            For<IProviderService>().Use<ProviderService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IEmployerService>().Use<EmployerService>();
 

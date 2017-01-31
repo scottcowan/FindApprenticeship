@@ -45,8 +45,6 @@
             For<VacancyEtlControlQueueConsumer>().Use<VacancyEtlControlQueueConsumer>();
             For<SavedSearchControlQueueConsumer>().Use<SavedSearchControlQueueConsumer>();
 
-            For<IReferenceDataService>().Use<ReferenceDataService>();
-            For<IProviderService>().Use<ProviderService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IEmployerService>().Use<EmployerService>();
 

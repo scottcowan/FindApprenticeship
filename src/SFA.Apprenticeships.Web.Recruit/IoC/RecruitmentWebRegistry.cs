@@ -110,8 +110,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
             For<IOrganisationService>().Use<OrganisationService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
-            For<IReferenceDataService>().Use<ReferenceDataService>();
-            For<IProviderService>().Use<ProviderService>();
             For<IEmployerService>().Use<EmployerService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
@@ -120,7 +118,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
             For<IReportingService>().Use<ReportingService>();
             For<IEncryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
             For<IDecryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
-            For<IVacancyManagementService>().Use<VacancyManagementService>();
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
             For<ICandidateSearchService>().Use<CandidateSearchService>();
             For<IVacancySummaryService>().Use<VacancySummaryService>();

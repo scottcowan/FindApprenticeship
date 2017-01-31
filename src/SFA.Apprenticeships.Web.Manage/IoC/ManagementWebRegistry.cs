@@ -89,7 +89,6 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
         {
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<IOrganisationService>().Use<OrganisationService>();
-            For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
