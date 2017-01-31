@@ -2,11 +2,6 @@
 
 namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net;
-    using System.Threading.Tasks;    
-    using Models;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
     using Comparers;
@@ -14,9 +9,15 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Extensions;
     using Factories;
     using FluentAssertions;
+    using Models;
     using Moq;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using Api.Models;
     using DbVacancySummary = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.VacancySummary;
 
     [Binding]
@@ -33,7 +34,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         public void ThenISeeVacancySummariesAndTotalPages(int expectedCount, int expectedPage, int expectedTotalCount, int expectedPageCount)
         {
             var vacancySummaries = ScenarioContext.Current.Get<List<DbVacancySummary>>("vacancySummaries");
-            var responseVacancySummaries = ScenarioContext.Current.Get<SFA.DAS.RAA.Api.Models.VacancySummariesPage>("responseVacancySummaries");
+            var responseVacancySummaries = ScenarioContext.Current.Get<VacancySummariesPage>("responseVacancySummaries");
 
             responseVacancySummaries.Should().NotBeNull();
             responseVacancySummaries.VacancySummaries.Should().NotBeNullOrEmpty();

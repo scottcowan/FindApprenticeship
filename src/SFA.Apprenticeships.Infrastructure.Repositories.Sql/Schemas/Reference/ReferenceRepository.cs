@@ -30,6 +30,7 @@
         public const string GetRegionByCodeSql = "SELECT LocalAuthorityGroupID AS RegionId, CodeName, ShortName, FullName FROM[dbo].[LocalAuthorityGroup] WHERE LocalAuthorityGroupTypeID = 4 AND CodeName = @RegionCode";
 
         public static string GetFrameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework ORDER BY FullName;";
+        public static string GetOccupationSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
@@ -348,14 +349,8 @@
         {
             _logger.Debug("Getting all apprenticeship occupations");
 
-            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
-
-            var sqlParams = new
-            {
-            };
-
             var dbOccupations = _getOpenConnection
-                .Query<ApprenticeshipOccupation>(sectorSql, sqlParams);
+                .Query<ApprenticeshipOccupation>(GetOccupationSql);
 
             _logger.Debug("Got all apprenticeship occupations");
 
@@ -366,14 +361,8 @@
         {
             _logger.Debug("Getting all frameworks");
 
-            const string frameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework ORDER BY FullName;";
-
-            var sqlParams = new
-            {
-            };
-
             var dbFrameworks = _getOpenConnection
-                .Query<ApprenticeshipFramework>(frameworkSql, sqlParams);
+                .Query<ApprenticeshipFramework>(GetFrameworkSql);
 
             return dbFrameworks;
         }

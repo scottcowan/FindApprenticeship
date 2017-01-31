@@ -48,11 +48,18 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 
             var frameworks = new Fixture().CreateMany<ApprenticeshipFramework>(3).ToList();
 
-            ScenarioContext.Current.Add("counties", frameworks);
+            var occupations = new Fixture().CreateMany<ApprenticeshipOccupation>(3).ToList();
+
+            ScenarioContext.Current.Add("frameworks", frameworks);
+            ScenarioContext.Current.Add("occupations", occupations);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
                 m => m.Query<ApprenticeshipFramework>(ReferenceRepository.GetFrameworkSql, null, null, null))
                 .Returns(frameworks);
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<ApprenticeshipOccupation>(ReferenceRepository.GetOccupationSql, null, null, null))
+                .Returns(occupations);
 
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
 

@@ -250,7 +250,6 @@
     <Compile Include="Controllers\FrameworkController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\PublicVacancySummaryController.cs" />
-    <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\PublicVacancyController.cs" />
     <Compile Include="Controllers\VacancyManagementController.cs" />
     <Compile Include="Controllers\VacancyController.cs" />

@@ -1,13 +1,11 @@
 ﻿namespace SFA.DAS.RAA.Api.Controllers
 {
-    using System;
+    using Apprenticeships.Application.ReferenceData;
+    using Apprenticeships.Domain.Entities.Raa.Reference;
+    using Strategies;
     using System.Collections.Generic;
     using System.Web.Http;
     using System.Web.Http.Description;
-    using Apprenticeships.Application.ReferenceData;
-    using Apprenticeships.Domain.Entities.Raa.Reference;
-    using Constants;
-    using Strategies;
 
     [RoutePrefix("reference")]
     public class ReferenceController : ApiController
