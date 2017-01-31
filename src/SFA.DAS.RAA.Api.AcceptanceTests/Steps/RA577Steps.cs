@@ -86,28 +86,40 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         {
             const string requestUri = UriFormats.GetStandardssUri;
 
-            var sectors = new Fixture().CreateMany<StandardSector>(3).ToList();
             var occupations = new Fixture().CreateMany<ApprenticeshipOccupation>(3).ToList();
+
             var educationLevelWithId1 = new Fixture().Build<EducationLevel>().With(c => c.EducationLevelId, 1)
                 .With(c => c.CodeName, "2")
-                .Create();
-            var standardsWithId1 = new Fixture().Build<Standard>()
-                .With(s => s.EducationLevelId, 1)
                 .Create();
             var educationLevelWithId2 = new Fixture().Build<EducationLevel>().With(c => c.EducationLevelId, 2)
                 .With(c => c.CodeName, "2")
                 .Create();
+
+            var standardsWithId1 = new Fixture().Build<Standard>()
+                .With(s => s.EducationLevelId, 1)
+                .With(s => s.StandardSectorId, 1)
+                .Create();
             var standardsWithId2 = new Fixture().Build<Standard>()
-                .With(s => s.EducationLevelId, 2).Create();
+                .With(s => s.EducationLevelId, 2)
+                .With(s => s.StandardSectorId, 2)
+                .Create();
+
+            var sectorWithId1 = new Fixture().Build<StandardSector>()
+                .With(ss => ss.StandardSectorId, 1)
+                .Create();
+            var sectorWithId2 = new Fixture().Build<StandardSector>()
+                .With(ss => ss.StandardSectorId, 2)
+                .Create();
 
             var standards = new List<Standard>();
             var educationLevels = new List<EducationLevel>();
+            var sectors = new List<StandardSector>();
             standards.Add(standardsWithId1);
             standards.Add(standardsWithId2);
             educationLevels.Add(educationLevelWithId1);
             educationLevels.Add(educationLevelWithId2);
-            //standards.Add(standardsWithId);
-            //educationLevels.Add(educationLevelWithId);
+            sectors.Add(sectorWithId1);
+            sectors.Add(sectorWithId2);
             ScenarioContext.Current.Add("sectors", sectors);
             ScenarioContext.Current.Add("occupations", occupations);
             ScenarioContext.Current.Add("standards", standards);
@@ -122,7 +134,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 .Returns(sectors);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.Entities.Standard>(ReferenceRepository.GetStandardSql, null, null, null))
+                m => m.Query<Standard>(ReferenceRepository.GetStandardSql, null, null, null))
                 .Returns(standards);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
@@ -143,8 +155,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                         ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
                     }
 
-                    var responseFrameworks = JsonConvert.DeserializeObject<IList<StandardSubjectAreaTierOne>>(content);
-                    ScenarioContext.Current.Add("responseFrameworks", responseFrameworks);
+                    var responseStandardSubjectAreaTierOnes = JsonConvert.DeserializeObject<IList<StandardSubjectAreaTierOne>>(content);
+                    ScenarioContext.Current.Add("responseStandardSubjectAreaTierOnes", responseStandardSubjectAreaTierOnes);
                 }
             }
         }
@@ -152,7 +164,11 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [Then(@"I see all the latest standards")]
         public void ThenISeeAllTheLatestStandards()
         {
-            ScenarioContext.Current.Pending();
+            var occupations = ScenarioContext.Current.Get<List<ApprenticeshipOccupation>>("occupations");
+            var responseStandardSubjectAreaTierOnes = ScenarioContext.Current.Get<IList<StandardSubjectAreaTierOne>>("responseStandardSubjectAreaTierOnes");
+
+            responseStandardSubjectAreaTierOnes.Should().NotBeNullOrEmpty();
+            responseStandardSubjectAreaTierOnes.Count.Should().Be(occupations.Count);
         }
     }
 }
