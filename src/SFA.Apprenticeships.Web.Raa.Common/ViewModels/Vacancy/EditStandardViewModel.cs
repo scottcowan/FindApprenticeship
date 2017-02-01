@@ -16,5 +16,8 @@
         public string StandardName { get; set; }
 
         public FrameworkStatusType Status { get; set; }
+        public int LarsCode { get; set; }
+        public int StandardSectorId { get; set; }
+        public int SsatId { get; set; }
     }
 }

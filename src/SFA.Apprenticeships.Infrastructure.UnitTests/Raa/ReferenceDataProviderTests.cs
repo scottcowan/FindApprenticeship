@@ -11,6 +11,7 @@
     using FluentAssertions;
     using Infrastructure.Raa;
     using Infrastructure.Raa.Strategies;
+    using Occupation = Domain.Entities.Raa.Reference.Occupation;
 
     [TestFixture]
     [Parallelizable]

@@ -19,6 +19,7 @@
     using Domain.Entities.ReferenceData;
     using Infrastructure.Presentation;
     using Constants.Pages;
+    using Domain.Entities.Raa.Reference;
     using Validators.Api;
     using Validators.Employer;
     using Validators.Provider;
@@ -549,6 +550,15 @@
             return GetMediatorResponse(AdminMediatorCodes.UpdateStandard.Ok, standard);
         }
 
+        public MediatorResponse<Standard> InsertStandard(Standard standard)
+        {
+            var dbStandard = _referenceDataProvider.InsertStandard(standard);
+
+            standard.Id = dbStandard.Id;
+
+            return GetMediatorResponse(AdminMediatorCodes.UpdateStandard.Ok, standard);
+        }
+
         public MediatorResponse<List<Category>> GetFrameworks()
         {
             var viewModel = _referenceDataProvider.GetFrameworks().ToList();
@@ -642,6 +652,49 @@
             var csvString = header + CsvPresenter.ToCsv<T, TClassMap>(items);
             var bytes = Encoding.UTF8.GetBytes(csvString);
             return bytes;
+        }
+
+        public MediatorResponse<List<Sector>> GetSectors()
+        {
+            var viewModel = _referenceDataProvider.GetSectors().ToList();
+
+            return GetMediatorResponse(AdminMediatorCodes.GetSectorsWithoutStandards.Ok, viewModel);
+        }
+
+        public MediatorResponse<List<Occupation>> GetOccupations()
+        {
+            var viewModel = _referenceDataProvider.GetOccupations().ToList();
+
+            return GetMediatorResponse(AdminMediatorCodes.GetOccupations.Ok, viewModel);
+        }
+
+        public MediatorResponse<EditSectorViewModel> UpdateSector(EditSectorViewModel sector)
+        {
+            var entity = new Sector()
+            {
+                Id = sector.Id,
+                ApprenticeshipOccupationId = sector.Occupation.Id,
+                Name = sector.Name
+            };
+
+            _referenceDataProvider.UpdateSector(entity);
+
+            return GetMediatorResponse(AdminMediatorCodes.UpdateFramework.Ok, sector);
+        }
+
+        public MediatorResponse<EditSectorViewModel> InsertSector(EditSectorViewModel sector)
+        {
+            var entity = new Sector()
+            {
+                ApprenticeshipOccupationId = sector.Occupation.Id,
+                Name = sector.Name
+            };
+
+            var dbSector = _referenceDataProvider.InsertSector(entity);
+
+            sector.Id = dbSector.Id;
+
+            return GetMediatorResponse(AdminMediatorCodes.UpdateStandard.Ok, sector);
         }
     }
 }

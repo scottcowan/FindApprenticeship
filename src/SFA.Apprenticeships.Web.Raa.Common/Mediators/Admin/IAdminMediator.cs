@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
     using ViewModels.Admin;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
@@ -46,7 +45,12 @@
         MediatorResponse<List<Category>> GetFrameworks();
         MediatorResponse<byte[]> GetFrameworksBytes();
         MediatorResponse<byte[]> GetStandardsBytes();
-        MediatorResponse<EditCategoryViewModel> UpdateFramework(EditCategoryViewModel entity);
+        MediatorResponse<EditCategoryViewModel> UpdateFramework(EditCategoryViewModel category);
         MediatorResponse<EditCategoryViewModel> InsertFramework(EditCategoryViewModel category);
+        MediatorResponse<Standard> InsertStandard(Standard standard);
+        MediatorResponse<List<Sector>>  GetSectors();
+        MediatorResponse<List<Occupation>> GetOccupations();
+        MediatorResponse<EditSectorViewModel> UpdateSector(EditSectorViewModel sector);
+        MediatorResponse<EditSectorViewModel> InsertSector(EditSectorViewModel sector);
     }
 }
