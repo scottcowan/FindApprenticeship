@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Domain.Entities.Raa.Reference;
     using ViewModels.Admin;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
