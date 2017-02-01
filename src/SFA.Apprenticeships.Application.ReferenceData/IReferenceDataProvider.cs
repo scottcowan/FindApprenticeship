@@ -53,7 +53,7 @@
         void UpdateFramework(Category entity);
         Category InsertFramework(Category entity);
 
-        Category GetFrameworkById(int categoryid);
+        Framework GetFrameworkById(int frameworkId);
 
         Standard InsertStandard(Standard standard);
         IEnumerable<Occupation> GetOccupations();

@@ -2,6 +2,7 @@
 {
     using Apprenticeships.Domain.Entities.ReferenceData;
     using System.Collections.Generic;
+    using Apprenticeships.Domain.Entities.Raa.Reference;
 
     /// <summary>
     /// Gets Standards
@@ -17,8 +18,8 @@
         /// <summary>
         /// Gets standard by Id
         /// </summary>
-        /// <param name="categoryId"></param>
+        /// <param name="frameworkId"></param>
         /// <returns></returns>
-        Category GetFramework(int? categoryId = null);
+        Framework GetFramework(int? frameworkId = null);
     }
 }

@@ -46,7 +46,7 @@
 
         Category InsertFramework(Category entity);
 
-        Category GetFrameworkById(int categoryId);
+        Framework GetFrameworkById(int categoryId);
 
         Standard InsertStandard(Standard standard);
 

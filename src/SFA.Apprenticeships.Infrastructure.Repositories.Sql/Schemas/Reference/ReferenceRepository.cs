@@ -35,7 +35,8 @@
         public static string GetStandardSql = "SELECT * FROM Reference.Standard ORDER BY FullName;";
         public static string GetEducationLevelSql = "SELECT * FROM Reference.EducationLevel;";
 
-        public static string GetFrameworkByIdSql = "SELECT * FROM ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @Id";
+        public static string GetFrameworkByIdSql = "SELECT * FROM ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @FrameworkId";
+        public static string GetOccupationByIdSql = "SELECT * FROM ApprenticeshipOccupation WHERE ApprenticeshipOccupationId = @OccupationId";
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
@@ -404,24 +405,25 @@
 
             const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
 
+            var frameworkId = category.Id;
             //TODO: Does this need to be here? If not, test and remove.
             var sqlParams = new
             {
-                category.Id
+                frameworkId
             };
 
-            var dbStandards = _getOpenConnection.Query<ApprenticeshipFramework>(GetFrameworkByIdSql, sqlParams);
+            var dbFrameworks = _getOpenConnection.Query<ApprenticeshipFramework>(GetFrameworkByIdSql, sqlParams);
 
-            var dbStandard = dbStandards.Single();
+            var dbframework = dbFrameworks.Single();
 
             var occupations = _getOpenConnection.Query<ApprenticeshipOccupation>(sectorSql);
             var occupationId = occupations.Single(w => w.CodeName == category.ParentCategoryCodeName).ApprenticeshipOccupationId;
 
-            dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)category.Status;
-            dbStandard.FullName = category.FullName;
-            dbStandard.ApprenticeshipOccupationId = occupationId;
+            dbframework.ApprenticeshipFrameworkStatusTypeId = (int)category.Status;
+            dbframework.FullName = category.FullName;
+            dbframework.ApprenticeshipOccupationId = occupationId;
 
-            var result = _getOpenConnection.UpdateSingle(dbStandard);
+            var result = _getOpenConnection.UpdateSingle(dbframework);
 
             if (!result)
                 throw new Exception($"Failed to save standard with id={category.Id}");
@@ -457,20 +459,21 @@
             return category;
         }
 
-        public Category GetFrameworkById(int categoryId)
+        public Framework GetFrameworkById(int frameworkId)
         {
-            _logger.Debug($"Getting Category with id {categoryId}");
+            _logger.Debug($"Getting Category with id {frameworkId}");
 
             var sqlParams = new
             {
-                categoryId
+                frameworkId
             };
 
-            var category = _getOpenConnection.Query<Category>(GetFrameworkByIdSql, sqlParams).FirstOrDefault();
+            var apprenticeshipFramework = _getOpenConnection.Query<ApprenticeshipFramework>(GetFrameworkByIdSql, sqlParams).FirstOrDefault();
 
-            _logger.Debug($"Found {category}");
+            _logger.Debug($"Found {apprenticeshipFramework}");
 
-            return category;
+            var framework = _mapper.Map<ApprenticeshipFramework, Framework>(apprenticeshipFramework);
+            return framework;
         }
 
         public Standard InsertStandard(Standard standard)

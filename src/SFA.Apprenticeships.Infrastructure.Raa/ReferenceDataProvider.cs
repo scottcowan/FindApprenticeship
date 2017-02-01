@@ -201,9 +201,9 @@
             return _referenceRepository.GetRegionById(regionId);
         }
 
-        public Category GetCategoryById(int categoryId)
+        public Framework GetFrameworkById(int frameworkId)
         {
-            return _referenceRepository.GetFrameworkById(categoryId);
+            return _referenceRepository.GetFrameworkById(frameworkId);
         }
 
         public Region GetRegionByCode(string regionCode)
@@ -224,11 +224,6 @@
         public Category InsertFramework(Category entity)
         {
             return _referenceRepository.InsertFramework(entity);
-        }
-
-        public Category GetFrameworkById(int categoryid)
-        {
-            return _referenceRepository.GetFrameworkById(categoryid);
         }
 
         public Standard InsertStandard(Standard standard)

@@ -2,6 +2,7 @@
 
 namespace SFA.DAS.RAA.Api.Controllers
 {
+    using Apprenticeships.Domain.Entities.Raa.Reference;
     using Apprenticeships.Domain.Entities.ReferenceData;
     using Strategies;
     using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace SFA.DAS.RAA.Api.Controllers
         /// <param name="id">The framework's primary identifier</param>
         /// <returns>The Category object</returns>
         [Route("framework/{id}")]
-        [ResponseType(typeof(Category))]
+        [ResponseType(typeof(Framework))]
         [HttpGet]
         public IHttpActionResult GetFrameworkById(int id)
         {
