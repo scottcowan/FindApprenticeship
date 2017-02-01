@@ -1,9 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Employers;
-    using Application.Interfaces.Providers;
     using Application.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancies.Entities;
@@ -13,8 +12,11 @@
     using Application.Interfaces;
     using Application.Interfaces.Api;
     using Application.Interfaces.Vacancy;
+    using DAS.RAA.Api.Client.V1.Models;
+    using DAS.RAA.Api.Service.V1.Mappers;
     using Domain.Entities.ReferenceData;
     using Domain.Raa.Interfaces.Repositories.Models;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     /// <summary>
     /// TODO: This class will eventually use an RAA service for the data rather than referencing repositories directly.
@@ -25,21 +27,19 @@
         private const int PageSize = 500;
         private const int ApiPageSize = 50;
 
+        private static readonly IMapper ApiClientMappers = new ApiClientMappers();
+
         private static readonly VacancyStatus[] DesiredStatuses = {VacancyStatus.Live};
 
         private readonly IVacancyReadRepository _vacancyReadRepository;
-        private readonly IProviderService _providerService;
-        private readonly IEmployerService _employerService;
         private readonly IReferenceDataProvider _referenceDataProvider;
         private readonly ILogService _logService;
         private readonly IVacancySummaryService _vacancySummaryService;
         private readonly IApiClientProvider _apiClientProvider;
 
-        public VacancyIndexDataProvider(IVacancyReadRepository vacancyReadRepository, IProviderService providerService, IEmployerService employerService, IReferenceDataProvider referenceDataProvider, ILogService logService, IVacancySummaryService vacancySummaryService, IApiClientProvider apiClientProvider)
+        public VacancyIndexDataProvider(IVacancyReadRepository vacancyReadRepository, IReferenceDataProvider referenceDataProvider, ILogService logService, IVacancySummaryService vacancySummaryService, IApiClientProvider apiClientProvider)
         {
             _vacancyReadRepository = vacancyReadRepository;
-            _providerService = providerService;
-            _employerService = employerService;
             _referenceDataProvider = referenceDataProvider;
             _logService = logService;
             _vacancySummaryService = vacancySummaryService;
@@ -48,20 +48,16 @@
 
         public int GetVacancyPageCount()
         {
-            int count;
-
             if (_apiClientProvider.IsEnabled())
             {
                 var apiClient = _apiClientProvider.GetApiClient();
                 var apiTask = apiClient.PublicVacancySummaryOperations.GetAllLiveVacancySummariesWithHttpMessagesAsync();
                 apiTask.Wait();
                 var publicVacancySummariesPage = apiTask.Result.Body;
-                count = publicVacancySummariesPage.TotalCount;
+                return publicVacancySummariesPage.TotalPages;
             }
-            else
-            {
-                count = _vacancyReadRepository.CountWithStatus(DesiredStatuses);
-            }
+
+            var count = _vacancyReadRepository.CountWithStatus(DesiredStatuses);
 
             var pageCount = count/PageSize;
             if (count%PageSize != 0)
@@ -73,65 +69,35 @@
 
         public VacancySummaries GetVacancySummaries(int pageNumber)
         {
-            /*if (_apiClientProvider.IsEnabled())
+            IList<VacancySummary> vacancies;
+
+            if (_apiClientProvider.IsEnabled())
             {
                 var apiClient = _apiClientProvider.GetApiClient();
                 var apiTask = apiClient.PublicVacancySummaryOperations.GetAllLiveVacancySummariesWithHttpMessagesAsync(pageNumber, ApiPageSize);
                 apiTask.Wait();
                 var publicVacancySummariesPage = apiTask.Result.Body;
-                var vacancies = publicVacancySummariesPage.VacancySummaries;
 
-                var apprenticeshipSummaries =
-                vacancies.Where(v => v.VacancyType == VacancyType.Apprenticeship.ToString()).Select(
-                    v =>
-                    {
-                        try
-                        {
-                            return ApprenticeshipSummaryMapper.GetApprenticeshipSummary(v, categories, _logService);
-                        }
-                        catch (Exception ex)
-                        {
-                            _logService.Error($"Error indexing the apprenticeship vacancy with ID={v.VacancyId}", ex);
-                            return null;
-                        }
-                    });
-
-                var traineeshipSummaries =
-                    vacancies.Where(v => v.VacancyType == VacancyType.Traineeship.ToString()).Select(
-                        v =>
-                        {
-                            try
-                            {
-                                return TraineeshipSummaryMapper.GetTraineeshipSummary(v,
-                                    employers[vacancyParties[v.VacancyOwnerRelationshipId].EmployerId],
-                                    providers[v.ContractOwnerId],
-                                    categories, _logService);
-                            }
-                            catch (Exception ex)
-                            {
-                                _logService.Error($"Error indexing the traineeship vacancy with ID={v.VacancyId}", ex);
-                                return null;
-                            }
-                        });
-
-                //count = publicVacancySummariesPage.TotalCount;
-            }*/
-
-            //Page number coming in increments from 1 rather than 0, the repo expects pages to start at 0 so take one from the passed in value
-            var query = new VacancySummaryByStatusQuery()
+                vacancies = ApiClientMappers.Map<IList<PublicVacancySummary>, IList<VacancySummary>>(publicVacancySummariesPage.VacancySummaries);
+            }
+            else
             {
-                PageSize = PageSize,
-                RequestedPage = pageNumber,
-                DesiredStatuses = DesiredStatuses
-            };
+                //Page number coming in increments from 1 rather than 0, the repo expects pages to start at 0 so take one from the passed in value
+                var query = new VacancySummaryByStatusQuery()
+                {
+                    PageSize = PageSize,
+                    RequestedPage = pageNumber,
+                    DesiredStatuses = DesiredStatuses
+                };
 
-            int totalRecords;
+                int totalRecords;
 
-            var vacancies = _vacancySummaryService.GetWithStatus(query, out totalRecords);
-            var categories = _referenceDataProvider.GetCategories(CategoryStatus.Active, CategoryStatus.PendingClosure).ToList();
-            //TODO: workaround to have the indexing partially working. Should be done properly
-            var apprenticeshipSummaries =
-                vacancies.Where(v => v.VacancyType == VacancyType.Apprenticeship).Select(
+                vacancies = _vacancySummaryService.GetWithStatus(query, out totalRecords);
+            }
+
+            var categories = new List<Category>(_referenceDataProvider.GetCategories(CategoryStatus.Active, CategoryStatus.PendingClosure).ToList());
+
+            var apprenticeshipSummaries = vacancies.Where(v => v.VacancyType == VacancyType.Apprenticeship).Select(
                     v =>
                     {
                         try
@@ -145,8 +111,7 @@
                         }
                     });
 
-            var traineeshipSummaries =
-                vacancies.Where(v => v.VacancyType == VacancyType.Traineeship).Select(
+            var traineeshipSummaries = vacancies.Where(v => v.VacancyType == VacancyType.Traineeship).Select(
                     v =>
                     {
                         try

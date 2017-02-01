@@ -62,17 +62,22 @@
         /// The closing date for applications
         /// </summary>
         [Required]
-        public DateTime? ClosingDate { get; set; }
+        public DateTime ClosingDate { get; set; }
         /// <summary>
         /// The likely start date for the vacancy
         /// </summary>
         [Required]
-        public DateTime? PossibleStartDate { get; set; }
+        public DateTime PossibleStartDate { get; set; }
         /// <summary>
         /// If true, applications for this vacancy will be made on an external recruitment system rather than on Find an Apprenticeship/Traineeship 
         /// </summary>
         [Required]
         public bool? OfflineVacancy { get; set; }
+        /// <summary>
+        /// The date this vacancy went live
+        /// </summary>
+        [Required]
+        public DateTime DateQAApproved { get; set; }
         /// <summary>
         /// Specifies the classification system of the training the apprentice will receive from the apprenticeship/traineeship. 
         /// Either via a framework or standard if the vacancy is an apprenticeship or a sector for traineeships
@@ -114,7 +119,7 @@
         /// The number of positions available for this vacancy
         /// </summary>
         [Required]
-        public int? NumberOfPositions { get; set; }
+        public int NumberOfPositions { get; set; }
         /// <summary>
         /// The type of a vacancy. Always either Apprenticeship or Traineeship for live vacancies
         /// </summary>

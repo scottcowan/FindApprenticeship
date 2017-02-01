@@ -58,6 +58,8 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <param name="offlineVacancy">If true, applications for this
         /// vacancy will be made on an external recruitment system rather
         /// than on Find an Apprenticeship/Traineeship</param>
+        /// <param name="dateQAApproved">The date this vacancy went
+        /// live</param>
         /// <param name="trainingType">Specifies the classification system of
         /// the training the apprentice will receive from the
         /// apprenticeship/traineeship.
@@ -139,7 +141,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// apprenticeship is operating under</param>
         /// <param name="employerAnonymousName">The displayed name the
         /// employer would prefer to be displayed on the vacancy</param>
-        public PublicVacancy(string desiredQualifications, string desiredSkills, string employerDescription, string futureProspects, string longDescription, string trainingProvided, int vacancyId, int vacancyReferenceNumber, System.Guid vacancyGuid, string title, string shortDescription, string workingWeek, string durationType, int duration, System.DateTime closingDate, System.DateTime possibleStartDate, bool offlineVacancy, string trainingType, string apprenticeshipLevel, string status, bool isAnonymousEmployer, int numberOfPositions, string vacancyType, PostalAddress address, string vacancyLocationType, int employerId, string employerName, string providerTradingName, PublicWage wage, bool isEmployerPositiveAboutDisability, string additionalLocationInformation = default(string), string contactEmail = default(string), string contactName = default(string), string contactNumber = default(string), string employerWebsiteUrl = default(string), string firstQuestion = default(string), string offlineApplicationInstructions = default(string), string offlineApplicationUrl = default(string), string otherInformation = default(string), string personalQualities = default(string), string secondQuestion = default(string), string thingsToConsider = default(string), string expectedDuration = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string employerAnonymousName = default(string))
+        public PublicVacancy(string desiredQualifications, string desiredSkills, string employerDescription, string futureProspects, string longDescription, string trainingProvided, int vacancyId, int vacancyReferenceNumber, System.Guid vacancyGuid, string title, string shortDescription, string workingWeek, string durationType, int duration, System.DateTime closingDate, System.DateTime possibleStartDate, bool offlineVacancy, System.DateTime dateQAApproved, string trainingType, string apprenticeshipLevel, string status, bool isAnonymousEmployer, int numberOfPositions, string vacancyType, PostalAddress address, string vacancyLocationType, int employerId, string employerName, string providerTradingName, PublicWage wage, bool isEmployerPositiveAboutDisability, string additionalLocationInformation = default(string), string contactEmail = default(string), string contactName = default(string), string contactNumber = default(string), string employerWebsiteUrl = default(string), string firstQuestion = default(string), string offlineApplicationInstructions = default(string), string offlineApplicationUrl = default(string), string otherInformation = default(string), string personalQualities = default(string), string secondQuestion = default(string), string thingsToConsider = default(string), string expectedDuration = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string employerAnonymousName = default(string))
         {
             AdditionalLocationInformation = additionalLocationInformation;
             ContactEmail = contactEmail;
@@ -171,6 +173,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             ClosingDate = closingDate;
             PossibleStartDate = possibleStartDate;
             OfflineVacancy = offlineVacancy;
+            DateQAApproved = dateQAApproved;
             TrainingType = trainingType;
             ApprenticeshipLevel = apprenticeshipLevel;
             FrameworkCodeName = frameworkCodeName;
@@ -395,6 +398,12 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "OfflineVacancy")]
         public bool OfflineVacancy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date this vacancy went live
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "DateQAApproved")]
+        public System.DateTime DateQAApproved { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the classification system of the training
