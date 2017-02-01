@@ -14,6 +14,8 @@
 
         public FrameworkStatusType Status { get; set; }
 
+        public int LarsCode { get; set; }
+
         protected bool Equals(Standard other)
         {
             return Id == other.Id && ApprenticeshipSectorId == other.ApprenticeshipSectorId && string.Equals(Name, other.Name) && ApprenticeshipLevel == other.ApprenticeshipLevel && Status == other.Status;

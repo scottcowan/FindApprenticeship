@@ -239,7 +239,7 @@
     <Compile Include="Steps\GetVacancySummarySteps.cs" />
     <Compile Include="Steps\HttpResponseSteps.cs" />
     <Compile Include="Steps\LinkEmployerSteps.cs" />
-    <Compile Include="Steps\RA577Steps.cs" />
+    <Compile Include="Steps\GetFrameworksAndStandardsSteps.cs" />
     <Compile Include="Steps\ResponseMessageSteps.cs" />
     <Compile Include="Steps\SetupVacancySteps.cs" />
     <Compile Include="Steps\SwaggerUiSteps.cs" />

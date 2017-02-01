@@ -20,7 +20,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Standard = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.Entities.Standard;
 
     [Binding]
-    public class RA577Steps
+    public class GetFrameworksAndStandardsSteps
     {
         [Given(@"On requesting for all frameworks")]
         public async Task GivenOnRequestingForAllFrameworks()
@@ -78,9 +78,6 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                         var responseMessage = JsonConvert.DeserializeObject<ResponseMessage>(content);
                         ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
                     }
-
-                    //var responseFrameworks = JsonConvert.DeserializeObject<IList<ApprenticeshipFramework>>(content);
-                    //ScenarioContext.Current.Add("responseFrameworks", responseFrameworks);
                     var responseCategories = JsonConvert.DeserializeObject<IList<Category>>(content);
                     ScenarioContext.Current.Add("responseCategories", responseCategories);
                 }
@@ -181,8 +178,6 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         {
             var occupations = ScenarioContext.Current.Get<List<ApprenticeshipOccupation>>("occupations");
             var sectors = ScenarioContext.Current.Get<List<StandardSector>>("sectors");
-            var standards = ScenarioContext.Current.Get<List<Standard>>("standards");
-
             var responseStandardSubjectAreaTierOnes = ScenarioContext.Current.Get<IList<StandardSubjectAreaTierOne>>("responseStandardSubjectAreaTierOnes");
 
             responseStandardSubjectAreaTierOnes.Should().NotBeNullOrEmpty();
@@ -195,11 +190,10 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 standardSubjectAreaTierOne.Id.Should().Be(occupation.ApprenticeshipOccupationId);
                 var ssat1Sectors = standardSubjectAreaTierOne.Sectors.ToList();
                 ssat1Sectors.Count.Should().Be(sectors.Count);
-                for (int j = 0; j < ssat1Sectors.Count; j++)
+                foreach (var ssat1Sector in ssat1Sectors)
                 {
-                    var ssat1Sector = ssat1Sectors[j];
-                    //etc
                     ssat1Sector.Standards.Count().Should().Be(1);
+                    ssat1Sector.ApprenticeshipOccupationId.Should().Be(occupation.ApprenticeshipOccupationId);
                 }
             }
         }
