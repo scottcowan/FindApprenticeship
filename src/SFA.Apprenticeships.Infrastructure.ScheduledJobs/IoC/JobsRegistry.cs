@@ -13,6 +13,7 @@
     using Application.Employer;
     using Application.Employer.Strategies;
     using Application.Interfaces;
+    using Application.Interfaces.Api;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
@@ -25,6 +26,7 @@
     using Application.Provider.Strategies;
     using Application.ReferenceData;
     using Application.Vacancies;
+    using Common.Api;
     using Consumers;
     using Domain.Interfaces.Repositories;
     using Processes.Vacancies;
@@ -87,6 +89,8 @@
 
             // Vacancy Housekeeping
             For<VacancyStatusControlQueueConsumer>().Use<VacancyStatusControlQueueConsumer>();
+
+            For<IApiClientProvider>().Use<ApiClientProvider>();
 
             RegisterStrategies();
         }

@@ -14,6 +14,7 @@
     using Application.Employer;
     using Application.Employer.Strategies;
     using Application.Interfaces;
+    using Application.Interfaces.Api;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
@@ -31,6 +32,7 @@
     using Applications;
     using Azure.ServiceBus;
     using Candidates;
+    using Common.Api;
     using Common.IoC;
     using Communication.Configuration;
     using Communications;
@@ -110,6 +112,8 @@
 
             For<IOrganisationService>().Use<OrganisationService>();
             For<IEmployerService>().Use<EmployerService>();
+
+            For<IApiClientProvider>().Use<ApiClientProvider>();
 
             // service bus
             RegisterServiceBusMessageBrokers(container);
