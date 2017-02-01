@@ -1,8 +1,8 @@
 ﻿namespace SFA.DAS.RAA.Api.Strategies
 {
+    using Apprenticeships.Domain.Entities.Raa.Reference;
     using Apprenticeships.Domain.Entities.ReferenceData;
     using System.Collections.Generic;
-    using Apprenticeships.Domain.Entities.Raa.Reference;
 
     /// <summary>
     /// Gets Standards

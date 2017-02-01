@@ -469,7 +469,7 @@
             };
 
             var apprenticeshipFramework = _getOpenConnection.Query<ApprenticeshipFramework>(GetFrameworkByIdSql, sqlParams).FirstOrDefault();
-
+            
             _logger.Debug($"Found {apprenticeshipFramework}");
 
             var framework = _mapper.Map<ApprenticeshipFramework, Framework>(apprenticeshipFramework);
