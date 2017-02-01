@@ -2,26 +2,50 @@
 
 namespace SFA.DAS.RAA.Api.Controllers
 {
-    using Apprenticeships.Application.ReferenceData;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Strategies;
     using System.Collections.Generic;
     using System.Web.Http.Description;
 
+    /// <summary>
+    /// Standards Controller for API
+    /// </summary>
     public class StandardController : ApiController
     {
-        private readonly IReferenceDataProvider _referenceDataProvider;
+        private readonly IGetStandardsStrategy _getStandardsStrategy;
 
-        public StandardController(IReferenceDataProvider referenceDataProvider)
+        /// <summary>
+        /// Controller constructor
+        /// </summary>
+        /// <param name="getStandardsStrategy"></param>
+        public StandardController(IGetStandardsStrategy getStandardsStrategy)
         {
-            _referenceDataProvider = referenceDataProvider;
+            _getStandardsStrategy = getStandardsStrategy;
         }
 
+        /// <summary>
+        /// Gets all standards
+        /// </summary>
+        /// <returns></returns>
         [Route("standards")]
         [ResponseType(typeof(IEnumerable<StandardSubjectAreaTierOne>))]
         [HttpGet]
         public IHttpActionResult GetStandards()
         {
-            return Ok(_referenceDataProvider.GetStandardSubjectAreaTierOnes());
+            return Ok(_getStandardsStrategy.GetStandards());
+        }
+
+        /// <summary>
+        /// Returns the information for the standard identified by the primary identifier in the URL
+        /// </summary>
+        /// <param name="id">The standard's primary identifier</param>
+        /// <returns>The StandardSubjectAreaTierOne object</returns>
+        [Route("standard/{id}")]
+        [ResponseType(typeof(StandardSubjectAreaTierOne))]
+        [HttpGet]
+        public IHttpActionResult GetStandardById(int id)
+        {
+            return Ok(_getStandardsStrategy.GetStandard(id));
         }
     }
 }

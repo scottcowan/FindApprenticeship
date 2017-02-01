@@ -1,10 +1,10 @@
 namespace SFA.DAS.RAA.Api.Strategies
 {
-    using System;
-    using System.Collections.Generic;
     using Apprenticeships.Application.ReferenceData;
     using Apprenticeships.Domain.Entities.Raa.Reference;
     using Constants;
+    using System;
+    using System.Collections.Generic;
 
     public class GetCountiesStrategy : IGetCountiesStrategy
     {
