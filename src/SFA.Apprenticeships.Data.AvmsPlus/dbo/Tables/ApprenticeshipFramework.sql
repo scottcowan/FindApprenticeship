@@ -12,6 +12,8 @@
     CONSTRAINT [FK_ApprenticeshipFramework_ApprenticeshipFrameworkStatusType] FOREIGN KEY ([ApprenticeshipFrameworkStatusTypeId]) REFERENCES [dbo].[ApprenticeshipFrameworkStatusType] ([ApprenticeshipFrameworkStatusTypeId]),
     CONSTRAINT [FK_ApprenticeshipFramework_ApprenticeshipOccupation] FOREIGN KEY ([ApprenticeshipOccupationId]) REFERENCES [dbo].[ApprenticeshipOccupation] ([ApprenticeshipOccupationId]),
     CONSTRAINT [FK_ApprenticeshipFramework_PreviousApprenticeshipOccupation] FOREIGN KEY ([PreviousApprenticeshipOccupationId]) REFERENCES [dbo].[ApprenticeshipOccupation] ([ApprenticeshipOccupationId]),
-    CONSTRAINT [uq_idx_ApprenticeshipFramework] UNIQUE NONCLUSTERED ([FullName] ASC)
+    CONSTRAINT [uq_idx_ApprenticeshipFramework] UNIQUE NONCLUSTERED ([FullName] ASC),
+	CONSTRAINT [uq_idx_ApprenticeshipFramework_CodeName] UNIQUE NONCLUSTERED ([CodeName] ASC),
+	CONSTRAINT [uq_idx_ApprenticeshipFramework_ShortName] UNIQUE NONCLUSTERED ([ShortName] ASC)
 );
 
