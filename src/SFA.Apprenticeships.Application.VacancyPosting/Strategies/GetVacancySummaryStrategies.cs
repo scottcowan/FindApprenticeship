@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Application.VacancyPosting.Strategies
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
+    using Interfaces.Vacancy;
     using Vacancy;
 
     public class GetVacancySummaryStrategies : IGetVacancySummaryStrategies

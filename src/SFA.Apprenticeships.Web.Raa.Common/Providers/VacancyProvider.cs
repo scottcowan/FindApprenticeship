@@ -24,14 +24,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
     using Infrastructure.Raa.Extensions;
-    using Mappers;
-    using Microsoft.Rest;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Application.Interfaces.Vacancy;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -41,7 +40,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
-    using ApiVacancy = DAS.RAA.Api.Client.V1.Models.Vacancy;
     using ApprenticeshipLevel = Domain.Entities.Raa.Vacancies.ApprenticeshipLevel;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using VacancyLocationType = Domain.Entities.Raa.Vacancies.VacancyLocationType;
@@ -50,8 +48,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
-        private static readonly IMapper ApiClientMappers = new ApiClientMappers();
-
         private readonly ILogService _logService;
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IReferenceDataService _referenceDataService;
@@ -68,7 +64,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         private readonly IGeoCodeLookupService _geoCodingService;
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
         private readonly IVacancySummaryService _vacancySummaryService;
-        private readonly IApiClientProvider _apiClientProvider;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
@@ -77,7 +72,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
             ICurrentUserService currentUserService, IUserProfileService userProfileService,
             IGeoCodeLookupService geocodingService, ILocalAuthorityLookupService localAuthLookupService,
-            IVacancySummaryService vacancySummaryService, IApiClientProvider apiClientProvider)
+            IVacancySummaryService vacancySummaryService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -95,12 +90,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _geoCodingService = geocodingService;
             _localAuthorityLookupService = localAuthLookupService;
             _vacancySummaryService = vacancySummaryService;
-            _apiClientProvider = apiClientProvider;
         }
 
-        public NewVacancyViewModel GetNewVacancyViewModel(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions)
+        public async Task<NewVacancyViewModel> GetNewVacancyViewModel(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions)
         {
-            var existingVacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
+            var existingVacancy = await _vacancyPostingService.GetVacancy(vacancyGuid);
 
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancyOwnerRelationshipId, true);
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
@@ -194,9 +188,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return addressViewModel;
         }
 
-        public NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber)
+        public async Task<NewVacancyViewModel> GetNewVacancyViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
@@ -230,9 +224,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             }
         }
 
-        public LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid, bool isEmployerAnonymous = false)
+        public async Task<LocationSearchViewModel> LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid, bool isEmployerAnonymous = false)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
+            var vacancy = await _vacancyPostingService.GetVacancy(vacancyGuid);
             var providerSite = _providerService.GetProviderSite(providerSiteId);
             var employer = _employerService.GetEmployer(employerId, true);
 
@@ -292,7 +286,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             };
         }
 
-        public VacancyMinimumData UpdateVacancy(VacancyMinimumData vacancyMinimumData)
+        public async Task<VacancyMinimumData> UpdateVacancy(VacancyMinimumData vacancyMinimumData)
         {
             var vacancyOwnerRelationship =
                 _providerService.GetVacancyOwnerRelationship(vacancyMinimumData.VacancyOwnerRelationshipId, true);
@@ -306,7 +300,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
             }
 
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyMinimumData.VacancyGuid);
+            var vacancy = await _vacancyPostingService.GetVacancy(vacancyMinimumData.VacancyGuid);
 
             vacancy.VacancyLocationType = vacancy.VacancyLocationType;
             vacancy.NumberOfPositions = vacancy.NumberOfPositions ?? 0;
@@ -329,9 +323,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         /// </summary>
         /// <param name="newVacancyViewModel"></param>
         /// <returns></returns>
-        public NewVacancyViewModel UpdateVacancy(NewVacancyViewModel newVacancyViewModel)
+        public async Task<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel newVacancyViewModel)
         {
-            var resultViewModel = UpdateExistingVacancy(newVacancyViewModel);
+            var resultViewModel = await UpdateExistingVacancy(newVacancyViewModel);
 
             resultViewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
@@ -373,13 +367,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             });
         }
 
-        public void TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel)
+        public async Task TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel)
         {
             try
             {
                 foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
                 {
-                    var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
+                    var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
                     if (vacancy != null)
                     {
                         var vacancyOwnerRelationship =
@@ -392,11 +386,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                         {
                             //No matching VOR exists for the new provider and provider site so create it.
                             //We do this because changing the provider site id for a VOR could make any non transfered vacancies associated with it unavailable to any provider
+                            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
                             existingVacancyOwnerRelationship = existingVacancyOwnerRelationship ?? new VacancyOwnerRelationship { ProviderSiteId = vacancyTransferViewModel.ProviderSiteId, EmployerId = vacancyOwnerRelationship.EmployerId };
                             existingVacancyOwnerRelationship.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
                             existingVacancyOwnerRelationship.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
                             existingVacancyOwnerRelationship.StatusType = VacancyOwnerRelationshipStatusTypes.Live;
-                            existingVacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(existingVacancyOwnerRelationship);
+                            existingVacancyOwnerRelationship = await _providerService.SaveVacancyOwnerRelationship(existingVacancyOwnerRelationship, employer.EdsUrn);
                         }
 
                         vacancy.VacancyOwnerRelationshipId = existingVacancyOwnerRelationship.VacancyOwnerRelationshipId;
@@ -414,9 +409,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             }
         }
 
-        public FurtherVacancyDetailsViewModel CloseVacancy(FurtherVacancyDetailsViewModel viewModel)
+        public async Task<FurtherVacancyDetailsViewModel> CloseVacancy(FurtherVacancyDetailsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
             vacancy.ClosingDate = DateTime.Now;
             vacancy.Status = VacancyStatus.Closed;
             FurtherVacancyDetailsViewModel result;
@@ -466,7 +461,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return trainingDetailsViewModel.VacancyType == VacancyType.Traineeship ? CategoryPrefixes.GetOriginalSectorSubjectAreaTier1Code(trainingDetailsViewModel.SectorCodeName) : null;
         }
 
-        private NewVacancyViewModel UpdateExistingVacancy(NewVacancyViewModel newVacancyViewModel)
+        private async Task<NewVacancyViewModel> UpdateExistingVacancy(NewVacancyViewModel newVacancyViewModel)
         {
             var comesFromPreview = newVacancyViewModel.ComeFromPreview;
 
@@ -476,8 +471,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 throw new Exception($"Vacancy Party {newVacancyViewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId} not found / no longer current");
 
             var vacancy = newVacancyViewModel.VacancyReferenceNumber.HasValue
-                ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
-                : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
+                ? await _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
+                : await _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
             var currentOfflineVacancyType = vacancy.OfflineVacancyType;
 
             vacancy.Title = newVacancyViewModel.Title;
@@ -522,9 +517,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return newVacancyViewModel;
         }
 
-        public TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber)
+        public async Task<TrainingDetailsViewModel> GetTrainingDetailsViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = _mapper.Map<Vacancy, TrainingDetailsViewModel>(vacancy);
             if (viewModel.VacancyType == VacancyType.Traineeship)
             {
@@ -542,9 +537,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public TrainingDetailsViewModel UpdateVacancy(TrainingDetailsViewModel viewModel)
+        public async Task<TrainingDetailsViewModel> UpdateVacancy(TrainingDetailsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
             vacancy.TrainingType = viewModel.TrainingType;
             vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
@@ -566,9 +561,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber)
+        public async Task<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancySummaryViewModel();
             viewModel.Wage = _mapper.Map<Wage, WageViewModel>(vacancy.Wage);
 
@@ -580,9 +575,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public FurtherVacancyDetailsViewModel UpdateVacancy(FurtherVacancyDetailsViewModel viewModel)
+        public async Task<FurtherVacancyDetailsViewModel> UpdateVacancy(FurtherVacancyDetailsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
             vacancy.Wage = _mapper.Map<WageViewModel, Wage>(viewModel.Wage);
@@ -611,9 +606,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return updatedViewModel;
         }
 
-        public VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber)
+        public async Task<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
             viewModel.AutoSaveTimeoutInSeconds =
                     _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
@@ -621,9 +616,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)
+        public async Task<VacancyRequirementsProspectsViewModel> UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.DesiredSkills = viewModel.DesiredSkills;
             vacancy.FutureProspects = viewModel.FutureProspects;
@@ -640,9 +635,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber)
+        public async Task<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
             viewModel.AutoSaveTimeoutInSeconds =
                     _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
@@ -650,9 +645,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel)
+        public async Task<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.FirstQuestion = viewModel.FirstQuestion;
             vacancy.SecondQuestion = viewModel.SecondQuestion;
@@ -666,9 +661,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public FurtherVacancyDetailsViewModel UpdateVacancyDates(FurtherVacancyDetailsViewModel viewModel)
+        public async Task<FurtherVacancyDetailsViewModel> UpdateVacancyDates(FurtherVacancyDetailsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.ClosingDate = viewModel.VacancyDatesViewModel.ClosingDate.Date;
             vacancy.PossibleStartDate = viewModel.VacancyDatesViewModel.PossibleStartDate.Date;
@@ -701,9 +696,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return result;
         }
 
-        public void EmptyVacancyLocation(int vacancyReferenceNumber)
+        public async Task EmptyVacancyLocation(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             vacancy.Address = null;
             vacancy.NumberOfPositions = null;
@@ -714,28 +709,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         public async Task<VacancyViewModel> GetVacancy(int vacancyReferenceNumber)
         {
-            Vacancy vacancy;
-
-            if (_configurationService.Get<CommonWebConfiguration>().Features.RaaApiEnabled)
-            {
-                var apiClient = _apiClientProvider.GetApiClient();
-
-                try
-                {
-                    var apiVacancyResult = await apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber);
-                    var apiVacancy = apiVacancyResult.Body;
-                    vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
-                }
-                catch (HttpOperationException ex)
-                {
-                    _logService.Info(ex.ToString());
-                    return null;
-                }
-            }
-            else
-            {
-                vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-            }
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (vacancy == null)
                 return null;
@@ -744,9 +718,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public VacancyViewModel GetVacancyById(int vacancyId)
+        public async Task<VacancyViewModel> GetVacancyById(int vacancyId)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyId);
+            var vacancy = await _vacancyPostingService.GetVacancy(vacancyId);
 
             if (vacancy == null)
                 return null;
@@ -757,9 +731,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public VacancyViewModel GetVacancy(Guid vacancyGuid)
+        public async Task<VacancyViewModel> GetVacancy(Guid vacancyGuid)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
+            var vacancy = await _vacancyPostingService.GetVacancy(vacancyGuid);
             if (vacancy != null)
             {
                 var viewModel = GetVacancyViewModelFrom(vacancy);
@@ -785,17 +759,30 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 viewModel.Contact = vacancy.GetContactInformation(providerSite);
             }
 
-            viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
-                ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
-                : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName).FullName;
+            if (vacancy.FrameworkStatus == FrameworkStatusType.Active ||
+                vacancy.StandardStatus == FrameworkStatusType.Active)
+            {
+                viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
+                    ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
+                    : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
+                        .FullName;
 
-            viewModel.SectorName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.SectorCodeName)
-                ? viewModel.TrainingDetailsViewModel.SectorCodeName
-                : _referenceDataService.GetCategoryByCode(viewModel.TrainingDetailsViewModel.SectorCodeName).FullName;
+                viewModel.SectorName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.SectorCodeName)
+                    ? viewModel.TrainingDetailsViewModel.SectorCodeName
+                    : _referenceDataService.GetCategoryByCode(viewModel.TrainingDetailsViewModel.SectorCodeName)
+                        .FullName;
 
-            var standard = GetStandard(vacancy.StandardId);
+                var standard = GetStandard(vacancy.StandardId);
 
-            viewModel.StandardName = standard == null ? "" : standard.Name;
+                viewModel.StandardName = standard == null ? "" : standard.Name;
+            }
+            else
+            {
+                vacancy.StandardId = null;
+                if (viewModel.TrainingDetailsViewModel != null)
+                    viewModel.TrainingDetailsViewModel.StandardId = null;
+            }
+            
             if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
             {
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
@@ -831,9 +818,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public VacancyViewModel SubmitVacancy(int vacancyReferenceNumber)
+        public async Task<VacancyViewModel> SubmitVacancy(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             vacancy.Status = VacancyStatus.Submitted;
             vacancy.DateSubmitted = _dateTimeService.UtcNow;
@@ -1011,9 +998,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public VacancyOwnerRelationshipViewModel CloneVacancy(int vacancyReferenceNumber)
+        public async Task<VacancyOwnerRelationshipViewModel> CloneVacancy(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             //TODO: control vacancy doesn't exist
 
@@ -1180,9 +1167,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy, _providerService.GetProvider(nextVacancy.ContractOwnerId)) : null;
         }
 
-        public void UnReserveVacancyForQA(int vacancyReferenceNumber)
+        public async Task UnReserveVacancyForQA(int vacancyReferenceNumber)
         {
-            var vacancyToUnReserve = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancyToUnReserve = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancyToUnReserve))
             {
@@ -1191,9 +1178,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             }
         }
 
-        public VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber)
+        public async Task<VacancyViewModel> ReserveVacancyForQA(int vacancyReferenceNumber)
         {
-            var vacancyToReserve = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancyToReserve = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancyToReserve))
             {
@@ -1283,10 +1270,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return _vacancyPostingService.CreateVacancy(newVacancy);
         }
 
-        public QAActionResultCode ApproveVacancy(int vacancyReferenceNumber)
+        public async Task<QAActionResultCode> ApproveVacancy(int vacancyReferenceNumber)
         {
             var qaApprovalDate = _dateTimeService.UtcNow;
-            var submittedVacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var submittedVacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, submittedVacancy))
             {
@@ -1345,9 +1332,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return QAActionResultCode.Ok;
         }
 
-        public QAActionResultCode RejectVacancy(int vacancyReferenceNumber)
+        public async Task<QAActionResultCode> RejectVacancy(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
             {
@@ -1369,9 +1356,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return regionalTeam;
         }
 
-        public VacancyViewModel ReviewVacancy(int vacancyReferenceNumber)
+        public async Task<VacancyViewModel> ReviewVacancy(int vacancyReferenceNumber)
         {
-            var vacancyToReserve = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancyToReserve = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancyToReserve))
                 return null;
@@ -1381,10 +1368,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return GetVacancyViewModelFrom(vacancy);
         }
 
-        public QAActionResult<FurtherVacancyDetailsViewModel> UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel)
+        public async Task<QAActionResult<FurtherVacancyDetailsViewModel>> UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel)
         {
             // TODO: merge with vacancypostingprovider? -> how we deal with comments. Add them as hidden fields in vacancy posting journey?
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
             {
@@ -1428,12 +1415,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
-        public QAActionResult<NewVacancyViewModel> UpdateVacancyWithComments(NewVacancyViewModel viewModel)
+        public async Task<QAActionResult<NewVacancyViewModel>> UpdateVacancyWithComments(NewVacancyViewModel viewModel)
         {
             if (!viewModel.VacancyReferenceNumber.HasValue)
                 throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
 
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
             {
@@ -1496,12 +1483,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             vacancy.DateStartedToQA = _dateTimeService.UtcNow;
         }
 
-        public QAActionResult<TrainingDetailsViewModel> UpdateVacancyWithComments(TrainingDetailsViewModel viewModel)
+        public async Task<QAActionResult<TrainingDetailsViewModel>> UpdateVacancyWithComments(TrainingDetailsViewModel viewModel)
         {
             if (!viewModel.VacancyReferenceNumber.HasValue)
                 throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
 
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
             {
@@ -1544,12 +1531,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return new QAActionResult<TrainingDetailsViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
-        public NewVacancyViewModel UpdateEmployerInformationWithComments(NewVacancyViewModel viewModel)
+        public async Task<NewVacancyViewModel> UpdateEmployerInformationWithComments(NewVacancyViewModel viewModel)
         {
             if (!viewModel.VacancyReferenceNumber.HasValue)
                 throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
 
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(viewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId, false);
             if (vacancyOwnerRelationship == null)
@@ -1604,9 +1591,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public QAActionResult<VacancyRequirementsProspectsViewModel> UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel)
+        public async Task<QAActionResult<VacancyRequirementsProspectsViewModel>> UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
             {
@@ -1637,9 +1624,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return new QAActionResult<VacancyRequirementsProspectsViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
-        public QAActionResult<VacancyQuestionsViewModel> UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel)
+        public async Task<QAActionResult<VacancyQuestionsViewModel>> UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
             {
@@ -1663,7 +1650,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return new QAActionResult<VacancyQuestionsViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
-        public LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel)
+        public async Task<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel)
         {
             var vacancyLocations = viewModel.Addresses.Select(_mapper.Map<VacancyLocationAddressViewModel, VacancyLocation>).ToList();
 
@@ -1675,7 +1662,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
 
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.VacancyLocationType =
                 viewModel.EmployerApprenticeshipLocation;
@@ -1730,9 +1717,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public void RemoveVacancyLocationInformation(Guid vacancyGuid)
+        public async Task RemoveVacancyLocationInformation(Guid vacancyGuid)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
+            var vacancy = await _vacancyPostingService.GetVacancy(vacancyGuid);
             if (vacancy != null)
             {
                 vacancy.VacancyLocationType = VacancyLocationType.Unknown;
@@ -1747,9 +1734,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             }
         }
 
-        public void RemoveLocationAddresses(Guid vacancyGuid)
+        public async Task RemoveLocationAddresses(Guid vacancyGuid)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
+            var vacancy = await _vacancyPostingService.GetVacancy(vacancyGuid);
             if (vacancy != null)
             {
                 vacancy.AdditionalLocationInformation = null;

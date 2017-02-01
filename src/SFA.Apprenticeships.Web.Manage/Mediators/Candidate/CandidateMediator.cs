@@ -9,6 +9,7 @@
     using Raa.Common.ViewModels.Application.Traineeship;
     using Raa.Common.ViewModels.Candidate;
     using System;
+    using System.Threading.Tasks;
     using ViewModels;
 
     public class CandidateMediator : MediatorBase, ICandidateMediator
@@ -57,37 +58,37 @@
             return GetMediatorResponse(CandidateMediatorCodes.GetCandidateApplications.Ok, viewModel);
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> GetCandidateApprenticeshipApplication(Guid applicationId)
+        public async Task<MediatorResponse<ApprenticeshipApplicationViewModel>> GetCandidateApprenticeshipApplication(Guid applicationId)
         {
-            var viewModel = _candidateProvider.GetCandidateApprenticeshipApplication(applicationId);
+            var viewModel = await _candidateProvider.GetCandidateApprenticeshipApplication(applicationId);
 
             return GetMediatorResponse(CandidateMediatorCodes.GetCandidateApprenticeshipApplication.Ok, viewModel);
         }
 
-        public MediatorResponse<TraineeshipApplicationViewModel> GetCandidateTraineeshipApplication(Guid applicationId)
+        public async Task<MediatorResponse<TraineeshipApplicationViewModel>> GetCandidateTraineeshipApplication(Guid applicationId)
         {
-            var viewModel = _candidateProvider.GetCandidateTraineeshipApplication(applicationId);
+            var viewModel = await _candidateProvider.GetCandidateTraineeshipApplication(applicationId);
 
             return GetMediatorResponse(CandidateMediatorCodes.GetCandidateTraineeshipApplication.Ok, viewModel);
         }
 
-        public MediatorResponse<CandidateVacancy> GetCandidateApprenticeshipVacancyViewModel(int vacancyId, Guid applicationId)
+        public async Task<MediatorResponse<CandidateVacancy>> GetCandidateApprenticeshipVacancyViewModel(int vacancyId, Guid applicationId)
         {
-            var applicationViewModel = _candidateProvider.GetCandidateApprenticeshipApplication(applicationId);
-            var viewModel = GetCandidateVacancy(vacancyId, applicationViewModel);
+            var applicationViewModel = await _candidateProvider.GetCandidateApprenticeshipApplication(applicationId);
+            var viewModel = await GetCandidateVacancy(vacancyId, applicationViewModel);
             return GetMediatorResponse(CandidateMediatorCodes.GetCandidateApprenticeshipVacancyViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<CandidateVacancy> GetCandidateTraineeshipVacancyViewModel(int vacancyId, Guid applicationId)
+        public async Task<MediatorResponse<CandidateVacancy>> GetCandidateTraineeshipVacancyViewModel(int vacancyId, Guid applicationId)
         {
-            var applicationViewModel = _candidateProvider.GetCandidateTraineeshipApplication(applicationId);
-            var viewModel = GetCandidateVacancy(vacancyId, applicationViewModel);
+            var applicationViewModel = await _candidateProvider.GetCandidateTraineeshipApplication(applicationId);
+            var viewModel = await GetCandidateVacancy(vacancyId, applicationViewModel);
             return GetMediatorResponse(CandidateMediatorCodes.GetCandidateTraineeshipVacancyViewModel.Ok, viewModel);
         }
 
-        private CandidateVacancy GetCandidateVacancy(int vacancyId, ApplicationViewModel applicationViewModel)
+        private async Task<CandidateVacancy> GetCandidateVacancy(int vacancyId, ApplicationViewModel applicationViewModel)
         {
-            var vacancyViewModel = _vacancyQaProvider.GetVacancyById(vacancyId);
+            var vacancyViewModel = await _vacancyQaProvider.GetVacancyById(vacancyId);
             vacancyViewModel.IsEditable = false;
             vacancyViewModel.IsCandidateView = true;
             return new CandidateVacancy

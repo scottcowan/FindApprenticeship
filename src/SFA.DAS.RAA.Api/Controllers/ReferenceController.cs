@@ -1,98 +1,137 @@
 ﻿namespace SFA.DAS.RAA.Api.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Web.Http;
     using System.Web.Http.Description;
-    using Apprenticeships.Application.ReferenceData;
     using Apprenticeships.Domain.Entities.Raa.Reference;
-    using Constants;
+    using Strategies;
 
+    [RoutePrefix("reference")]
     public class ReferenceController : ApiController
     {
-        private readonly IReferenceDataProvider _referenceDataProvider;
+        private readonly IGetCountiesStrategy _getCountiesStrategy;
+        private readonly IGetLocalAuthoritiesStrategy _getLocalAuthoritiesStrategy;
+        private readonly IGetRegionsStrategy _getRegionsStrategy;
 
-        public ReferenceController(IReferenceDataProvider referenceDataProvider)
+        public ReferenceController(IGetCountiesStrategy getCountiesStrategy, IGetLocalAuthoritiesStrategy getLocalAuthoritiesStrategy, IGetRegionsStrategy getRegionsStrategy)
         {
-            _referenceDataProvider = referenceDataProvider;
+            _getCountiesStrategy = getCountiesStrategy;
+            _getLocalAuthoritiesStrategy = getLocalAuthoritiesStrategy;
+            _getRegionsStrategy = getRegionsStrategy;
         }
 
-        [Route("reference/counties")]
+        /// <summary>
+        /// Retrieves all county information for all counties
+        /// </summary>
+        /// <returns>The full list of counties</returns>
+        [Route("counties")]
         [ResponseType(typeof(IEnumerable<County>))]
+        [HttpGet]
         public IHttpActionResult GetCounties()
         {
-            return Ok(_referenceDataProvider.GetCounties());
+            return Ok(_getCountiesStrategy.GetCounties());
         }
 
-        [Route("reference/county")]
+        /// <summary>
+        /// Returns the information for the county identified by the primary identifier in the URL
+        /// </summary>
+        /// <param name="id">The county's primary identifier</param>
+        /// <returns>The county object</returns>
+        [Route("county/{id}")]
         [ResponseType(typeof(County))]
-        public IHttpActionResult GetCounty(int? countyId = null, string countyCode = null)
+        [HttpGet]
+        public IHttpActionResult GetCountyById(int id)
         {
-            if (!countyId.HasValue && string.IsNullOrEmpty(countyCode))
-            {
-                throw new ArgumentException(ReferenceMessages.MissingCountyIdentifier);
-            }
-
-            var county = countyId.HasValue ? _referenceDataProvider.GetCountyById(countyId.Value) : _referenceDataProvider.GetCountyByCode(countyCode);
-
-            if (county == null)
-            {
-                throw new KeyNotFoundException(ReferenceMessages.CountyNotFound);
-            }
-
-            return Ok(county);
+            return Ok(_getCountiesStrategy.GetCounty(id));
         }
 
-        [Route("reference/localauthorities")]
+        /// <summary>
+        /// Returns the information for the county identified by the county's code in the URL
+        /// </summary>
+        /// <param name="code">The county's code</param>
+        /// <returns>The county object</returns>
+        [Route("county/code/{code}")]
+        [ResponseType(typeof(County))]
+        [HttpGet]
+        public IHttpActionResult GetCountyByCode(string code)
+        {
+            return Ok(_getCountiesStrategy.GetCounty(countyCode: code));
+        }
+
+        /// <summary>
+        /// Retrieves all local authority information for all counties
+        /// </summary>
+        /// <returns>The full list of local authorities</returns>
+        [Route("localauthorities")]
         [ResponseType(typeof(IEnumerable<LocalAuthority>))]
+        [HttpGet]
         public IHttpActionResult GetLocalAuthorities()
         {
-            return Ok(_referenceDataProvider.GetLocalAuthorities());
+            return Ok(_getLocalAuthoritiesStrategy.GetLocalAuthorities());
         }
 
-        [Route("reference/localauthority")]
+        /// <summary>
+        /// Returns the information for the local authority identified by the primary identifier in the URL
+        /// </summary>
+        /// <param name="id">The local authority's primary identifier</param>
+        /// <returns>The local authority object</returns>
+        [Route("localauthority/{id}")]
         [ResponseType(typeof(LocalAuthority))]
-        public IHttpActionResult GetLocalAuthority(int? localAuthorityId = null, string localAuthorityCode = null)
+        [HttpGet]
+        public IHttpActionResult GetLocalAuthorityById(int id)
         {
-            if (!localAuthorityId.HasValue && string.IsNullOrEmpty(localAuthorityCode))
-            {
-                throw new ArgumentException(ReferenceMessages.MissingLocalAuthorityIdentifier);
-            }
-
-            var localAuthority = localAuthorityId.HasValue ? _referenceDataProvider.GetLocalAuthorityById(localAuthorityId.Value) : _referenceDataProvider.GetLocalAuthorityByCode(localAuthorityCode);
-
-            if (localAuthority == null)
-            {
-                throw new KeyNotFoundException(ReferenceMessages.LocalAuthorityNotFound);
-            }
-
-            return Ok(localAuthority);
+            return Ok(_getLocalAuthoritiesStrategy.GetLocalAuthority(id));
         }
 
-        [Route("reference/regions")]
+        /// <summary>
+        /// Returns the information for the local authority identified by the county's code in the URL
+        /// </summary>
+        /// <param name="code">The local authority's code</param>
+        /// <returns>The local authority object</returns>
+        [Route("localauthority/code/{code}")]
+        [ResponseType(typeof(LocalAuthority))]
+        [HttpGet]
+        public IHttpActionResult GetLocalAuthorityByCode(string code)
+        {
+            return Ok(_getLocalAuthoritiesStrategy.GetLocalAuthority(localAuthorityCode: code));
+        }
+
+        /// <summary>
+        /// Retrieves all region information for all regions
+        /// </summary>
+        /// <returns>The full list of regions</returns>
+        [Route("regions")]
         [ResponseType(typeof(IEnumerable<Region>))]
+        [HttpGet]
         public IHttpActionResult GetRegions()
         {
-            return Ok(_referenceDataProvider.GetRegions());
+            return Ok(_getRegionsStrategy.GetRegions());
         }
 
-        [Route("reference/region")]
+        /// <summary>
+        /// Returns the information for the region identified by the primary identifier in the URL
+        /// </summary>
+        /// <param name="id">The region's primary identifier</param>
+        /// <returns>The region object</returns>
+        [Route("region/{id}")]
         [ResponseType(typeof(Region))]
-        public IHttpActionResult GetRegion(int? regionId = null, string regionCode = null)
+        [HttpGet]
+        public IHttpActionResult GetRegionById(int id)
         {
-            if (!regionId.HasValue && string.IsNullOrEmpty(regionCode))
-            {
-                throw new ArgumentException(ReferenceMessages.MissingRegionIdentifier);
-            }
+            return Ok(_getRegionsStrategy.GetRegion(id));
+        }
 
-            var region = regionId.HasValue ? _referenceDataProvider.GetRegionById(regionId.Value) : _referenceDataProvider.GetRegionByCode(regionCode);
-
-            if (region == null)
-            {
-                throw new KeyNotFoundException(ReferenceMessages.RegionNotFound);
-            }
-
-            return Ok(region);
+        /// <summary>
+        /// Returns the information for the region identified by the region's code in the URL
+        /// </summary>
+        /// <param name="code">The region's code</param>
+        /// <returns>The region object</returns>
+        [Route("region/code/{code}")]
+        [ResponseType(typeof(Region))]
+        [HttpGet]
+        public IHttpActionResult GetRegionByCode(string code)
+        {
+            return Ok(_getRegionsStrategy.GetRegion(regionCode: code));
         }
     }
 }

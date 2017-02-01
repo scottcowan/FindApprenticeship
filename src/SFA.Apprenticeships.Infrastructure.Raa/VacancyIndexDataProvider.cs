@@ -11,6 +11,7 @@
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
     using Application.Interfaces;
+    using Application.Interfaces.Vacancy;
     using Application.Vacancy;
     using Domain.Entities.ReferenceData;
     using Domain.Raa.Interfaces.Repositories.Models;

@@ -12,6 +12,7 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using System;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
@@ -27,9 +28,9 @@
         }
 
         [HttpGet]
-        public ActionResult Review(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public async Task<ActionResult> Review(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.Review(applicationSelectionViewModel);
+            var response = await _apprenticeshipApplicationMediator.Review(applicationSelectionViewModel);
 
             switch (response.Code)
             {
@@ -45,9 +46,9 @@
             }
         }
 
-        private ActionResult ReviewAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        private async Task<ActionResult> ReviewAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ReviewAppointCandidate(apprenticeshipApplicationViewModel);
+            var response = await _apprenticeshipApplicationMediator.ReviewAppointCandidate(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -74,9 +75,9 @@
             }
         }
 
-        private ActionResult ReviewRejectCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        private async Task<ActionResult> ReviewRejectCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ReviewRejectCandidate(apprenticeshipApplicationViewModel);
+            var response = await _apprenticeshipApplicationMediator.ReviewRejectCandidate(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -105,9 +106,9 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewRevertToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public async Task<ActionResult> ReviewRevertToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ReviewRevertToInProgress(apprenticeshipApplicationViewModel);
+            var response = await _apprenticeshipApplicationMediator.ReviewRevertToInProgress(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -136,26 +137,26 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewSaveAndContinue(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public async Task<ActionResult> ReviewSaveAndContinue(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             switch (apprenticeshipApplicationViewModel.Status)
             {
                 case ApplicationStatuses.Submitted:
-                    return SetToSubmitted(apprenticeshipApplicationViewModel);
+                    return await SetToSubmitted(apprenticeshipApplicationViewModel);
                 case ApplicationStatuses.InProgress:
-                    return PromoteToInProgress(apprenticeshipApplicationViewModel);
+                    return await PromoteToInProgress(apprenticeshipApplicationViewModel);
                 case ApplicationStatuses.Successful:
-                    return ReviewAppointCandidate(apprenticeshipApplicationViewModel);
+                    return await ReviewAppointCandidate(apprenticeshipApplicationViewModel);
                 case ApplicationStatuses.Unsuccessful:
-                    return ReviewRejectCandidate(apprenticeshipApplicationViewModel);
+                    return await ReviewRejectCandidate(apprenticeshipApplicationViewModel);
                 default:
                     throw new InvalidOperationException("Invalid status change");
             }
         }
 
-        private ActionResult PromoteToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        private async Task<ActionResult> PromoteToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.PromoteToInProgress(apprenticeshipApplicationViewModel);
+            var response = await _apprenticeshipApplicationMediator.PromoteToInProgress(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -182,9 +183,9 @@
             }
         }
 
-        private ActionResult SetToSubmitted(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        private async Task<ActionResult> SetToSubmitted(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ReviewSetToSubmitted(apprenticeshipApplicationViewModel);
+            var response = await _apprenticeshipApplicationMediator.ReviewSetToSubmitted(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -212,9 +213,9 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public async Task<ActionResult> ConfirmSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ConfirmSuccessfulDecision(applicationSelectionViewModel);
+            var response = await _apprenticeshipApplicationMediator.ConfirmSuccessfulDecision(applicationSelectionViewModel);
 
             switch (response.Code)
             {
@@ -232,9 +233,9 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "SendSuccessfulDecision")]
-        public ActionResult SendSuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel, string applicationIds)
+        public async Task<ActionResult> SendSuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel, string applicationIds)
         {
-            var response = _apprenticeshipApplicationMediator.SendSuccessfulDecision(apprenticeshipApplicationViewModel.ApplicationSelection);
+            var response = await _apprenticeshipApplicationMediator.SendSuccessfulDecision(apprenticeshipApplicationViewModel.ApplicationSelection);
             ConfirmationStatusViewModel confirmationStatusViewModel = new ConfirmationStatusViewModel()
             {
                 CustomMessage = response.ViewModel.ConfirmationStatusSentMessage + response.ViewModel.ApplicantDetails.Name,
@@ -250,9 +251,9 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public async Task<ActionResult> ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ConfirmUnsuccessfulDecision(applicationSelectionViewModel);
+            var response = await _apprenticeshipApplicationMediator.ConfirmUnsuccessfulDecision(applicationSelectionViewModel);
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok:
@@ -269,9 +270,9 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "SendUnsuccessfulDecision")]
-        public ActionResult SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public async Task<ActionResult> SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.SendUnsuccessfulDecision(apprenticeshipApplicationViewModel);
+            var response = await _apprenticeshipApplicationMediator.SendUnsuccessfulDecision(apprenticeshipApplicationViewModel);
             ConfirmationStatusViewModel confirmationStatusViewModel = new ConfirmationStatusViewModel()
             {
                 CustomMessage = response.ViewModel.ConfirmationStatusSentMessage + response.ViewModel.ApplicantDetails.Name,
@@ -288,9 +289,9 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public async Task<ActionResult> ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ConfirmRevertToInProgress(applicationSelectionViewModel);
+            var response = await _apprenticeshipApplicationMediator.ConfirmRevertToInProgress(applicationSelectionViewModel);
 
             switch (response.Code)
             {
@@ -308,9 +309,9 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "RevertToInProgress")]
-        public ActionResult RevertToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public async Task<ActionResult> RevertToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.RevertToInProgress(apprenticeshipApplicationViewModel.ApplicationSelection);
+            var response = await _apprenticeshipApplicationMediator.RevertToInProgress(apprenticeshipApplicationViewModel.ApplicationSelection);
 
             switch (response.Code)
             {

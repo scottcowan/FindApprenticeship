@@ -14,19 +14,20 @@
     using Raa.Common.ViewModels.Application.Traineeship;
     using Recruit.Mediators.Application;
     using System;
+    using System.Threading.Tasks;
 
     [TestFixture]
     public class TraineeshipApplicationMediatorTests
     {
         [Test]
-        public void ShouldReturnNoVacancyIdIfNoVacancyGuidIsSuppliedOnReview()
+        public async Task ShouldReturnNoVacancyIdIfNoVacancyGuidIsSuppliedOnReview()
         {
             var logService = new Mock<ILogService>();
             var mediator = new TraineeshipApplicationMediator(null, null, null, null, logService.Object);
 
             var viewModel = new ApplicationSelectionViewModel(new VacancyApplicationsSearchViewModel(), Guid.Empty);
 
-            var respone = mediator.Review(viewModel);
+            var respone = await mediator.Review(viewModel);
 
             respone.AssertCodeAndMessage(TraineeshipApplicationMediatorCodes.Review.NoApplicationId, false, false);
             logService.Verify(l => l.Info("Review vacancy failed: VacancyGuid is empty."));
@@ -34,7 +35,7 @@
 
 
         [Test]
-        public void ShouldUpdateCommentsWhenSettingStatusToInProgress()
+        public async Task ShouldUpdateCommentsWhenSettingStatusToInProgress()
         {
             // Arrange
             var mockApplicationProvider = new Mock<IApplicationProvider>();
@@ -44,7 +45,7 @@
                 .With(vm => vm.Status, ApplicationStatuses.InProgress).Create();
             mockValidator.Setup(m => m.Validate(viewModel)).Returns(new ValidationResult());
             // Act
-            var response = mediator.PromoteToInProgress(viewModel);
+            var response = await mediator.PromoteToInProgress(viewModel);
             //Assert
             response.ViewModel.Status.Should().Be(ApplicationStatuses.InProgress);
             response.AssertCodeAndMessage(TraineeshipApplicationMediatorCodes.PromoteToInProgress.Ok, false, false);
@@ -53,7 +54,7 @@
         }
 
         [Test]
-        public void ShouldUpdateCommentsWhenSettingStatusToSubmitted()
+        public async Task ShouldUpdateCommentsWhenSettingStatusToSubmitted()
         {
             // Arrange
             var mockApplicationProvider = new Mock<IApplicationProvider>();
@@ -63,7 +64,7 @@
                 .With(vm => vm.Status, ApplicationStatuses.Submitted).Create();
             mockValidator.Setup(m => m.Validate(viewModel)).Returns(new ValidationResult());
             // Act
-            var response = mediator.ReviewSetToSubmitted(viewModel);
+            var response = await mediator.ReviewSetToSubmitted(viewModel);
             //Assert
             response.ViewModel.Status.Should().Be(ApplicationStatuses.Submitted);
             response.AssertCodeAndMessage(TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok, false, false);

@@ -33,5 +33,18 @@
                 ReferencedEntitySurrogateId = 228616654
             };
         }
+
+        public static RaaApiUser GetValidAgencyApiUser(Guid primaryApiKey)
+        {
+            return new RaaApiUser
+            {
+                PrimaryApiKey = primaryApiKey,
+                SecondaryApiKey = Guid.NewGuid(),
+                UserType = RaaApiUserType.Agency,
+                ReferencedEntityId = 5,
+                ReferencedEntityGuid = Guid.NewGuid(),
+                ReferencedEntitySurrogateId = null
+            };
+        }
     }
 }

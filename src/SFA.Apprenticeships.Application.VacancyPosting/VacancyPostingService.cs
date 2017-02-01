@@ -8,6 +8,7 @@
     //TODO: rename project to SFA.Management.Application.VacancyPosting?
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class VacancyPostingService : IVacancyPostingService
     {
@@ -60,19 +61,19 @@
             return _getNextVacancyReferenceNumberStrategy.GetNextVacancyReferenceNumber();
         }
 
-        public Vacancy GetVacancyByReferenceNumber(int vacancyReferenceNumber)
+        public Task<Vacancy> GetVacancyByReferenceNumber(int vacancyReferenceNumber)
         {
-            return _getVacancyStrategies.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            return Task.FromResult(_getVacancyStrategies.GetVacancyByReferenceNumber(vacancyReferenceNumber));
         }
 
-        public Vacancy GetVacancy(Guid vacancyGuid)
+        public Task<Vacancy> GetVacancy(Guid vacancyGuid)
         {
-            return _getVacancyStrategies.GetVacancyByGuid(vacancyGuid);
+            return Task.FromResult(_getVacancyStrategies.GetVacancyByGuid(vacancyGuid));
         }
 
-        public Vacancy GetVacancy(int vacancyId)
+        public Task<Vacancy> GetVacancy(int vacancyId)
         {
-            return _getVacancyStrategies.GetVacancyById(vacancyId);
+            return Task.FromResult(_getVacancyStrategies.GetVacancyById(vacancyId));
         }
 
         public IList<VacancySummary> GetWithStatus(VacancySummaryByStatusQuery query, out int totalRecords)

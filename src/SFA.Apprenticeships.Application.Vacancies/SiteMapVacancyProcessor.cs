@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancies
 {
+    using Domain.Entities.Vacancies;
+    using Entities.SiteMap;
+    using Interfaces;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Vacancies;
-    using Entities.SiteMap;
-
-    using SFA.Apprenticeships.Application.Interfaces;
     using Vacancy;
     using Vacancy.SiteMap;
 

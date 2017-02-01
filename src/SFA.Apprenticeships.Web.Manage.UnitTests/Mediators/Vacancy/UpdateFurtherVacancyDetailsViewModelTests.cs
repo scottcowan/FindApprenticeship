@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
+    using System.Threading.Tasks;
     using Common.Constants;
     using Common.UnitTests.Mediators;
     using Constants.ViewModels;
@@ -15,7 +16,7 @@
     public class UpdateFurtherVacancyDetailsViewModelTests
     {
         [Test]
-        public void ShouldReturnFailedValidationIfTheViewModelIsNotCorrect()
+        public async Task ShouldReturnFailedValidationIfTheViewModelIsNotCorrect()
         {
             const int vacancyReferenceNumber = 1;
             var vacancy = VacancyMediatorTestHelper.GetValidVacancyViewModel(vacancyReferenceNumber);
@@ -23,39 +24,39 @@
 
             var mediator = new VacancyMediatorBuilder().Build();
 
-            var result = mediator.UpdateVacancy(vacancy.FurtherVacancyDetailsViewModel);
+            var result = await mediator.UpdateVacancy(vacancy.FurtherVacancyDetailsViewModel);
             result.AssertValidationResult(VacancyMediatorCodes.UpdateVacancy.FailedValidation);
         }
 
         [Test]
-        public void ShouldReturnInvalidVacancyIfTheVacancyIsNotAvailableToQA()
+        public async Task ShouldReturnInvalidVacancyIfTheVacancyIsNotAvailableToQA()
         {
             const int vacancyReferenceNumber = 1;
             var provider = new Mock<IVacancyQAProvider>();
             var vacancy = VacancyMediatorTestHelper.GetValidVacancyViewModel(vacancyReferenceNumber);
             var qaActionResult = new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.InvalidVacancy);
 
-            provider.Setup(p => p.UpdateVacancyWithComments(vacancy.FurtherVacancyDetailsViewModel)).Returns(qaActionResult);
+            provider.Setup(p => p.UpdateVacancyWithComments(vacancy.FurtherVacancyDetailsViewModel)).Returns(Task.FromResult(qaActionResult));
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.UpdateVacancy(vacancy.FurtherVacancyDetailsViewModel);
+            var result = await mediator.UpdateVacancy(vacancy.FurtherVacancyDetailsViewModel);
             result.AssertMessage(VacancyMediatorCodes.UpdateVacancy.InvalidVacancy, VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
         }
 
         [Test]
-        public void ShouldReturnOkIsThereIsNotAnyIssue()
+        public async Task ShouldReturnOkIsThereIsNotAnyIssue()
         {
             const int vacancyReferenceNumber = 1;
             var provider = new Mock<IVacancyQAProvider>();
             var vacancy = VacancyMediatorTestHelper.GetValidVacancyViewModel(vacancyReferenceNumber);
             var qaActionResult = new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.Ok, vacancy.FurtherVacancyDetailsViewModel);
 
-            provider.Setup(p => p.UpdateVacancyWithComments(vacancy.FurtherVacancyDetailsViewModel)).Returns(qaActionResult);
+            provider.Setup(p => p.UpdateVacancyWithComments(vacancy.FurtherVacancyDetailsViewModel)).Returns(Task.FromResult(qaActionResult));
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.UpdateVacancy(vacancy.FurtherVacancyDetailsViewModel);
+            var result = await mediator.UpdateVacancy(vacancy.FurtherVacancyDetailsViewModel);
             result.AssertCodeAndMessage(VacancyMediatorCodes.UpdateVacancy.Ok);
             result.ViewModel.ShouldBeEquivalentTo(vacancy.FurtherVacancyDetailsViewModel);
         }

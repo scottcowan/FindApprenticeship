@@ -217,7 +217,6 @@
     <Compile Include="Extensions\CandidateSearchExtensions.cs" />
     <Compile Include="Extensions\VacancyDatesViewModelExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
-    <Compile Include="Mappers\ApiClientMappers.cs" />
     <Compile Include="Mappers\Resolvers\ApiEndpointConverter.cs" />
     <Compile Include="Mappers\Resolvers\ApiEndpointViewModelConverter.cs" />
     <Compile Include="Mappers\ApiUserMappers.cs" />
@@ -234,8 +233,6 @@
     <Compile Include="Mediators\Admin\AdminMediator.cs" />
     <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
     <Compile Include="Mediators\Admin\IAdminMediator.cs" />
-    <Compile Include="Providers\ApiClientProvider.cs" />
-    <Compile Include="Providers\IApiClientProvider.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelMessages.cs" />
     <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelValidator.cs" />
@@ -361,6 +358,7 @@
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesSearchViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EditCategoryViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\EditFrameworksViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EditLinkViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
@@ -376,10 +374,15 @@
     <Compile Include="ViewModels\VacancyPosting\VacancyLocationAddressViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\Employer\EmployerViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\EditSectorsViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\EditSectorViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\EditStandardsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EditStandardViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\IPartialVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\OccupationViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\QAActionResult.cs" />
+    <Compile Include="ViewModels\Vacancy\SectorViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\StandardViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ContactDetailsAndVacancyHistoryViewModel.cs" />

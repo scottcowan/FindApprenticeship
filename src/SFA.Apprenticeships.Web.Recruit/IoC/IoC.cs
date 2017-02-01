@@ -17,6 +17,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Common.Providers;
     using Common.Providers.Azure.AccessControlService;
     using Common.Services;
+    using DAS.RAA.Api.Service.V1.IoC;
     using Infrastructure.Azure.ServiceBus.Configuration;
     using Infrastructure.Azure.ServiceBus.IoC;
     using Infrastructure.Caching.Memory.IoC;
@@ -79,8 +80,8 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<ReportingServicesRegistry>();
                 x.AddRegistry<VacancyPostingServiceRegistry>();
                 x.AddRegistry<LocationServiceRegistry>();
+                x.AddRegistry<ApiServiceRegistry>();
 
-                x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
                 x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
                 x.For<IProviderVacancyAuthorisationService>().Use<ProviderVacancyAuthorisationService>();

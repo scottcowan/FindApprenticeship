@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System.Threading.Tasks;
     using Application.Interfaces;
     using Common.Mediators;
     using Mediators.Application;
@@ -18,9 +19,9 @@
             _traineeshipApplicationMediator = traineeshipApplicationMediator;
         }
 
-        public ActionResult ViewAnonymisedApprenticeship(string application)
+        public async Task<ActionResult> ViewAnonymisedApprenticeship(string application)
         {
-            var response = _apprenticeshipApplicationMediator.View(application);
+            var response = await _apprenticeshipApplicationMediator.View(application);
 
             switch (response.Code)
             {
@@ -33,9 +34,9 @@
             }
         }
 
-        public ActionResult ViewAnonymisedTraineeship(string application)
+        public async Task<ActionResult> ViewAnonymisedTraineeship(string application)
         {
-            var response = _traineeshipApplicationMediator.View(application);
+            var response = await _traineeshipApplicationMediator.View(application);
 
             switch (response.Code)
             {

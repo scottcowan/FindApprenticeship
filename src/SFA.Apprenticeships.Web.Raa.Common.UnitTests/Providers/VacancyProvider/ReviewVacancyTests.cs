@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
 {
+    using System.Threading.Tasks;
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
@@ -30,7 +31,7 @@
         }
 
         [Test]
-        public void ShouldReturnTheViewModelIfTheUserCanQAIt()
+        public async Task ShouldReturnTheViewModelIfTheUserCanQAIt()
         {
             const int vacancyReferenceNumber = 1;
             const string userName = "userName";
@@ -42,7 +43,7 @@
             var vacancyProviderBuilder = VacancyProviderTestHelper.GetBasicVacancyProviderBuilder(userName, vacancyReferenceNumber);
             var provider = vacancyProviderBuilder.With(vacancyLockingService).Build();
 
-            var viewModel = provider.ReviewVacancy(vacancyReferenceNumber);
+            var viewModel = await provider.ReviewVacancy(vacancyReferenceNumber);
 
             viewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }

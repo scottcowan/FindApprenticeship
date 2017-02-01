@@ -1,0 +1,283 @@
+﻿@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Domain.Entities.Raa.Reference
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.EditSectorsViewModel
+@{
+    ViewBag.Title = "Sectors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .highlight-row {
+        background-color: #dee0e2;
+    }
+
+    .new-item {
+        background-color: rgb(222, 235, 255);
+    }
+</style>
+
+<h1 id="heading" class="heading-xlarge">Sectors</h1>
+
+<div class="grid-row">
+    @*@Html.RouteLink("Download Sectors", ManagementRouteNames.AdminSectorsCsv, null, new { @class = "column-one-third" })*@
+    <a href="" class="column-one-third" data-bind="click: addItem">Add new sector</a>
+</div>
+
+<div class="grid-row" data-bind="visible: message" style="display: none;">
+    <div class="column-two-thirds">
+        <div class="info-summary" role="group" aria-labelledby="VacancyDeletedInfoMessageText" tabindex="-1">
+
+            <p id="VacancyDeletedInfoMessageText" data-bind="text: message"></p>
+
+        </div>
+    </div>
+</div>
+
+<div class="grid-row sfa-medium-bottom-margin sfa-medium-top-margin">
+    <input type="text" placeholder="Type to search" data-bind="value: searchText, valueUpdate: 'keyup'" class="column-one-third" />
+    <label class="column-one-third">
+        <input type="checkbox" data-bind="checked: showChanged" /> Show modified
+    </label>
+    <button style="display: none;" class="button no-handler column-one-third" data-bind="css : { 'disabled' : busy }, visible : changedItems().length > 0, click: saveChanges">
+        <span data-bind="visible: !busy()">Save changes to <span data-bind="text: changedItems().length"></span> item(s)</span>
+        <span data-bind="visible: busy">Saving</span>
+    </button>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Occupation Name</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody data-bind="template: { name: 'sector', foreach: sectors, as: 'sector' }">
+        @foreach (var sector in Model.Sectors)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => sector.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => sector.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => sector.Occupation.FullName)
+                </td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    @Scripts.Render("~/bundles/knockout")
+
+    <script type="text/html" id="sector">
+        <tr data-bind="css : { 'highlight-row' : sector.Changed(), 'new-item' : !sector.Id() }">
+            <td data-bind="text: sector.Id"></td>
+            <td><input type="text" data-bind="value: sector.Name, valueUpdate: 'keyup'" /></td>
+            <td>
+                <select data-bind="options: $root.Occupations, optionsText: 'FullName', value: sector.Occupation"></select>
+            </td>
+            <td>
+                <a href="" data-bind="click: $root.delete, visible: !Id()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                <a href="" data-bind="click: $root.save, visible: !Id()"><i class="fa fa-check" aria-hidden="true"></i></a>
+            </td>
+        </tr>
+    </script>
+
+    <script>
+        var pageInit = function() {
+            var occupations = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Occupations)));
+            var sectors = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Sectors)));
+
+            var mappings = {
+                create: function(options) {
+                    var mapped = ko.mapping.fromJS(options.data);
+                    mapped.Selected = ko.observable(false);
+
+                    var occupation = options.data.Occupation ? options.data.Occupation.FullName : '';
+                    mapped.Occupation = ko.observable();
+
+                    for (var i = 0; i < occupations().length; i++) {
+                        if (occupation === occupations()[i].FullName()) {
+                            mapped.Occupation(occupations()[i]);
+                            break;
+                        }
+                    }
+
+                    mapped.Changed = ko.observable(false);
+
+                    return mapped;
+                }
+            };
+
+            function ViewModel() {
+                var self = this;
+
+                self.busy = ko.observable(false);
+                self.Sectors = sectors;
+                self.Occupations = occupations;
+
+                self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Sectors)), mappings);
+
+                self.dataChange = function(item) {
+                    item.Changed(true);
+                }
+
+                self.searchText = ko.observable();
+                self.showChanged = ko.observable(false);
+
+                self.message = ko.observable();
+
+                self.sectors = ko.computed(function() {
+                    if (self.showChanged()) {
+                        return ko.utils.arrayFilter(self.data(),
+                            function(item) {
+                                return item.Changed();
+                            });
+                    } else {
+                        if (self.searchText() != null) {
+                            var filter = self.searchText().toLowerCase();
+
+                            return ko.utils.arrayFilter(self.data(),
+                                function(item) {
+                                    var match = false;
+
+                                    var id = item.Id();
+                                    if (id != null) match = match || id.toString().toLowerCase().indexOf(filter) > -1;
+
+                                    var name = item.Name();
+                                    if (name != null) match = match || name.toLowerCase().indexOf(filter) > -1;
+
+                                    var occupationName = item.Occupation().FullName();
+                                    if (occupationName != null)
+                                        match = match || occupationName.toLowerCase().indexOf(filter) > -1;
+
+                                    return match;
+                                });
+                        } else {
+                            return self.data();
+                        }
+                    }
+                });
+
+                self.changedItems = ko.computed(function() {
+                    return ko.utils.arrayFilter(self.data(),
+                        function(item) {
+                            return item.Changed() && item.Id();
+                        });
+                });
+
+                // subscribe to all observables on this object
+                for (var i = 0; i < self.data().length; i++) {
+                    var mapped = self.data()[i];
+
+                    subscribeObject(mapped);
+                }
+
+                function subscribeObject(mapped) {
+                    for (var item in mapped) {
+                        if (item !== 'Status' &&
+                            item !== 'Changed' &&
+                            mapped.hasOwnProperty(item) &&
+                            item.indexOf('_') === -1) {
+                            mapped[item].subscribe(function(newValue) { self.dataChange(mapped); });
+                        }
+                    }
+                }
+
+                // functions
+                self.saveChanges = function() {
+                    self.busy(true);
+
+                    // clear existing message
+                    self.message(null);
+
+                    var df = [];
+
+                    var changedItems = self.changedItems();
+
+                    for (var i = 0; i < changedItems.length; i++) {
+                        (function() {
+                            var item = changedItems[i];
+                            df.push($.Deferred(function(promise) {
+                                $.ajax({
+                                    method: 'POST',
+                                    url: '@Url.Action("UpdateSector")',
+                                    data: ko.mapping.toJS(item)
+                                }).done(function() {
+                                    item.Changed(false);
+                                    promise.resolve();
+                                }).fail(function() {
+                                    promise.reject();
+                                });
+                            }));
+                        })();
+                    }
+
+                    $.when.apply(undefined, df).always(function() {
+                        // always reset busy (button) state
+                        self.busy(false);
+                    }).done(function() {
+                        // add success message
+
+                    }).fail(function() {
+                        // add error state
+                        self.message('Failed to save');
+                    });
+                }
+
+                self.addItem = function() {
+                    //clear search first
+                    self.searchText(null);
+
+                    var newItem = ko.mapping.fromJS(@Html.Raw(Json.Encode(new EditSectorViewModel())), mappings);
+                    newItem.Id(null);
+
+                    subscribeObject(newItem);
+
+                    self.data.splice(0, 0, newItem);
+                }
+
+                self.delete = function(item) {
+                    // should only delete new items that aren't saved
+                    if (!item.Id()) {
+                        self.data.remove(item);
+                    }
+                }
+
+                self.save = function(item) {
+                    // validate
+                    if (item.Name() && item.Name() !== '') {
+                        self.message(null);
+
+                        $.ajax({
+                            method: 'POST',
+                            url: '@Url.Action("CreateSector")',
+                            data: ko.mapping.toJS(item)
+                        }).done(function(data) {
+                            item.Id(data.Id);
+                            item.Changed(false);
+                        }).fail(function() {
+                            self.message('Failed to save');
+                        });
+                    }
+                }
+
+                return self;
+            };
+
+            var viewModel = new ViewModel();
+
+            ko.applyBindings(viewModel);
+        }
+
+        pageInit();
+    </script>
+}

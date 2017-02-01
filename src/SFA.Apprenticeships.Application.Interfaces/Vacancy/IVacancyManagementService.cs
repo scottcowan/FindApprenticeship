@@ -1,12 +1,14 @@
-﻿namespace SFA.Apprenticeships.Application.Vacancy
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancy
 {
+    using System.Threading.Tasks;
     using Domain.Entities.Raa.Vacancies;
-    using Interfaces.Service;
+    using Service;
 
     public interface IVacancyManagementService
     {
         IServiceResult Delete(int vacancyId);
         IServiceResult<VacancySummary> FindSummary(int vacancyId);
         IServiceResult<VacancySummary> FindSummaryByReferenceNumber(int vacancyReferenceNumber);
+        Task<IServiceResult<WageUpdate>> EditWage(WageUpdate wageUpdate, int vacancyReferenceNumber);
     }
 }

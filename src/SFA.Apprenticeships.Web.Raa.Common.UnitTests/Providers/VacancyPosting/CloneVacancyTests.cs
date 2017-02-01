@@ -7,6 +7,7 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using System;
+    using System.Threading.Tasks;
 
     [TestFixture]
     [Parallelizable]
@@ -21,7 +22,7 @@
             var dateTimeNow = DateTime.UtcNow;
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(initialVacancyReferenceNumber))
-                .Returns(GetLiveVacancyWithComments(initialVacancyReferenceNumber, initialVacancyTitle));
+                .Returns(Task.FromResult(GetLiveVacancyWithComments(initialVacancyReferenceNumber, initialVacancyTitle)));
             MockVacancyPostingService.Setup(s => s.GetNextVacancyReferenceNumber()).Returns(newVacancyReferenceNumber);
             MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(It.IsAny<int>(), true))
                 .Returns(new Fixture().Build<VacancyOwnerRelationship>().Create());

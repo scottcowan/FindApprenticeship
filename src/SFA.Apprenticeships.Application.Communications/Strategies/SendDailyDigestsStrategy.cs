@@ -1,15 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Application.Communications.Strategies
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class SendDailyDigestsStrategy : ISendDailyDigestsStrategy
     {

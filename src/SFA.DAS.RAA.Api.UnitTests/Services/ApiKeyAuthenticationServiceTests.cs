@@ -24,6 +24,7 @@
         private readonly Guid _validApiKey = Guid.NewGuid();
         private readonly Guid _validProviderApiKey = Guid.NewGuid();
         private readonly Guid _validEmployerApiKey = Guid.NewGuid();
+        private readonly Guid _validAgencyApiKey = Guid.NewGuid();
 
         private readonly RaaApiUser _validApiUser = new RaaApiUser
         {
@@ -37,6 +38,8 @@
 
         private readonly RaaApiUser _validEmployerApiUser = RaaApiUserFactory.GetValidEmployerApiUser(Guid.NewGuid());
 
+        private readonly RaaApiUser _validAgencyApiUser = RaaApiUserFactory.GetValidAgencyApiUser(Guid.NewGuid());
+
         private Mock<IRaaApiUserRepository> _raaApiUserRepository;
         private IAuthenticationService _authenticationService;
 
@@ -48,6 +51,7 @@
             _raaApiUserRepository.Setup(r => r.GetUser(_validApiKey)).Returns(_validApiUser);
             _raaApiUserRepository.Setup(r => r.GetUser(_validProviderApiKey)).Returns(_validProviderApiUser);
             _raaApiUserRepository.Setup(r => r.GetUser(_validEmployerApiKey)).Returns(_validEmployerApiUser);
+            _raaApiUserRepository.Setup(r => r.GetUser(_validAgencyApiKey)).Returns(_validAgencyApiUser);
 
             _authenticationService = new ApiKeyAuthenticationService(_raaApiUserRepository.Object);
         }
@@ -191,6 +195,30 @@
             claimsIdentity.Name.Should().Be(expectedName);
             var raaApiUser = claimsIdentity.GetRaaApiUser();
             raaApiUser.Equals(_validEmployerApiUser).Should().BeTrue();
+        }
+
+        [Test]
+        public void ValidAgencyApiKeyTest()
+        {
+            var claims = new Dictionary<string, string>
+            {
+                { ApiKeyAuthenticationService.ApiKeyKey, _validAgencyApiKey.ToString() }
+            };
+            var principal = _authenticationService.Authenticate(claims);
+
+            var expectedName = $"RaaApiUser_ApiKey_{_validAgencyApiKey}_Agency";
+            principal.IsInRole(Roles.Api).Should().BeTrue();
+            principal.IsInRole(Roles.Provider).Should().BeFalse();
+            principal.IsInRole(Roles.Agency).Should().BeTrue();
+            principal.IsInRole(Roles.Admin).Should().BeFalse();
+            var claimsIdentity = ValidatePrincipal(principal, true);
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _validAgencyApiKey.ToString()).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == expectedName).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == RaaClaimTypes.Ukprn).Should().BeFalse();
+            claimsIdentity.Name.Should().Be(expectedName);
+            var raaApiUser = claimsIdentity.GetRaaApiUser();
+            raaApiUser.Equals(_validAgencyApiUser).Should().BeTrue();
         }
 
         private static ClaimsIdentity ValidatePrincipal(IPrincipal principal, bool expectedIsAuthenticated)

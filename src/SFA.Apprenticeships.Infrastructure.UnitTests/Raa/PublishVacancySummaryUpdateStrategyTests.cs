@@ -5,9 +5,9 @@
     using Application.Interfaces;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
+    using Application.Interfaces.Vacancy;
     using Application.ReferenceData;
     using Application.Vacancies.Entities;
-    using Application.Vacancy;
     using Application.VacancyPosting.Strategies;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
@@ -18,7 +18,6 @@
     using Infrastructure.Raa.Strategies;
     using Moq;
     using NUnit.Framework;
-    using SFA.Infrastructure.Interfaces;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 

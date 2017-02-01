@@ -15,6 +15,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
@@ -53,9 +54,9 @@
             _currentUserService = currentUserService;
         }
 
-        public ShareApplicationsViewModel GetShareApplicationsViewModel(int vacancyReferenceNumber)
+        public async Task<ShareApplicationsViewModel> GetShareApplicationsViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var ukprn = _currentUserService.GetClaimValue("ukprn");
@@ -84,9 +85,9 @@
             return viewModel;
         }
 
-        public BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            var vacancyApplicationsViewModel = GetVacancyApplicationsViewModel(bulkDeclineCandidatesViewModel.VacancyApplicationsSearch, false);
+            var vacancyApplicationsViewModel = await GetVacancyApplicationsViewModel(bulkDeclineCandidatesViewModel.VacancyApplicationsSearch, false);
 
             var viewModel = new BulkDeclineCandidatesViewModel
             {
@@ -115,14 +116,14 @@
             return bulkDeclineCandidatesViewModel;
         }
 
-        public VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
+        public async Task<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
         {
-            return GetVacancyApplicationsViewModel(vacancyApplicationsSearch, true);
+            return await GetVacancyApplicationsViewModel(vacancyApplicationsSearch, true);
         }
 
-        public VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch, bool applyPagination)
+        public async Task<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch, bool applyPagination)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyApplicationsSearch.VacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyApplicationsSearch.VacancyReferenceNumber);
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<Vacancy, VacancyApplicationsViewModel>(vacancy);
@@ -268,10 +269,10 @@
             return page;
         }
 
-        public ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public async Task<ApprenticeshipApplicationViewModel> GetApprenticeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var application = _apprenticeshipApplicationService.GetApplication(applicationSelectionViewModel.ApplicationId);
-            var viewModel = ConvertToApprenticeshipApplicationViewModel(application, applicationSelectionViewModel);
+            var viewModel = await ConvertToApprenticeshipApplicationViewModel(application, applicationSelectionViewModel);
             return viewModel;
         }
 
@@ -322,17 +323,17 @@
             return applicationSelectionViewModel;
         }
 
-        public TraineeshipApplicationViewModel GetTraineeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public async Task<TraineeshipApplicationViewModel> GetTraineeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var application = _traineeshipApplicationService.GetApplication(applicationSelectionViewModel.ApplicationId);
-            var viewModel = ConvertToTraineeshipApplicationViewModel(application, applicationSelectionViewModel);
+            var viewModel = await ConvertToTraineeshipApplicationViewModel(application, applicationSelectionViewModel);
             return viewModel;
         }
 
-        public TraineeshipApplicationViewModel GetTraineeshipApplicationViewModelForReview(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public async Task<TraineeshipApplicationViewModel> GetTraineeshipApplicationViewModelForReview(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var application = _traineeshipApplicationService.GetApplicationForReview(applicationSelectionViewModel.ApplicationId);
-            var viewModel = ConvertToTraineeshipApplicationViewModel(application, applicationSelectionViewModel);
+            var viewModel = await ConvertToTraineeshipApplicationViewModel(application, applicationSelectionViewModel);
             return viewModel;
         }
 
@@ -341,20 +342,20 @@
             _traineeshipApplicationService.UpdateApplicationNotes(applicationId, notes, publishUpdate);
         }
 
-        public void ShareApplications(int vacancyReferenceNumber, string providerName,
+        public async Task ShareApplications(int vacancyReferenceNumber, string providerName,
             IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime
             , string recipientEmailAddress, string optionalMessage = null)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancy = await _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             _employerService.SendApplicationLinks(vacancy.Title, providerName, applicationLinks,
                 linkExpiryDateTime, recipientEmailAddress, optionalMessage);
         }
 
         #region Helpers
 
-        private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
+        private async Task<ApprenticeshipApplicationViewModel> ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
+            var vacancy = await _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
@@ -364,9 +365,9 @@
             return viewModel;
         }
 
-        private TraineeshipApplicationViewModel ConvertToTraineeshipApplicationViewModel(TraineeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
+        private async Task<TraineeshipApplicationViewModel> ConvertToTraineeshipApplicationViewModel(TraineeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
+            var vacancy = await _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(application);

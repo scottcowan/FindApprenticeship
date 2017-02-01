@@ -7,6 +7,7 @@
     using NUnit.Framework;
     using Raa.Common.ViewModels.Vacancy;
     using System;
+    using System.Threading.Tasks;
 
     [TestFixture]
     [Parallelizable]
@@ -36,7 +37,7 @@
             };
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(apprenticeshipVacancy);
+                .Returns(Task.FromResult(apprenticeshipVacancy));
             MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(apprenticeshipVacancy))

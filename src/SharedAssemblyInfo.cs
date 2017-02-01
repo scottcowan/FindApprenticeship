@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("SFA - Skills Funding Agency")]
 [assembly: AssemblyProduct("SFA Apprenticeships")]
-[assembly: AssemblyCopyright("Copyright © 2015")]
+[assembly: AssemblyCopyright("Copyright © 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyDescription("")]

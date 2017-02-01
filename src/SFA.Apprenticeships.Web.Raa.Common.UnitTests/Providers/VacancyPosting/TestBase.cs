@@ -2,12 +2,14 @@
 
 namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
+    using Application.Interfaces.Api;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
+    using Application.Interfaces.Vacancy;
     using Application.Interfaces.VacancyPosting;
     using Application.Vacancy;
     using Moq;
@@ -80,8 +82,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
                 _mockUserProfileService.Object,
                 MockGeocodeService.Object,
                 MockLocalAuthorityLookupService.Object,
-                _mockVacancySummaryService.Object,
-                new Mock<IApiClientProvider>().Object);
+                _mockVacancySummaryService.Object);
         }
     }
 }

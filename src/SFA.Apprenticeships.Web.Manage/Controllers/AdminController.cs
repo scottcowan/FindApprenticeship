@@ -15,6 +15,7 @@
     using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
     using System.Web.Mvc;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Raa.Common.ViewModels.Vacancy;
@@ -504,6 +505,19 @@
         {
             var response = _adminMediator.GetStandard();
 
+            var occupations = response.ViewModel.Select(s => new OccupationViewModel()
+            {
+                FullName = s.Name,
+                Id = s.Id
+            });
+
+            var sectorResponse = _adminMediator.GetSectors();
+            var sectors = sectorResponse.ViewModel.Select(s => new SectorViewModel()
+            {
+                Id = s.Id,
+                FullName = s.Name
+            });
+
             var standards = new List<EditStandardViewModel>();
 
             foreach(var standardSector in response.ViewModel.SelectMany(s => s.Sectors).OrderBy(s => s.Name))
@@ -514,19 +528,38 @@
                 {
                     Id = s.Id,
                     Name = ssat1.Name,
-                    StandardSectorName = s.Name,
-                    StandardName = standardSector.Name,
-                    Status = s.Status
+                    SsatId = ssat1.Id,
+                    StandardSectorName = standardSector.Name,
+                    StandardSectorId = standardSector.Id,
+                    StandardName = s.Name,
+                    Status = s.Status,
+                    ApprenticeshipLevel = s.ApprenticeshipLevel,
+                    LarsCode = s.LarsCode
                 }));
             }
 
-            return View(standards);
+            var viewModel = new EditStandardsViewModel()
+            {
+                Standards = standards,
+                Occupations = occupations,
+                Sectors = sectors
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
         public JsonResult UpdateStandard(EditStandardViewModel standard)
         {
-            var entity = new Standard() { Id = standard.Id, Status = standard.Status };
+            var entity = new Standard()
+            {
+                Id = standard.Id,
+                Status = standard.Status,
+                ApprenticeshipLevel = standard.ApprenticeshipLevel,
+                LarsCode = standard.LarsCode,
+                Name = standard.StandardName,
+                ApprenticeshipSectorId = standard.StandardSectorId
+            };
             
             var response = _adminMediator.UpdateStandard(entity);
             
@@ -534,11 +567,31 @@
             return Json(new {status = "Ok"});
         }
 
+        [HttpPost]
+        public JsonResult CreateStandard(EditStandardViewModel standard)
+        {
+            var entity = new Standard()
+            {
+                Id = standard.Id,
+                Status = standard.Status,
+                ApprenticeshipLevel = standard.ApprenticeshipLevel,
+                LarsCode = standard.LarsCode,
+                Name = standard.StandardName,
+                ApprenticeshipSectorId = standard.StandardSectorId
+            };
+
+            var response = _adminMediator.InsertStandard(entity);
+
+            // always return success here as an exception will return of it's own accord
+            return Json(response.ViewModel);
+        }
+
         [HttpGet]
         public ActionResult Frameworks()
         {
             var response = _adminMediator.GetFrameworks();
             var categories = new List<EditCategoryViewModel>();
+            var occupations = response.ViewModel.Select(s => new OccupationViewModel() {Id = s.Id, FullName = s.FullName, CodeName = s.CodeName.Replace("SSAT1.","") }).ToList();
 
             foreach (var category in response.ViewModel)
             {
@@ -546,21 +599,36 @@
                     category.SubCategories.Select(s => new EditCategoryViewModel()
                     {
                         Id = s.Id,
+                        Code = CategoryPrefixes.GetOriginalFrameworkCode(s.CodeName),
                         SsatName = category.FullName,
                         FullName = s.FullName,
                         Status = s.Status
                     }));
             }
 
-            return View(categories);
+            var viewModel = new EditFrameworksViewModel() { Categories = categories, Occupations = occupations};
+
+            return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult UpdateFramework(EditCategoryViewModel category)
         {
+            category.SsatCode = CategoryPrefixes.GetOriginalSectorSubjectAreaTier1Code(category.SsatCode);
+
             var response = _adminMediator.UpdateFramework(category);
 
             return Json(new {Status = "Ok"});
+        }
+
+        [HttpPost]
+        public ActionResult CreateFramework(EditCategoryViewModel category)
+        {
+            category.SsatCode = CategoryPrefixes.GetOriginalSectorSubjectAreaTier1Code(category.SsatCode);
+
+            var response = _adminMediator.InsertFramework(category);
+
+            return Json(response.ViewModel);
         }
 
         [HttpGet]
@@ -575,6 +643,45 @@
         {
             var response = _adminMediator.GetStandardsBytes();
             return File(response.ViewModel, "text/csv", "StandardsList.csv");
+        }
+
+        [HttpGet]
+        public ActionResult Sectors()
+        {
+            var response = _adminMediator.GetSectors();
+
+            var sectors = new List<EditSectorViewModel>();
+            var occupations = _adminMediator.GetOccupations().ViewModel.Where(w => w.Status == OccupationStatusType.Active).ToList();
+
+            sectors.AddRange(
+                response.ViewModel.Select(s => new EditSectorViewModel()
+                {
+                    Id = s.Id,
+                    Name =  s.Name, //CategoryPrefixes.GetOriginalFrameworkCode(s.CodeName),
+                    Occupation = occupations.SingleOrDefault(o => o.Id == s.ApprenticeshipOccupationId)
+                }));
+
+            sectors.RemoveAll(r => r.Occupation == null);
+
+            var viewModel = new EditSectorsViewModel() { Sectors = sectors, Occupations = occupations };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateSector(EditSectorViewModel sector)
+        {
+            var response = _adminMediator.UpdateSector(sector);
+
+            return Json(new { Status = "Ok" });
+        }
+
+        [HttpPost]
+        public JsonResult CreateSector(EditSectorViewModel sector)
+        {
+            var response = _adminMediator.InsertSector(sector);
+
+            return Json(response.ViewModel);
         }
     }
 }

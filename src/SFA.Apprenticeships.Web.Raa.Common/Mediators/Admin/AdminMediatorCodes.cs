@@ -208,5 +208,15 @@
         {
             public const string Ok = "AdminMediatorCodes.UpdateFramework";
         }
+
+        public class GetSectorsWithoutStandards
+        {
+            public const string Ok = "AdminMediatorCodes.GetSectors";
+        }
+
+        public class GetOccupations
+        {
+            public const string Ok = "AdminMediatorCodes.GetOccupations";
+        }
     }
 }

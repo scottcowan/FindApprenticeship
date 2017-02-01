@@ -5,10 +5,11 @@
     using System.Web.Http.Description;
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Models;
     using Providers;
-    using Swashbuckle.Swagger.Annotations;
 
-    [Authorize(Roles = Roles.Provider)]
+    [Authorize(Roles = Roles.Provider + "," + Roles.Agency)]
+    [RoutePrefix("vacancy")]
     public class VacancyController : ApiController
     {
         private readonly IVacancyProvider _vacancyProvider;
@@ -18,27 +19,28 @@
             _vacancyProvider = vacancyProvider;
         }
 
-        /*[Route("vacancies")]
-        [SwaggerOperation("GetAll")]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }*/
-
-        [Route("vacancy")]
+        [Route("{id}")]
         [ResponseType(typeof(Vacancy))]
-        [SwaggerOperation("GetVacancy")]
-        public IHttpActionResult Get(int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
+        [HttpGet]
+        public IHttpActionResult GetById(int id)
         {
-            return Ok(_vacancyProvider.Get(vacancyId, vacancyReferenceNumber, vacancyGuid));
+            return Ok(_vacancyProvider.Get(new VacancyIdentifier(id)));
         }
 
-        /*[HttpPost]
-        [Route("vacancy")]
-        [SwaggerOperation("Create")]
-        public IHttpActionResult Create(VacancyApiModel vacancy)
+        [Route("reference/{reference}")]
+        [ResponseType(typeof(Vacancy))]
+        [HttpGet]
+        public IHttpActionResult GetByReferenceNumber(string reference)
         {
-            return Ok();
-        }*/
+            return Ok(_vacancyProvider.Get(new VacancyIdentifier(reference)));
+        }
+
+        [Route("guid/{guid}")]
+        [ResponseType(typeof(Vacancy))]
+        [HttpGet]
+        public IHttpActionResult GetByGuid(Guid guid)
+        {
+            return Ok(_vacancyProvider.Get(new VacancyIdentifier(guid)));
+        }
     }
 }

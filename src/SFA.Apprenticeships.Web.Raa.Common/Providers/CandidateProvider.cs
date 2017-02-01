@@ -19,6 +19,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Threading.Tasks;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
@@ -154,20 +155,20 @@
             }
         }
 
-        public ApprenticeshipApplicationViewModel GetCandidateApprenticeshipApplication(Guid applicationId)
+        public async Task<ApprenticeshipApplicationViewModel> GetCandidateApprenticeshipApplication(Guid applicationId)
         {
             var application = _apprenticeshipApplicationService.GetApplication(applicationId);
 
-            var vacancyDetail = _vacancyQaProvider.GetVacancyById(application.Vacancy.Id);
+            var vacancyDetail = await _vacancyQaProvider.GetVacancyById(application.Vacancy.Id);
 
-            var viewModel = ConvertToApprenticeshipApplicationViewModel(application, vacancyDetail);
+            var viewModel = await ConvertToApprenticeshipApplicationViewModel(application, vacancyDetail);
             return viewModel;
         }
 
-        public TraineeshipApplicationViewModel GetCandidateTraineeshipApplication(Guid applicationId)
+        public async Task<TraineeshipApplicationViewModel> GetCandidateTraineeshipApplication(Guid applicationId)
         {
             var application = _traineeshipApplicationService.GetApplication(applicationId);
-            var viewModel = ConvertToTraineeshipApplicationViewModel(application);
+            var viewModel = await ConvertToTraineeshipApplicationViewModel(application);
             return viewModel;
         }
 
@@ -258,11 +259,11 @@
 
         #region Helpers
 
-        private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, VacancyViewModel vacancyDetail)
+        private async Task<ApprenticeshipApplicationViewModel> ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, VacancyViewModel vacancyDetail)
         {
             var webSettings = _configurationService.Get<CommonWebConfiguration>();
             var domainUrl = webSettings.SiteDomainName;
-            var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
+            var vacancy = await _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
@@ -277,9 +278,9 @@
             return viewModel;
         }
 
-        private TraineeshipApplicationViewModel ConvertToTraineeshipApplicationViewModel(TraineeshipApplicationDetail application)
+        private async Task<TraineeshipApplicationViewModel> ConvertToTraineeshipApplicationViewModel(TraineeshipApplicationDetail application)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
+            var vacancy = await _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(application);

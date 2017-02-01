@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
+    using System.Threading.Tasks;
     using Common.UnitTests.Mediators;
     using Manage.Mediators.Vacancy;
     using Moq;
@@ -18,7 +19,7 @@
 
             var provider = new Mock<IVacancyQAProvider>();
 
-            provider.Setup(p => p.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(viewModel);
+            provider.Setup(p => p.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
 
             var mediator = new VacancyMediatorBuilder().Build();
 
@@ -35,7 +36,7 @@
 
             var provider = new Mock<IVacancyQAProvider>();
 
-            provider.Setup(p => p.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(viewModel);
+            provider.Setup(p => p.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 

@@ -12,6 +12,7 @@
     using Recruit.Mediators.Application;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using System.Web.Routing;
 
@@ -38,11 +39,11 @@
                 .Returns(mockValidationResult.Object);
 
             mockApplicationProvider.Setup(m => m.GetShareApplicationsViewModel(It.IsAny<int>()))
-                .Returns(new ShareApplicationsViewModel()
+                .Returns(Task.FromResult(new ShareApplicationsViewModel()
                 {
                     VacancyType = VacancyType.Apprenticeship,
                     ApplicationSummaries = { applicationSummary }
-                });
+                }));
 
             //this is the unencrypted version, that we should not use
             mockEncryptionService.Setup(m => m.Encrypt(It.IsAny<AnonymisedApplicationLink>())).Returns("abcABC+123/123");

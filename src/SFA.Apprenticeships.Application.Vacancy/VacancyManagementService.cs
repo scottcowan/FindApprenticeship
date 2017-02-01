@@ -1,20 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
+    using System.Threading.Tasks;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Service;
+    using Interfaces.Vacancy;
 
     public class VacancyManagementService : IVacancyManagementService
     {
-        private readonly IVacancyReadRepository _readRepository;
         private readonly IVacancySummaryService _vacancySummaryService;
         private readonly IDeleteVacancyStrategy _deleteVacancyStrategy;
 
-        public VacancyManagementService(IVacancyReadRepository readRepository, 
-            IDeleteVacancyStrategy deleteVacancyStrategy,
+        public VacancyManagementService(IDeleteVacancyStrategy deleteVacancyStrategy,
             IVacancySummaryService vacancySummaryService)
         {
-            _readRepository = readRepository;
             _deleteVacancyStrategy = deleteVacancyStrategy;
             _vacancySummaryService = vacancySummaryService;
         }
@@ -47,6 +45,11 @@
             }
 
             return new ServiceResult<VacancySummary>(VacancyManagementServiceCodes.FindSummary.Ok, vacancySummary);
+        }
+
+        public Task<IServiceResult<WageUpdate>> EditWage(WageUpdate wageUpdate, int vacancyReferenceNumber)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

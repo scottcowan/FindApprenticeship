@@ -6,6 +6,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// The information related to a UK local authority
+    /// </summary>
     public partial class LocalAuthority
     {
         /// <summary>
@@ -16,7 +19,18 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// Initializes a new instance of the LocalAuthority class.
         /// </summary>
-        public LocalAuthority(int? localAuthorityId = default(int?), string codeName = default(string), string shortName = default(string), string fullName = default(string), County county = default(County), Region region = default(Region))
+        /// <param name="localAuthorityId">The local authority's primary
+        /// identifier</param>
+        /// <param name="codeName">The local authority's code
+        /// identifier</param>
+        /// <param name="shortName">The shortened name of the local authority.
+        /// Usually the same as the code</param>
+        /// <param name="fullName">The local authority's full name</param>
+        /// <param name="county">The county this local authority belongs
+        /// to</param>
+        /// <param name="region">The region this local authority belongs
+        /// to</param>
+        public LocalAuthority(int localAuthorityId, string codeName, string shortName, string fullName, County county, Region region)
         {
             LocalAuthorityId = localAuthorityId;
             CodeName = codeName;
@@ -27,34 +41,78 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
+        /// Gets or sets the local authority's primary identifier
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "LocalAuthorityId")]
-        public int? LocalAuthorityId { get; set; }
+        public int LocalAuthorityId { get; set; }
 
         /// <summary>
+        /// Gets or sets the local authority's code identifier
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CodeName")]
         public string CodeName { get; set; }
 
         /// <summary>
+        /// Gets or sets the shortened name of the local authority. Usually
+        /// the same as the code
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ShortName")]
         public string ShortName { get; set; }
 
         /// <summary>
+        /// Gets or sets the local authority's full name
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "FullName")]
         public string FullName { get; set; }
 
         /// <summary>
+        /// Gets or sets the county this local authority belongs to
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "County")]
         public County County { get; set; }
 
         /// <summary>
+        /// Gets or sets the region this local authority belongs to
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Region")]
         public Region Region { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (CodeName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CodeName");
+            }
+            if (ShortName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ShortName");
+            }
+            if (FullName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "FullName");
+            }
+            if (County == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "County");
+            }
+            if (Region == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Region");
+            }
+            if (this.County != null)
+            {
+                this.County.Validate();
+            }
+            if (this.Region != null)
+            {
+                this.Region.Validate();
+            }
+        }
     }
 }

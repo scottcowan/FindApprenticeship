@@ -7,7 +7,7 @@
 Scenario: Get vacancy details with no identifier
 	When I authorize my request with a Provider API key
 	And I request the vacancy details for the vacancy with no identifier
-	Then The response status is: BadRequest with response message: Please specify either a vacancyId, a vacancyReferenceNumber or a vacancyGuid.
+	Then The response status is: NotFound
 	And I do not see the vacancy details for the vacancy with no identifier
 
 @RA388 @GetVacancyById
@@ -123,6 +123,13 @@ Scenario: Get vacancy by guid that doesn't exist
 	And I request the vacancy details for the vacancy with guid: 3
 	Then The response status is: NotFound
 	And I do not see the vacancy details for the vacancy with guid: 3
+
+@RA388 @GetVacancyByReferenceNumber @AgencyUser
+Scenario: Get vacancy details by reference number for an agency user
+	When I authorize my request with an Agency API key
+	And I request the vacancy details for the vacancy with reference number: 2
+	Then The response status is: OK
+	And I see the vacancy details for the vacancy with reference number: 2
 
 @RA388 @EditWage
 Scenario: Increase fixed wage by £20 per week without authorization

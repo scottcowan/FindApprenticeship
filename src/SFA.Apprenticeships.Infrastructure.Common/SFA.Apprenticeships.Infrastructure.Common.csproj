@@ -103,6 +103,7 @@
       <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.4\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.WindowsAzure.Configuration">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
       <Private>True</Private>
@@ -127,6 +128,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
@@ -143,6 +145,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Api\PublicApiClientProvider.cs" />
+    <Compile Include="Configuration\ApiConfiguration.cs" />
     <Compile Include="Configuration\CacheConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationCacheKey.cs" />
     <Compile Include="Configuration\ConfigurationExpressionExtension.cs" />
@@ -165,6 +169,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
       <Project>{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Caching.Memory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.DAS.RAA.Api.Client.V1\SFA.DAS.RAA.Api.Client.V1.csproj">
+      <Project>{b263f67e-b3ea-410a-ba24-4f3cc2ce0008}</Project>
+      <Name>SFA.DAS.RAA.Api.Client.V1</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure.Azure\SFA.Infrastructure.Azure.csproj">
       <Project>{fe5b99f5-66d8-42fc-a8b3-6562837623a4}</Project>

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
+    using System.Threading.Tasks;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
     using ViewModels.Candidate;
@@ -9,8 +10,8 @@
     {
         CandidateSearchResultsViewModel SearchCandidates(CandidateSearchViewModel searchViewModel, string ukprn);
         CandidateApplicationsViewModel GetCandidateApplications(Guid candidateId);
-        ApprenticeshipApplicationViewModel GetCandidateApprenticeshipApplication(Guid applicationId);
-        TraineeshipApplicationViewModel GetCandidateTraineeshipApplication(Guid applicationId);
+        Task<ApprenticeshipApplicationViewModel> GetCandidateApprenticeshipApplication(Guid applicationId);
+        Task<TraineeshipApplicationViewModel> GetCandidateTraineeshipApplication(Guid applicationId);
         CandidateApplicationSummariesViewModel GetCandidateApplicationSummaries(CandidateApplicationsSearchViewModel searchViewModel, string ukprn);
     }
 }

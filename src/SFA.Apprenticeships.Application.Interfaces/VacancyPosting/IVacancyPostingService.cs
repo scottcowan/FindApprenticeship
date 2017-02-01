@@ -4,7 +4,8 @@
     using Domain.Entities.Raa.Vacancies;
     using System;
     using System.Collections.Generic;
-	using Domain.Raa.Interfaces.Repositories.Models;
+    using System.Threading.Tasks;
+    using Domain.Raa.Interfaces.Repositories.Models;
 
     public interface IVacancyPostingService
     {
@@ -12,11 +13,11 @@
 
         int GetNextVacancyReferenceNumber();
 
-        Vacancy GetVacancy(int vacancyId);
+        Task<Vacancy> GetVacancy(int vacancyId);
 
-        Vacancy GetVacancyByReferenceNumber(int vacancyReferenceNumber);
+        Task<Vacancy> GetVacancyByReferenceNumber(int vacancyReferenceNumber);
 
-        Vacancy GetVacancy(Guid vacancyGuid);
+        Task<Vacancy> GetVacancy(Guid vacancyGuid);
         
         IList<VacancySummary> GetWithStatus(VacancySummaryByStatusQuery query, out int totalRecords);
 

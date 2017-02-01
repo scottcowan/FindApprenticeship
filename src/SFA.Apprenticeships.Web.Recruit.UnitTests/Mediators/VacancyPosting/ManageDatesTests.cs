@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
     using System;
+    using System.Threading.Tasks;
     using Builders;
     using Common.Constants;
     using Common.ViewModels;
@@ -19,7 +20,7 @@
     public class ManageDatesTests : TestsBase
     {
         [Test]
-        public void ShouldMergeRequestAndExistingFurtherVacancyDetails()
+        public async Task ShouldMergeRequestAndExistingFurtherVacancyDetails()
         {
             const int vacancyReferenceNumber = 1;
 
@@ -38,11 +39,11 @@
 
             var existingViewModel = new VacancyViewModelBuilder().With(new WageViewModel() { Type = WageType.NationalMinimum, Classification = WageClassification.NationalMinimum, CustomType = CustomWageType.NotApplicable, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.Weekly, HoursPerWeek = 37.5m}).BuildValid(VacancyStatus.Live, VacancyType.Apprenticeship).FurtherVacancyDetailsViewModel;
 
-            VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(existingViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(Task.FromResult(existingViewModel));
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancyDates(viewModel, false);
+            var result = await mediator.UpdateVacancyDates(viewModel, false);
 
             VacancyPostingProvider.Verify(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber));
 
@@ -56,7 +57,7 @@
         }
 
         [Test]
-        public void ShouldReturnAWarningHashIfTheModelHasOnlyWarnings()
+        public async Task ShouldReturnAWarningHashIfTheModelHasOnlyWarnings()
         {
             const int vacancyReferenceNumber = 1;
 
@@ -70,10 +71,10 @@
                 }
             };
 
-            VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(viewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
             var mediator = GetMediator();
 
-            var result = mediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, false);
+            var result = await mediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, false);
 
             result.Code.Should().Be(VacancyPostingMediatorCodes.GetVacancySummaryViewModel.FailedValidation);
             result.ViewModel.WarningsHash.Should().NotBe(0);
@@ -81,7 +82,7 @@
         }
 
         [Test]
-        public void ShouldReturnOkIfThereIsntAnyValidationError()
+        public async Task ShouldReturnOkIfThereIsntAnyValidationError()
         {
             var vacancyReferenceNumber = 1;
 
@@ -91,17 +92,17 @@
                 PossibleStartDate = new DateViewModel(DateTime.Now.AddDays(21))
             }).BuildValid(VacancyStatus.Live, VacancyType.Apprenticeship).FurtherVacancyDetailsViewModel;
 
-            VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(viewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
             var mediator = GetMediator();
 
-            var result = mediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, false);
+            var result = await mediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, false);
 
             result.Code.Should().Be(VacancyPostingMediatorCodes.GetVacancySummaryViewModel.Ok);
             result.ViewModel.Should().Be(viewModel);
         }
 
         [Test]
-        public void ShouldNotUpdateTheVacancyIfThereAreWarningsAndWeDontAcceptThem()
+        public async Task ShouldNotUpdateTheVacancyIfThereAreWarningsAndWeDontAcceptThem()
         {
             var vacancyReferenceNumber = 1;
 
@@ -118,13 +119,13 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancyDates(viewModel, false);
+            var result = await mediator.UpdateVacancyDates(viewModel, false);
 
             result.Code.Should().Be(VacancyPostingMediatorCodes.ManageDates.FailedValidation);
         }
 
         [Test]
-        public void ShouldNotUpdateTheVacancyIfWeAcceptTheWarningsButTheyAreDifferentFromThePreviousOnes()
+        public async Task ShouldNotUpdateTheVacancyIfWeAcceptTheWarningsButTheyAreDifferentFromThePreviousOnes()
         {
             const int vacancyReferenceNumber = 1;
             const int oldWarningHash = -1011218820;
@@ -143,14 +144,14 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancyDates(viewModel, true);
+            var result = await mediator.UpdateVacancyDates(viewModel, true);
 
             result.Code.Should().Be(VacancyPostingMediatorCodes.ManageDates.FailedValidation);
         }
 
         [TestCase(VacancyApplicationsState.HasApplications, VacancyPostingMediatorCodes.ManageDates.UpdatedHasApplications)]
         [TestCase(VacancyApplicationsState.NoApplications, VacancyPostingMediatorCodes.ManageDates.UpdatedNoApplications)]
-        public void ShouldUpdateTheVacancyIfWeAcceptTheWarningsAndTheyAreEqualFromThePreviousOnes(VacancyApplicationsState state, string expectedCode)
+        public async Task ShouldUpdateTheVacancyIfWeAcceptTheWarningsAndTheyAreEqualFromThePreviousOnes(VacancyApplicationsState state, string expectedCode)
         {
             const int vacancyReferenceNumber = 1;
             const int oldWarningHash = 128335101;
@@ -170,9 +171,9 @@
 
             var mediator = GetMediator();
 
-            VacancyPostingProvider.Setup(p => p.UpdateVacancyDates(It.IsAny<FurtherVacancyDetailsViewModel>())).Returns(viewModel);
+            VacancyPostingProvider.Setup(p => p.UpdateVacancyDates(It.IsAny<FurtherVacancyDetailsViewModel>())).Returns(Task.FromResult(viewModel));
 
-            var result = mediator.UpdateVacancyDates(viewModel, true);
+            var result = await mediator.UpdateVacancyDates(viewModel, true);
 
             result.Code.Should().Be(expectedCode);
             VacancyPostingProvider.Verify(
@@ -186,7 +187,7 @@
         }
 
         [Test]
-        public void FailedMinimumWageValidation()
+        public async Task FailedMinimumWageValidation()
         {
             var closingDate = DateTime.Now.AddDays(7);
             var minimumWageChangeDate = new DateTime(2016, 10, 1);
@@ -214,11 +215,11 @@
             existingViewModel.Wage.Unit = WageUnit.Weekly;
             existingViewModel.Wage.HoursPerWeek = 30;
 
-            VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(It.IsAny<int>())).Returns(existingViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(It.IsAny<int>())).Returns(Task.FromResult(existingViewModel));
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancyDates(viewModel, false);
+            var result = await mediator.UpdateVacancyDates(viewModel, false);
             result.ViewModel.ComeFromPreview.Should().BeTrue();
             result.Code.Should().Be(VacancyPostingMediatorCodes.ManageDates.FailedCrossFieldValidation);
             result.Message.Level.Should().Be(UserMessageLevel.Warning);

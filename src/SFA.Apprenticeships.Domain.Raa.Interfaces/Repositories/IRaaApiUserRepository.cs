@@ -7,6 +7,8 @@
     {
         RaaApiUser GetUser(Guid apiKey);
 
-        RaaApiUser GetUser(int referencedEntitySurrogateId);
+        RaaApiUser GetUserByReferencedEntityId(int referencedEntityId);
+        RaaApiUser GetUserByReferencedEntityGuid(Guid referencedEntityGuid);
+        RaaApiUser GetUserByReferencedEntitySurrogateId(int referencedEntitySurrogateId);
     }
 }

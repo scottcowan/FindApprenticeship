@@ -9,52 +9,52 @@
 
     public interface IVacancyMediator
     {
-        MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(int vacancyReferenceNumber);
+        Task<MediatorResponse<DashboardVacancySummaryViewModel>> ApproveVacancy(int vacancyReferenceNumber);
 
-        MediatorResponse<DashboardVacancySummaryViewModel> RejectVacancy(int vacancyReferenceNumber);
+        Task<MediatorResponse<DashboardVacancySummaryViewModel>> RejectVacancy(int vacancyReferenceNumber);
 
-        MediatorResponse<VacancyViewModel> ReserveVacancyForQA(int vacancyReferenceNumber);
+        Task<MediatorResponse<VacancyViewModel>> ReserveVacancyForQA(int vacancyReferenceNumber);
 
-        MediatorResponse<VacancyViewModel> ReviewVacancy(int vacancyReferenceNumber);
+        Task<MediatorResponse<VacancyViewModel>> ReviewVacancy(int vacancyReferenceNumber);
 
-        MediatorResponse<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(int vacancyReferenceNumber);
+        Task<MediatorResponse<FurtherVacancyDetailsViewModel>> GetVacancySummaryViewModel(int vacancyReferenceNumber);
 
-        MediatorResponse<FurtherVacancyDetailsViewModel> UpdateVacancy(FurtherVacancyDetailsViewModel viewModel);
+        Task<MediatorResponse<FurtherVacancyDetailsViewModel>> UpdateVacancy(FurtherVacancyDetailsViewModel viewModel);
 
-        MediatorResponse<NewVacancyViewModel> GetBasicDetails(int vacancyReferenceNumber);
+        Task<MediatorResponse<NewVacancyViewModel>> GetBasicDetails(int vacancyReferenceNumber);
 
-        MediatorResponse<TrainingDetailsViewModel> GetTrainingDetails(int vacancyReferenceNumber);
+        Task<MediatorResponse<TrainingDetailsViewModel>> GetTrainingDetails(int vacancyReferenceNumber);
 
-        MediatorResponse<TrainingDetailsViewModel> UpdateVacancy(TrainingDetailsViewModel viewModel);
+        Task<MediatorResponse<TrainingDetailsViewModel>> UpdateVacancy(TrainingDetailsViewModel viewModel);
 
-        MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
+        Task<MediatorResponse<VacancyQuestionsViewModel>> GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
 
-        MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(
+        Task<MediatorResponse<VacancyRequirementsProspectsViewModel>> GetVacancyRequirementsProspectsViewModel(
             int vacancyReferenceNumber);
 
-        MediatorResponse<VacancyOwnerRelationshipViewModel> GetEmployerInformation(int vacancyReferenceNumber,
+        Task<MediatorResponse<VacancyOwnerRelationshipViewModel>> GetEmployerInformation(int vacancyReferenceNumber,
             bool? useEmployerLocation);
 
-        MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel);
+        Task<MediatorResponse<NewVacancyViewModel>> UpdateVacancy(NewVacancyViewModel viewModel);
 
-        MediatorResponse<NewVacancyViewModel> UpdateOfflineVacancyType(NewVacancyViewModel viewModel);
+        Task<MediatorResponse<NewVacancyViewModel>> UpdateOfflineVacancyType(NewVacancyViewModel viewModel);
 
-        MediatorResponse<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel);
+        Task<MediatorResponse<VacancyQuestionsViewModel>> UpdateVacancy(VacancyQuestionsViewModel viewModel);
 
-        MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(
+        Task<MediatorResponse<VacancyRequirementsProspectsViewModel>> UpdateVacancy(
             VacancyRequirementsProspectsViewModel viewModel);
 
-        MediatorResponse<VacancyOwnerRelationshipViewModel> UpdateEmployerInformation(
+        Task<MediatorResponse<VacancyOwnerRelationshipViewModel>> UpdateEmployerInformation(
             VacancyOwnerRelationshipViewModel viewModel);
 
-        MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(int vacancyReferenceNumber);
+        Task<MediatorResponse<LocationSearchViewModel>> GetLocationAddressesViewModel(int vacancyReferenceNumber);
 
-        MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel);
+        Task<MediatorResponse<LocationSearchViewModel>> AddLocations(LocationSearchViewModel viewModel);
 
-        MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel,
+        Task<MediatorResponse<LocationSearchViewModel>> SearchLocations(LocationSearchViewModel viewModel,
             List<VacancyLocationAddressViewModel> alreadyAddedLocations);
 
-        MediatorResponse<LocationSearchViewModel> UseLocation(LocationSearchViewModel viewModel, int locationIndex,
+        Task<MediatorResponse<LocationSearchViewModel>> UseLocation(LocationSearchViewModel viewModel, int locationIndex,
             string postCodeSearch);
 
         MediatorResponse<LocationSearchViewModel> RemoveLocation(LocationSearchViewModel viewModel, int locationIndex);
