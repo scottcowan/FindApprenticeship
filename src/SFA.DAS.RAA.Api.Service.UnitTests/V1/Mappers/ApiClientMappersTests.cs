@@ -1,13 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Mappers
+﻿namespace SFA.DAS.RAA.Api.Service.UnitTests.V1.Mappers
 {
-    using Common.Mappers;
-    using Domain.Entities.Raa.Vacancies;
-    using Domain.Entities.Vacancies;
     using NUnit.Framework;
-    using ApiGeoPoint = DAS.RAA.Api.Client.V1.Models.GeoPoint;
-    using ApiPostalAddress = DAS.RAA.Api.Client.V1.Models.PostalAddress;
-    using ApiWage = DAS.RAA.Api.Client.V1.Models.Wage;
-    using ApiVacancy = DAS.RAA.Api.Client.V1.Models.Vacancy;
+    using Service.V1.Mappers;
+    using ApiWage = Client.V1.Models.Wage;
+    using ApiVacancy = Client.V1.Models.Vacancy;
 
     [TestFixture]
     [Parallelizable]
@@ -27,7 +23,7 @@
             var apiWage = new ApiWage("NationalMinimum", null, null, null, null, "£120.00 - £208.50", "Weekly", 30);
             var apiVacancy = new ApiVacancy {Wage = apiWage};
 
-            var vacancy = mappers.Map<ApiVacancy, Vacancy>(apiVacancy);
+            var vacancy = mappers.Map<ApiVacancy, ApiVacancy>(apiVacancy);
         }
     }
 }

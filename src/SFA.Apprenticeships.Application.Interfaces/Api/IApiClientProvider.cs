@@ -1,9 +1,11 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Api
 {
     using DAS.RAA.Api.Client.V1;
 
     public interface IApiClientProvider
     {
         IApiClient GetApiClient();
+
+        bool IsEnabled();
     }
 }

@@ -9,6 +9,8 @@
     public class RaaApiUserRepository : IRaaApiUserRepository
     {
         public const string SelectSql = "SELECT PrimaryApiKey, SecondaryApiKey, UserTypeId AS UserType, ReferencedEntityId, ReferencedEntityGuid, ReferencedEntitySurrogateId FROM [RaaApi].[User] WHERE PrimaryApiKey = @ApiKey OR SecondaryApiKey = @ApiKey";
+        public const string SelectByEntityIdSql = "SELECT PrimaryApiKey, SecondaryApiKey, UserTypeId AS UserType, ReferencedEntityId, ReferencedEntityGuid, ReferencedEntitySurrogateId FROM [RaaApi].[User] WHERE ReferencedEntityId = @ReferencedEntityId";
+        public const string SelectByEntityGuidSql = "SELECT PrimaryApiKey, SecondaryApiKey, UserTypeId AS UserType, ReferencedEntityId, ReferencedEntityGuid, ReferencedEntitySurrogateId FROM [RaaApi].[User] WHERE ReferencedEntityGuid = @ReferencedEntityGuid";
         public const string SelectBySurrogateIdSql = "SELECT PrimaryApiKey, SecondaryApiKey, UserTypeId AS UserType, ReferencedEntityId, ReferencedEntityGuid, ReferencedEntitySurrogateId FROM [RaaApi].[User] WHERE ReferencedEntitySurrogateId = @ReferencedEntitySurrogateId";
 
         private readonly IGetOpenConnection _getOpenConnection;
@@ -25,7 +27,21 @@
             return raaApiUser ?? RaaApiUser.UnknownApiUser;
         }
 
-        public RaaApiUser GetUser(int referencedEntitySurrogateId)
+        public RaaApiUser GetUserByReferencedEntityId(int referencedEntityId)
+        {
+            var raaApiUser = _getOpenConnection.Query<RaaApiUser>(SelectByEntityIdSql, new { ReferencedEntityId = referencedEntityId }).SingleOrDefault();
+
+            return raaApiUser ?? RaaApiUser.UnknownApiUser;
+        }
+
+        public RaaApiUser GetUserByReferencedEntityGuid(Guid referencedEntityGuid)
+        {
+            var raaApiUser = _getOpenConnection.Query<RaaApiUser>(SelectByEntityGuidSql, new { ReferencedEntityGuid = referencedEntityGuid }).SingleOrDefault();
+
+            return raaApiUser ?? RaaApiUser.UnknownApiUser;
+        }
+
+        public RaaApiUser GetUserByReferencedEntitySurrogateId(int referencedEntitySurrogateId)
         {
             var raaApiUser = _getOpenConnection.Query<RaaApiUser>(SelectBySurrogateIdSql, new { ReferencedEntitySurrogateId = referencedEntitySurrogateId }).SingleOrDefault();
 

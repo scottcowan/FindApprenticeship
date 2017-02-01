@@ -50,8 +50,11 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using System.Web;
+    using Application.Interfaces.Api;
+    using Application.Interfaces.Vacancy;
     using Application.Provider.Strategies;
     using Common.Providers;
+    using Infrastructure.Common.Api;
 
     public class CandidateWebRegistry : Registry
     {
@@ -106,6 +109,8 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
             For<ICandidateApplicationsProvider>().Use<CandidateApplicationsProvider>();
 
             For<IGoogleMapsProvider>().Use<GoogleMapsProvider>();
+
+            For<IApiClientProvider>().Use<ApiClientProvider>();
         }
 
         private void RegisterServices()
@@ -119,9 +124,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
             For<IUserAccountService>().Use<UserAccountService>();
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();
-            For<IReferenceDataService>().Use<ReferenceDataService>();
             For<ICandidateVacancyService>().Use<CandidateVacancyService>();
-            For<IProviderService>().Use<ProviderService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IEmployerService>().Use<EmployerService>();
             For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();

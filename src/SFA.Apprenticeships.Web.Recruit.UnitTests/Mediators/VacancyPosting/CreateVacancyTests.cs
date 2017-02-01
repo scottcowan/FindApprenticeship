@@ -240,7 +240,7 @@
             };
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(AnInt))
-               .Returns(GetLiveVacancyWithComments(AnInt, initialVacancyTitle));
+               .Returns(Task.FromResult(GetLiveVacancyWithComments(AnInt, initialVacancyTitle)));
 
             var provider = GetVacancyPostingProvider();
 

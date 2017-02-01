@@ -60,9 +60,9 @@
             _trainingDetailsViewModelServerValidator = trainingDetailsViewModelServerValidator;
         }
 
-        public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(int vacancyReferenceNumber)
+        public async Task<MediatorResponse<DashboardVacancySummaryViewModel>> ApproveVacancy(int vacancyReferenceNumber)
         {
-            var resultCode = _vacancyQaProvider.ApproveVacancy(vacancyReferenceNumber);
+            var resultCode = await _vacancyQaProvider.ApproveVacancy(vacancyReferenceNumber);
 
             switch (resultCode)
             {
@@ -88,9 +88,9 @@
                 : GetMediatorResponse(VacancyMediatorCodes.ApproveVacancy.Ok, nextVacancy);
         }
 
-        public MediatorResponse<DashboardVacancySummaryViewModel> RejectVacancy(int vacancyReferenceNumber)
+        public async Task<MediatorResponse<DashboardVacancySummaryViewModel>> RejectVacancy(int vacancyReferenceNumber)
         {
-            if (_vacancyQaProvider.RejectVacancy(vacancyReferenceNumber) == QAActionResultCode.InvalidVacancy)
+            if (await _vacancyQaProvider.RejectVacancy(vacancyReferenceNumber) == QAActionResultCode.InvalidVacancy)
             {
                 return
                     GetMediatorResponse<DashboardVacancySummaryViewModel>(
@@ -106,9 +106,9 @@
                 : GetMediatorResponse(VacancyMediatorCodes.RejectVacancy.Ok, nextVacancy);
         }
 
-        public MediatorResponse<VacancyViewModel> ReserveVacancyForQA(int vacancyReferenceNumber)
+        public async Task<MediatorResponse<VacancyViewModel>> ReserveVacancyForQA(int vacancyReferenceNumber)
         {
-            var vacancyViewModel = _vacancyQaProvider.ReserveVacancyForQA(vacancyReferenceNumber);
+            var vacancyViewModel = await _vacancyQaProvider.ReserveVacancyForQA(vacancyReferenceNumber);
 
             if (vacancyViewModel == null)
             {
@@ -125,9 +125,9 @@
             return GetMediatorResponse(VacancyMediatorCodes.ReserveVacancyForQA.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<VacancyViewModel> ReviewVacancy(int vacancyReferenceNumber)
+        public async Task<MediatorResponse<VacancyViewModel>> ReviewVacancy(int vacancyReferenceNumber)
         {
-            var vacancyViewModel = _vacancyQaProvider.ReviewVacancy(vacancyReferenceNumber);
+            var vacancyViewModel = await _vacancyQaProvider.ReviewVacancy(vacancyReferenceNumber);
 
             if (vacancyViewModel == null)
             {
@@ -172,9 +172,9 @@
             }
         }
 
-        public MediatorResponse<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(int vacancyReferenceNumber)
+        public async Task<MediatorResponse<FurtherVacancyDetailsViewModel>> GetVacancySummaryViewModel(int vacancyReferenceNumber)
         {
-            var vacancyViewModel = _vacancyQaProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
+            var vacancyViewModel = await _vacancyQaProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
@@ -190,7 +190,7 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetVacancySummaryViewModel.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<FurtherVacancyDetailsViewModel> UpdateVacancy(FurtherVacancyDetailsViewModel viewModel)
+        public async Task<MediatorResponse<FurtherVacancyDetailsViewModel>> UpdateVacancy(FurtherVacancyDetailsViewModel viewModel)
         {
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
@@ -208,14 +208,14 @@
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
-            var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
+            var updatedViewModel = await _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
             return ReturnResult(updatedViewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> GetBasicDetails(int vacancyReferenceNumber)
+        public async Task<MediatorResponse<NewVacancyViewModel>> GetBasicDetails(int vacancyReferenceNumber)
         {
-            var newVacancyViewModel = _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
+            var newVacancyViewModel = await _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 
             var validationResult = _newVacancyViewModelServerValidator.Validate(newVacancyViewModel);
 
@@ -228,9 +228,9 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetBasicVacancyDetails.Ok, newVacancyViewModel);
         }
 
-        public MediatorResponse<TrainingDetailsViewModel> GetTrainingDetails(int vacancyReferenceNumber)
+        public async Task<MediatorResponse<TrainingDetailsViewModel>> GetTrainingDetails(int vacancyReferenceNumber)
         {
-            var vacancyViewModel = _vacancyQaProvider.GetTrainingDetailsViewModel(vacancyReferenceNumber);
+            var vacancyViewModel = await _vacancyQaProvider.GetTrainingDetailsViewModel(vacancyReferenceNumber);
 
             var validationResult = _trainingDetailsViewModelServerValidator.Validate(vacancyViewModel);
 
@@ -282,9 +282,9 @@
             return GetMediatorResponse(VacancyMediatorCodes.UnReserveVacancyForQA.Ok);
         }
 
-        public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(int vacancyReferenceNumber)
+        public async Task<MediatorResponse<VacancyQuestionsViewModel>> GetVacancyQuestionsViewModel(int vacancyReferenceNumber)
         {
-            var vacancyViewModel = _vacancyQaProvider.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
+            var vacancyViewModel = await _vacancyQaProvider.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
 
             var validationResult = _vacancyQuestionsViewModelServerValidator.Validate(vacancyViewModel);
 
@@ -296,9 +296,9 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetVacancyQuestionsViewModel.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber)
+        public async Task<MediatorResponse<VacancyRequirementsProspectsViewModel>> GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber)
         {
-            var vacancyViewModel = _vacancyQaProvider.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber);
+            var vacancyViewModel = await _vacancyQaProvider.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber);
 
             var validationResult = _vacancyRequirementsProspectsViewModelServerValidator.Validate(vacancyViewModel);
 
@@ -310,9 +310,9 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetVacancyRequirementsProspectsViewModel.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<VacancyOwnerRelationshipViewModel> GetEmployerInformation(int vacancyReferenceNumber, bool? useEmployerLocation)
+        public async Task<MediatorResponse<VacancyOwnerRelationshipViewModel>> GetEmployerInformation(int vacancyReferenceNumber, bool? useEmployerLocation)
         {
-            var vacancy = _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
+            var vacancy = await _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 
             var viewModel = vacancy.VacancyOwnerRelationship;
             viewModel.VacancyLocationType =
@@ -383,7 +383,7 @@
             }
         }
 
-        public MediatorResponse<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel)
+        public async Task<MediatorResponse<VacancyQuestionsViewModel>> UpdateVacancy(VacancyQuestionsViewModel viewModel)
         {
             var validationResult = _vacancyQuestionsViewModelServerValidator.Validate(viewModel);
 
@@ -392,22 +392,22 @@
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
-            var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
+            var updatedViewModel = await _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
             return ReturnResult(updatedViewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel)
+        public async Task<MediatorResponse<NewVacancyViewModel>> UpdateVacancy(NewVacancyViewModel viewModel)
         {
-            return UpdateVacancy(viewModel, _newVacancyViewModelServerValidator);
+            return await UpdateVacancy(viewModel, _newVacancyViewModelServerValidator);
         }
 
-        public MediatorResponse<NewVacancyViewModel> UpdateOfflineVacancyType(NewVacancyViewModel viewModel)
+        public async Task<MediatorResponse<NewVacancyViewModel>> UpdateOfflineVacancyType(NewVacancyViewModel viewModel)
         {
-            return UpdateVacancy(viewModel, _newVacancyViewModelClientValidator);
+            return await UpdateVacancy(viewModel, _newVacancyViewModelClientValidator);
         }
 
-        public MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel, AbstractValidator<NewVacancyViewModel> validator)
+        public async Task<MediatorResponse<NewVacancyViewModel>> UpdateVacancy(NewVacancyViewModel viewModel, AbstractValidator<NewVacancyViewModel> validator)
         {
             var validationResult = validator.Validate(viewModel);
 
@@ -425,12 +425,12 @@
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
-            var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
+            var updatedViewModel = await _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
             return ReturnResult(updatedViewModel);
         }
 
-        public MediatorResponse<TrainingDetailsViewModel> UpdateVacancy(TrainingDetailsViewModel viewModel)
+        public async Task<MediatorResponse<TrainingDetailsViewModel>> UpdateVacancy(TrainingDetailsViewModel viewModel)
         {
             var validationResult = _trainingDetailsViewModelServerValidator.Validate(viewModel);
 
@@ -446,12 +446,12 @@
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
-            var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
+            var updatedViewModel = await _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
             return ReturnResult(updatedViewModel);
         }
 
-        public MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)
+        public async Task<MediatorResponse<VacancyRequirementsProspectsViewModel>> UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)
         {
             var validationResult = _vacancyRequirementsProspectsViewModelServerValidator.Validate(viewModel);
 
@@ -460,15 +460,15 @@
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
-            var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
+            var updatedViewModel = await _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
             return ReturnResult(updatedViewModel);
         }
 
-        public MediatorResponse<VacancyOwnerRelationshipViewModel> UpdateEmployerInformation(VacancyOwnerRelationshipViewModel viewModel)
+        public async Task<MediatorResponse<VacancyOwnerRelationshipViewModel>> UpdateEmployerInformation(VacancyOwnerRelationshipViewModel viewModel)
         {
             var validationResult = _vacancyOwnerRelationshipViewModelValidator.Validate(viewModel);
-            var existingVacancy = _vacancyQaProvider.GetNewVacancyViewModel(viewModel.VacancyReferenceNumber);
+            var existingVacancy = await _vacancyQaProvider.GetNewVacancyViewModel(viewModel.VacancyReferenceNumber);
 
             var existingViewModel = existingVacancy.VacancyOwnerRelationship;
             existingViewModel.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
@@ -494,7 +494,7 @@
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateEmployerInformation.FailedValidation, existingViewModel, validationResult);
             }
 
-            _providerQaProvider.ConfirmVacancyOwnerRelationship(viewModel);
+            await _providerQaProvider.ConfirmVacancyOwnerRelationship(viewModel);
 
             existingVacancy.VacancyLocationType = viewModel.VacancyLocationType;
             existingVacancy.NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
@@ -512,28 +512,28 @@
             existingVacancy.AnonymousEmployerDescriptionComment = viewModel.AnonymousEmployerDescriptionComment;
             existingVacancy.AnonymousAboutTheEmployerComment = viewModel.AnonymousAboutTheEmployerComment;
 
-            _vacancyQaProvider.UpdateEmployerInformationWithComments(existingVacancy);
+            await _vacancyQaProvider.UpdateEmployerInformationWithComments(existingVacancy);
 
             if (viewModel.VacancyLocationType == VacancyLocationType.SpecificLocation
                 || viewModel.VacancyLocationType == VacancyLocationType.Nationwide)
             {
-                _vacancyQaProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
+                await _vacancyQaProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
             }
 
             return GetMediatorResponse(VacancyMediatorCodes.UpdateEmployerInformation.Ok, viewModel);
         }
 
-        public MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(int vacancyReferenceNumber)
+        public async Task<MediatorResponse<LocationSearchViewModel>> GetLocationAddressesViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
+            var vacancy = await _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 
-            var locationSearchViewModel = _vacancyQaProvider.LocationAddressesViewModel(vacancy.Ukprn, vacancy.VacancyOwnerRelationship.ProviderSiteId, vacancy.VacancyOwnerRelationship.Employer.EmployerId, vacancy.VacancyGuid);
+            var locationSearchViewModel = await _vacancyQaProvider.LocationAddressesViewModel(vacancy.Ukprn, vacancy.VacancyOwnerRelationship.ProviderSiteId, vacancy.VacancyOwnerRelationship.Employer.EmployerId, vacancy.VacancyGuid);
             locationSearchViewModel.CurrentPage = 1;
 
             return GetMediatorResponse(VacancyMediatorCodes.GetLocationAddressesViewModel.Ok, locationSearchViewModel);
         }
 
-        public MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel)
+        public async Task<MediatorResponse<LocationSearchViewModel>> AddLocations(LocationSearchViewModel viewModel)
         {
             var validationResult = _locationSearchViewModelServerValidator.Validate(viewModel);
 
@@ -542,16 +542,16 @@
                 return GetMediatorResponse(VacancyMediatorCodes.AddLocations.FailedValidation, viewModel, validationResult);
             }
 
-            var locationSearchViewModel = _vacancyQaProvider.AddLocations(viewModel);
+            var locationSearchViewModel = await _vacancyQaProvider.AddLocations(viewModel);
 
             return GetMediatorResponse(VacancyMediatorCodes.AddLocations.Ok, locationSearchViewModel);
         }
 
-        public MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations)
+        public async Task<MediatorResponse<LocationSearchViewModel>> SearchLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations)
         {
             if (string.IsNullOrWhiteSpace(viewModel.PostcodeSearch))
             {
-                AddAlreadyAddedLocations(viewModel, alreadyAddedLocations);
+                await AddAlreadyAddedLocations(viewModel, alreadyAddedLocations);
 
                 return GetMediatorResponse(VacancyMediatorCodes.SearchLocations.NotFullPostcode, viewModel);
             }
@@ -560,7 +560,7 @@
             {
                 viewModel = _locationsProvider.GetAddressesFor(viewModel);
 
-                AddAlreadyAddedLocations(viewModel, alreadyAddedLocations);
+                await AddAlreadyAddedLocations(viewModel, alreadyAddedLocations);
 
                 return GetMediatorResponse(VacancyMediatorCodes.SearchLocations.Ok, viewModel);
             }
@@ -570,10 +570,10 @@
             }
         }
 
-        public MediatorResponse<LocationSearchViewModel> UseLocation(LocationSearchViewModel viewModel, int locationIndex, string postCodeSearch)
+        public async Task<MediatorResponse<LocationSearchViewModel>> UseLocation(LocationSearchViewModel viewModel, int locationIndex, string postCodeSearch)
         {
             viewModel.PostcodeSearch = postCodeSearch;
-            var searchResult = SearchLocations(viewModel, viewModel.Addresses);
+            var searchResult = await SearchLocations(viewModel, viewModel.Addresses);
 
             if (searchResult.ViewModel.SearchResultAddresses?.Page != null && searchResult.ViewModel.SearchResultAddresses.Page.Count() > locationIndex)
             {
@@ -605,9 +605,9 @@
             return GetMediatorResponse(VacancyMediatorCodes.RemoveLocation.Ok, viewModel);
         }
 
-        private void AddAlreadyAddedLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations)
+        private async Task AddAlreadyAddedLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations)
         {
-            var existingVacancy = _vacancyQaProvider.GetVacancy(viewModel.VacancyGuid);
+            var existingVacancy = await _vacancyQaProvider.GetVacancy(viewModel.VacancyGuid);
             if (existingVacancy != null)
             {
                 viewModel.Addresses = existingVacancy.LocationAddresses;

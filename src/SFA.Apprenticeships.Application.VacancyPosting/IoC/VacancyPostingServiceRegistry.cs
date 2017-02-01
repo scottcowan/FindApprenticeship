@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.VacancyPosting.IoC
 {
     using Interfaces.Vacancies;
-    using Interfaces.VacancyPosting;
     using Strategies;
     using StructureMap.Configuration.DSL;
 
@@ -23,7 +22,6 @@
 
             // Services
             For<IVacancyLockingService>().Use<VacancyLockingService>();
-            For<IVacancyPostingService>().Use<VacancyPostingService>();
         }
     }
 }

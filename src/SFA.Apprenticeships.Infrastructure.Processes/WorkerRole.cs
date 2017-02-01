@@ -31,6 +31,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Sql.Schemas.Vacancy.IoC;
     using Application.Interfaces;
     using Application.Location.IoC;
+    using DAS.RAA.Api.Service.V1.IoC;
     using Repositories.Sql.Schemas.Employer.IoC;
     using Repositories.Sql.Schemas.Provider.IoC;
     using StructureMap;
@@ -133,6 +134,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<EmployerRepositoryRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
                 x.AddRegistry<LocationServiceRegistry>();
+                x.AddRegistry<ApiServiceRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();

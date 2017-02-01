@@ -36,8 +36,6 @@
 
         public int SubCategoriesFullNamesLimit { get; set; }
 
-        public string RaaApiBaseUrl { get; set; }
-
         public string GoogleMapsPrivateKey { get; set; }
     }
 
@@ -46,7 +44,5 @@
         public bool SavedSearchesEnabled { get; set; }
 
         public bool SmsEnabled { get; set; }
-
-        public bool RaaApiEnabled { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
+    using System.Threading.Tasks;
     using Common.Constants;
     using Common.UnitTests.Mediators;
     using Constants.ViewModels;
@@ -18,14 +19,14 @@
     public class ReviewVacancyTests
     {
         [Test]
-        public void ShouldReturnTheViewModelIfAllIsOk()
+        public async Task ShouldReturnTheViewModelIfAllIsOk()
         {
             const int vacancyReferenceNumber = 1;
             var viewModel = VacancyMediatorTestHelper.GetValidVacancyViewModel(vacancyReferenceNumber);
 
             var provider = new Mock<IVacancyQAProvider>();
 
-            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(viewModel);
+            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
 
             var validator = new Mock<VacancyViewModelValidator>();
             validator.Setup(v => v.Validate(It.IsAny<VacancyViewModel>()))
@@ -33,7 +34,7 @@
 
             var mediator = new VacancyMediatorBuilder().With(validator).With(provider).Build();
 
-            var result = mediator.ReviewVacancy(vacancyReferenceNumber);
+            var result = await mediator.ReviewVacancy(vacancyReferenceNumber);
 
             result.AssertCodeAndMessage(VacancyMediatorCodes.ReviewVacancy.Ok);
             result.ViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
@@ -46,7 +47,7 @@
             var viewModel = VacancyMediatorTestHelper.GetValidVacancyViewModel(vacancyReferenceNumber);
 
             var provider = new Mock<IVacancyQAProvider>();
-            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(viewModel);
+            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
 
             var validator = new Mock<VacancyViewModelValidator>();
             validator.Setup(v => v.Validate(It.IsAny<VacancyViewModel>()))
@@ -60,14 +61,14 @@
         }
 
         [Test]
-        public void ShouldReturnAResponseWithValidationErrorsIfThereAreValidationErrors()
+        public async Task ShouldReturnAResponseWithValidationErrorsIfThereAreValidationErrors()
         {
             const int vacancyReferenceNumber = 1;
             var viewModel = VacancyMediatorTestHelper.GetValidVacancyViewModel(vacancyReferenceNumber);
             viewModel.NewVacancyViewModel.Title = null;
 
             var provider = new Mock<IVacancyQAProvider>();
-            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(viewModel);
+            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
 
             var validator = new Mock<VacancyViewModelValidator>();
             var validationFailure = new ValidationFailure("NewVacancyViewModel.Title", "someError");
@@ -76,25 +77,25 @@
 
             var mediator = new VacancyMediatorBuilder().With(validator).With(provider).Build();
 
-            var result = mediator.ReviewVacancy(vacancyReferenceNumber);
+            var result = await mediator.ReviewVacancy(vacancyReferenceNumber);
 
             result.AssertValidationResult(VacancyMediatorCodes.ReviewVacancy.FailedValidation, true);
             result.ViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
         [Test]
-        public void ShouldReturnAMessageIfTheVacancyReturnedIsNull()
+        public async Task ShouldReturnAMessageIfTheVacancyReturnedIsNull()
         {
             const int vacancyReferenceNumber = 1;
             VacancyViewModel viewModel = null;
 
             var provider = new Mock<IVacancyQAProvider>();
 
-            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(viewModel);
+            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.ReviewVacancy(vacancyReferenceNumber);
+            var result = await mediator.ReviewVacancy(vacancyReferenceNumber);
 
             result.AssertMessage(VacancyMediatorCodes.ReviewVacancy.InvalidVacancy,
                 VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
@@ -102,14 +103,14 @@
 
         [TestCase(VacancySource.Av, VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvms, VacancyViewModelMessages.VacancyAuthoredInAvms)]
         [TestCase(VacancySource.Api, VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApi, VacancyViewModelMessages.VacancyAuthoredInApi)]
-        public void ShouldReturnTheViewModelAndAMessageIfTheVacancySourceIsNotRaa(VacancySource vacancySource, string code, string message)
+        public async Task ShouldReturnTheViewModelAndAMessageIfTheVacancySourceIsNotRaa(VacancySource vacancySource, string code, string message)
         {
             const int vacancyReferenceNumber = 1;
             var viewModel = VacancyMediatorTestHelper.GetValidVacancyViewModel(vacancyReferenceNumber, vacancySource);
 
             var provider = new Mock<IVacancyQAProvider>();
 
-            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(viewModel);
+            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
 
             var validator = new Mock<VacancyViewModelValidator>();
             validator.Setup(v => v.Validate(It.IsAny<VacancyViewModel>()))
@@ -117,7 +118,7 @@
 
             var mediator = new VacancyMediatorBuilder().With(validator).With(provider).Build();
 
-            var result = mediator.ReviewVacancy(vacancyReferenceNumber);
+            var result = await mediator.ReviewVacancy(vacancyReferenceNumber);
 
             result.ViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
             result.AssertMessage(code, 
@@ -127,14 +128,14 @@
 
         [TestCase(VacancySource.Av, VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvmsWithValidationErrors, VacancyViewModelMessages.VacancyAuthoredInAvms)]
         [TestCase(VacancySource.Api, VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors, VacancyViewModelMessages.VacancyAuthoredInApi)]
-        public void ShouldReturnTheViewModelAndAMessageIfTheVacancySourceIsNotRaaAndHasValidationErrors(VacancySource vacancySource, string code, string message)
+        public async Task ShouldReturnTheViewModelAndAMessageIfTheVacancySourceIsNotRaaAndHasValidationErrors(VacancySource vacancySource, string code, string message)
         {
             const int vacancyReferenceNumber = 1;
             var viewModel = VacancyMediatorTestHelper.GetValidVacancyViewModel(vacancyReferenceNumber, vacancySource);
 
             var provider = new Mock<IVacancyQAProvider>();
 
-            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(viewModel);
+            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
 
             var validator = new Mock<VacancyViewModelValidator>();
             var validationFailure = new ValidationFailure("NewVacancyViewModel.Title", "someError");
@@ -143,7 +144,7 @@
 
             var mediator = new VacancyMediatorBuilder().With(validator).With(provider).Build();
 
-            var result = mediator.ReviewVacancy(vacancyReferenceNumber);
+            var result = await mediator.ReviewVacancy(vacancyReferenceNumber);
 
             result.ViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
             result.AssertValidationResultWithMessage(code, message, UserMessageLevel.Info, true);

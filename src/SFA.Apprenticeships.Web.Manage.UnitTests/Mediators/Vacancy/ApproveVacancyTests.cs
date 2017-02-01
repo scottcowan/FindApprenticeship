@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
     using System.Linq;
+    using System.Threading.Tasks;
     using Common.Constants;
     using Common.UnitTests.Mediators;
     using Constants.ViewModels;
@@ -16,7 +17,7 @@
     public class ApproveVacancyTests
     {
         [Test]
-        public void ShouldGetStatusOkIfNoProblem()
+        public async Task ShouldGetStatusOkIfNoProblem()
         {
             const int vacancyReferenceNumber = 1;
             var provider = new Mock<IVacancyQAProvider>();
@@ -24,7 +25,7 @@
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.ApproveVacancy(vacancyReferenceNumber);
+            var result = await mediator.ApproveVacancy(vacancyReferenceNumber);
             result.Code.Should().Be(VacancyMediatorCodes.ApproveVacancy.Ok);
         }
 
@@ -65,7 +66,7 @@
         }
 
         [Test]
-        public void ShouldReturnTheNextAvailableVacancyAfterApprovingOne()
+        public async Task ShouldReturnTheNextAvailableVacancyAfterApprovingOne()
         {
             const int vacancyReferenceNumber = 1;
             const int nextVacancyReferenceNumber = 2;
@@ -77,13 +78,13 @@
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.ApproveVacancy(vacancyReferenceNumber);
+            var result = await mediator.ApproveVacancy(vacancyReferenceNumber);
             result.AssertCodeAndMessage(VacancyMediatorCodes.ApproveVacancy.Ok);
             result.ViewModel.VacancyReferenceNumber.Should().Be(nextVacancyReferenceNumber);
         }
 
         [Test]
-        public void ShouldReturnNoAvailableVacanciesIfThereArentAnyAvailableVacancies()
+        public async Task ShouldReturnNoAvailableVacanciesIfThereArentAnyAvailableVacancies()
         {
             const int vacancyReferenceNumber = 1;
             DashboardVacancySummaryViewModel nullVacancy = null;
@@ -94,35 +95,35 @@
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.ApproveVacancy(vacancyReferenceNumber);
+            var result = await mediator.ApproveVacancy(vacancyReferenceNumber);
             result.AssertMessage(VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies, VacancyViewModelMessages.NoVacanciesAvailble, UserMessageLevel.Info);
         }
 
         [Test]
-        public void ShouldReturnInvalidVacancyIfTheVacancyIsNotAvailableToQA()
+        public async Task ShouldReturnInvalidVacancyIfTheVacancyIsNotAvailableToQA()
         {
             const int vacancyReferenceNumber = 1;
             var provider = new Mock<IVacancyQAProvider>();
 
-            provider.Setup(p => p.ApproveVacancy(vacancyReferenceNumber)).Returns(QAActionResultCode.InvalidVacancy);
+            provider.Setup(p => p.ApproveVacancy(vacancyReferenceNumber)).Returns(Task.FromResult(QAActionResultCode.InvalidVacancy));
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.ApproveVacancy(vacancyReferenceNumber);
+            var result = await mediator.ApproveVacancy(vacancyReferenceNumber);
             result.AssertMessage(VacancyMediatorCodes.ApproveVacancy.InvalidVacancy, VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
         }
 
         [Test]
-        public void ShouldReturnPostcodeLookupFailedIfTheVacancyIsThereWasAnErrorGeocodingTheVacancy()
+        public async Task ShouldReturnPostcodeLookupFailedIfTheVacancyIsThereWasAnErrorGeocodingTheVacancy()
         {
             const int vacancyReferenceNumber = 1;
             var provider = new Mock<IVacancyQAProvider>();
 
-            provider.Setup(p => p.ApproveVacancy(vacancyReferenceNumber)).Returns(QAActionResultCode.GeocodingFailure);
+            provider.Setup(p => p.ApproveVacancy(vacancyReferenceNumber)).Returns(Task.FromResult(QAActionResultCode.GeocodingFailure));
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.ApproveVacancy(vacancyReferenceNumber);
+            var result = await mediator.ApproveVacancy(vacancyReferenceNumber);
             result.AssertMessage(VacancyMediatorCodes.ApproveVacancy.PostcodeLookupFailed, VacancyViewModelMessages.PostcodeLookupFailed, UserMessageLevel.Error);
         }
     }

@@ -81,6 +81,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Api\IApiClientProvider.cs" />
     <Compile Include="Applications\ErrorCodes.cs" />
     <Compile Include="Applications\ICommonApplicationService.cs" />
     <Compile Include="AuditEventTypes.cs" />
@@ -159,6 +160,8 @@
     <Compile Include="Vacancies\TraineeshipSearchResponse.cs" />
     <Compile Include="Vacancies\ICandidateVacancyService.cs" />
     <Compile Include="VacancyPosting\IVacancyPostingService.cs" />
+    <Compile Include="Vacancy\IVacancyManagementService.cs" />
+    <Compile Include="Vacancy\IVacancySummaryService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
@@ -176,6 +179,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
       <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>
       <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.DAS.RAA.Api.Client.V1\SFA.DAS.RAA.Api.Client.V1.csproj">
+      <Project>{b263f67e-b3ea-410a-ba24-4f3cc2ce0008}</Project>
+      <Name>SFA.DAS.RAA.Api.Client.V1</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

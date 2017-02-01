@@ -23,9 +23,11 @@ namespace SFA.DAS.RAA.Api.Client.V1
             /// </param>
             /// <param name='page'>
             /// </param>
-            public static System.Collections.Generic.IList<VacancySummary> GetAll(this IVacancySummaryOperations operations, string filterType = default(string), int? page = default(int?))
+            /// <param name='pageSize'>
+            /// </param>
+            public static VacancySummariesPage GetVacancySummaries(this IVacancySummaryOperations operations, string filterType = default(string), int? page = default(int?), int? pageSize = default(int?))
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVacancySummaryOperations)s).GetAllAsync(filterType, page), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVacancySummaryOperations)s).GetVacancySummariesAsync(filterType, page, pageSize), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -39,12 +41,14 @@ namespace SFA.DAS.RAA.Api.Client.V1
             /// </param>
             /// <param name='page'>
             /// </param>
+            /// <param name='pageSize'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<System.Collections.Generic.IList<VacancySummary>> GetAllAsync(this IVacancySummaryOperations operations, string filterType = default(string), int? page = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<VacancySummariesPage> GetVacancySummariesAsync(this IVacancySummaryOperations operations, string filterType = default(string), int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetAllWithHttpMessagesAsync(filterType, page, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetVacancySummariesWithHttpMessagesAsync(filterType, page, pageSize, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

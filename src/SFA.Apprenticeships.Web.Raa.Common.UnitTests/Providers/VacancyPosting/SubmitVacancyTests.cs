@@ -7,6 +7,7 @@
     using Moq;
     using NUnit.Framework;
     using System;
+    using System.Threading.Tasks;
 
     [TestFixture]
     [Parallelizable]
@@ -24,7 +25,7 @@
                 VacancyLocationType = VacancyLocationType.SpecificLocation
             };
 
-            MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(Task.FromResult(apprenticeshipVacancy));
             MockVacancyPostingService.Setup(ps => ps.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>()))
@@ -53,7 +54,7 @@
                 VacancyLocationType = VacancyLocationType.SpecificLocation
             };
 
-            MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(Task.FromResult(apprenticeshipVacancy));
             MockVacancyPostingService.Setup(ps => ps.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>()))
@@ -82,7 +83,7 @@
                 SubmissionCount = 2
             };
 
-            MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(Task.FromResult(apprenticeshipVacancy));
             MockVacancyPostingService.Setup(ps => ps.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>()))

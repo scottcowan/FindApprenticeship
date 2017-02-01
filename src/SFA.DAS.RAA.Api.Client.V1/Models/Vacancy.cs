@@ -723,5 +723,18 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "IsMultiLocation")]
         public bool? IsMultiLocation { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.Address != null)
+            {
+                this.Address.Validate();
+            }
+        }
     }
 }

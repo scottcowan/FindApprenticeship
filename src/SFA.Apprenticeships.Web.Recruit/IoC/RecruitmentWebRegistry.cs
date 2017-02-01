@@ -56,6 +56,9 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using System.Web;
+    using Application.Interfaces.Api;
+    using Application.Interfaces.Vacancy;
+    using Providers;
     using CandidateRepository = Infrastructure.Repositories.Mongo.Candidates.CandidateRepository;
     using ISubmitContactMessageStrategy = Application.UserAccount.Strategies.ProviderUserAccount.ISubmitContactMessageStrategy;
     using SubmitContactMessageStrategy = Application.UserAccount.Strategies.ProviderUserAccount.SubmitContactMessageStrategy;
@@ -108,8 +111,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
             For<IOrganisationService>().Use<OrganisationService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
-            For<IReferenceDataService>().Use<ReferenceDataService>();
-            For<IProviderService>().Use<ProviderService>();
             For<IEmployerService>().Use<EmployerService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
@@ -118,7 +119,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
             For<IReportingService>().Use<ReportingService>();
             For<IEncryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
             For<IDecryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
-            For<IVacancyManagementService>().Use<VacancyManagementService>();
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
             For<ICandidateSearchService>().Use<CandidateSearchService>();
             For<IVacancySummaryService>().Use<VacancySummaryService>();

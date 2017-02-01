@@ -26,11 +26,11 @@
 
         public ActionResult Index()
         {
-            var statusTasks = new[]
+            var statusTasks = new Task[]
             {
-                new Task(() => _apprenticeshipApplicationProvider.GetApplicationViewModel(Guid.NewGuid(), 123456)),
-                new Task(() => _candidateServiceProvider.GetCandidate(Guid.NewGuid())),
-                new Task(() => _searchProvider.FindLocation("London"))
+                Task.FromResult(_apprenticeshipApplicationProvider.GetApplicationViewModel(Guid.NewGuid(), 123456)),
+                Task.FromResult(_candidateServiceProvider.GetCandidate(Guid.NewGuid())),
+                Task.FromResult(_searchProvider.FindLocation("London"))
             };
 
             Parallel.ForEach(statusTasks, task => task.Start());

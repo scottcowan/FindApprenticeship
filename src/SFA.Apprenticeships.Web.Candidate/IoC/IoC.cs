@@ -26,6 +26,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
     using Infrastructure.VacancySearch.IoC;
     using Application.Interfaces;
     using Application.Location.IoC;
+    using DAS.RAA.Api.Service.V1.IoC;
     using Infrastructure.Repositories.Sql.Schemas.Employer.IoC;
     using Infrastructure.Repositories.Sql.Schemas.Provider.IoC;
     using StructureMap;
@@ -74,6 +75,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
                 x.AddRegistry<EmployerRepositoryRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
                 x.AddRegistry<LocationServiceRegistry>();
+                x.AddRegistry<ApiServiceRegistry>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

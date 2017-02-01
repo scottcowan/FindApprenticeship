@@ -9,6 +9,7 @@
     using Ploeh.AutoFixture;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using ViewModels.VacancyPosting;
     using Web.Common.ViewModels.Locations;
 
@@ -19,7 +20,7 @@
         private readonly Guid _vacancyGuid = Guid.NewGuid();
 
         [Test]
-        public void WhenCreatingANewVacancyShouldReturnANewLocationSearchViewModel()
+        public async Task WhenCreatingANewVacancyShouldReturnANewLocationSearchViewModel()
         {
             const string ukprn = "ukprn";
             const int employerId = 1;
@@ -31,7 +32,7 @@
             MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
 
-            var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
+            var result = await provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
 
             result.Ukprn.Should().Be(ukprn);
             result.EmployerId.Should().Be(employerId);
@@ -41,7 +42,7 @@
         }
 
         [Test]
-        public void IfTheVacancyAlreadyExistsShouldFillTheViewModelWithItsInformation()
+        public async Task IfTheVacancyAlreadyExistsShouldFillTheViewModelWithItsInformation()
         {
             const string ukprn = "ukprn";
             const int employerId = 2;
@@ -49,19 +50,19 @@
 
             var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(_vacancyGuid);
 
-            MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(Task.FromResult(vacancyWithLocationAddresses.Vacancy));
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId))
                 .Returns(vacancyWithLocationAddresses.LocationAddresses);
 
             var provider = GetVacancyPostingProvider();
 
-            var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
+            var result = await provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
 
             result.Addresses.Count.Should().Be(2);
         }
 
         [Test]
-        public void IfTheVacancyHasOnlyOneAddressAndItsDifferentFromTheEmployerAddressShouldAddTheVacancyAddressToVacancyLocationsList()
+        public async Task IfTheVacancyHasOnlyOneAddressAndItsDifferentFromTheEmployerAddressShouldAddTheVacancyAddressToVacancyLocationsList()
         {
             const string ukprn = "ukprn";
             const int employerId = 2;
@@ -71,13 +72,13 @@
 
             var vacancy = GetVacancy(_vacancyGuid, 1, numberOfPositions, VacancyLocationType.MultipleLocations, additionalLocationInformation);
 
-            MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(Task.FromResult(vacancy));
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId))
                 .Returns(new List<VacancyLocation>());
 
             var provider = GetVacancyPostingProvider();
 
-            var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
+            var result = await provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
 
             result.Addresses.Count.Should().Be(1);
         }
@@ -93,7 +94,7 @@
 
             var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(additionalLocationInformation);
 
-            MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancyWithLocationAddresses.Vacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(Task.FromResult(vacancyWithLocationAddresses.Vacancy));
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
             MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(It.IsAny<int>(), It.IsAny<string>(), true))
                 .Returns(new VacancyOwnerRelationship());
@@ -127,7 +128,7 @@
             var vacancyGuid = Guid.NewGuid();
             var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber);
 
-            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(Task.FromResult(vacancyWithLocationAddresses.Vacancy));
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
             var provider = GetVacancyPostingProvider();
 
@@ -158,7 +159,7 @@
                 vacancyReferenceNumber, 1, employerApprenticeshipLocation,
                 null, null, string.Empty);
 
-            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(Task.FromResult(vacancyWithLocationAddresses.Vacancy));
             var provider = GetVacancyPostingProvider();
 
             //Act
@@ -187,7 +188,7 @@
 
             var vacancy = GetVacancy(_vacancyGuid, 1, numberOfPositions, VacancyLocationType.MultipleLocations, additionalLocationInformation);
 
-            MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(Task.FromResult(vacancy));
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(new List<VacancyLocation>());
             MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(It.IsAny<int>(), It.IsAny<string>(), true))
                 .Returns(new VacancyOwnerRelationship());

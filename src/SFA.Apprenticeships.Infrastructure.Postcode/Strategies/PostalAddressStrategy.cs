@@ -14,16 +14,17 @@
     using RestSharp;
     using System.Collections.Generic;
     using Application.Interfaces.ReferenceData;
+    using Domain.Raa.Interfaces.Repositories;
 
     public class PostalAddressStrategy : IPostalAddressStrategy
     {
-        private readonly IReferenceDataService _referenceDataService;
+        private readonly IReferenceRepository _referenceRepository;
         private readonly IConfigurationService _configurationService;
         private readonly ILogService _logger;
 
-        public PostalAddressStrategy(IReferenceDataService referenceDataService, IConfigurationService configurationService, ILogService logger)
+        public PostalAddressStrategy(IReferenceRepository referenceRepository, IConfigurationService configurationService, ILogService logger)
         {
-            _referenceDataService = referenceDataService;
+            _referenceRepository = referenceRepository;
             _configurationService = configurationService;
             _logger = logger;
         }
@@ -121,7 +122,7 @@
                 postalAddress.LocalAuthorityCodeName = postzon.DistrictCode;
 
                 //TODO: Cache in service
-                var localAuthority = _referenceDataService.GetLocalAuthorityByCode(postzon.DistrictCode);
+                var localAuthority = _referenceRepository.GetLocalAuthorityByCode(postzon.DistrictCode);
                 if (localAuthority != null)
                 {
                     postalAddress.CountyId = localAuthority.County.CountyId;

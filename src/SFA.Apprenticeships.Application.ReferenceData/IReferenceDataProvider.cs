@@ -5,6 +5,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
 
+    //TODO: remove this in favour of using the service directly. This internal interface has been used throughout the solution
     public interface IReferenceDataProvider
     {
         IEnumerable<Category> GetCategories();

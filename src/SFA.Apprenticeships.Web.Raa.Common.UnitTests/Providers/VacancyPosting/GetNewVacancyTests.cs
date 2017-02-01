@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
+    using System.Threading.Tasks;
     using Domain.Entities.Raa.Parties;
     using FluentAssertions;
     using Moq;
@@ -33,13 +34,13 @@
         }
 
         [Test]
-        public void ShouldDefaultToPreferredSite()
+        public async Task ShouldDefaultToPreferredSite()
         {
             // Arrange.
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(VacancyOwnerRelationshipId, VacancyGuid, null);
+            var viewModel = await provider.GetNewVacancyViewModel(VacancyOwnerRelationshipId, VacancyGuid, null);
 
             // Assert.
             MockProviderService.Verify(mock =>

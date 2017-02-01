@@ -14,6 +14,7 @@
     using Application.Employer;
     using Application.Employer.Strategies;
     using Application.Interfaces;
+    using Application.Interfaces.Api;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
@@ -31,6 +32,7 @@
     using Applications;
     using Azure.ServiceBus;
     using Candidates;
+    using Common.Api;
     using Common.IoC;
     using Communication.Configuration;
     using Communications;
@@ -92,9 +94,6 @@
             For<ISiteMapVacancyProcessor>().Use<SiteMapVacancyProcessor>();
             For<ISiteMapVacancyProvider>().Use<SiteMapVacancyProvider>();
 
-            // reference data
-            For<IReferenceDataService>().Use<ReferenceDataService>();
-
             // application housekeeping
             For<IRootApplicationHousekeeper>().Use<RootApplicationHousekeeper>();
             For<IDraftApplicationForExpiredVacancyHousekeeper>().Use<DraftApplicationForExpiredVacancyHousekeeper>();
@@ -111,9 +110,10 @@
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
 
-            For<IProviderService>().Use<ProviderService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IEmployerService>().Use<EmployerService>();
+
+            For<IApiClientProvider>().Use<ApiClientProvider>();
 
             // service bus
             RegisterServiceBusMessageBrokers(container);

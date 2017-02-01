@@ -9,6 +9,7 @@
     using Domain.Entities.Vacancies;
     using Providers;
     using System;
+    using System.Threading.Tasks;
     using Application.Interfaces.Providers;
     using Application.Interfaces.VacancyPosting;
     using Application.ReferenceData;
@@ -345,7 +346,7 @@
             }
         }
 
-        public MediatorResponse<TransferVacanciesResultsViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel)
+        public async Task<MediatorResponse<TransferVacanciesResultsViewModel>> GetVacancyDetails(TransferVacanciesViewModel viewModel)
         {
             try
             {
@@ -363,7 +364,7 @@
                         string vacancyReference;
                         if (VacancyHelper.TryGetVacancyReference(vacancy, out vacancyReference))
                         {
-                            var vacancyDetails = _vacancyPostingService.GetVacancyByReferenceNumber(Convert.ToInt32(vacancyReference));
+                            var vacancyDetails = await _vacancyPostingService.GetVacancyByReferenceNumber(Convert.ToInt32(vacancyReference));
                             if (vacancyDetails != null)
                             {
                                 var vacancyView = new TransferVacancyViewModel

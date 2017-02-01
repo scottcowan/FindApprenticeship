@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
 {
+    using System.Threading.Tasks;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using Common.Providers;
@@ -8,8 +9,7 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
     using Web.Common.Configuration;
 
     [TestFixture]
@@ -17,7 +17,7 @@
     public class RejectVacancyTests
     {
         [Test]
-        public void RejectVacancy()
+        public async Task RejectVacancy()
         {
             //Arrange
             var vacancyReferenceNumber = 1;
@@ -32,7 +32,7 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
-            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(Task.FromResult(vacancy));
 
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(It.IsAny<string>(), It.IsAny<Vacancy>()))
                 .Returns(true);
@@ -45,7 +45,7 @@
                     .Build();
 
             //Act
-            var result = vacancyProvider.RejectVacancy(vacancyReferenceNumber);
+            var result = await vacancyProvider.RejectVacancy(vacancyReferenceNumber);
 
             //Assert
             result.Should().Be(QAActionResultCode.Ok);
@@ -60,7 +60,7 @@
         }
 
         [Test]
-        public void ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
+        public async Task ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
         {
             const int vacanyReferenceNumber = 1;
             const string userName = "userName";
@@ -71,7 +71,7 @@
 
             currentUserService.Setup(cus => cus.CurrentUserName).Returns(userName);
             vacancyPostingService.Setup(vps => vps.GetVacancyByReferenceNumber(vacanyReferenceNumber))
-                .Returns(new Vacancy { VacancyReferenceNumber = vacanyReferenceNumber });
+                .Returns(Task.FromResult(new Vacancy { VacancyReferenceNumber = vacanyReferenceNumber }));
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(userName, It.IsAny<Vacancy>()))
                 .Returns(false);
 
@@ -82,7 +82,7 @@
                     .With(currentUserService)
                     .Build();
 
-            var result = vacancyProvider.RejectVacancy(vacanyReferenceNumber);
+            var result = await vacancyProvider.RejectVacancy(vacanyReferenceNumber);
 
             result.Should().Be(QAActionResultCode.InvalidVacancy);
         }
