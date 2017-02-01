@@ -1,14 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
-    using Domain.Raa.Interfaces.Repositories;
-    using System.Collections.Generic;
-    using System.Linq;
     using Application.ReferenceData;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using Domain.Raa.Interfaces.Repositories;
     using Presentation;
     using Strategies;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class ReferenceDataProvider : IReferenceDataProvider
     {
@@ -146,6 +146,11 @@
             return standardSubjectAreaTierOnes;
         }
 
+        public StandardSubjectAreaTierOne GetStandardSubjectAreaTierOneById(int standardid)
+        {
+            return _referenceRepository.GetStandardSubjectAreaTierOneById(standardid);
+        }
+
         public IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication)
         {
             return _getReleaseNotesStrategy.GetReleaseNotes(dasApplication);
@@ -196,6 +201,11 @@
             return _referenceRepository.GetRegionById(regionId);
         }
 
+        public Category GetCategoryById(int categoryId)
+        {
+            return _referenceRepository.GetFrameworkById(categoryId);
+        }
+
         public Region GetRegionByCode(string regionCode)
         {
             return _referenceRepository.GetRegionByCode(regionCode);
@@ -214,6 +224,11 @@
         public Category InsertFramework(Category entity)
         {
             return _referenceRepository.InsertFramework(entity);
+        }
+
+        public Category GetFrameworkById(int categoryid)
+        {
+            return _referenceRepository.GetFrameworkById(categoryid);
         }
 
         public Standard InsertStandard(Standard standard)

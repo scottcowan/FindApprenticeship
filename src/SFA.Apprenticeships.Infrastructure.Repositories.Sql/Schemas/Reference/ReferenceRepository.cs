@@ -35,6 +35,8 @@
         public static string GetStandardSql = "SELECT * FROM Reference.Standard ORDER BY FullName;";
         public static string GetEducationLevelSql = "SELECT * FROM Reference.EducationLevel;";
 
+        public static string GetFrameworkByIdSql = "SELECT * FROM ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @Id";
+
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -400,7 +402,6 @@
         {
             _logger.Debug($"Updating framework with id={category.Id}");
 
-            const string standardSql = "SELECT * FROM ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @Id";
             const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
 
             //TODO: Does this need to be here? If not, test and remove.
@@ -409,7 +410,7 @@
                 category.Id
             };
 
-            var dbStandards = _getOpenConnection.Query<Entities.ApprenticeshipFramework>(standardSql, sqlParams);
+            var dbStandards = _getOpenConnection.Query<ApprenticeshipFramework>(GetFrameworkByIdSql, sqlParams);
 
             var dbStandard = dbStandards.Single();
 
@@ -428,7 +429,7 @@
 
         public Category InsertFramework(Category category)
         {
-            _logger.Debug($"Inserting new framework");
+            _logger.Debug("Inserting new framework");
 
             const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
 
@@ -456,9 +457,25 @@
             return category;
         }
 
+        public Category GetFrameworkById(int categoryId)
+        {
+            _logger.Debug($"Getting Category with id {categoryId}");
+
+            var sqlParams = new
+            {
+                categoryId
+            };
+
+            var category = _getOpenConnection.Query<Category>(GetFrameworkByIdSql, sqlParams).FirstOrDefault();
+
+            _logger.Debug($"Found {category}");
+
+            return category;
+        }
+
         public Standard InsertStandard(Standard standard)
         {
-            _logger.Debug($"Inserting new standard");
+            _logger.Debug("Inserting new standard");
 
             // get new education level
             var educationLevels = GetEducationLevels();
@@ -466,7 +483,7 @@
 
             var dbStandard = new Entities.Standard
             {
-                ApprenticeshipFrameworkStatusTypeId = (int) standard.Status,
+                ApprenticeshipFrameworkStatusTypeId = (int)standard.Status,
                 LarsCode = standard.LarsCode,
                 StandardSectorId = standard.ApprenticeshipSectorId,
                 EducationLevelId = level.EducationLevelId,
@@ -492,7 +509,7 @@
                 sector.Id
             };
 
-            var dbSectors = _getOpenConnection.Query<Entities.StandardSector>(sectorSql, sqlParams);
+            var dbSectors = _getOpenConnection.Query<StandardSector>(sectorSql, sqlParams);
 
             var dbSector = dbSectors.Single();
 
@@ -520,6 +537,11 @@
             sector.Id = (int)result;
 
             return sector;
+        }
+
+        public StandardSubjectAreaTierOne GetStandardSubjectAreaTierOneById(int standardId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

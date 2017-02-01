@@ -2,9 +2,11 @@ namespace SFA.DAS.RAA.Api.Strategies
 {
     using Apprenticeships.Application.ReferenceData;
     using Apprenticeships.Domain.Entities.ReferenceData;
+    using Constants;
+    using System;
     using System.Collections.Generic;
 
-    class GetFrameworksStrategy : IGetFrameworksStrategy
+    public class GetFrameworksStrategy : IGetFrameworksStrategy
     {
         private readonly IReferenceDataProvider _referenceDataProvider;
 
@@ -17,9 +19,21 @@ namespace SFA.DAS.RAA.Api.Strategies
             return _referenceDataProvider.GetFrameworks();
         }
 
-        public Category GetFramework(int? frameworkId = null)
+        public Category GetFramework(int? categoryId = null)
         {
-            throw new System.NotImplementedException();
+            if (!categoryId.HasValue)
+            {
+                throw new ArgumentException(ReferenceMessages.MissingFrameworkIdentifier);
+            }
+
+            var framework = _referenceDataProvider.GetFrameworkById(categoryId.Value);
+
+            if (framework == null)
+            {
+                throw new KeyNotFoundException(ReferenceMessages.FrameworkNotFound);
+            }
+
+            return framework;
         }
     }
 }

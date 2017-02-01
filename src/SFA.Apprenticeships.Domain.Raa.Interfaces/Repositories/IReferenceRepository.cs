@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories
 {
-    using System.Collections.Generic;
     using Entities.Raa.Reference;
     using Entities.Raa.Vacancies;
     using Entities.ReferenceData;
+    using System.Collections.Generic;
     using Occupation = Entities.Raa.Reference.Occupation;
 
     public interface IReferenceRepository
@@ -39,12 +39,21 @@
         Region GetRegionById(int regionId);
 
         Region GetRegionByCode(string regionCode);
-		
-		void UpdateStandard(Standard standard);
+
+        void UpdateStandard(Standard standard);
+
         void UpdateFramework(Category category);
+
         Category InsertFramework(Category entity);
+
+        Category GetFrameworkById(int categoryId);
+
         Standard InsertStandard(Standard standard);
+
         void UpdateSector(Sector sector);
+
         Sector InsertSector(Sector sector);
+
+        StandardSubjectAreaTierOne GetStandardSubjectAreaTierOneById(int standardId);
     }
 }

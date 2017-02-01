@@ -17,8 +17,8 @@
         /// <summary>
         /// Gets standard by Id
         /// </summary>
-        /// <param name="frameworkId"></param>
+        /// <param name="categoryId"></param>
         /// <returns></returns>
-        Category GetFramework(int? frameworkId = null);
+        Category GetFramework(int? categoryId = null);
     }
 }

@@ -2,9 +2,11 @@
 {
     using Apprenticeships.Application.ReferenceData;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Constants;
+    using System;
     using System.Collections.Generic;
 
-    class GetStandardsStrategy : IGetStandardsStrategy
+    public class GetStandardsStrategy : IGetStandardsStrategy
     {
         private readonly IReferenceDataProvider _referenceDataProvider;
 
@@ -19,7 +21,18 @@
 
         public StandardSubjectAreaTierOne GetStandard(int? standardId = null)
         {
-            throw new System.NotImplementedException();
+            if (!standardId.HasValue)
+            {
+                throw new ArgumentException(ReferenceMessages.MissingStandardIdentifier);
+            }
+
+            var standard = _referenceDataProvider.GetStandardSubjectAreaTierOneById(standardId.Value);
+
+            if (standard == null)
+            {
+                throw new KeyNotFoundException(ReferenceMessages.StandardNotFound);
+            }
+            return standard;
         }
     }
 }
