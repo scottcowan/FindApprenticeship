@@ -327,5 +327,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         [Write(false)]
         public FrameworkStatusType? StandardStatus { get; set; }
+
+        [Write(false)]
+        public bool IsEmployerPositiveAboutDisability { get; set; }
     }
 }

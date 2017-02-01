@@ -150,5 +150,10 @@
         /// </summary>
         [Required]
         public PublicWage Wage { get; set; }
+        /// <summary>
+        /// If true, the employer actively encourages candidates with a disability to apply
+        /// </summary>
+        [Required]
+        public bool IsEmployerPositiveAboutDisability { get; set; }
     }
 }

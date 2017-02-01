@@ -13,7 +13,7 @@
 
     public class TraineeshipSummaryMapper
     {
-        public static TraineeshipSummary GetTraineeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IList<Category> categories, ILogService logService)
+        public static TraineeshipSummary GetTraineeshipSummary(VacancySummary vacancy, IList<Category> categories, ILogService logService)
         {
             try
             {
@@ -39,10 +39,10 @@
                     // ReSharper restore PossibleInvalidOperationException
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
-                    EmployerName = string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName) ? employer.FullName : vacancy.EmployerAnonymousName,
+                    EmployerName = string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName) ? vacancy.EmployerName : vacancy.EmployerAnonymousName,
                     IsEmployerAnonymous = !string.IsNullOrEmpty(vacancy.EmployerAnonymousName),
-                    ProviderName = provider.TradingName,
-                    IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
+                    ProviderName = vacancy.ProviderTradingName,
+                    IsPositiveAboutDisability = vacancy.IsEmployerPositiveAboutDisability,
                     Location = location,
                     CategoryCode = category.CodeName,
                     Category = category.FullName,

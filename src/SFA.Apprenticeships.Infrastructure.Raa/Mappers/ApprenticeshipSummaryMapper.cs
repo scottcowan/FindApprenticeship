@@ -15,7 +15,7 @@
 
     public class ApprenticeshipSummaryMapper
     {
-        public static ApprenticeshipSummary GetApprenticeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IList<Category> categories, ILogService logService)
+        public static ApprenticeshipSummary GetApprenticeshipSummary(VacancySummary vacancy, IList<Category> categories, ILogService logService)
         {
             try
             {
@@ -40,9 +40,9 @@
                     // ReSharper restore PossibleInvalidOperationException
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
-                    EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.FullName : vacancy.EmployerAnonymousName,
-                    ProviderName = provider.TradingName,
-                    IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
+                    EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? vacancy.EmployerName : vacancy.EmployerAnonymousName,
+                    ProviderName = vacancy.ProviderTradingName,
+                    IsPositiveAboutDisability = vacancy.IsEmployerPositiveAboutDisability,
                     IsEmployerAnonymous = !string.IsNullOrEmpty(vacancy.EmployerAnonymousName),
                     Location = location,
                     VacancyLocationType = vacancy.VacancyLocationType == Domain.Entities.Raa.Vacancies.VacancyLocationType.Nationwide ? VacancyLocationType.National : VacancyLocationType.NonNational,
