@@ -8,6 +8,7 @@
         public const string Api = "API";
         public const string Provider = "Provider";
         public const string Employer = "Employer";
+        public const string Agency = "Agency";
         public const string Admin = "Admin";
     }
 }

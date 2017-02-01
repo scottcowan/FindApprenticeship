@@ -8,7 +8,7 @@
     using Models;
     using Providers;
 
-    [Authorize(Roles = Roles.Provider)]
+    [Authorize(Roles = Roles.Provider + "," + Roles.Agency)]
     [RoutePrefix("vacancy")]
     public class VacancyController : ApiController
     {

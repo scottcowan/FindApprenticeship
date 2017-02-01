@@ -28,7 +28,7 @@
         /// <summary>
         /// Can be a UKPRN, EDSURN or other identifier
         /// </summary>
-        public int ReferencedEntitySurrogateId { get; set; }
+        public int? ReferencedEntitySurrogateId { get; set; }
 
         protected bool Equals(RaaApiUser other)
         {
@@ -48,11 +48,11 @@
             unchecked
             {
                 var hashCode = PrimaryApiKey.GetHashCode();
-                hashCode = (hashCode*397) ^ SecondaryApiKey.GetHashCode();
-                hashCode = (hashCode*397) ^ (int) UserType;
-                hashCode = (hashCode*397) ^ ReferencedEntityId;
-                hashCode = (hashCode*397) ^ ReferencedEntityGuid.GetHashCode();
-                hashCode = (hashCode*397) ^ ReferencedEntitySurrogateId;
+                hashCode = (hashCode * 397) ^ SecondaryApiKey.GetHashCode();
+                hashCode = (hashCode * 397) ^ (int) UserType;
+                hashCode = (hashCode * 397) ^ ReferencedEntityId;
+                hashCode = (hashCode * 397) ^ ReferencedEntityGuid.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReferencedEntitySurrogateId.GetHashCode();
                 return hashCode;
             }
         }

@@ -24,5 +24,17 @@
         {
             ScenarioContext.Current.Add(ScenarioContextKeys.ApiKey, ApiKeys.ProviderApiKey);
         }
+
+        [When(@"I authorize my request with an Employer API key")]
+        public void WhenIAuthorizeMyRequestWithAnEmployerApiKey()
+        {
+            ScenarioContext.Current.Add(ScenarioContextKeys.ApiKey, ApiKeys.EmployerApiKey);
+        }
+
+        [When(@"I authorize my request with an Agency API key")]
+        public void WhenIAuthorizeMyRequestWithAnAgencyApiKey()
+        {
+            ScenarioContext.Current.Add(ScenarioContextKeys.ApiKey, ApiKeys.AgencyApiKey);
+        }
     }
 }
