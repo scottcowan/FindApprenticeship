@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.Reference
 {
     using Application.Interfaces;
+    using Domain.Entities.Raa.Reference;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -10,6 +12,7 @@
     using DomainOccupation = Domain.Entities.Raa.Reference.Occupation;
     using DomainSector = Domain.Entities.Raa.Vacancies.Sector;
     using DomainStandard = Domain.Entities.Raa.Vacancies.Standard;
+    using Standard = Schemas.Reference.Entities.Standard;
 
     [TestFixture]
     [Parallelizable]
@@ -122,12 +125,12 @@
 
             //Assert
             destination.Should().NotBeNull();
-            destination.ApprenticeshipLevel.Should().Be(source.EducationLevelId);
+            destination.ApprenticeshipLevel.Should().Be((ApprenticeshipLevel)source.EducationLevelId);
             destination.ApprenticeshipSectorId.Should().Be(source.StandardSectorId);
             destination.Id.Should().Be(source.StandardId);
             destination.LarsCode.Should().Be(source.LarsCode);
             destination.Name.Should().Be(source.FullName);
-            destination.Status.Should().Be(source.ApprenticeshipFrameworkStatusTypeId);
+            destination.Status.Should().Be((FrameworkStatusType)source.ApprenticeshipFrameworkStatusTypeId);
         }
 
         [Test]
@@ -142,7 +145,6 @@
             //Assert
             destination.Should().NotBeNull();
             destination.FullName.Should().Be(source.Name);
-            destination.ApprenticeshipFrameworkStatusTypeId.Should().Be(source.ApprenticeshipSectorId);
             destination.EducationLevelId.Should().Be((int)source.ApprenticeshipLevel);
             destination.LarsCode.Should().Be(source.LarsCode);
             destination.ApprenticeshipFrameworkStatusTypeId.Should().Be((int)source.Status);
