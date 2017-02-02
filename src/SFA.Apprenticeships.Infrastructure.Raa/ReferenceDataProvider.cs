@@ -146,9 +146,9 @@
             return standardSubjectAreaTierOnes;
         }
 
-        public StandardSubjectAreaTierOne GetStandardSubjectAreaTierOneById(int standardid)
+        public Standard GetStandardById(int standardId)
         {
-            return _referenceRepository.GetStandardSubjectAreaTierOneById(standardid);
+            return _referenceRepository.GetStandardById(standardId);
         }
 
         public IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication)
@@ -202,7 +202,7 @@
         }
 
         public Framework GetFrameworkById(int frameworkId)
-        {            
+        {
             return _referenceRepository.GetFrameworkById(frameworkId);
         }
 

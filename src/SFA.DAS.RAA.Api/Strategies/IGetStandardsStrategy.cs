@@ -19,6 +19,6 @@
         /// </summary>
         /// <param name="standardId"></param>
         /// <returns></returns>
-        StandardSubjectAreaTierOne GetStandard(int? standardId = null);
+        Standard GetStandard(int? standardId = null);
     }
 }

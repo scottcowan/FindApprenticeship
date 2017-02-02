@@ -1,6 +1,7 @@
 ﻿namespace SFA.DAS.RAA.Api.Strategies
 {
     using Apprenticeships.Application.ReferenceData;
+    using Apprenticeships.Domain.Entities.Raa.Reference;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Constants;
     using System;
@@ -19,16 +20,16 @@
             return _referenceDataProvider.GetStandardSubjectAreaTierOnes();
         }
 
-        public StandardSubjectAreaTierOne GetStandard(int? standardId = null)
+        public Standard GetStandard(int? standardId = null)
         {
             if (!standardId.HasValue)
             {
                 throw new ArgumentException(ReferenceMessages.MissingStandardIdentifier);
             }
 
-            var standard = _referenceDataProvider.GetStandardSubjectAreaTierOneById(standardId.Value);
+            var standard = _referenceDataProvider.GetStandardById(standardId.Value);
 
-            if (standard == null)
+            if (standard == null || standard.Status != FrameworkStatusType.Active)
             {
                 throw new KeyNotFoundException(ReferenceMessages.StandardNotFound);
             }

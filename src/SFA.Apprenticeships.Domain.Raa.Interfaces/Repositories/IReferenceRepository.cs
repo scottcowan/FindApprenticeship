@@ -54,6 +54,6 @@
 
         Sector InsertSector(Sector sector);
 
-        StandardSubjectAreaTierOne GetStandardSubjectAreaTierOneById(int standardId);
+        Standard GetStandardById(int standardId);
     }
 }

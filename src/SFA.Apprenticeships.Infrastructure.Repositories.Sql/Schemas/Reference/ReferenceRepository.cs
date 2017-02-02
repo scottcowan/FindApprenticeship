@@ -38,6 +38,8 @@
         public static string GetFrameworkByIdSql = "SELECT * FROM dbo.ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @FrameworkId";
         public static string GetOccupationByIdSql = "SELECT * FROM dbo.ApprenticeshipOccupation WHERE ApprenticeshipOccupationId = @OccupationId";
 
+        public static string GetStandardByIdSql = "SELECT * FROM Reference.Standard WHERE StandardId = @StandardId";
+
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -367,38 +369,6 @@
             return levels;
         }
 
-        public void UpdateStandard(Standard standard)
-        {
-            _logger.Debug($"Updating standard with id={standard.Id}");
-
-            const string standardSql = "SELECT * FROM Reference.Standard WHERE StandardId = @Id";
-
-            //TODO: Does this need to be here? If not, test and remove.
-            var sqlParams = new
-            {
-                standard.Id
-            };
-
-            var dbStandards = _getOpenConnection.Query<Entities.Standard>(standardSql, sqlParams);
-
-            var dbStandard = dbStandards.Single();
-
-            dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)standard.Status;
-            dbStandard.LarsCode = standard.LarsCode;
-            dbStandard.StandardSectorId = standard.ApprenticeshipSectorId;
-            dbStandard.FullName = standard.Name;
-
-            // get new education level
-            var educationLevels = GetEducationLevels();
-            var level = educationLevels.Single(s => int.Parse(s.CodeName) == (int)standard.ApprenticeshipLevel);
-            dbStandard.EducationLevelId = level.EducationLevelId;
-
-            var result = _getOpenConnection.UpdateSingle(dbStandard);
-
-            if (!result)
-                throw new Exception($"Failed to save standard with id={standard.Id}");
-        }
-
         public void UpdateFramework(Category category)
         {
             _logger.Debug($"Updating framework with id={category.Id}");
@@ -468,7 +438,7 @@
                 frameworkId
             };
 
-            var apprenticeshipFramework = 
+            var apprenticeshipFramework =
                 _getOpenConnection.Query<ApprenticeshipFramework>(GetFrameworkByIdSql, sqlParams).FirstOrDefault();
             var framework = _mapper.Map<ApprenticeshipFramework, Framework>(apprenticeshipFramework);
             if (apprenticeshipFramework != null)
@@ -508,6 +478,49 @@
             standard.Id = (int)result;
 
             return standard;
+        }
+
+        public Standard GetStandardById(int standardId)
+        {
+            _logger.Debug($"Getting standard with id={standardId}");
+            var sqlParams = new
+            {
+                standardId
+            };
+            var dbStandard = _getOpenConnection.Query<Entities.Standard>(GetStandardByIdSql, sqlParams).FirstOrDefault();
+            var standard = _mapper.Map<Entities.Standard, Standard>(dbStandard);
+            return standard;
+        }
+
+        public void UpdateStandard(Standard standard)
+        {
+            _logger.Debug($"Updating standard with id={standard.Id}");
+            var standardId = standard.Id;
+
+            //TODO: Does this need to be here? If not, test and remove.
+            var sqlParams = new
+            {
+                standardId
+            };
+
+            var dbStandards = _getOpenConnection.Query<Entities.Standard>(GetStandardByIdSql, sqlParams);
+
+            var dbStandard = dbStandards.Single();
+
+            dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)standard.Status;
+            dbStandard.LarsCode = standard.LarsCode;
+            dbStandard.StandardSectorId = standard.ApprenticeshipSectorId;
+            dbStandard.FullName = standard.Name;
+
+            // get new education level
+            var educationLevels = GetEducationLevels();
+            var level = educationLevels.Single(s => int.Parse(s.CodeName) == (int)standard.ApprenticeshipLevel);
+            dbStandard.EducationLevelId = level.EducationLevelId;
+
+            var result = _getOpenConnection.UpdateSingle(dbStandard);
+
+            if (!result)
+                throw new Exception($"Failed to save standard with id={standard.Id}");
         }
 
         public void UpdateSector(Sector sector)
@@ -550,11 +563,6 @@
             sector.Id = (int)result;
 
             return sector;
-        }
-
-        public StandardSubjectAreaTierOne GetStandardSubjectAreaTierOneById(int standardId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

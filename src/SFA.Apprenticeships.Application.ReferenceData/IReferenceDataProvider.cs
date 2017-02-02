@@ -25,7 +25,7 @@
 
         IEnumerable<StandardSubjectAreaTierOne> GetStandardSubjectAreaTierOnes();
 
-        StandardSubjectAreaTierOne GetStandardSubjectAreaTierOneById(int standardid);
+        Standard GetStandardById(int standardid);
 
         IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication);
 

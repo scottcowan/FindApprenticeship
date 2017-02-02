@@ -41,7 +41,7 @@ namespace SFA.DAS.RAA.Api.Controllers
         /// <param name="id">The standard's primary identifier</param>
         /// <returns>The StandardSubjectAreaTierOne object</returns>
         [Route("standard/{id}")]
-        [ResponseType(typeof(StandardSubjectAreaTierOne))]
+        [ResponseType(typeof(Standard))]
         [HttpGet]
         public IHttpActionResult GetStandardById(int id)
         {
