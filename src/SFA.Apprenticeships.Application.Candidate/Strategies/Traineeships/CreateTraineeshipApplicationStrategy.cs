@@ -7,6 +7,7 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
     using System;
+    using System.Threading.Tasks;
     using Vacancy;
 
     public class CreateTraineeshipApplicationStrategy : ICreateTraineeshipApplicationStrategy
@@ -22,9 +23,9 @@
             _candidateReadRepository = candidateReadRepository;
         }
 
-        public TraineeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
+        public async Task<TraineeshipApplicationDetail> CreateApplication(Guid candidateId, int vacancyId)
         {
-            var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
+            var vacancyDetails = await _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
             if (vacancyDetails == null) return null;
 

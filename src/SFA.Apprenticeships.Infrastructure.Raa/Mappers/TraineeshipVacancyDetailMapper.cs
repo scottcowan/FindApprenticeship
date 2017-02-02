@@ -6,7 +6,6 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
     using Presentation;
@@ -44,7 +43,6 @@
                 //LocalAuthority = vacancy.,
                 NumberOfPositions = vacancy.NumberOfPositions ?? 0,
                 RealityCheck = vacancy.ThingsToConsider,
-                Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
                 EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.FullName : vacancy.EmployerAnonymousName,
                 AnonymousEmployerName = vacancy.EmployerAnonymousName,

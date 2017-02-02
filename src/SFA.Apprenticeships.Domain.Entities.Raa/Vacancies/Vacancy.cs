@@ -158,7 +158,8 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 EditedInRaa = EditedInRaa,
                 AnonymousEmployerReasonComment = AnonymousEmployerReasonComment,
                 AnonymousEmployerDescriptionComment = AnonymousEmployerDescriptionComment,
-                AnonymousAboutTheEmployerComment = AnonymousAboutTheEmployerComment
+                AnonymousAboutTheEmployerComment = AnonymousAboutTheEmployerComment,
+                IsEmployerPositiveAboutDisability = IsEmployerPositiveAboutDisability
             };
         }
     }

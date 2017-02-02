@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Threading.Tasks;
     using Validators;
     using ViewModels.VacancySearch;
 
@@ -179,7 +180,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.Ok, traineeshipSearchResponseViewModel);
         }
 
-        public MediatorResponse<TraineeshipVacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId)
+        public async Task<MediatorResponse<TraineeshipVacancyDetailViewModel>> Details(string vacancyIdString, Guid? candidateId)
         {
             int vacancyId;
 
@@ -188,17 +189,17 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
                 return GetMediatorResponse<TraineeshipVacancyDetailViewModel>(TraineeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
-            var vacancyDetailViewModel = _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = await _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             return GetDetails(vacancyDetailViewModel);
         }
 
-        public MediatorResponse<TraineeshipVacancyDetailViewModel> DetailsByReferenceNumber(string vacancyReferenceNumberString, Guid? candidateId)
+        public async Task<MediatorResponse<TraineeshipVacancyDetailViewModel>> DetailsByReferenceNumber(string vacancyReferenceNumberString, Guid? candidateId)
         {
             int vacancyReferenceNumber;
             if (VacancyHelper.TryGetVacancyReferenceNumber(vacancyReferenceNumberString, out vacancyReferenceNumber))
             {
-                var vacancyDetailViewModel = _traineeshipVacancyProvider.GetVacancyDetailViewModelByReferenceNumber(candidateId, vacancyReferenceNumber);
+                var vacancyDetailViewModel = await _traineeshipVacancyProvider.GetVacancyDetailViewModelByReferenceNumber(candidateId, vacancyReferenceNumber);
                 return GetDetails(vacancyDetailViewModel);
             }
             return GetMediatorResponse<TraineeshipVacancyDetailViewModel>(TraineeshipSearchMediatorCodes.Details.VacancyNotFound);

@@ -29,14 +29,14 @@
                 && ((double?)object1.Latitude).Equals(object2.Address.GeoPoint.Latitude)
                 && object1.GeocodeEasting == object2.Address.GeoPoint.Easting
                 && object1.GeocodeNorthing == object2.Address.GeoPoint.Northing
-                && object2.AnonymousAboutTheEmployer == null
+                && string.Equals(object1.AnonymousAboutTheEmployer, object2.AnonymousAboutTheEmployer)
                 && object2.ApplicantCount == 0
                 && object1.ApprenticeshipLevel == object2.ApprenticeshipLevel
                 && object1.ApplicationClosingDate.Equals(object2.ClosingDate)
-                && object2.ContractOwnerId == 0
+                && object1.ContractOwnerID == object2.ContractOwnerId
                 && object2.CreatedDate == DateTime.MinValue
                 && object2.DateFirstSubmitted == null
-                && object2.DateQAApproved == null
+                && object1.DateQAApproved == object2.DateQAApproved
                 && object2.DateStartedToQA == null
                 && object2.DateSubmitted == null
                 && object2.DeliveryOrganisationId == null
@@ -74,7 +74,7 @@
                 && object1.VacancyId == object2.VacancyId
                 && object1.VacancyLocationTypeId == (int)object2.VacancyLocationType
                 && object2.VacancyManagerId == null
-                && object2.VacancyOwnerRelationshipId == 0
+                && object1.VacancyOwnerRelationshipId == object2.VacancyOwnerRelationshipId
                 && object1.VacancyReferenceNumber == object2.VacancyReferenceNumber
                 && object1.VacancyTypeId == (int)object2.VacancyType
                 && object1.WeeklyWage == object2.Wage.Amount
@@ -144,7 +144,8 @@
                 && object2.AnonymousAboutTheEmployerComment == null
                 && object2.CreatedDateTime == DateTime.MinValue
                 && object2.FrameworkStatus == 0
-                && object2.StandardStatus == 0;
+                && object2.StandardStatus == 0
+                && object1.IsEmployerPositiveAboutDisability == object2.IsEmployerPositiveAboutDisability;
         }
 
         public static WageUnit CorrectWageUnit(WageType type, WageUnit unit)

@@ -186,14 +186,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> Details(string id)
         {
-            return await Task.Run(() =>
-            {
-                var candidateId = GetCandidateId();
+            var candidateId = GetCandidateId();
 
-                var response = _apprenticeshipSearchMediator.Details(id, candidateId);
+            var response = await _apprenticeshipSearchMediator.Details(id, candidateId);
 
-                return GetDetailsResult(response);
-            });
+            return GetDetailsResult(response);
         }
 
         [HttpGet]
@@ -202,14 +199,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> DetailsByReferenceNumber(string vacancyReferenceNumber)
         {
-            return await Task.Run(() =>
-            {
-                var candidateId = GetCandidateId();
+            var candidateId = GetCandidateId();
 
-                var response = _apprenticeshipSearchMediator.DetailsByReferenceNumber(vacancyReferenceNumber, candidateId);
+            var response = await _apprenticeshipSearchMediator.DetailsByReferenceNumber(vacancyReferenceNumber, candidateId);
 
-                return GetDetailsResult(response);
-            });
+            return GetDetailsResult(response);
         }
 
         private ActionResult GetDetailsResult(MediatorResponse<ApprenticeshipVacancyDetailViewModel> response)
@@ -235,22 +229,19 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [HttpGet]
         public async Task<ActionResult> RedirectToExternalWebsite(string id)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _apprenticeshipSearchMediator.RedirectToExternalWebsite(id);
+
+            switch (response.Code)
             {
-                var response = _apprenticeshipSearchMediator.RedirectToExternalWebsite(id);
+                case ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound:
+                    return new ApprenticeshipNotFoundResult();
+                case ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyHasError:
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
+                case ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.Ok:
+                    return new RedirectResult(response.ViewModel.VacancyUrl);
+            }
 
-                switch (response.Code)
-                {
-                    case ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound:
-                        return new ApprenticeshipNotFoundResult();
-                    case ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyHasError:
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
-                    case ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.Ok:
-                        return new RedirectResult(response.ViewModel.VacancyUrl);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
     }
 }

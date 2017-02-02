@@ -2,6 +2,7 @@
 {
     using System;
     using System.Globalization;
+    using System.Threading.Tasks;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
@@ -21,21 +22,21 @@
         [TestCase(null)]
         [TestCase("0")]
         [TestCase("X")]
-        public void ShouldSetSavedVacancyCountToOne(string savedAndDraftCount)
+        public async Task ShouldSetSavedVacancyCountToOne(string savedAndDraftCount)
         {
             // Arrange.
             var viewModel = new SavedVacancyViewModel();
 
             ApprenticeshipApplicationProvider
                 .Setup(mock => mock.SaveVacancy(_testCandidateId, TestVacancyId))
-                .Returns(viewModel);
+                .Returns(Task.FromResult(viewModel));
 
             UserDataProvider
                 .Setup(mock => mock.Get(UserDataItemNames.SavedAndDraftCount))
                 .Returns(savedAndDraftCount);
 
             // Act.
-            var response = Mediator.SaveVacancy(_testCandidateId, TestVacancyId);
+            var response = await Mediator.SaveVacancy(_testCandidateId, TestVacancyId);
 
             // Assert.
             UserDataProvider.Verify(mock => mock.Get(UserDataItemNames.SavedAndDraftCount), Times.Once);
@@ -74,21 +75,21 @@
 
         [TestCase(1)]
         [TestCase(5)]
-        public void ShouldIncrementSavedVacancyCount(int savedAndDraftCount)
+        public async Task ShouldIncrementSavedVacancyCount(int savedAndDraftCount)
         {
             // Arrange.
             var viewModel = new SavedVacancyViewModel();
 
             ApprenticeshipApplicationProvider
                 .Setup(mock => mock.SaveVacancy(_testCandidateId, TestVacancyId))
-                .Returns(viewModel);
+                .Returns(Task.FromResult(viewModel));
 
             UserDataProvider
                 .Setup(mock => mock.Get(UserDataItemNames.SavedAndDraftCount))
                 .Returns(savedAndDraftCount.ToString(CultureInfo.InvariantCulture));
 
             // Act.
-            var response = Mediator.SaveVacancy(_testCandidateId, TestVacancyId);
+            var response = await Mediator.SaveVacancy(_testCandidateId, TestVacancyId);
 
             // Assert.
             UserDataProvider.Verify(mock => mock.Get(UserDataItemNames.SavedAndDraftCount), Times.Once);

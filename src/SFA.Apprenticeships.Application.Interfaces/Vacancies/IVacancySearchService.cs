@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
 {
+    using System.Threading.Tasks;
     using Domain.Entities.Vacancies;
     using Search;
 
-    public interface IVacancySearchService<TVacancySummaryResponse, out TVacancyDetail, TSearchParameters> 
+    public interface IVacancySearchService<TVacancySummaryResponse, TVacancyDetail, TSearchParameters> 
         where TVacancySummaryResponse : VacancySummary
         where TVacancyDetail : VacancyDetail
         where TSearchParameters : VacancySearchParametersBase
@@ -20,7 +21,7 @@
         /// </summary>
         /// <param name="vacancyId">id for the vacancy to retrieve</param>
         /// <returns>vacancy detail or null</returns>
-        TVacancyDetail GetVacancyDetails(int vacancyId);
+        Task<TVacancyDetail> GetVacancyDetails(int vacancyId);
 
         int GetVacancyId(int vacancyReferenceNumber);
     }

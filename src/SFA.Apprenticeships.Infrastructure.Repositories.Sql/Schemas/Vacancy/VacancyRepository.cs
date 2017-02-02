@@ -790,7 +790,8 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
 		la.CodeName AS LocalAuthorityCode,
 		v.DurationTypeId AS DurationType,
 		v.DurationValue AS Duration,
-		c.FullName AS County
+		c.FullName AS County,
+        e.DisableAllowed as IsEmployerPositiveAboutDisability
 FROM	Vacancy v
 JOIN	VacancyOwnerRelationship o
 ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId

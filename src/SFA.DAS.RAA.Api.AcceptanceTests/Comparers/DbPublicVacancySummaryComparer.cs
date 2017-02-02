@@ -33,10 +33,10 @@
                 && object2.ApplicantCount == 0
                 && object1.ApprenticeshipLevel == object2.ApprenticeshipLevel
                 && object1.ApplicationClosingDate.Equals(object2.ClosingDate)
-                && object2.ContractOwnerId == 0
+                && object1.ContractOwnerId == object2.ContractOwnerId
                 && object2.CreatedDate == DateTime.MinValue
                 && object2.DateFirstSubmitted == null
-                && object2.DateQAApproved == null
+                && object1.DateQAApproved == object2.DateQAApproved
                 && object2.DateStartedToQA == null
                 && object2.DateSubmitted == null
                 && object2.DeliveryOrganisationId == null
@@ -71,7 +71,7 @@
                 && object1.VacancyId == object2.VacancyId
                 && object1.VacancyLocationTypeId == (int)object2.VacancyLocationType
                 && object2.VacancyManagerId == null
-                && object2.VacancyOwnerRelationshipId == 0
+                && object1.VacancyOwnerRelationshipId == object2.VacancyOwnerRelationshipId
                 && object1.VacancyReferenceNumber == object2.VacancyReferenceNumber
                 && object1.VacancyTypeId == object2.VacancyType
                 && object1.WeeklyWage == object2.Wage.Amount
@@ -82,7 +82,8 @@
                 && string.Equals(object1.WageText, object2.Wage.Text)
                 && wageType == object2.Wage.Type
                 && CorrectWageUnit(wageType, wageUnit) == object2.Wage.Unit
-                && string.Equals(object1.WorkingWeek, object2.WorkingWeek);
+                && string.Equals(object1.WorkingWeek, object2.WorkingWeek)
+                && object1.IsEmployerPositiveAboutDisability == object2.IsEmployerPositiveAboutDisability;
         }
 
         public static WageUnit CorrectWageUnit(WageType type, WageUnit unit)

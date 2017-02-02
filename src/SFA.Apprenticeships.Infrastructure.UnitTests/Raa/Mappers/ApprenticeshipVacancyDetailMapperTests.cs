@@ -90,7 +90,6 @@
                 detail.LocalAuthority.Should().BeNull();
                 detail.NumberOfPositions.Should().Be(vacancy.NumberOfPositions ?? 0);
                 detail.RealityCheck.Should().Be(vacancy.ThingsToConsider);
-                detail.Created.Should().Be(vacancy.CreatedDateTime);
                 detail.VacancyStatus.Should().Be(vacancy.Status.GetVacancyStatuses());
                 detail.TrainingType.Should().Be(vacancy.TrainingType.GetTrainingType());
                 detail.EmployerName.Should().Be(employer.FullName);

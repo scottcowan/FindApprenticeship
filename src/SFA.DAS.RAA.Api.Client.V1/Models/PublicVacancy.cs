@@ -41,6 +41,8 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// reference e.g. 123456 for VAC000123456</param>
         /// <param name="vacancyGuid">The secondary GUID identifier for the
         /// vacancy</param>
+        /// <param name="vacancyOwnerRelationshipId">The primary identifier of
+        /// the linking object between a provider site and an employer</param>
         /// <param name="title">The main heading for the vacancy e.g. Retail
         /// Apprentice</param>
         /// <param name="shortDescription">A short paragraph of text giving a
@@ -58,6 +60,8 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <param name="offlineVacancy">If true, applications for this
         /// vacancy will be made on an external recruitment system rather
         /// than on Find an Apprenticeship/Traineeship</param>
+        /// <param name="dateQAApproved">The date this vacancy went
+        /// live</param>
         /// <param name="trainingType">Specifies the classification system of
         /// the training the apprentice will receive from the
         /// apprenticeship/traineeship.
@@ -83,6 +87,8 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// include: 'Unknown', 'Apprenticeship', 'Traineeship'</param>
         /// <param name="address">The address of the vacancy. Not always the
         /// employer's address</param>
+        /// <param name="contractOwnerId">The provider's primary
+        /// identifier</param>
         /// <param name="vacancyLocationType">The type of address of the
         /// vacancy. Indicates whether it's the employer's address or
         /// somewhere different. Possible values include: 'Unknown',
@@ -94,6 +100,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// name</param>
         /// <param name="wage">Object detailing the wage information for the
         /// vacancy</param>
+        /// <param name="isEmployerPositiveAboutDisability">If true, the
+        /// employer actively encourages candidates with a disability to
+        /// apply</param>
         /// <param name="additionalLocationInformation">If the vacancy has
         /// multiple locations, this property may contain additional
         /// information about those locations</param>
@@ -136,7 +145,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// apprenticeship is operating under</param>
         /// <param name="employerAnonymousName">The displayed name the
         /// employer would prefer to be displayed on the vacancy</param>
-        public PublicVacancy(string desiredQualifications, string desiredSkills, string employerDescription, string futureProspects, string longDescription, string trainingProvided, int vacancyId, int vacancyReferenceNumber, System.Guid vacancyGuid, string title, string shortDescription, string workingWeek, string durationType, int duration, System.DateTime closingDate, System.DateTime possibleStartDate, bool offlineVacancy, string trainingType, string apprenticeshipLevel, string status, bool isAnonymousEmployer, int numberOfPositions, string vacancyType, PostalAddress address, string vacancyLocationType, int employerId, string employerName, string providerTradingName, PublicWage wage, string additionalLocationInformation = default(string), string contactEmail = default(string), string contactName = default(string), string contactNumber = default(string), string employerWebsiteUrl = default(string), string firstQuestion = default(string), string offlineApplicationInstructions = default(string), string offlineApplicationUrl = default(string), string otherInformation = default(string), string personalQualities = default(string), string secondQuestion = default(string), string thingsToConsider = default(string), string expectedDuration = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string employerAnonymousName = default(string))
+        /// <param name="anonymousAboutTheEmployer">The description the
+        /// employer would prefer to be displayed on the vacancy</param>
+        public PublicVacancy(string desiredQualifications, string desiredSkills, string employerDescription, string futureProspects, string longDescription, string trainingProvided, int vacancyId, int vacancyReferenceNumber, System.Guid vacancyGuid, int vacancyOwnerRelationshipId, string title, string shortDescription, string workingWeek, string durationType, int duration, System.DateTime closingDate, System.DateTime possibleStartDate, bool offlineVacancy, System.DateTime dateQAApproved, string trainingType, string apprenticeshipLevel, string status, bool isAnonymousEmployer, int numberOfPositions, string vacancyType, PostalAddress address, int contractOwnerId, string vacancyLocationType, int employerId, string employerName, string providerTradingName, PublicWage wage, bool isEmployerPositiveAboutDisability, string additionalLocationInformation = default(string), string contactEmail = default(string), string contactName = default(string), string contactNumber = default(string), string employerWebsiteUrl = default(string), string firstQuestion = default(string), string offlineApplicationInstructions = default(string), string offlineApplicationUrl = default(string), string otherInformation = default(string), string personalQualities = default(string), string secondQuestion = default(string), string thingsToConsider = default(string), string expectedDuration = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string employerAnonymousName = default(string), string anonymousAboutTheEmployer = default(string))
         {
             AdditionalLocationInformation = additionalLocationInformation;
             ContactEmail = contactEmail;
@@ -159,6 +170,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             VacancyId = vacancyId;
             VacancyReferenceNumber = vacancyReferenceNumber;
             VacancyGuid = vacancyGuid;
+            VacancyOwnerRelationshipId = vacancyOwnerRelationshipId;
             Title = title;
             ShortDescription = shortDescription;
             WorkingWeek = workingWeek;
@@ -168,6 +180,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             ClosingDate = closingDate;
             PossibleStartDate = possibleStartDate;
             OfflineVacancy = offlineVacancy;
+            DateQAApproved = dateQAApproved;
             TrainingType = trainingType;
             ApprenticeshipLevel = apprenticeshipLevel;
             FrameworkCodeName = frameworkCodeName;
@@ -176,14 +189,17 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             Status = status;
             EmployerAnonymousName = employerAnonymousName;
             IsAnonymousEmployer = isAnonymousEmployer;
+            AnonymousAboutTheEmployer = anonymousAboutTheEmployer;
             NumberOfPositions = numberOfPositions;
             VacancyType = vacancyType;
             Address = address;
+            ContractOwnerId = contractOwnerId;
             VacancyLocationType = vacancyLocationType;
             EmployerId = employerId;
             EmployerName = employerName;
             ProviderTradingName = providerTradingName;
             Wage = wage;
+            IsEmployerPositiveAboutDisability = isEmployerPositiveAboutDisability;
         }
 
         /// <summary>
@@ -330,6 +346,13 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         public System.Guid VacancyGuid { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary identifier of the linking object between
+        /// a provider site and an employer
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyOwnerRelationshipId")]
+        public int VacancyOwnerRelationshipId { get; set; }
+
+        /// <summary>
         /// Gets or sets the main heading for the vacancy e.g. Retail
         /// Apprentice
         /// </summary>
@@ -391,6 +414,12 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "OfflineVacancy")]
         public bool OfflineVacancy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date this vacancy went live
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "DateQAApproved")]
+        public System.DateTime DateQAApproved { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the classification system of the training
@@ -456,6 +485,13 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         public bool IsAnonymousEmployer { get; set; }
 
         /// <summary>
+        /// Gets or sets the description the employer would prefer to be
+        /// displayed on the vacancy
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "AnonymousAboutTheEmployer")]
+        public string AnonymousAboutTheEmployer { get; set; }
+
+        /// <summary>
         /// Gets or sets the number of positions available for this vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "NumberOfPositions")]
@@ -475,6 +511,12 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Address")]
         public PostalAddress Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets the provider's primary identifier
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ContractOwnerId")]
+        public int ContractOwnerId { get; set; }
 
         /// <summary>
         /// Gets or sets the type of address of the vacancy. Indicates whether
@@ -508,6 +550,13 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Wage")]
         public PublicWage Wage { get; set; }
+
+        /// <summary>
+        /// Gets or sets if true, the employer actively encourages candidates
+        /// with a disability to apply
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "IsEmployerPositiveAboutDisability")]
+        public bool IsEmployerPositiveAboutDisability { get; set; }
 
         /// <summary>
         /// Validate the object.

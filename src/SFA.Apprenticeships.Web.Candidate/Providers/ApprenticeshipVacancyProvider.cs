@@ -160,7 +160,7 @@
             }
         }
 
-        public ApprenticeshipVacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId)
+        public async Task<ApprenticeshipVacancyDetailViewModel> GetVacancyDetailViewModel(Guid? candidateId, int vacancyId)
         {
             _logger.Debug(
                 "Calling ApprenticeshipVacancyDetailProvider to get the Vacancy detail View Model for candidate ID: {0}, vacancy ID: {1}.",
@@ -169,8 +169,8 @@
             try
             {
                 var vacancyDetail = candidateId.HasValue ?
-                    _candidateService.GetApprenticeshipVacancyDetail(candidateId.Value, vacancyId) :
-                    _apprenticeshipSearchService.GetVacancyDetails(vacancyId);
+                    await _candidateService.GetApprenticeshipVacancyDetail(candidateId.Value, vacancyId) :
+                    await _apprenticeshipSearchService.GetVacancyDetails(vacancyId);
 
                 if (vacancyDetail == null) return null;
 
@@ -206,18 +206,18 @@
             }
         }
 
-        public ApprenticeshipVacancyDetailViewModel GetVacancyDetailViewModelByReferenceNumber(Guid? candidateId, int vacancyReferenceNumber)
+        public async Task<ApprenticeshipVacancyDetailViewModel> GetVacancyDetailViewModelByReferenceNumber(Guid? candidateId, int vacancyReferenceNumber)
         {
             var vacancyId = _apprenticeshipSearchService.GetVacancyId(vacancyReferenceNumber);
-            return GetVacancyDetailViewModel(candidateId, vacancyId);
+            return await GetVacancyDetailViewModel(candidateId, vacancyId);
         }
 
-        public ApprenticeshipVacancyDetailViewModel IncrementClickThroughFor(int vacancyId)
+        public async Task<ApprenticeshipVacancyDetailViewModel> IncrementClickThroughFor(int vacancyId)
         {
             _logger.Debug(
                 "Calling ApprenticeshipVacancyDetailProvider to increment click-throughs for vacancy ID: {0}.", vacancyId);
 
-            var vacancyDetail = _apprenticeshipSearchService.GetVacancyDetails(vacancyId);
+            var vacancyDetail = await _apprenticeshipSearchService.GetVacancyDetails(vacancyId);
 
             if (vacancyDetail == null) return null;
 

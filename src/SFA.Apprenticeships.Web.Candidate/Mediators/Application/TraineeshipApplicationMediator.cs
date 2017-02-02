@@ -11,6 +11,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
     using Providers;
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Security;
     using Validators;
     using ViewModels.Applications;
@@ -31,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             _traineeshipApplicationViewModelServer = traineeshipApplicationViewModelServer;
         }
 
-        public MediatorResponse<TraineeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString)
+        public async Task<MediatorResponse<TraineeshipApplicationViewModel>> Apply(Guid candidateId, string vacancyIdString)
         {
             int vacancyId;
 
@@ -40,7 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
                 return GetMediatorResponse<TraineeshipApplicationViewModel>(TraineeshipApplicationMediatorCodes.Apply.VacancyNotFound);
             }
 
-            var model = _traineeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            var model = await _traineeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (model.HasError())
             {
@@ -52,11 +53,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Apply.Ok, model);
         }
 
-        public MediatorResponse<TraineeshipApplicationViewModel> Submit(Guid candidateId, int vacancyId, TraineeshipApplicationViewModel viewModel)
+        public async Task<MediatorResponse<TraineeshipApplicationViewModel>> Submit(Guid candidateId, int vacancyId, TraineeshipApplicationViewModel viewModel)
         {
             viewModel = StripApplicationViewModelBeforeValidation(viewModel);
 
-            var savedModel = _traineeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            var savedModel = await _traineeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (savedModel.HasError())
             {
@@ -72,7 +73,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
                 return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Submit.ValidationError, viewModel, result);
             }
 
-            var submittedApplicationModel = _traineeshipApplicationProvider.SubmitApplication(candidateId, vacancyId, viewModel);
+            var submittedApplicationModel = await _traineeshipApplicationProvider.SubmitApplication(candidateId, vacancyId, viewModel);
 
             if (submittedApplicationModel.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
             {
@@ -128,7 +129,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             return GetMediatorResponse(TraineeshipApplicationMediatorCodes.AddEmptyTrainingCourseRows.Ok, viewModel);
         }
 
-        public MediatorResponse<WhatHappensNextTraineeshipViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle)
+        public async Task<MediatorResponse<WhatHappensNextTraineeshipViewModel>> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle)
         {
             int vacancyId;
 
@@ -137,7 +138,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
                 return GetMediatorResponse<WhatHappensNextTraineeshipViewModel>(TraineeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
             }
 
-            var model = _traineeshipApplicationProvider.GetWhatHappensNextViewModel(candidateId, vacancyId);
+            var model = await _traineeshipApplicationProvider.GetWhatHappensNextViewModel(candidateId, vacancyId);
 
             if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
@@ -153,9 +154,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             return GetMediatorResponse(TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok, model);
         }
 
-        public MediatorResponse<TraineeshipApplicationViewModel> View(Guid candidateId, int vacancyId)
+        public async Task<MediatorResponse<TraineeshipApplicationViewModel>> View(Guid candidateId, int vacancyId)
         {
-            var model = _traineeshipApplicationProvider.GetApplicationViewModelEx(candidateId, vacancyId);
+            var model = await _traineeshipApplicationProvider.GetApplicationViewModelEx(candidateId, vacancyId);
 
             if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationNotFound)
             {

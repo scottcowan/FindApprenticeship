@@ -30,6 +30,11 @@
         [Required]
         public Guid VacancyGuid { get; set; }
         /// <summary>
+        /// The primary identifier of the linking object between a provider site and an employer
+        /// </summary>
+        [Required]
+        public int VacancyOwnerRelationshipId { get; set; }
+        /// <summary>
         /// The main heading for the vacancy e.g. Retail Apprentice
         /// </summary>
         [Required]
@@ -62,17 +67,22 @@
         /// The closing date for applications
         /// </summary>
         [Required]
-        public DateTime? ClosingDate { get; set; }
+        public DateTime ClosingDate { get; set; }
         /// <summary>
         /// The likely start date for the vacancy
         /// </summary>
         [Required]
-        public DateTime? PossibleStartDate { get; set; }
+        public DateTime PossibleStartDate { get; set; }
         /// <summary>
         /// If true, applications for this vacancy will be made on an external recruitment system rather than on Find an Apprenticeship/Traineeship 
         /// </summary>
         [Required]
         public bool? OfflineVacancy { get; set; }
+        /// <summary>
+        /// The date this vacancy went live
+        /// </summary>
+        [Required]
+        public DateTime DateQAApproved { get; set; }
         /// <summary>
         /// Specifies the classification system of the training the apprentice will receive from the apprenticeship/traineeship. 
         /// Either via a framework or standard if the vacancy is an apprenticeship or a sector for traineeships
@@ -111,10 +121,14 @@
         [Required]
         public bool? IsAnonymousEmployer { get; set; }
         /// <summary>
+        /// The description the employer would prefer to be displayed on the vacancy
+        /// </summary>
+        public string AnonymousAboutTheEmployer { get; set; }
+        /// <summary>
         /// The number of positions available for this vacancy
         /// </summary>
         [Required]
-        public int? NumberOfPositions { get; set; }
+        public int NumberOfPositions { get; set; }
         /// <summary>
         /// The type of a vacancy. Always either Apprenticeship or Traineeship for live vacancies
         /// </summary>
@@ -125,6 +139,11 @@
         /// </summary>
         [Required]
         public PostalAddress Address { get; set; }
+        /// <summary>
+        /// The provider's primary identifier
+        /// </summary>
+        [Required]
+        public int ContractOwnerId { get; set; }
         /// <summary>
         /// The type of address of the vacancy. Indicates whether it's the employer's address or somewhere different
         /// </summary>
@@ -150,5 +169,10 @@
         /// </summary>
         [Required]
         public PublicWage Wage { get; set; }
+        /// <summary>
+        /// If true, the employer actively encourages candidates with a disability to apply
+        /// </summary>
+        [Required]
+        public bool IsEmployerPositiveAboutDisability { get; set; }
     }
 }

@@ -37,7 +37,7 @@
         public void PageAndPageSizeAreLimited()
         {
             const int page = -3;
-            const int pageSize = 77;
+            const int pageSize = 777;
 
             var getVacancySummariesStrategy = new Mock<IGetVacancySummaryStrategies>();
 
@@ -52,7 +52,7 @@
                         It.Is<VacancySummaryByStatusQuery>(
                             q =>
                                 q.DesiredStatuses.Length == 1 && q.DesiredStatuses[0] == VacancyStatus.Live &&
-                                q.RequestedPage == 1 && q.PageSize == 50), out resultsCount));
+                                q.RequestedPage == 1 && q.PageSize == 250), out resultsCount));
         }
     }
 }

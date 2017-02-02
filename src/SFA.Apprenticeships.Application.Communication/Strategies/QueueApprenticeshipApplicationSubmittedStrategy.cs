@@ -3,6 +3,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
@@ -24,12 +25,12 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
             _sendCandidateCommunicationStrategy = queueCommunicationRequestStrategy;
         }
 
-        public void Send(Guid candidateId, IEnumerable<CommunicationToken> tokens)
+        public async Task Send(Guid candidateId, IEnumerable<CommunicationToken> tokens)
         {
             var candidate = _candidateReadRepository.Get(candidateId);
 
             var application = GetApplication(tokens);
-            var vacancy = _vacancyDataProvider.GetVacancyDetails(application.Vacancy.Id, true);
+            var vacancy = await _vacancyDataProvider.GetVacancyDetails(application.Vacancy.Id, true);
 
             var applicationTokens = new[]
             {
