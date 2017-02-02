@@ -20,7 +20,7 @@
         /// This includes only the public facing vacancy data. If you need the full vacancy information for a vacancy you have access too, use the non public end point.
         /// </summary>
         /// <param name="page">The page of vacancies required. If this is less than 1 or greater than the total number of pages, it will be set to 1 or the last page respectively</param>
-        /// <param name="pageSize">The number of vacancies to return per page up to a maximum of 50. Values larger than this will be set to 50</param>
+        /// <param name="pageSize">The number of vacancies to return per page up to a maximum of 250. Values larger than this will be set to 250</param>
         /// <returns>The requested page of live vacancy summaries along with the total number of vacancies and pages available. Vacancies are ordered by date submitted</returns>
         [Route("vacancysummaries")]
         [ResponseType(typeof(PublicVacancySummariesPage))]

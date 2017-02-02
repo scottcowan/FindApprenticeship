@@ -59,6 +59,8 @@
             // Only delete from queue once we have all vacancies from the service without error.
             _jobControlQueue.DeleteMessage(ScheduledJobQueues.VacancyEtl, scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
 
+            var lastVacancySummaryPage = vacancySummaries.Last();
+
             //Process pages
             while (vacancySummaries.Any())
             {
@@ -67,8 +69,6 @@
                 await Task.WhenAll(vacancySummariesToProcess.Select(ProcessVacancySummaryPage));
                 vacancySummaries.RemoveRange(0, rangeLength);
             }
-
-            var lastVacancySummaryPage = vacancySummaries.Last();
 
             _logger.Info("Vacancy ETL Queue completed: {0} vacancy summary pages processed ", lastVacancySummaryPage.TotalPages);
 

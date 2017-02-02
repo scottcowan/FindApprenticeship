@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.Traineeships
 {
     using System;
+    using System.Threading.Tasks;
     using Application.Interfaces.Candidates;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
@@ -21,28 +22,28 @@
         private const int ValidVacancyId = 1;
 
         [Test]
-        public void WhenIGetTheApplicationViewModel_IfIveAlreadyAppliedForTheApprenticeship_IGetAViewModelWithError()
+        public async Task WhenIGetTheApplicationViewModel_IfIveAlreadyAppliedForTheApprenticeship_IGetAViewModelWithError()
         {
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new TraineeshipApplicationDetail());
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).Build();
 
-            var traineeshipApplicationViewModel = traineeshipApplicationProvider.GetApplicationViewModel(Guid.NewGuid(), 1);
+            var traineeshipApplicationViewModel = await traineeshipApplicationProvider.GetApplicationViewModel(Guid.NewGuid(), 1);
 
             traineeshipApplicationViewModel.HasError().Should().BeTrue();
         }
         [Test]
-        public void CreateApplicationReturnsNull()
+        public async Task CreateApplicationReturnsNull()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
-            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
+            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(Task.FromResult((TraineeshipApplicationDetail)null));
             var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
-            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((TraineeshipVacancyDetailViewModel)null);
+            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult((TraineeshipVacancyDetailViewModel)null));
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).With(traineeshipVacancyProvider).Build();
             
-            var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
+            var viewModel = await traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.TraineeshipNoLongerAvailable);
@@ -50,17 +51,17 @@
         }
 
         [Test]
-        public void CreateApplicationReturnsVacancyStatusesUnavailable()
+        public async Task CreateApplicationReturnsVacancyStatusesUnavailable()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
-            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail { VacancyStatus = VacancyStatuses.Unavailable });
+            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(Task.FromResult(new TraineeshipApplicationDetail { VacancyStatus = VacancyStatuses.Unavailable }));
             var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
-            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new TraineeshipVacancyDetailViewModel { VacancyStatus = VacancyStatuses.Unavailable });
+            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult(new TraineeshipVacancyDetailViewModel { VacancyStatus = VacancyStatuses.Unavailable }));
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).With(traineeshipVacancyProvider).Build();
 
-            var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
+            var viewModel = await traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.TraineeshipNoLongerAvailable);
@@ -68,17 +69,17 @@
         }
 
         [Test]
-        public void CreateApplicationReturnsVacancyStatusesLive()
+        public async Task CreateApplicationReturnsVacancyStatusesLive()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
-            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail { VacancyStatus = VacancyStatuses.Live });
+            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(Task.FromResult(new TraineeshipApplicationDetail { VacancyStatus = VacancyStatuses.Live }));
             var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
-            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new TraineeshipVacancyDetailViewModel { VacancyStatus = VacancyStatuses.Live });
+            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult(new TraineeshipVacancyDetailViewModel { VacancyStatus = VacancyStatuses.Live }));
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).With(traineeshipVacancyProvider).Build();
 
-            var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
+            var viewModel = await traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelMessage.Should().BeNullOrEmpty();
@@ -86,17 +87,17 @@
         }
 
         [Test]
-        public void CreateApplicationReturnsExpiredOrWithdrawn()
+        public async Task CreateApplicationReturnsExpiredOrWithdrawn()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
-            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail { Status = ApplicationStatuses.ExpiredOrWithdrawn });
+            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(Task.FromResult(new TraineeshipApplicationDetail { Status = ApplicationStatuses.ExpiredOrWithdrawn }));
             var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
-            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((TraineeshipVacancyDetailViewModel)null);
+            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult((TraineeshipVacancyDetailViewModel)null));
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).With(traineeshipVacancyProvider).Build();
 
-            var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
+            var viewModel = await traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.TraineeshipNoLongerAvailable);
@@ -104,7 +105,7 @@
         }
 
         [Test]
-        public void UnhandledError()
+        public async Task UnhandledError()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
@@ -112,7 +113,7 @@
             candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Throws(new CustomException(ErrorCodes.ApplicationNotFoundError));
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).Build();
 
-            var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
+            var viewModel = await traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Error);
@@ -121,7 +122,7 @@
         }
 
         [Test]
-        public void Error()
+        public async Task Error()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
@@ -129,7 +130,7 @@
             candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Throws(new Exception());
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).Build();
 
-            var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
+            var viewModel = await traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Error);
@@ -138,17 +139,17 @@
         }
 
         [Test]
-        public void PatchWithVacancyDetail_VacancyNotFound()
+        public async Task PatchWithVacancyDetail_VacancyNotFound()
         {
             var candidateId = Guid.NewGuid();
             var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
-            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((TraineeshipVacancyDetailViewModel)null);
+            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult((TraineeshipVacancyDetailViewModel)null));
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
-            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail());
+            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(Task.FromResult(new TraineeshipApplicationDetail()));
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).With(traineeshipVacancyProvider).Build();
 
-            var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
+            var viewModel = await traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.TraineeshipNoLongerAvailable);
@@ -156,17 +157,17 @@
         }
 
         [Test]
-        public void PatchWithVacancyDetail_VacancyStatusUnavailable()
+        public async Task PatchWithVacancyDetail_VacancyStatusUnavailable()
         {
             var candidateId = Guid.NewGuid();
             var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
-            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new TraineeshipVacancyDetailViewModel { VacancyStatus = VacancyStatuses.Unavailable });
+            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult(new TraineeshipVacancyDetailViewModel { VacancyStatus = VacancyStatuses.Unavailable }));
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
-            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail());
+            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(Task.FromResult(new TraineeshipApplicationDetail()));
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).With(traineeshipVacancyProvider).Build();
 
-            var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
+            var viewModel = await traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.TraineeshipNoLongerAvailable);
@@ -174,17 +175,17 @@
         }
 
         [Test]
-        public void PatchWithVacancyDetail_VacancyHasError()
+        public async Task PatchWithVacancyDetail_VacancyHasError()
         {
             var candidateId = Guid.NewGuid();
             var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
-            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new TraineeshipVacancyDetailViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed));
+            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult(new TraineeshipVacancyDetailViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed)));
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
-            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail());
+            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(Task.FromResult(new TraineeshipApplicationDetail()));
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).With(traineeshipVacancyProvider).Build();
 
-            var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
+            var viewModel = await traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelMessage.Should().Be(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed);
@@ -192,17 +193,17 @@
         }
 
         [Test]
-        public void Ok()
+        public async Task Ok()
         {
             var candidateId = Guid.NewGuid();
             var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
-            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new TraineeshipVacancyDetailViewModel());
+            traineeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult(new TraineeshipVacancyDetailViewModel()));
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
-            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail());
+            candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(Task.FromResult(new TraineeshipApplicationDetail()));
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).With(traineeshipVacancyProvider).Build();
 
-            var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
+            var viewModel = await traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelMessage.Should().BeNullOrEmpty();

@@ -33,20 +33,17 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> Apply(string id)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _traineeshipApplicationMediator.Apply(UserContext.CandidateId, id);
+
+            switch (response.Code)
             {
-                var response = _traineeshipApplicationMediator.Apply(UserContext.CandidateId, id);
+                case TraineeshipApplicationMediatorCodes.Apply.HasError:
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case TraineeshipApplicationMediatorCodes.Apply.Ok:
+                    return View(response.ViewModel);
+            }
 
-                switch (response.Code)
-                {
-                    case TraineeshipApplicationMediatorCodes.Apply.HasError:
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case TraineeshipApplicationMediatorCodes.Apply.Ok:
-                        return View(response.ViewModel);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpPost]
@@ -57,28 +54,25 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Apply(int id, TraineeshipApplicationViewModel model)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _traineeshipApplicationMediator.Submit(UserContext.CandidateId, id, model);
+
+            switch (response.Code)
             {
-                var response = _traineeshipApplicationMediator.Submit(UserContext.CandidateId, id, model);
+                case TraineeshipApplicationMediatorCodes.Submit.IncorrectState:
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case TraineeshipApplicationMediatorCodes.Submit.Error:
+                    ModelState.Clear();
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return View(response.ViewModel);
+                case TraineeshipApplicationMediatorCodes.Submit.Ok:
+                    return RedirectToRoute(CandidateRouteNames.TraineeshipWhatNext, response.Parameters);
+                case TraineeshipApplicationMediatorCodes.Submit.ValidationError:
+                    ModelState.Clear();
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+            }
 
-                switch (response.Code)
-                {
-                    case TraineeshipApplicationMediatorCodes.Submit.IncorrectState:
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case TraineeshipApplicationMediatorCodes.Submit.Error:
-                        ModelState.Clear();
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View(response.ViewModel);
-                    case TraineeshipApplicationMediatorCodes.Submit.Ok:
-                        return RedirectToRoute(CandidateRouteNames.TraineeshipWhatNext, response.Parameters);
-                    case TraineeshipApplicationMediatorCodes.Submit.ValidationError:
-                        ModelState.Clear();
-                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View(response.ViewModel);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpPost]
@@ -137,20 +131,17 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> WhatHappensNext(string id, string vacancyReference, string vacancyTitle)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _traineeshipApplicationMediator.WhatHappensNext(UserContext.CandidateId, id, vacancyReference, vacancyTitle);
+
+            switch (response.Code)
             {
-                var response = _traineeshipApplicationMediator.WhatHappensNext(UserContext.CandidateId, id, vacancyReference, vacancyTitle);
+                case TraineeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound:
+                    return new TraineeshipNotFoundResult();
+                case TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok:
+                    return View(response.ViewModel);
+            }
 
-                switch (response.Code)
-                {
-                    case TraineeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound:
-                        return new TraineeshipNotFoundResult();
-                    case TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok:
-                        return View(response.ViewModel);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpGet]
@@ -159,26 +150,23 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> View(int id)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _traineeshipApplicationMediator.View(UserContext.CandidateId, id);
+
+            switch (response.Code)
             {
-                var response = _traineeshipApplicationMediator.View(UserContext.CandidateId, id);
+                case TraineeshipApplicationMediatorCodes.View.Error:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
 
-                switch (response.Code)
-                {
-                    case TraineeshipApplicationMediatorCodes.View.Error:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case TraineeshipApplicationMediatorCodes.View.ApplicationNotFound:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
 
-                    case TraineeshipApplicationMediatorCodes.View.ApplicationNotFound:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case TraineeshipApplicationMediatorCodes.View.Ok:
+                    return View(response.ViewModel);
+            }
 
-                    case TraineeshipApplicationMediatorCodes.View.Ok:
-                        return View(response.ViewModel);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Domain.Entities.Applications;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
@@ -30,12 +31,12 @@
             _referenceDataService = referenceDataService;
         }
 
-        public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> GetSuggestedApprenticeshipVacancies(
+        public async Task<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>> GetSuggestedApprenticeshipVacancies(
             ApprenticeshipSearchParameters searchParameters, 
             IList<ApprenticeshipApplicationSummary> candidateApplications, 
             int vacancyId)
         {
-            var vacancy = _vacancyDataProvider.GetVacancyDetails(vacancyId);
+            var vacancy = await _vacancyDataProvider.GetVacancyDetails(vacancyId);
             var vacancySubCategory = _referenceDataService.GetSubCategoryByName(vacancy.SubCategory);
 
             if (vacancySubCategory == null) { return null; }

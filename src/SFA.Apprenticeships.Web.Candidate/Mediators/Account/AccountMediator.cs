@@ -13,6 +13,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
     using Providers;
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using Validators;
     using ViewModels.Account;
     using ViewModels.MyApplications;
@@ -81,9 +82,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             return GetMediatorResponse(AccountMediatorCodes.Archive.SuccessfullyArchived, MyApplicationsPageMessages.ApplicationArchived, UserMessageLevel.Success);
         }
 
-        public MediatorResponse Delete(Guid candidateId, int vacancyId)
+        public async Task<MediatorResponse> Delete(Guid candidateId, int vacancyId)
         {
-            var viewModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            var viewModel = await _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (viewModel.HasError())
             {
@@ -262,9 +263,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             return GetMediatorResponse(AccountMediatorCodes.AcceptTermsAndConditions.ErrorAccepting);
         }
 
-        public MediatorResponse ApprenticeshipVacancyDetails(Guid candidateId, int vacancyId)
+        public async Task<MediatorResponse> ApprenticeshipVacancyDetails(Guid candidateId, int vacancyId)
         {
-            var vacancyDetailViewModel = _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = await _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
@@ -279,9 +280,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             return GetMediatorResponse(AccountMediatorCodes.VacancyDetails.Available);
         }
 
-        public MediatorResponse TraineeshipVacancyDetails(Guid candidateId, int vacancyId)
+        public async Task<MediatorResponse> TraineeshipVacancyDetails(Guid candidateId, int vacancyId)
         {
-            var vacancyDetailViewModel = _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = await _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {

@@ -1,10 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
+    using System.Threading.Tasks;
     using Domain.Entities.Vacancies;
 
-    public interface IVacancyDataProvider<out TVacancyDetail> where TVacancyDetail : VacancyDetail
+    public interface IVacancyDataProvider<TVacancyDetail> where TVacancyDetail : VacancyDetail
     {
-        TVacancyDetail GetVacancyDetails(int vacancyId, bool errorIfNotFound = false);
+        Task<TVacancyDetail> GetVacancyDetails(int vacancyId, bool errorIfNotFound = false);
         int GetVacancyId(int vacancyReferenceNumber);
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
+    using System.Threading.Tasks;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.ReferenceData;
@@ -36,16 +37,15 @@
             _apiClientProvider = apiClientProvider;
         }
 
-        public TraineeshipVacancyDetail GetVacancyDetails(int vacancyId, bool errorIfNotFound = false)
+        public async Task<TraineeshipVacancyDetail> GetVacancyDetails(int vacancyId, bool errorIfNotFound = false)
         {
             Vacancy vacancy;
             if (_apiClientProvider.IsEnabled())
             {
                 var apiClient = _apiClientProvider.GetApiClient();
-                var apiTask = apiClient.PublicVacancyOperations.GetByIdWithHttpMessagesAsync(vacancyId);
-                apiTask.Wait();
-                var publicVacancy = apiTask.Result.Body;
+                var apiResponse = await apiClient.PublicVacancyOperations.GetByIdWithHttpMessagesAsync(vacancyId);
                 //TODO: check for nulls and exceptions
+                var publicVacancy = apiResponse.Body;
                 vacancy = ApiClientMappers.Map<PublicVacancy, Vacancy>(publicVacancy);
             }
             else

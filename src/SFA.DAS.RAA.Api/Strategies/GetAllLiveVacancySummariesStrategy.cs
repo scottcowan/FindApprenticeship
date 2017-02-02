@@ -30,9 +30,9 @@
             {
                 pageSize = 1;
             }
-            if (pageSize > 50)
+            if (pageSize > 250)
             {
-                pageSize = 50;
+                pageSize = 250;
             }
 
             var query = new VacancySummaryByStatusQuery

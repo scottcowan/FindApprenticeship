@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
+    using System.Threading.Tasks;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Common.UnitTests.Mediators;
@@ -32,37 +33,37 @@
         [TestCase("VAC000547307")]
         [TestCase("[[imgUrl]]")]
         [TestCase("separator.png")]
-        public void GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
+        public async Task GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
         {
-            var response = Mediator.WhatHappensNext(_someCandidateId, vacancyId, VacancyReference, VacancyTitle, null);
+            var response = await Mediator.WhatHappensNext(_someCandidateId, vacancyId, VacancyReference, VacancyTitle, null);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound, false);
         }
 
         [Test]
-        public void ExpiredOrWithdrawnVacancyReturnsAVacancyNotFound()
+        public async Task ExpiredOrWithdrawnVacancyReturnsAVacancyNotFound()
         {
             ApprenticeshipApplicationProvider.Setup(
                 p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId, null))
-                .Returns(new WhatHappensNextApprenticeshipViewModel
+                .Returns(Task.FromResult(new WhatHappensNextApprenticeshipViewModel
                 {
                     Status = ApplicationStatuses.ExpiredOrWithdrawn
-                });
+                }));
 
-            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference,
+            var response = await Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference,
                 VacancyTitle, null);
 
             response.Code.Should().Be(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
         }
 
         [Test]
-        public void IfModelHasError_PopulateVacancyTitleAndVacancyReferenceInTheModel()
+        public async Task IfModelHasError_PopulateVacancyTitleAndVacancyReferenceInTheModel()
         {
             ApprenticeshipApplicationProvider.Setup(
                 p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId, null))
-                .Returns(new WhatHappensNextApprenticeshipViewModel(SomeErrorMessage));
+                .Returns(Task.FromResult(new WhatHappensNextApprenticeshipViewModel(SomeErrorMessage)));
 
-            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference,
+            var response = await Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference,
                 VacancyTitle, null);
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
             response.ViewModel.VacancyTitle = VacancyTitle;
@@ -70,16 +71,16 @@
         }
 
         [Test]
-        public void Ok()
+        public async Task Ok()
         {
             ApprenticeshipApplicationProvider.Setup(
                 p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId, null))
-                .Returns(new WhatHappensNextApprenticeshipViewModel
+                .Returns(Task.FromResult(new WhatHappensNextApprenticeshipViewModel
                 {
                     VacancyStatus = VacancyStatuses.Live
-                });
+                }));
 
-            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference,
+            var response = await Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference,
                 VacancyTitle, null);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);

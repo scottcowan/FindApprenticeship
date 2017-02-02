@@ -22,7 +22,7 @@
     public class VacancyIndexDataProvider : IVacancyIndexDataProvider
     {
         private const int PageSize = 500;
-        private const int ApiPageSize = 50;
+        private const int ApiPageSize = 250;
 
         private static readonly IMapper ApiClientMappers = new ApiClientMappers();
 
