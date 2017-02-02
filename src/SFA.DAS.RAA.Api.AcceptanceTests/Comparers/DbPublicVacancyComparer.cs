@@ -36,7 +36,7 @@
                 && object2.ContractOwnerId == 0
                 && object2.CreatedDate == DateTime.MinValue
                 && object2.DateFirstSubmitted == null
-                && object2.DateQAApproved == null
+                && object1.DateQAApproved == object2.DateQAApproved
                 && object2.DateStartedToQA == null
                 && object2.DateSubmitted == null
                 && object2.DeliveryOrganisationId == null
@@ -144,7 +144,8 @@
                 && object2.AnonymousAboutTheEmployerComment == null
                 && object2.CreatedDateTime == DateTime.MinValue
                 && object2.FrameworkStatus == 0
-                && object2.StandardStatus == 0;
+                && object2.StandardStatus == 0
+                && object1.IsEmployerPositiveAboutDisability == object2.IsEmployerPositiveAboutDisability;
         }
 
         public static WageUnit CorrectWageUnit(WageType type, WageUnit unit)

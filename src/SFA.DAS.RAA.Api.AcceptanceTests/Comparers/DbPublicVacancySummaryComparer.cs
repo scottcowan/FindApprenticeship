@@ -36,7 +36,7 @@
                 && object2.ContractOwnerId == 0
                 && object2.CreatedDate == DateTime.MinValue
                 && object2.DateFirstSubmitted == null
-                && object2.DateQAApproved == null
+                && object1.DateQAApproved == object2.DateQAApproved
                 && object2.DateStartedToQA == null
                 && object2.DateSubmitted == null
                 && object2.DeliveryOrganisationId == null
@@ -82,7 +82,8 @@
                 && string.Equals(object1.WageText, object2.Wage.Text)
                 && wageType == object2.Wage.Type
                 && CorrectWageUnit(wageType, wageUnit) == object2.Wage.Unit
-                && string.Equals(object1.WorkingWeek, object2.WorkingWeek);
+                && string.Equals(object1.WorkingWeek, object2.WorkingWeek)
+                && object1.IsEmployerPositiveAboutDisability == object2.IsEmployerPositiveAboutDisability;
         }
 
         public static WageUnit CorrectWageUnit(WageType type, WageUnit unit)
