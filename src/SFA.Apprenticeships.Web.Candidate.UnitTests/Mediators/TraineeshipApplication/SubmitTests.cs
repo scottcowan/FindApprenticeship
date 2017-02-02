@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Builders;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
@@ -21,7 +22,7 @@
         private const int ValidVacancyId = 1;
 
         [Test]
-        public void FailValidation()
+        public async Task FailValidation()
         {
             var viewModel = new TraineeshipApplicationViewModel
             {
@@ -34,20 +35,20 @@
                 }
             };
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(viewModel);
+                .Returns(Task.FromResult(viewModel));
             TraineeshipApplicationProvider.Setup(
                 p =>
                     p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<TraineeshipApplicationViewModel>(),
                         It.IsAny<TraineeshipApplicationViewModel>()))
                 .Returns<Guid, TraineeshipApplicationViewModel, TraineeshipApplicationViewModel>((cid, svm, vm) => vm);
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
             response.AssertValidationResult(TraineeshipApplicationMediatorCodes.Submit.ValidationError, true, false);
         }
 
         [Test]
-        public void FailValidationEducationLongerThan15Char()
+        public async Task FailValidationEducationLongerThan15Char()
         {
             var viewModel = new TraineeshipApplicationViewModel
             {
@@ -67,36 +68,36 @@
                 }
             };
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(viewModel);
+                .Returns(Task.FromResult(viewModel));
             TraineeshipApplicationProvider.Setup(
                 p =>
                     p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<TraineeshipApplicationViewModel>(),
                         It.IsAny<TraineeshipApplicationViewModel>()))
                 .Returns<Guid, TraineeshipApplicationViewModel, TraineeshipApplicationViewModel>((cid, svm, vm) => vm);
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
             response.AssertValidationResult(TraineeshipApplicationMediatorCodes.Submit.ValidationError, true, false);
         }
 
         [Test]
-        public void GetApplicationViewModelError()
+        public async Task GetApplicationViewModelError()
         {
             var getApplicationViewModel =
                 new TraineeshipApplicationViewModelBuilder().WithMessage(ApplicationPageMessages.SubmitApplicationFailed)
                     .Build();
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(getApplicationViewModel);
+                .Returns(Task.FromResult(getApplicationViewModel));
 
             var viewModel = new TraineeshipApplicationViewModelBuilder().Build();
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
             response.AssertMessage(TraineeshipApplicationMediatorCodes.Submit.Error,
                 ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, true, true);
         }
 
         [Test]
-        public void IncorrectState()
+        public async Task IncorrectState()
         {
             var viewModel = new TraineeshipApplicationViewModel
             {
@@ -105,10 +106,10 @@
                 ViewModelStatus = ApplicationViewModelStatus.ApplicationInIncorrectState
             };
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(new TraineeshipApplicationViewModel
+                .Returns(Task.FromResult(new TraineeshipApplicationViewModel
                 {
                     ViewModelStatus = ApplicationViewModelStatus.ApplicationInIncorrectState
-                });
+                }));
             TraineeshipApplicationProvider.Setup(
                 p =>
                     p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<TraineeshipApplicationViewModel>(),
@@ -116,15 +117,15 @@
                 .Returns<Guid, TraineeshipApplicationViewModel, TraineeshipApplicationViewModel>((cid, svm, vm) => vm);
             TraineeshipApplicationProvider.Setup(
                 p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<TraineeshipApplicationViewModel>()))
-                .Returns<Guid, int, TraineeshipApplicationViewModel>((cid, vid, vm) => vm);
+                .Returns<Guid, int, TraineeshipApplicationViewModel>((cid, vid, vm) => Task.FromResult(vm));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.Submit.IncorrectState, false);
         }
 
         [Test]
-        public void Ok()
+        public async Task Ok()
         {
             var viewModel = new TraineeshipApplicationViewModel
             {
@@ -132,7 +133,7 @@
                 VacancyDetail = new TraineeshipVacancyDetailViewModel()
             };
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(new TraineeshipApplicationViewModel());
+                .Returns(Task.FromResult(new TraineeshipApplicationViewModel()));
             TraineeshipApplicationProvider.Setup(
                 p =>
                     p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<TraineeshipApplicationViewModel>(),
@@ -140,15 +141,15 @@
                 .Returns<Guid, TraineeshipApplicationViewModel, TraineeshipApplicationViewModel>((cid, svm, vm) => vm);
             TraineeshipApplicationProvider.Setup(
                 p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<TraineeshipApplicationViewModel>()))
-                .Returns<Guid, int, TraineeshipApplicationViewModel>((cid, vid, vm) => vm);
+                .Returns<Guid, int, TraineeshipApplicationViewModel>((cid, vid, vm) => Task.FromResult(vm));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.Submit.Ok, false, true);
         }
 
         [Test]
-        public void OkIsJavascript()
+        public async Task OkIsJavascript()
         {
             var viewModel = new TraineeshipApplicationViewModel
             {
@@ -157,7 +158,7 @@
                 IsJavascript = true
             };
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(new TraineeshipApplicationViewModel());
+                .Returns(Task.FromResult(new TraineeshipApplicationViewModel()));
             TraineeshipApplicationProvider.Setup(
                 p =>
                     p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<TraineeshipApplicationViewModel>(),
@@ -165,15 +166,15 @@
                 .Returns<Guid, TraineeshipApplicationViewModel, TraineeshipApplicationViewModel>((cid, svm, vm) => vm);
             TraineeshipApplicationProvider.Setup(
                 p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<TraineeshipApplicationViewModel>()))
-                .Returns<Guid, int, TraineeshipApplicationViewModel>((cid, vid, vm) => vm);
+                .Returns<Guid, int, TraineeshipApplicationViewModel>((cid, vid, vm) => Task.FromResult(vm));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.Submit.Ok, false, true);
         }
 
         [Test]
-        public void SubmitApplicationError()
+        public async Task SubmitApplicationError()
         {
             var viewModel = new TraineeshipApplicationViewModel
             {
@@ -182,7 +183,7 @@
                 ViewModelStatus = ApplicationViewModelStatus.Error
             };
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(new TraineeshipApplicationViewModel {ViewModelStatus = ApplicationViewModelStatus.Error});
+                .Returns(Task.FromResult(new TraineeshipApplicationViewModel {ViewModelStatus = ApplicationViewModelStatus.Error}));
             TraineeshipApplicationProvider.Setup(
                 p =>
                     p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<TraineeshipApplicationViewModel>(),
@@ -190,9 +191,9 @@
                 .Returns<Guid, TraineeshipApplicationViewModel, TraineeshipApplicationViewModel>((cid, svm, vm) => vm);
             TraineeshipApplicationProvider.Setup(
                 p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<TraineeshipApplicationViewModel>()))
-                .Returns<Guid, int, TraineeshipApplicationViewModel>((cid, vid, vm) => vm);
+                .Returns<Guid, int, TraineeshipApplicationViewModel>((cid, vid, vm) => Task.FromResult(vm));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
             response.AssertMessage(TraineeshipApplicationMediatorCodes.Submit.Error,
                 ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, true, true);

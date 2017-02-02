@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
@@ -28,13 +29,13 @@
         const int ValidVacancyId = 1;
 
         [Test]
-        public void GivenException_ThenCreateOrRetrieveApplicationFailedIsReturned()
+        public async Task GivenException_ThenCreateOrRetrieveApplicationFailedIsReturned()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Throws<Exception>();
 
-            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().With(candidateService).Build().GetWhatHappensNextViewModel(candidateId, ValidVacancyId, null);
+            var returnedViewModel = await new ApprenticeshipApplicationProviderBuilder().With(candidateService).Build().GetWhatHappensNextViewModel(candidateId, ValidVacancyId, null);
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
             returnedViewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
@@ -42,7 +43,7 @@
         }
 
         [Test]
-        public void GivenNoApplicationFound_ThenApplicationNotFoundIsReturned()
+        public async Task GivenNoApplicationFound_ThenApplicationNotFoundIsReturned()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
@@ -50,7 +51,7 @@
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build);
             candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, It.IsAny<bool>())).Returns(new ApprenticeshipApplicationSummary[0]);
 
-            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().With(candidateService).Build().GetWhatHappensNextViewModel(candidateId, ValidVacancyId, null);
+            var returnedViewModel = await new ApprenticeshipApplicationProviderBuilder().With(candidateService).Build().GetWhatHappensNextViewModel(candidateId, ValidVacancyId, null);
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
             returnedViewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.ApplicationNotFound);
@@ -58,7 +59,7 @@
         }
 
         [Test]
-        public void GivenNoCandidateFound_ThenApplicationNotFoundIsReturned()
+        public async Task GivenNoCandidateFound_ThenApplicationNotFoundIsReturned()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
@@ -66,7 +67,7 @@
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns((Candidate) null);
             candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, It.IsAny<bool>())).Returns(new ApprenticeshipApplicationSummary[0]);
 
-            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().With(candidateService).Build().GetWhatHappensNextViewModel(candidateId, ValidVacancyId, null);
+            var returnedViewModel = await new ApprenticeshipApplicationProviderBuilder().With(candidateService).Build().GetWhatHappensNextViewModel(candidateId, ValidVacancyId, null);
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
             returnedViewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.ApplicationNotFound);
@@ -74,7 +75,7 @@
         }
 
         [Test]
-        public void GivenPatchWithVacancyDetailHasError_ThenMessageIsReturned()
+        public async Task GivenPatchWithVacancyDetailHasError_ThenMessageIsReturned()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
@@ -83,9 +84,9 @@
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build);
             candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, It.IsAny<bool>())).Returns(new ApprenticeshipApplicationSummary[0]);
             
-            apprenticeshipVacancyProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((ApprenticeshipVacancyDetailViewModel)null);
+            apprenticeshipVacancyProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult((ApprenticeshipVacancyDetailViewModel)null));
             
-            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+            var returnedViewModel = await new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyProvider).Build()
                 .GetWhatHappensNextViewModel(candidateId, ValidVacancyId, null);
 
@@ -96,7 +97,7 @@
         }
 
         [Test]
-        public void GivenGetWhatHappensNextViewModelIsSuccessful_ThenViewModelIsReturned()
+        public async Task GivenGetWhatHappensNextViewModelIsSuccessful_ThenViewModelIsReturned()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
@@ -106,12 +107,12 @@
             candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, It.IsAny<bool>())).Returns(new ApprenticeshipApplicationSummary[0]);
             candidateService.Setup(
                 cs => cs.GetSuggestedApprenticeshipVacancies(It.IsAny<ApprenticeshipSearchParameters>(), candidateId, ValidVacancyId))
-                .Returns(new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(0, new List<ApprenticeshipSearchResponse>(), null, new ApprenticeshipSearchParameters {Location = new Location()}));
-            apprenticeshipVacancyProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new ApprenticeshipVacancyDetailViewModelBuilder().Build());
+                .Returns(Task.FromResult(new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(0, new List<ApprenticeshipSearchResponse>(), null, new ApprenticeshipSearchParameters {Location = new Location()})));
+            apprenticeshipVacancyProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult(new ApprenticeshipVacancyDetailViewModelBuilder().Build()));
 
             var configurationService = new Mock<IConfigurationService>();
 
-            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+            var returnedViewModel = await new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyProvider).With(configurationService).Build()
                 .GetWhatHappensNextViewModel(candidateId, ValidVacancyId, null);
 
@@ -121,7 +122,7 @@
         }
 
         [Test]
-        public void GivenVacancyIsExpired_ThenViewModelStatusIsExpired()
+        public async Task GivenVacancyIsExpired_ThenViewModelStatusIsExpired()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
@@ -131,10 +132,10 @@
             candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, It.IsAny<bool>())).Returns(new ApprenticeshipApplicationSummary[0]);
             candidateService.Setup(
                 cs => cs.GetSuggestedApprenticeshipVacancies(It.IsAny<ApprenticeshipSearchParameters>(), candidateId, ValidVacancyId))
-                .Returns(new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(0, new List<ApprenticeshipSearchResponse>(), null, new ApprenticeshipSearchParameters { Location = new Location() }));
-            apprenticeshipVacancyProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new ApprenticeshipVacancyDetailViewModelBuilder().WithVacancyStatus(VacancyStatuses.Expired).Build());
+                .Returns(Task.FromResult(new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(0, new List<ApprenticeshipSearchResponse>(), null, new ApprenticeshipSearchParameters { Location = new Location() })));
+            apprenticeshipVacancyProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult(new ApprenticeshipVacancyDetailViewModelBuilder().WithVacancyStatus(VacancyStatuses.Expired).Build()));
 
-            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+            var returnedViewModel = await new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyProvider).Build()
                 .GetWhatHappensNextViewModel(candidateId, ValidVacancyId, null);
 

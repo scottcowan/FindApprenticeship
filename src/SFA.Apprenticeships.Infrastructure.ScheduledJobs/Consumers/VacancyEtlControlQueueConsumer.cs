@@ -1,15 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs.Consumers
 {
     using System.Threading.Tasks;
-    using SFA.Infrastructure.Interfaces;
     using Application.Vacancies;
     using Application.Vacancies.Entities;
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
     using Elastic.Common.Entities;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Application.Interfaces;
     using VacancyIndexer;
 
     public class VacancyEtlControlQueueConsumer : AzureControlQueueConsumer
@@ -32,29 +29,26 @@
             _logger = logger;
         }
 
-        public Task CheckScheduleQueue()
+        public async Task CheckScheduleQueue()
         {
-            return Task.Run(() =>
+            var latestScheduledMessage = GetLatestQueueMessage();
+
+            if (latestScheduledMessage == null)
             {
-                var latestScheduledMessage = GetLatestQueueMessage();
+                _logger.Debug("No scheduled message found on control queue");
+                return;
+            }
 
-                if (latestScheduledMessage == null)
-                {
-                    _logger.Debug("No scheduled message found on control queue");
-                    return;
-                }
+            _logger.Info("Calling vacancy indexer service to create scheduled index");
 
-                _logger.Info("Calling vacancy indexer service to create scheduled index");
+            _apprenticeshipVacancyIndexerService.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
+            _traineeshipVacancyIndexerService.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
 
-                _apprenticeshipVacancyIndexerService.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
-                _traineeshipVacancyIndexerService.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
+            _logger.Info("Calling vacancy summary processor to queue vacancy pages");
 
-                _logger.Info("Calling vacancy summary processor to queue vacancy pages");
-                
-                _vacancySummaryProcessor.ProcessVacancyPages(latestScheduledMessage);
+            await _vacancySummaryProcessor.ProcessVacancyPages(latestScheduledMessage);
 
-                _logger.Info("Scheduled index created and vacancy pages queued");
-            });
+            _logger.Info("Scheduled index created and vacancy pages queued");
         }
     }
 }

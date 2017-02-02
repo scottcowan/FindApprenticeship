@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
+    using System.Threading.Tasks;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
     using Interfaces;
@@ -22,13 +23,13 @@
             _vacancyDataProvider = vacancyDataProvider;
         }
 
-        public TVacancyDetail GetVacancyDetails(Guid candidateId, int vacancyId)
+        public async Task<TVacancyDetail> GetVacancyDetails(Guid candidateId, int vacancyId)
         {
             _logger.Debug("Calling LegacyGetCandidateVacancyDetailStrategy to get vacancy details for vacancy ID {0} and candidate ID {1}.", vacancyId, candidateId);
 
             try
             {
-                var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
+                var vacancyDetails = await _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
                 return vacancyDetails;
             }

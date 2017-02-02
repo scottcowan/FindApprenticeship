@@ -34,7 +34,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <param name="vacancyLocationType">Possible values include:
         /// 'Unknown', 'SpecificLocation', 'MultipleLocations',
         /// 'Nationwide'</param>
-        public VacancySummary(int? vacancyId = default(int?), int? vacancyOwnerRelationshipId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), string title = default(string), string shortDescription = default(string), string workingWeek = default(string), string expectedDuration = default(string), string durationType = default(string), int? duration = default(int?), System.DateTime? closingDate = default(System.DateTime?), System.DateTime? possibleStartDate = default(System.DateTime?), bool? offlineVacancy = default(bool?), int? noOfOfflineApplicants = default(int?), System.DateTime? dateSubmitted = default(System.DateTime?), System.DateTime? dateFirstSubmitted = default(System.DateTime?), System.DateTime? dateStartedToQA = default(System.DateTime?), string qAUserName = default(string), System.DateTime? dateQAApproved = default(System.DateTime?), int? submissionCount = default(int?), int? vacancyManagerId = default(int?), int? deliveryOrganisationId = default(int?), int? parentVacancyId = default(int?), string trainingType = default(string), string apprenticeshipLevel = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string status = default(string), string employerAnonymousName = default(string), string employerAnonymousReason = default(string), bool? isAnonymousEmployer = default(bool?), string anonymousAboutTheEmployer = default(string), int? numberOfPositions = default(int?), string vacancyType = default(string), System.DateTime? updatedDateTime = default(System.DateTime?), PostalAddress address = default(PostalAddress), int? contractOwnerId = default(int?), int? originalContractOwnerId = default(int?), string regionalTeam = default(string), string vacancyLocationType = default(string), int? employerId = default(int?), string employerName = default(string), string employerLocation = default(string), int? newApplicationCount = default(int?), int? applicantCount = default(int?), string providerTradingName = default(string), System.DateTime? createdDate = default(System.DateTime?), Wage wage = default(Wage), bool? isMultiLocation = default(bool?))
+        public VacancySummary(int? vacancyId = default(int?), int? vacancyOwnerRelationshipId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), string title = default(string), string shortDescription = default(string), string workingWeek = default(string), string expectedDuration = default(string), string durationType = default(string), int? duration = default(int?), System.DateTime? closingDate = default(System.DateTime?), System.DateTime? possibleStartDate = default(System.DateTime?), bool? offlineVacancy = default(bool?), int? noOfOfflineApplicants = default(int?), System.DateTime? dateSubmitted = default(System.DateTime?), System.DateTime? dateFirstSubmitted = default(System.DateTime?), System.DateTime? dateStartedToQA = default(System.DateTime?), string qAUserName = default(string), System.DateTime? dateQAApproved = default(System.DateTime?), int? submissionCount = default(int?), int? vacancyManagerId = default(int?), int? deliveryOrganisationId = default(int?), int? parentVacancyId = default(int?), string trainingType = default(string), string apprenticeshipLevel = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string status = default(string), string employerAnonymousName = default(string), string employerAnonymousReason = default(string), bool? isAnonymousEmployer = default(bool?), string anonymousAboutTheEmployer = default(string), int? numberOfPositions = default(int?), string vacancyType = default(string), System.DateTime? updatedDateTime = default(System.DateTime?), PostalAddress address = default(PostalAddress), int? contractOwnerId = default(int?), int? originalContractOwnerId = default(int?), string regionalTeam = default(string), string vacancyLocationType = default(string), int? employerId = default(int?), string employerName = default(string), string employerLocation = default(string), int? newApplicationCount = default(int?), int? applicantCount = default(int?), string providerTradingName = default(string), System.DateTime? createdDate = default(System.DateTime?), Wage wage = default(Wage), bool? isMultiLocation = default(bool?), bool? isEmployerPositiveAboutDisability = default(bool?))
         {
             VacancyId = vacancyId;
             VacancyOwnerRelationshipId = vacancyOwnerRelationshipId;
@@ -86,6 +86,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             CreatedDate = createdDate;
             Wage = wage;
             IsMultiLocation = isMultiLocation;
+            IsEmployerPositiveAboutDisability = isEmployerPositiveAboutDisability;
         }
 
         /// <summary>
@@ -353,6 +354,11 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "IsMultiLocation")]
         public bool? IsMultiLocation { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "IsEmployerPositiveAboutDisability")]
+        public bool? IsEmployerPositiveAboutDisability { get; set; }
 
         /// <summary>
         /// Validate the object.

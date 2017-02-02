@@ -10,6 +10,7 @@
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using System;
+    using System.Threading.Tasks;
     using ViewModels.VacancySearch;
 
     public class TraineeshipVacancyProvider : ITraineeshipVacancyProvider
@@ -88,7 +89,7 @@
             }
         }
 
-        public TraineeshipVacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId)
+        public async Task<TraineeshipVacancyDetailViewModel> GetVacancyDetailViewModel(Guid? candidateId, int vacancyId)
         {
             _logger.Debug(
                 "Calling TraineeshipVacancyDetailProvider to get the Vacancy detail View Model for candidate ID: {0}, vacancy ID: {1}.",
@@ -97,8 +98,8 @@
             try
             {
                 var vacancyDetail = candidateId.HasValue ?
-                    _candidateService.GetTraineeshipVacancyDetail(candidateId.Value, vacancyId) :
-                    _traineeshipSearchService.GetVacancyDetails(vacancyId);
+                    await _candidateService.GetTraineeshipVacancyDetail(candidateId.Value, vacancyId) :
+                    await _traineeshipSearchService.GetVacancyDetails(vacancyId);
 
                 if (vacancyDetail == null) return null;
 
@@ -136,10 +137,10 @@
             }
         }
 
-        public TraineeshipVacancyDetailViewModel GetVacancyDetailViewModelByReferenceNumber(Guid? candidateId, int vacancyReferenceNumber)
+        public async Task<TraineeshipVacancyDetailViewModel> GetVacancyDetailViewModelByReferenceNumber(Guid? candidateId, int vacancyReferenceNumber)
         {
             var vacancyId = _traineeshipSearchService.GetVacancyId(vacancyReferenceNumber);
-            return GetVacancyDetailViewModel(candidateId, vacancyId);
+            return await GetVacancyDetailViewModel(candidateId, vacancyId);
         }
     }
 }

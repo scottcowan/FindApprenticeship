@@ -30,8 +30,6 @@
                 var fixture = new Fixture();
 
                 var vacancy = fixture.Create<Domain.Entities.Raa.Vacancies.VacancySummary>();
-                var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
-                var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
 
                 var categories = fixture
                     .Build<Domain.Entities.ReferenceData.Category>()
@@ -39,8 +37,7 @@
                     .ToList();
 
                 // Act.
-                var summary = TraineeshipSummaryMapper.GetTraineeshipSummary(
-                    vacancy, employer, provider, categories, _mockLogService.Object);
+                var summary = TraineeshipSummaryMapper.GetTraineeshipSummary(vacancy, categories, _mockLogService.Object);
 
                 // Assert.
                 summary.Should().NotBeNull();
@@ -53,17 +50,13 @@
             // Arrange.
             var fixture = new Fixture();
 
-            var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
-            var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
-
             var categories = fixture
                 .Build<Domain.Entities.ReferenceData.Category>()
                 .CreateMany(categoryCount)
                 .ToList();
 
             // Act.
-            var summary = TraineeshipSummaryMapper.GetTraineeshipSummary(
-                null, employer, provider, categories, _mockLogService.Object);
+            var summary = TraineeshipSummaryMapper.GetTraineeshipSummary(null, categories, _mockLogService.Object);
 
             // Assert.
             summary.Should().BeNull();
@@ -85,21 +78,17 @@
                 .With(each => each.EmployerAnonymousName, anonymousEmployerName)
                 .Create();
 
-            var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
-            var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
-
             var categories = fixture
                 .Build<Domain.Entities.ReferenceData.Category>()
                 .CreateMany(1)
                 .ToList();
 
             // Act.
-            var summary = TraineeshipSummaryMapper.GetTraineeshipSummary(
-                vacancy, employer, provider, categories, _mockLogService.Object);
+            var summary = TraineeshipSummaryMapper.GetTraineeshipSummary(vacancy, categories, _mockLogService.Object);
 
             // Assert.
             summary.Should().NotBeNull();
-            summary.EmployerName.Should().Be(anonymised ? "Anonymous Employer Name" : employer.FullName);
+            summary.EmployerName.Should().Be(anonymised ? "Anonymous Employer Name" : vacancy.EmployerName);
         }
     }
 }

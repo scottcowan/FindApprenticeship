@@ -14,6 +14,7 @@
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Threading.Tasks;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
     using ViewModels.VacancySearch;
@@ -44,7 +45,7 @@
             _candidateApplicationsProvider = candidateApplicationsProvider;
         }
 
-        public ApprenticeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
+        public async Task<ApprenticeshipApplicationViewModel> GetApplicationViewModel(Guid candidateId, int vacancyId)
         {
             _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
@@ -65,7 +66,7 @@
                 }
 
                 var applicationViewModel = _apprenticeshipCandidateWebMappers.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
-                return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
+                return await PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
             catch (CustomException e)
             {
@@ -98,9 +99,9 @@
             }
         }
 
-        public ApprenticeshipApplicationPreviewViewModel GetApplicationPreviewViewModel(Guid candidateId, int vacancyId)
+        public async Task<ApprenticeshipApplicationPreviewViewModel> GetApplicationPreviewViewModel(Guid candidateId, int vacancyId)
         {
-            var viewModel = GetApplicationViewModel(candidateId, vacancyId);
+            var viewModel = await GetApplicationViewModel(candidateId, vacancyId);
 
             return new ApprenticeshipApplicationPreviewViewModel
             {
@@ -115,7 +116,7 @@
             };
         }
 
-        public ApprenticeshipApplicationViewModel CreateApplicationViewModel(Guid candidateId, int vacancyId)
+        public async Task<ApprenticeshipApplicationViewModel> CreateApplicationViewModel(Guid candidateId, int vacancyId)
         {
             _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
@@ -123,7 +124,7 @@
 
             try
             {
-                var applicationDetails = _candidateService.CreateApplication(candidateId, vacancyId);
+                var applicationDetails = await _candidateService.CreateApplication(candidateId, vacancyId);
                 if (applicationDetails == null)
                 {
                     return new ApprenticeshipApplicationViewModel
@@ -135,7 +136,7 @@
 
                 _candidateApplicationsProvider.RecalculateSavedAndDraftCount(candidateId, null);
                 var applicationViewModel = _apprenticeshipCandidateWebMappers.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
-                return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
+                return await PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
             catch (CustomException e)
             {
@@ -245,7 +246,7 @@
             }
         }
 
-        public ApprenticeshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId)
+        public async Task<ApprenticeshipApplicationViewModel> SubmitApplication(Guid candidateId, int vacancyId)
         {
             _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to submit the Application for candidate ID: {0}, vacancy ID: {1}.",
@@ -255,7 +256,7 @@
 
             try
             {
-                model = GetApplicationViewModel(candidateId, vacancyId);
+                model = await GetApplicationViewModel(candidateId, vacancyId);
 
                 if (model.HasError())
                 {
@@ -407,7 +408,7 @@
             return _candidateApplicationsProvider.GetTraineeshipFeatureViewModel(candidateId);
         }
 
-        public WhatHappensNextApprenticeshipViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId, string searchReturnUrl)
+        public async Task<WhatHappensNextApprenticeshipViewModel> GetWhatHappensNextViewModel(Guid candidateId, int vacancyId, string searchReturnUrl)
         {
             _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to get the What Happens Next data for candidate ID: {0}, vacancy ID: {1}.",
@@ -431,7 +432,7 @@
                 }
 
                 var model = _apprenticeshipCandidateWebMappers.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
-                var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, model);
+                var patchedModel = await PatchWithVacancyDetail(candidateId, vacancyId, model);
 
                 if (patchedModel.HasError())
                 {
@@ -449,7 +450,7 @@
 
 
                 whatHappensNextViewModel = WhatHappensNextSavedAndDrafts(whatHappensNextViewModel, candidateId);
-                whatHappensNextViewModel = WhatHappensNextSuggestions(whatHappensNextViewModel, candidateId, applicationDetails.Vacancy.Id, searchReturnUrl);
+                whatHappensNextViewModel = await WhatHappensNextSuggestions(whatHappensNextViewModel, candidateId, applicationDetails.Vacancy.Id, searchReturnUrl);
                 return whatHappensNextViewModel;
             }
             catch (Exception e)
@@ -472,7 +473,7 @@
             return whatHappensNextViewModel;
         }
 
-        private WhatHappensNextApprenticeshipViewModel WhatHappensNextSuggestions(WhatHappensNextApprenticeshipViewModel whatHappensNextViewModel, Guid candidateId, int vacancyId, string searchReturnUrl)
+        private async Task<WhatHappensNextApprenticeshipViewModel> WhatHappensNextSuggestions(WhatHappensNextApprenticeshipViewModel whatHappensNextViewModel, Guid candidateId, int vacancyId, string searchReturnUrl)
         {
             var searchReturnViewModel = ApprenticeshipSearchViewModel.FromSearchUrl(searchReturnUrl) ?? new ApprenticeshipSearchViewModel { WithinDistance = 40, ResultsPerPage = 5, PageNumber = 1 };
             var searchLocation = _apprenticeshipCandidateWebMappers.Map<ApprenticeshipSearchViewModel, Location>(searchReturnViewModel);
@@ -488,7 +489,7 @@
                 SearchRadius = searchReturnViewModel.WithinDistance
             };
 
-            var suggestedVacancies = _candidateService.GetSuggestedApprenticeshipVacancies(searchParameters, candidateId, vacancyId);
+            var suggestedVacancies = await _candidateService.GetSuggestedApprenticeshipVacancies(searchParameters, candidateId, vacancyId);
 
             if (suggestedVacancies == null)
             {
@@ -520,9 +521,9 @@
             return _candidateApplicationsProvider.GetCandidateApplications(candidateId);
         }
 
-        public SavedVacancyViewModel SaveVacancy(Guid candidateId, int vacancyId)
+        public async Task<SavedVacancyViewModel> SaveVacancy(Guid candidateId, int vacancyId)
         {
-            var applicationDetail = _candidateService.SaveVacancy(candidateId, vacancyId);
+            var applicationDetail = await _candidateService.SaveVacancy(candidateId, vacancyId);
 
             return new SavedVacancyViewModel
             {
@@ -553,11 +554,11 @@
             return new ApprenticeshipApplicationViewModel(failMessage, ApplicationViewModelStatus.Error);
         }
 
-        private ApprenticeshipApplicationViewModel PatchWithVacancyDetail(
+        private async Task<ApprenticeshipApplicationViewModel> PatchWithVacancyDetail(
             Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
-            var vacancyDetailViewModel = _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = await _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {

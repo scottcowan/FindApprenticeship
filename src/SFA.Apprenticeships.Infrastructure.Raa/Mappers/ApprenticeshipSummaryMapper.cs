@@ -2,20 +2,19 @@
 {
     using Application.Interfaces;
     using Domain.Entities.Extensions;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Raa.Parties;
-    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using Extensions;
     using System;
     using System.Collections.Generic;
+    using DAS.RAA.Api.Client.V1.Models;
+    using GeoPoint = Domain.Entities.Locations.GeoPoint;
     using VacancyLocationType = Domain.Entities.Vacancies.VacancyLocationType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class ApprenticeshipSummaryMapper
     {
-        public static ApprenticeshipSummary GetApprenticeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IList<Category> categories, ILogService logService)
+        public static ApprenticeshipSummary GetApprenticeshipSummary(VacancySummary vacancy, IList<Category> categories, ILogService logService)
         {
             try
             {
@@ -40,9 +39,9 @@
                     // ReSharper restore PossibleInvalidOperationException
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
-                    EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.FullName : vacancy.EmployerAnonymousName,
-                    ProviderName = provider.TradingName,
-                    IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
+                    EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? vacancy.EmployerName : vacancy.EmployerAnonymousName,
+                    ProviderName = vacancy.ProviderTradingName,
+                    IsPositiveAboutDisability = vacancy.IsEmployerPositiveAboutDisability,
                     IsEmployerAnonymous = !string.IsNullOrEmpty(vacancy.EmployerAnonymousName),
                     Location = location,
                     VacancyLocationType = vacancy.VacancyLocationType == Domain.Entities.Raa.Vacancies.VacancyLocationType.Nationwide ? VacancyLocationType.National : VacancyLocationType.NonNational,

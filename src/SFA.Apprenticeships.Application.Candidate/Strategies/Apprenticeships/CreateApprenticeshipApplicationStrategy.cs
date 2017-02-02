@@ -9,6 +9,7 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using System;
+    using System.Threading.Tasks;
     using Vacancy;
 
     public class CreateApprenticeshipApplicationStrategy : ICreateApprenticeshipApplicationStrategy, ISaveApprenticeshipVacancyStrategy
@@ -32,14 +33,14 @@
             _serviceBus = serviceBus;
         }
 
-        public ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
+        public async Task<ApprenticeshipApplicationDetail> CreateApplication(Guid candidateId, int vacancyId)
         {
             var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
 
             if (applicationDetail == null)
             {
                 // Candidate has not previously applied for this vacancy.
-                return CreateNewApplication(candidateId, vacancyId);
+                return await CreateNewApplication(candidateId, vacancyId);
             }
 
             applicationDetail.AssertState("Create apprenticeshipApplication", ApplicationStatuses.Draft);
@@ -52,7 +53,7 @@
             return applicationDetail;
         }
 
-        public ApprenticeshipApplicationDetail SaveVacancy(Guid candidateId, int vacancyId)
+        public async Task<ApprenticeshipApplicationDetail> SaveVacancy(Guid candidateId, int vacancyId)
         {
             var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
 
@@ -61,7 +62,7 @@
                 return applicationDetail;
             }
 
-            return CreateNewApplication(candidateId, vacancyId, true);
+            return await CreateNewApplication(candidateId, vacancyId, true);
         }
 
         #region
@@ -74,9 +75,9 @@
             return _apprenticeshipApplicationReadRepository.Get(apprenticeshipApplicationDetail.EntityId);
         }
 
-        private ApprenticeshipApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId, bool saveVacancy = false)
+        private async Task<ApprenticeshipApplicationDetail> CreateNewApplication(Guid candidateId, int vacancyId, bool saveVacancy = false)
         {
-            var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
+            var vacancyDetails = await _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
             if (vacancyDetails == null) return null;
 

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Threading.Tasks;
     using Candidate.Mediators.Search;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
@@ -42,10 +43,10 @@
         [TestCase("VAC000547307")]
         [TestCase("[[imgUrl]]")]
         [TestCase("separator.png")]
-        public void GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
+        public async Task GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
         {
             var mediator = GetMediator(null);
-            var response = mediator.Details(vacancyId, null);
+            var response = await mediator.Details(vacancyId, null);
 
             response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }
@@ -79,7 +80,7 @@
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
 
             traineeshipVacancyProvider.Setup(
-                p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+                p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(Task.FromResult(vacancyDetailViewModel));
 
             var userDataProvider = GetUserDataProvider();
 
@@ -88,7 +89,7 @@
         }
 
         [Test]
-        public void Ok()
+        public async Task Ok()
         {
             var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
@@ -97,7 +98,7 @@
             };
 
             var mediator = GetMediator(vacancyDetailViewModel);
-            var response = mediator.Details(VacancyId, null);
+            var response = await mediator.Details(VacancyId, null);
 
             response.AssertCode(TraineeshipSearchMediatorCodes.Details.Ok, true);
 
@@ -112,7 +113,7 @@
         }
 
         [Test]
-        public void VacancyHasError()
+        public async Task VacancyHasError()
         {
             const string message = "The vacancy has an error";
 
@@ -124,23 +125,23 @@
 
             var mediator = GetMediator(vacancyDetailViewModel);
 
-            var response = mediator.Details(VacancyId, null);
+            var response = await mediator.Details(VacancyId, null);
 
             response.AssertMessage(TraineeshipSearchMediatorCodes.Details.VacancyHasError, message,
                 UserMessageLevel.Warning, true);
         }
 
         [Test]
-        public void VacancyNotFound()
+        public async Task VacancyNotFound()
         {
             var mediator = GetMediator(null);
-            var response = mediator.Details(VacancyId, null);
+            var response = await mediator.Details(VacancyId, null);
 
             response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }
 
         [Test]
-        public void VacancyUnavailable()
+        public async Task VacancyUnavailable()
         {
             var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
@@ -148,7 +149,7 @@
             };
 
             var mediator = GetMediator(vacancyDetailViewModel);
-            var response = mediator.Details(VacancyId, null);
+            var response = await mediator.Details(VacancyId, null);
 
             response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }

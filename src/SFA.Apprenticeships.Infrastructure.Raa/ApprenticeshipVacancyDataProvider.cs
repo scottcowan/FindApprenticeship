@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
     using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.ReferenceData;
@@ -10,28 +12,60 @@
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
     using Application.Interfaces;
+    using Application.Interfaces.Api;
+    using DAS.RAA.Api.Client.V1.Models;
+    using DAS.RAA.Api.Service.V1.Mappers;
+    using Microsoft.Rest;
     using ErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
+    using Vacancy = Domain.Entities.Raa.Vacancies.Vacancy;
 
     public class ApprenticeshipVacancyDataProvider : IVacancyDataProvider<ApprenticeshipVacancyDetail>
     {
+        private static readonly IMapper ApiClientMappers = new ApiClientMappers();
+
         private readonly IVacancyReadRepository _vacancyReadRepository;
         private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
         private readonly IReferenceDataProvider _referenceDataProvider;
         private readonly ILogService _logService;
+        private readonly IApiClientProvider _apiClientProvider;
 
-        public ApprenticeshipVacancyDataProvider(IVacancyReadRepository vacancyReadRepository, IProviderService providerService, IEmployerService employerService, IReferenceDataProvider referenceDataProvider, ILogService logService)
+        public ApprenticeshipVacancyDataProvider(IVacancyReadRepository vacancyReadRepository, IProviderService providerService, IEmployerService employerService, IReferenceDataProvider referenceDataProvider, ILogService logService, IApiClientProvider apiClientProvider)
         {
             _vacancyReadRepository = vacancyReadRepository;
             _providerService = providerService;
             _employerService = employerService;
             _referenceDataProvider = referenceDataProvider;
             _logService = logService;
+            _apiClientProvider = apiClientProvider;
         }
 
-        public ApprenticeshipVacancyDetail GetVacancyDetails(int vacancyId, bool errorIfNotFound = false)
+        public async Task<ApprenticeshipVacancyDetail> GetVacancyDetails(int vacancyId, bool errorIfNotFound = false)
         {
-            var vacancy = _vacancyReadRepository.Get(vacancyId);
+            Vacancy vacancy = null;
+            if (_apiClientProvider.IsEnabled())
+            {
+                try
+                {
+                    var apiClient = _apiClientProvider.GetApiClient();
+                    var apiResponse = await apiClient.PublicVacancyOperations.GetByIdWithHttpMessagesAsync(vacancyId);
+                    //TODO: check for nulls and exceptions
+                    var publicVacancy = apiResponse.Body;
+                    vacancy = ApiClientMappers.Map<PublicVacancy, Vacancy>(publicVacancy);
+                }
+                catch (HttpOperationException ex)
+                {
+                    _logService.Warn($"Calling the API to retrieve vacancy with ID: {vacancyId} caused an exception", ex);
+                    if (ex.Response.StatusCode == HttpStatusCode.InternalServerError)
+                    {
+                        throw;
+                    }
+                }
+            }
+            else
+            {
+                vacancy = _vacancyReadRepository.Get(vacancyId);
+            }
 
             if (vacancy == null)
             {

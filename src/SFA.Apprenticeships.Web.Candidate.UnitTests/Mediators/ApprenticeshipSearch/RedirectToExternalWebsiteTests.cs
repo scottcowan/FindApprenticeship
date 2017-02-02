@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
+    using System.Threading.Tasks;
     using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
@@ -20,31 +21,31 @@
         [TestCase("VAC000547307")]
         [TestCase("[[imgUrl]]")]
         [TestCase("separator.png")]
-        public void GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
+        public async Task GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
         {
-            var response = Mediator.RedirectToExternalWebsite(vacancyId);
+            var response = await Mediator.RedirectToExternalWebsite(vacancyId);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound, false);
         }
 
         [Test]
-        public void Ok()
+        public async Task Ok()
         {
             //Arrange
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel();
 
             ApprenticeshipVacancyProvider.Setup(p => p.IncrementClickThroughFor(It.IsAny<int>()))
-                .Returns(vacancyDetailViewModel);
+                .Returns(Task.FromResult(vacancyDetailViewModel));
 
             //Act
-            var response = Mediator.RedirectToExternalWebsite(Id);
+            var response = await Mediator.RedirectToExternalWebsite(Id);
 
             //Assert
             response.AssertCode(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.Ok, true);
         }
 
         [Test]
-        public void VacancyHasError()
+        public async Task VacancyHasError()
         {
             //Arrange
             const string message = "The vacancy has an error";
@@ -55,10 +56,10 @@
             };
 
             ApprenticeshipVacancyProvider.Setup(p => p.IncrementClickThroughFor(It.IsAny<int>()))
-                .Returns(vacancyDetailViewModel);
+                .Returns(Task.FromResult(vacancyDetailViewModel));
 
             //Act
-            var response = Mediator.RedirectToExternalWebsite(Id);
+            var response = await Mediator.RedirectToExternalWebsite(Id);
 
             //Assert
             response.AssertMessage(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyHasError, message,
@@ -66,9 +67,9 @@
         }
 
         [Test]
-        public void VacancyNotFound()
+        public async Task VacancyNotFound()
         {
-            var response = Mediator.RedirectToExternalWebsite(Id);
+            var response = await Mediator.RedirectToExternalWebsite(Id);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound, false);
         }

@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancies
 {
+    using System.Threading.Tasks;
     using Domain.Interfaces.Messaging;
 
     public interface IVacancySummaryProcessor
     {
-        void ProcessVacancyPages(StorageQueueMessage scheduledQueueMessage);
+        Task ProcessVacancyPages(StorageQueueMessage scheduledQueueMessage);
     }
 }

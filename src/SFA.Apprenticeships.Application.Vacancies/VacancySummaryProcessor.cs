@@ -39,11 +39,11 @@
             _logger = logger;
         }
 
-        public void ProcessVacancyPages(StorageQueueMessage scheduledQueueMessage)
+        public async Task ProcessVacancyPages(StorageQueueMessage scheduledQueueMessage)
         {
             _logger.Debug("Retrieving vacancy summary page count");
 
-            var vacancyPageCount = _vacancyIndexDataProvider.GetVacancyPageCount();
+            var vacancyPageCount = await _vacancyIndexDataProvider.GetVacancyPageCount();
 
             _logger.Info("Retrieved vacancy summary page count of {0}", vacancyPageCount);
 
@@ -59,10 +59,16 @@
             // Only delete from queue once we have all vacancies from the service without error.
             _jobControlQueue.DeleteMessage(ScheduledJobQueues.VacancyEtl, scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
 
-            //Process pages
-            Parallel.ForEach(vacancySummaries, new ParallelOptions { MaxDegreeOfParallelism = 1 }, ProcessVacancySummaryPage);
-
             var lastVacancySummaryPage = vacancySummaries.Last();
+
+            //Process pages
+            while (vacancySummaries.Any())
+            {
+                var rangeLength = Math.Min(10, vacancySummaries.Count);
+                var vacancySummariesToProcess = vacancySummaries.Take(rangeLength);
+                await Task.WhenAll(vacancySummariesToProcess.Select(ProcessVacancySummaryPage));
+                vacancySummaries.RemoveRange(0, rangeLength);
+            }
 
             _logger.Info("Vacancy ETL Queue completed: {0} vacancy summary pages processed ", lastVacancySummaryPage.TotalPages);
 
@@ -78,11 +84,11 @@
             _logger.Info("Published VacancySummaryUpdateComplete message published to queue");
         }
 
-        private void ProcessVacancySummaryPage(VacancySummaryPage vacancySummaryPage)
+        private async Task ProcessVacancySummaryPage(VacancySummaryPage vacancySummaryPage)
         {
             _logger.Info("Retrieving vacancy search page number: {0}/{1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
 
-            var vacancies = _vacancyIndexDataProvider.GetVacancySummaries(vacancySummaryPage.PageNumber);
+            var vacancies = await _vacancyIndexDataProvider.GetVacancySummaries(vacancySummaryPage.PageNumber);
             var apprenticeshipsExtended = _mapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryUpdate>>(vacancies.ApprenticeshipSummaries).ToList();
             var traineeshipsExtended = _mapper.Map<IEnumerable<TraineeshipSummary>, IEnumerable<TraineeshipSummaryUpdate>>(vacancies.TraineeshipSummaries).ToList();
 
@@ -92,25 +98,19 @@
                 apprenticeshipsExtended.Count,
                 traineeshipsExtended.Count);
 
-            Parallel.ForEach(
-                apprenticeshipsExtended,
-                new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                apprenticeshipExtended =>
-                {
-                    apprenticeshipExtended.ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime;
-                    _apprenticeshipSummaryUpdateProcessor.Process(apprenticeshipExtended);
-                });
+            foreach (var apprenticeshipExtended in apprenticeshipsExtended)
+            {
+                apprenticeshipExtended.ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime;
+                _apprenticeshipSummaryUpdateProcessor.Process(apprenticeshipExtended);
+            }
 
             _logger.Info("Processed {0} apprenticeships", apprenticeshipsExtended.Count);
 
-            Parallel.ForEach(
-                traineeshipsExtended,
-                new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                traineeshipExtended =>
-                {
-                    traineeshipExtended.ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime;
-                    _traineeshipsSummaryUpdateProcessor.Process(traineeshipExtended);
-                });
+            foreach (var traineeshipExtended in traineeshipsExtended)
+            {
+                traineeshipExtended.ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime;
+                _traineeshipsSummaryUpdateProcessor.Process(traineeshipExtended);
+            }
 
             _logger.Info("Processed {0} traineeships", traineeshipsExtended.Count);
 

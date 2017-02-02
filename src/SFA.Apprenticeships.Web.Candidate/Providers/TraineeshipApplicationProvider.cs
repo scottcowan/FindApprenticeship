@@ -8,6 +8,7 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
     using System;
+    using System.Threading.Tasks;
     using ViewModels.Applications;
     using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
@@ -30,7 +31,7 @@
             _logger = logger;
         }
 
-        public TraineeshipApplicationViewModel GetApplicationViewModelEx(Guid candidateId, int vacancyId)
+        public async Task<TraineeshipApplicationViewModel> GetApplicationViewModelEx(Guid candidateId, int vacancyId)
         {
             _logger.Debug("Calling TraineeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.", candidateId, vacancyId);
 
@@ -48,7 +49,7 @@
                     };
                 }
 
-                return PatchWithVacancyDetail(candidateId, vacancyId, viewModel);
+                return await PatchWithVacancyDetail(candidateId, vacancyId, viewModel);
             }
             catch (CustomException e)
             {
@@ -71,7 +72,7 @@
             }
         }
 
-        public TraineeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
+        public async Task<TraineeshipApplicationViewModel> GetApplicationViewModel(Guid candidateId, int vacancyId)
         {
             _logger.Debug(
                 "Calling TraineeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
@@ -85,7 +86,7 @@
                     return new TraineeshipApplicationViewModel("Traineeship already applied", ApplicationViewModelStatus.ApplicationInIncorrectState);
                 }
 
-                var applicationDetails = _candidateService.CreateTraineeshipApplication(candidateId, vacancyId);
+                var applicationDetails = await _candidateService.CreateTraineeshipApplication(candidateId, vacancyId);
                 if (applicationDetails == null)
                 {
                     return new TraineeshipApplicationViewModel
@@ -94,7 +95,7 @@
                     };
                 }
                 var applicationViewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetails);
-                return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
+                return await PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
             catch (CustomException e)
             {
@@ -117,7 +118,7 @@
             }
         }
 
-        public TraineeshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId,
+        public async Task<TraineeshipApplicationViewModel> SubmitApplication(Guid candidateId, int vacancyId,
             TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
             _logger.Debug(
@@ -126,7 +127,7 @@
 
             try
             {
-                var model = GetApplicationViewModel(candidateId, vacancyId);
+                var model = await GetApplicationViewModel(candidateId, vacancyId);
 
                 //TODO: check for error (traineeship already submitted)?
 
@@ -165,7 +166,7 @@
             }
         }
 
-        public WhatHappensNextTraineeshipViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
+        public async Task<WhatHappensNextTraineeshipViewModel> GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
         {
             _logger.Debug(
                 "Calling TraineeshipApplicationProvider to get the What Happens Next data for candidate ID: {0}, vacancy ID: {1}.",
@@ -173,7 +174,7 @@
 
             try
             {
-                var vacancyDetailViewModel = _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+                var vacancyDetailViewModel = await _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
                 if (vacancyDetailViewModel.HasError())
                 {
@@ -241,11 +242,11 @@
             }
         }
 
-        private TraineeshipApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId,
+        private async Task<TraineeshipApplicationViewModel> PatchWithVacancyDetail(Guid candidateId, int vacancyId,
             TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
-            var vacancyDetailViewModel = _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = await _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
