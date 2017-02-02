@@ -111,6 +111,51 @@ testRunner.And("I see all the latest standards", ((string)(null)), ((TechTalk.Sp
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I request for a framework with a id 2 which has the status Ceased")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA577")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA577")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetFrameworkByIdReturnNotFound")]
+        public virtual void IRequestForAFrameworkWithAId2WhichHasTheStatusCeased()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I request for a framework with a id 2 which has the status Ceased", new string[] {
+                        "RA577",
+                        "GetFrameworkByIdReturnNotFound"});
+#line 19
+this.ScenarioSetup(scenarioInfo);
+#line 20
+testRunner.When("I request for a framework with id 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
+testRunner.Then("The response status is: NotFound with response message: The requested framework h" +
+                    "as not been found.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 22
+testRunner.And("I do not see the framework details for the id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I request for a framework with a id 264")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA577")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA577")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetFrameworkByIdReturnSuccess")]
+        public virtual void IRequestForAFrameworkWithAId264()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I request for a framework with a id 264", new string[] {
+                        "RA577",
+                        "GetFrameworkByIdReturnSuccess"});
+#line 25
+this.ScenarioSetup(scenarioInfo);
+#line 26
+testRunner.When("I request for a framework with id 264", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
+testRunner.Then("The response status is: Ok", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 28
+testRunner.And("I see the framework details for id 264", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

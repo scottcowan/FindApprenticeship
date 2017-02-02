@@ -197,5 +197,24 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 }
             }
         }
+        [When(@"I request for a framework with id (.*)")]
+        public void WhenIRequestForAFrameworkWithId(int p0)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [Then(@"I do not see the framework details for the id: (.*)")]
+        public void ThenIDoNotSeeTheFrameworkDetailsForTheId(int p0)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [Then(@"I see the framework details for id (.*)")]
+        public void ThenISeeTheFrameworkDetailsForId(int p0)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+
     }
 }
