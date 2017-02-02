@@ -469,10 +469,20 @@
             };
 
             var apprenticeshipFramework = _getOpenConnection.Query<ApprenticeshipFramework>(GetFrameworkByIdSql, sqlParams).FirstOrDefault();
-            
-            _logger.Debug($"Found {apprenticeshipFramework}");
-
             var framework = _mapper.Map<ApprenticeshipFramework, Framework>(apprenticeshipFramework);
+            if (apprenticeshipFramework != null)
+            {
+                var occupationId = apprenticeshipFramework.ApprenticeshipOccupationId;
+                var sqlParam1 = new
+                {
+                    occupationId
+                };
+                IList<ApprenticeshipOccupation> apprenticeshipOccupations = _getOpenConnection.Query<ApprenticeshipOccupation>(GetOccupationByIdSql, sqlParam1);
+                var occupation =
+                    apprenticeshipOccupations.FirstOrDefault(x => x.ApprenticeshipOccupationId == apprenticeshipFramework.ApprenticeshipOccupationId);
+                if (occupation != null) framework.ParentCategoryCodeName = occupation.CodeName;
+            }
+            _logger.Debug($"Found {apprenticeshipFramework}");
             return framework;
         }
 

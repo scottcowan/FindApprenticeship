@@ -33,7 +33,7 @@ namespace SFA.DAS.RAA.Api.Strategies
             {
                 throw new KeyNotFoundException(ReferenceMessages.FrameworkNotFound);
             }
-
+            //var category = framework.ToCategory();
             return framework;
         }
     }
