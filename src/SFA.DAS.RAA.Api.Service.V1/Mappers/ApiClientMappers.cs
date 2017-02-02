@@ -117,7 +117,8 @@
                 .ForMember(dest => dest.NewApplicationCount, opt => opt.Ignore())
                 .ForMember(dest => dest.ApplicantCount, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
-                .ForMember(dest => dest.IsMultiLocation, opt => opt.Ignore());
+                .ForMember(dest => dest.IsMultiLocation, opt => opt.Ignore())
+                .ForMember(dest => dest.OfflineVacancyType, opt => opt.Ignore());
 
             Mapper.CreateMap<ApiCounty, County>();
             Mapper.CreateMap<ApiLocalAuthority, LocalAuthority>();
