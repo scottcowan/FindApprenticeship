@@ -41,6 +41,8 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// reference e.g. 123456 for VAC000123456</param>
         /// <param name="vacancyGuid">The secondary GUID identifier for the
         /// vacancy</param>
+        /// <param name="vacancyOwnerRelationshipId">The primary identifier of
+        /// the linking object between a provider site and an employer</param>
         /// <param name="title">The main heading for the vacancy e.g. Retail
         /// Apprentice</param>
         /// <param name="shortDescription">A short paragraph of text giving a
@@ -85,6 +87,8 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// include: 'Unknown', 'Apprenticeship', 'Traineeship'</param>
         /// <param name="address">The address of the vacancy. Not always the
         /// employer's address</param>
+        /// <param name="contractOwnerId">The provider's primary
+        /// identifier</param>
         /// <param name="vacancyLocationType">The type of address of the
         /// vacancy. Indicates whether it's the employer's address or
         /// somewhere different. Possible values include: 'Unknown',
@@ -143,7 +147,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// employer would prefer to be displayed on the vacancy</param>
         /// <param name="anonymousAboutTheEmployer">The description the
         /// employer would prefer to be displayed on the vacancy</param>
-        public PublicVacancy(string desiredQualifications, string desiredSkills, string employerDescription, string futureProspects, string longDescription, string trainingProvided, int vacancyId, int vacancyReferenceNumber, System.Guid vacancyGuid, string title, string shortDescription, string workingWeek, string durationType, int duration, System.DateTime closingDate, System.DateTime possibleStartDate, bool offlineVacancy, System.DateTime dateQAApproved, string trainingType, string apprenticeshipLevel, string status, bool isAnonymousEmployer, int numberOfPositions, string vacancyType, PostalAddress address, string vacancyLocationType, int employerId, string employerName, string providerTradingName, PublicWage wage, bool isEmployerPositiveAboutDisability, string additionalLocationInformation = default(string), string contactEmail = default(string), string contactName = default(string), string contactNumber = default(string), string employerWebsiteUrl = default(string), string firstQuestion = default(string), string offlineApplicationInstructions = default(string), string offlineApplicationUrl = default(string), string otherInformation = default(string), string personalQualities = default(string), string secondQuestion = default(string), string thingsToConsider = default(string), string expectedDuration = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string employerAnonymousName = default(string), string anonymousAboutTheEmployer = default(string))
+        public PublicVacancy(string desiredQualifications, string desiredSkills, string employerDescription, string futureProspects, string longDescription, string trainingProvided, int vacancyId, int vacancyReferenceNumber, System.Guid vacancyGuid, int vacancyOwnerRelationshipId, string title, string shortDescription, string workingWeek, string durationType, int duration, System.DateTime closingDate, System.DateTime possibleStartDate, bool offlineVacancy, System.DateTime dateQAApproved, string trainingType, string apprenticeshipLevel, string status, bool isAnonymousEmployer, int numberOfPositions, string vacancyType, PostalAddress address, int contractOwnerId, string vacancyLocationType, int employerId, string employerName, string providerTradingName, PublicWage wage, bool isEmployerPositiveAboutDisability, string additionalLocationInformation = default(string), string contactEmail = default(string), string contactName = default(string), string contactNumber = default(string), string employerWebsiteUrl = default(string), string firstQuestion = default(string), string offlineApplicationInstructions = default(string), string offlineApplicationUrl = default(string), string otherInformation = default(string), string personalQualities = default(string), string secondQuestion = default(string), string thingsToConsider = default(string), string expectedDuration = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string employerAnonymousName = default(string), string anonymousAboutTheEmployer = default(string))
         {
             AdditionalLocationInformation = additionalLocationInformation;
             ContactEmail = contactEmail;
@@ -166,6 +170,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             VacancyId = vacancyId;
             VacancyReferenceNumber = vacancyReferenceNumber;
             VacancyGuid = vacancyGuid;
+            VacancyOwnerRelationshipId = vacancyOwnerRelationshipId;
             Title = title;
             ShortDescription = shortDescription;
             WorkingWeek = workingWeek;
@@ -188,6 +193,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             NumberOfPositions = numberOfPositions;
             VacancyType = vacancyType;
             Address = address;
+            ContractOwnerId = contractOwnerId;
             VacancyLocationType = vacancyLocationType;
             EmployerId = employerId;
             EmployerName = employerName;
@@ -338,6 +344,13 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyGuid")]
         public System.Guid VacancyGuid { get; set; }
+
+        /// <summary>
+        /// Gets or sets the primary identifier of the linking object between
+        /// a provider site and an employer
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyOwnerRelationshipId")]
+        public int VacancyOwnerRelationshipId { get; set; }
 
         /// <summary>
         /// Gets or sets the main heading for the vacancy e.g. Retail
@@ -498,6 +511,12 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Address")]
         public PostalAddress Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets the provider's primary identifier
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ContractOwnerId")]
+        public int ContractOwnerId { get; set; }
 
         /// <summary>
         /// Gets or sets the type of address of the vacancy. Indicates whether

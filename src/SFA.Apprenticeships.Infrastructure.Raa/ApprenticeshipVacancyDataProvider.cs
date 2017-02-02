@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
     using System.Linq;
+    using System.Net;
     using System.Threading.Tasks;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
@@ -14,6 +15,7 @@
     using Application.Interfaces.Api;
     using DAS.RAA.Api.Client.V1.Models;
     using DAS.RAA.Api.Service.V1.Mappers;
+    using Microsoft.Rest;
     using ErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
     using Vacancy = Domain.Entities.Raa.Vacancies.Vacancy;
 
@@ -40,14 +42,25 @@
 
         public async Task<ApprenticeshipVacancyDetail> GetVacancyDetails(int vacancyId, bool errorIfNotFound = false)
         {
-            Vacancy vacancy;
+            Vacancy vacancy = null;
             if (_apiClientProvider.IsEnabled())
             {
-                var apiClient = _apiClientProvider.GetApiClient();
-                var apiResponse = await apiClient.PublicVacancyOperations.GetByIdWithHttpMessagesAsync(vacancyId);
-                //TODO: check for nulls and exceptions
-                var publicVacancy = apiResponse.Body;
-                vacancy = ApiClientMappers.Map<PublicVacancy, Vacancy>(publicVacancy);
+                try
+                {
+                    var apiClient = _apiClientProvider.GetApiClient();
+                    var apiResponse = await apiClient.PublicVacancyOperations.GetByIdWithHttpMessagesAsync(vacancyId);
+                    //TODO: check for nulls and exceptions
+                    var publicVacancy = apiResponse.Body;
+                    vacancy = ApiClientMappers.Map<PublicVacancy, Vacancy>(publicVacancy);
+                }
+                catch (HttpOperationException ex)
+                {
+                    _logService.Warn($"Calling the API to retrieve vacancy with ID: {vacancyId} caused an exception", ex);
+                    if (ex.Response.StatusCode == HttpStatusCode.InternalServerError)
+                    {
+                        throw;
+                    }
+                }
             }
             else
             {

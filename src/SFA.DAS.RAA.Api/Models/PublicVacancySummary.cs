@@ -30,6 +30,11 @@
         [Required]
         public Guid VacancyGuid { get; set; }
         /// <summary>
+        /// The primary identifier of the linking object between a provider site and an employer
+        /// </summary>
+        [Required]
+        public int VacancyOwnerRelationshipId { get; set; }
+        /// <summary>
         /// The main heading for the vacancy e.g. Retail Apprentice
         /// </summary>
         [Required]
@@ -134,6 +139,11 @@
         /// </summary>
         [Required]
         public PostalAddress Address { get; set; }
+        /// <summary>
+        /// The provider's primary identifier
+        /// </summary>
+        [Required]
+        public int ContractOwnerId { get; set; }
         /// <summary>
         /// The type of address of the vacancy. Indicates whether it's the employer's address or somewhere different
         /// </summary>
