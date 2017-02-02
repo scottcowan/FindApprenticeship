@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Application.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancies.Entities;
@@ -18,10 +19,6 @@
     using Domain.Raa.Interfaces.Repositories.Models;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
-    /// <summary>
-    /// TODO: This class will eventually use an RAA service for the data rather than referencing repositories directly.
-    /// This service does not exist yet and so the simplest approach has been used for now
-    /// </summary>
     public class VacancyIndexDataProvider : IVacancyIndexDataProvider
     {
         private const int PageSize = 500;
@@ -46,53 +43,66 @@
             _apiClientProvider = apiClientProvider;
         }
 
-        public int GetVacancyPageCount()
+        public async Task<int> GetVacancyPageCount()
         {
+            int count;
+            int pageSize;
+
             if (_apiClientProvider.IsEnabled())
             {
                 var apiClient = _apiClientProvider.GetApiClient();
-                var apiTask = apiClient.PublicVacancySummaryOperations.GetAllLiveVacancySummariesWithHttpMessagesAsync();
-                apiTask.Wait();
-                var publicVacancySummariesPage = apiTask.Result.Body;
-                return publicVacancySummariesPage.TotalPages;
+                var apiResponse = await apiClient.PublicVacancySummaryOperations.GetAllLiveVacancySummariesWithHttpMessagesAsync(1, 1);
+                var publicVacancySummariesPage = apiResponse.Body;
+                count = publicVacancySummariesPage.TotalCount;
+                pageSize = ApiPageSize;
+            }
+            else
+            {
+                count = _vacancyReadRepository.CountWithStatus(DesiredStatuses);
+                pageSize = PageSize;
             }
 
-            var count = _vacancyReadRepository.CountWithStatus(DesiredStatuses);
-
-            var pageCount = count/PageSize;
-            if (count%PageSize != 0)
+            var pageCount = count / pageSize;
+            if (count% pageSize != 0)
             {
                 pageCount++;
             }
             return pageCount;
         }
 
-        public VacancySummaries GetVacancySummaries(int pageNumber)
+        public async Task<VacancySummaries> GetVacancySummaries(int pageNumber)
         {
             IList<VacancySummary> vacancies;
 
-            if (_apiClientProvider.IsEnabled())
+            try
             {
-                var apiClient = _apiClientProvider.GetApiClient();
-                var apiTask = apiClient.PublicVacancySummaryOperations.GetAllLiveVacancySummariesWithHttpMessagesAsync(pageNumber, ApiPageSize);
-                apiTask.Wait();
-                var publicVacancySummariesPage = apiTask.Result.Body;
-
-                vacancies = ApiClientMappers.Map<IList<PublicVacancySummary>, IList<VacancySummary>>(publicVacancySummariesPage.VacancySummaries);
-            }
-            else
-            {
-                //Page number coming in increments from 1 rather than 0, the repo expects pages to start at 0 so take one from the passed in value
-                var query = new VacancySummaryByStatusQuery()
+                if (_apiClientProvider.IsEnabled())
                 {
-                    PageSize = PageSize,
-                    RequestedPage = pageNumber,
-                    DesiredStatuses = DesiredStatuses
-                };
+                    var apiClient = _apiClientProvider.GetApiClient();
+                    var apiResponse = await apiClient.PublicVacancySummaryOperations.GetAllLiveVacancySummariesWithHttpMessagesAsync(pageNumber, ApiPageSize);
+                    var publicVacancySummariesPage = apiResponse.Body;
 
-                int totalRecords;
+                    vacancies = ApiClientMappers.Map<IList<PublicVacancySummary>, IList<VacancySummary>>(publicVacancySummariesPage.VacancySummaries);
+                }
+                else
+                {
+                    //Page number coming in increments from 1 rather than 0, the repo expects pages to start at 0 so take one from the passed in value
+                    var query = new VacancySummaryByStatusQuery()
+                    {
+                        PageSize = PageSize,
+                        RequestedPage = pageNumber,
+                        DesiredStatuses = DesiredStatuses
+                    };
 
-                vacancies = _vacancySummaryService.GetWithStatus(query, out totalRecords);
+                    int totalRecords;
+
+                    vacancies = _vacancySummaryService.GetWithStatus(query, out totalRecords);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Exception thrown when retrieving vacancy summaries page {pageNumber}", ex);
+                throw;
             }
 
             var categories = new List<Category>(_referenceDataProvider.GetCategories(CategoryStatus.Active, CategoryStatus.PendingClosure).ToList());
