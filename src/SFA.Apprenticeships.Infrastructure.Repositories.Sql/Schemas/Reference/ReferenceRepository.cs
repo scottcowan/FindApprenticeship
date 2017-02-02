@@ -477,10 +477,11 @@
                 {
                     occupationId
                 };
-                IList<ApprenticeshipOccupation> apprenticeshipOccupations = _getOpenConnection.Query<ApprenticeshipOccupation>(GetOccupationByIdSql, sqlParam1);
-                var occupation =
-                    apprenticeshipOccupations.FirstOrDefault(x => x.ApprenticeshipOccupationId == apprenticeshipFramework.ApprenticeshipOccupationId);
-                if (occupation != null) framework.ParentCategoryCodeName = occupation.CodeName;
+                var apprenticeshipOccupation = _getOpenConnection.Query<ApprenticeshipOccupation>(GetOccupationByIdSql, sqlParam1)
+                    .FirstOrDefault();
+                //var occupation =
+                //    apprenticeshipOccupations.FirstOrDefault(x => x.ApprenticeshipOccupationId == apprenticeshipFramework.ApprenticeshipOccupationId);
+                if (apprenticeshipOccupation != null) framework.ParentCategoryCodeName = apprenticeshipOccupation.CodeName;
             }
             _logger.Debug($"Found {apprenticeshipFramework}");
             return framework;

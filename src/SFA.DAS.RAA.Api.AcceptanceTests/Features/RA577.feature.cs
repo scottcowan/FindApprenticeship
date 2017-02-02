@@ -113,46 +113,45 @@ testRunner.And("I see all the latest standards", ((string)(null)), ((TechTalk.Sp
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I request for a framework with a id 2 which has the status Ceased")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get framework by id that has the status ceased")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA577")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA577")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetFrameworkByIdReturnNotFound")]
-        public virtual void IRequestForAFrameworkWithAId2WhichHasTheStatusCeased()
+        public virtual void GetFrameworkByIdThatHasTheStatusCeased()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I request for a framework with a id 2 which has the status Ceased", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get framework by id that has the status ceased", new string[] {
                         "RA577",
                         "GetFrameworkByIdReturnNotFound"});
 #line 19
 this.ScenarioSetup(scenarioInfo);
 #line 20
-testRunner.When("I request for a framework with id 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+testRunner.Given("I request the framework with id: 264", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 21
-testRunner.Then("The response status is: NotFound with response message: The requested framework h" +
-                    "as not been found.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.Then("The response status is : NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 22
-testRunner.And("I do not see the framework details for the id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+testRunner.And("I do not see the information for the framework with id: 264", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I request for a framework with a id 264")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get Framework by id that does exist and is active")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA577")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA577")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetFrameworkByIdReturnSuccess")]
-        public virtual void IRequestForAFrameworkWithAId264()
+        public virtual void GetFrameworkByIdThatDoesExistAndIsActive()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I request for a framework with a id 264", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Framework by id that does exist and is active", new string[] {
                         "RA577",
                         "GetFrameworkByIdReturnSuccess"});
 #line 25
 this.ScenarioSetup(scenarioInfo);
 #line 26
-testRunner.When("I request for a framework with id 264", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+testRunner.Given("I request the framework with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 27
-testRunner.Then("The response status is: Ok", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 28
-testRunner.And("I see the framework details for id 264", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+testRunner.And("I see the information for the framework with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -2,6 +2,7 @@
 
 namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
+    using Apprenticeships.Domain.Entities.Raa.Reference;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.ReferenceData;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference;
@@ -11,6 +12,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Factories;
     using FluentAssertions;
     using Models;
+    using Moq;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
     using System.Collections.Generic;
@@ -167,8 +169,10 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                         ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
                     }
 
-                    var responseStandardSubjectAreaTierOnes = JsonConvert.DeserializeObject<IList<StandardSubjectAreaTierOne>>(content);
-                    ScenarioContext.Current.Add("responseStandardSubjectAreaTierOnes", responseStandardSubjectAreaTierOnes);
+                    var responseStandardSubjectAreaTierOnes =
+                        JsonConvert.DeserializeObject<IList<StandardSubjectAreaTierOne>>(content);
+                    ScenarioContext.Current.Add("responseStandardSubjectAreaTierOnes",
+                        responseStandardSubjectAreaTierOnes);
                 }
             }
         }
@@ -178,7 +182,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         {
             var occupations = ScenarioContext.Current.Get<List<ApprenticeshipOccupation>>("occupations");
             var sectors = ScenarioContext.Current.Get<List<StandardSector>>("sectors");
-            var responseStandardSubjectAreaTierOnes = ScenarioContext.Current.Get<IList<StandardSubjectAreaTierOne>>("responseStandardSubjectAreaTierOnes");
+            var responseStandardSubjectAreaTierOnes =
+                ScenarioContext.Current.Get<IList<StandardSubjectAreaTierOne>>("responseStandardSubjectAreaTierOnes");
 
             responseStandardSubjectAreaTierOnes.Should().NotBeNullOrEmpty();
             responseStandardSubjectAreaTierOnes.Count.Should().Be(occupations.Count);
@@ -197,23 +202,82 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 }
             }
         }
-        [When(@"I request for a framework with id (.*)")]
-        public void WhenIRequestForAFrameworkWithId(int p0)
+
+        [Given(@"I request the framework with id: (.*)")]
+        public async Task GivenIRequestTheFrameworkWithId(int frameworkId)
+        {
+            var requestUri = string.Format(UriFormats.GetFrameworksByIdUri, frameworkId);
+            await GetFrameworkById(requestUri);
+        }
+
+        private async Task GetFrameworkById(string requestUri)
+        {
+            var framework = new Fixture().Build<ApprenticeshipFramework>()
+                .With(f => f.ApprenticeshipFrameworkId, 2)
+                .With(f => f.ApprenticeshipFrameworkStatusTypeId, 1)
+                .With(f => f.ApprenticeshipOccupationId, 1)
+                .Create();
+
+            var occupation = new Fixture().Build<ApprenticeshipOccupation>()
+                .With(o => o.ApprenticeshipOccupationId, 1)
+                .With(o => o.CodeName, "CodeName1")
+                .Create();
+
+            ScenarioContext.Current.Add("framework", framework);
+            ScenarioContext.Current.Add("occupation", occupation);
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<ApprenticeshipFramework>(ReferenceRepository.GetFrameworkByIdSql,
+                It.Is<object>(o => o.GetHashCode() == new { frameworkId = framework.ApprenticeshipFrameworkId }.GetHashCode()), null, null))
+                .Returns(new[] { framework });
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<ApprenticeshipOccupation>(ReferenceRepository.GetOccupationByIdSql,
+                It.Is<object>(o => o.GetHashCode() == new { occupationId = occupation.ApprenticeshipOccupationId }.GetHashCode()), null, null))
+                .Returns(new[] { occupation });
+
+            var httpClient = FeatureContext.Current.TestServer().HttpClient;
+
+            using (var response = await httpClient.GetAsync(requestUri))
+            {
+                ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseStatusCode, response.StatusCode);
+                using (var httpContent = response.Content)
+                {
+                    var content = await httpContent.ReadAsStringAsync();
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        var responseMessage = JsonConvert.DeserializeObject<ResponseMessage>(content);
+                        ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
+                    }
+
+                    var responseFramework =
+                        JsonConvert.DeserializeObject<Framework>(content);
+                    ScenarioContext.Current.Add("responseFramework",
+                        responseFramework);
+                }
+            }
+        }
+
+        [Then(@"The response status is : NotFound")]
+        public void ThenTheResponseStatusIsNotFound()
         {
             ScenarioContext.Current.Pending();
         }
 
-        [Then(@"I do not see the framework details for the id: (.*)")]
-        public void ThenIDoNotSeeTheFrameworkDetailsForTheId(int p0)
+        [Then(@"I do not see the information for the framework with id:(.*)")]
+        public void ThenIDoNotSeeTheInformationForTheFrameworkWithId(int p0)
         {
             ScenarioContext.Current.Pending();
         }
 
-        [Then(@"I see the framework details for id (.*)")]
-        public void ThenISeeTheFrameworkDetailsForId(int p0)
+        [Then(@"I see the information for the framework with id: (.*)")]
+        public void ThenISeeTheInformationForTheFrameworkWithId(int p0)
         {
-            ScenarioContext.Current.Pending();
+            var occupations = ScenarioContext.Current.Get<List<ApprenticeshipOccupation>>("occupations");
+            var responseFramework = ScenarioContext.Current.Get<Framework>("responseFramework");
+            responseFramework.Should().NotBeNull();
         }
+
 
 
     }

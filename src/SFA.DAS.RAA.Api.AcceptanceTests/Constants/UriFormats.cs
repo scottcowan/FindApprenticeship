@@ -31,5 +31,7 @@
 
         public const string GetFrameworksUri = "frameworks";
         public const string GetStandardssUri = "standards";
+        public const string GetFrameworksByIdUri = "framework/{0}";
+        public const string GetStandardssByIdUri = "standard/{0}";
     }
 }
