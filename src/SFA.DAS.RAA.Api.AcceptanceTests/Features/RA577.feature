@@ -27,4 +27,14 @@ Given I request the framework with id: 2
 Then The response status is: OK
 And I see the information for the framework with id: 2
 
+@RA577 @GetStandardByIdReturnSuccess
+Scenario: Get Standard by id that exists and is active
+Given I request the standard with id: 2
+Then The response status is: OK
+And I see the information for the standard with id: 2
 
+@RA577 @GetStandardByIdReturnNotFound
+Scenario: Get Standard by id that does not exists
+Given I request the standard with id: 999
+Then The response status is: NotFound
+And I see do not see the information for the framework with id: 999

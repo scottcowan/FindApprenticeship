@@ -297,6 +297,55 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             responseFramework.ParentCategoryCodeName.Should().Be(occupationWithId.CodeName);
         }
 
+        [Given(@"I request the standard with id: (.*)")]
+        public async Task GivenIRequestTheStandardWithId(int standardId)
+        {
+            var requestUri = string.Format(UriFormats.GetStandardssByIdUri, standardId);
+            await GetStandardById(requestUri);
+        }
+
+        private async Task GetStandardById(string requestUri)
+        {
+            var httpClient = FeatureContext.Current.TestServer().HttpClient;
+
+            using (var response = await httpClient.GetAsync(requestUri))
+            {
+                ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseStatusCode, response.StatusCode);
+                using (var httpContent = response.Content)
+                {
+                    var content = await httpContent.ReadAsStringAsync();
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        var responseMessage = JsonConvert.DeserializeObject<ResponseMessage>(content);
+                        ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
+                    }
+
+                    var responseFramework =
+                        JsonConvert.DeserializeObject<Framework>(content);
+                    if (responseFramework != null && new Framework().Equals(responseFramework))
+                    {
+                        responseFramework = null;
+                    }
+                    ScenarioContext.Current.Add(requestUri, responseFramework);
+                }
+            }
+        }
+
+        [Then(@"I see the information for the standard with id: (.*)")]
+        public void ThenISeeTheInformationForTheStandardWithId(int standardId)
+        {
+            var requestUri = string.Format(UriFormats.GetStandardssByIdUri, standardId);
+            var responseStandard = ScenarioContext.Current.Get<Standard>(requestUri);
+            responseStandard.Should().NotBeNull();
+        }
+
+        [Then(@"I see do not see the information for the framework with id: (.*)")]
+        public void ThenISeeDoNotSeeTheInformationForTheFrameworkWithId(int standardId)
+        {
+            var requestUri = string.Format(UriFormats.GetStandardssByIdUri, standardId);
+            var responseStandard = ScenarioContext.Current.Get<Standard>(requestUri);
+            responseStandard.Should().BeNull();
+        }
 
 
     }

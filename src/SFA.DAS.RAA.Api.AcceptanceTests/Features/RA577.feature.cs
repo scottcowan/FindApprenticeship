@@ -155,6 +155,50 @@ testRunner.And("I see the information for the framework with id: 2", ((string)(n
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get Standard by id that exists and is active")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA577")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA577")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetStandardByIdReturnSuccess")]
+        public virtual void GetStandardByIdThatExistsAndIsActive()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Standard by id that exists and is active", new string[] {
+                        "RA577",
+                        "GetStandardByIdReturnSuccess"});
+#line 31
+this.ScenarioSetup(scenarioInfo);
+#line 32
+testRunner.Given("I request the standard with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 33
+testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 34
+testRunner.And("I see the information for the standard with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get Standard by id that does not exists")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA577")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA577")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetStandardByIdReturnNotFound")]
+        public virtual void GetStandardByIdThatDoesNotExists()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Standard by id that does not exists", new string[] {
+                        "RA577",
+                        "GetStandardByIdReturnNotFound"});
+#line 37
+this.ScenarioSetup(scenarioInfo);
+#line 38
+testRunner.Given("I request the standard with id: 999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 39
+testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 40
+testRunner.And("I see do not see the information for the framework with id: 999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
