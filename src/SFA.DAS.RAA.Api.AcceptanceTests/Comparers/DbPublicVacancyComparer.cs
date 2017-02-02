@@ -29,7 +29,7 @@
                 && ((double?)object1.Latitude).Equals(object2.Address.GeoPoint.Latitude)
                 && object1.GeocodeEasting == object2.Address.GeoPoint.Easting
                 && object1.GeocodeNorthing == object2.Address.GeoPoint.Northing
-                && object2.AnonymousAboutTheEmployer == null
+                && string.Equals(object1.AnonymousAboutTheEmployer, object2.AnonymousAboutTheEmployer)
                 && object2.ApplicantCount == 0
                 && object1.ApprenticeshipLevel == object2.ApprenticeshipLevel
                 && object1.ApplicationClosingDate.Equals(object2.ClosingDate)

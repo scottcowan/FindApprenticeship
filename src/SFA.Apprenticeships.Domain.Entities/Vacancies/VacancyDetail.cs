@@ -45,13 +45,9 @@
 
         public string RealityCheck { get; set; }
 
-        public DateTime Created { get; set; }
-
         public VacancyStatuses VacancyStatus { get; set; }
 
         public TrainingType TrainingType { get; set; }
-
-        public bool EditedInRaa { get; set; }
 
         public VacancyLocationType VacancyLocationType { get; set; }
         

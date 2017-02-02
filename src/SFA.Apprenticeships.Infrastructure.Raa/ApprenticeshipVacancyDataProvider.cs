@@ -10,28 +10,49 @@
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
     using Application.Interfaces;
+    using Application.Interfaces.Api;
+    using DAS.RAA.Api.Client.V1.Models;
+    using DAS.RAA.Api.Service.V1.Mappers;
     using ErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
+    using Vacancy = Domain.Entities.Raa.Vacancies.Vacancy;
 
     public class ApprenticeshipVacancyDataProvider : IVacancyDataProvider<ApprenticeshipVacancyDetail>
     {
+        private static readonly IMapper ApiClientMappers = new ApiClientMappers();
+
         private readonly IVacancyReadRepository _vacancyReadRepository;
         private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
         private readonly IReferenceDataProvider _referenceDataProvider;
         private readonly ILogService _logService;
+        private readonly IApiClientProvider _apiClientProvider;
 
-        public ApprenticeshipVacancyDataProvider(IVacancyReadRepository vacancyReadRepository, IProviderService providerService, IEmployerService employerService, IReferenceDataProvider referenceDataProvider, ILogService logService)
+        public ApprenticeshipVacancyDataProvider(IVacancyReadRepository vacancyReadRepository, IProviderService providerService, IEmployerService employerService, IReferenceDataProvider referenceDataProvider, ILogService logService, IApiClientProvider apiClientProvider)
         {
             _vacancyReadRepository = vacancyReadRepository;
             _providerService = providerService;
             _employerService = employerService;
             _referenceDataProvider = referenceDataProvider;
             _logService = logService;
+            _apiClientProvider = apiClientProvider;
         }
 
         public ApprenticeshipVacancyDetail GetVacancyDetails(int vacancyId, bool errorIfNotFound = false)
         {
-            var vacancy = _vacancyReadRepository.Get(vacancyId);
+            Vacancy vacancy;
+            if (_apiClientProvider.IsEnabled())
+            {
+                var apiClient = _apiClientProvider.GetApiClient();
+                var apiTask = apiClient.PublicVacancyOperations.GetByIdWithHttpMessagesAsync(vacancyId);
+                apiTask.Wait();
+                var publicVacancy = apiTask.Result.Body;
+                //TODO: check for nulls and exceptions
+                vacancy = ApiClientMappers.Map<PublicVacancy, Vacancy>(publicVacancy);
+            }
+            else
+            {
+                vacancy = _vacancyReadRepository.Get(vacancyId);
+            }
 
             if (vacancy == null)
             {

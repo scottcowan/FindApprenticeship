@@ -96,7 +96,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// apprenticeship is operating under</param>
         /// <param name="employerAnonymousName">The displayed name the
         /// employer would prefer to be displayed on the vacancy</param>
-        public PublicVacancySummary(int vacancyId, int vacancyReferenceNumber, System.Guid vacancyGuid, string title, string shortDescription, string workingWeek, string durationType, int duration, System.DateTime closingDate, System.DateTime possibleStartDate, bool offlineVacancy, System.DateTime dateQAApproved, string trainingType, string apprenticeshipLevel, string status, bool isAnonymousEmployer, int numberOfPositions, string vacancyType, PostalAddress address, string vacancyLocationType, int employerId, string employerName, string providerTradingName, PublicWage wage, bool isEmployerPositiveAboutDisability, string expectedDuration = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string employerAnonymousName = default(string))
+        /// <param name="anonymousAboutTheEmployer">The description the
+        /// employer would prefer to be displayed on the vacancy</param>
+        public PublicVacancySummary(int vacancyId, int vacancyReferenceNumber, System.Guid vacancyGuid, string title, string shortDescription, string workingWeek, string durationType, int duration, System.DateTime closingDate, System.DateTime possibleStartDate, bool offlineVacancy, System.DateTime dateQAApproved, string trainingType, string apprenticeshipLevel, string status, bool isAnonymousEmployer, int numberOfPositions, string vacancyType, PostalAddress address, string vacancyLocationType, int employerId, string employerName, string providerTradingName, PublicWage wage, bool isEmployerPositiveAboutDisability, string expectedDuration = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string employerAnonymousName = default(string), string anonymousAboutTheEmployer = default(string))
         {
             VacancyId = vacancyId;
             VacancyReferenceNumber = vacancyReferenceNumber;
@@ -119,6 +121,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             Status = status;
             EmployerAnonymousName = employerAnonymousName;
             IsAnonymousEmployer = isAnonymousEmployer;
+            AnonymousAboutTheEmployer = anonymousAboutTheEmployer;
             NumberOfPositions = numberOfPositions;
             VacancyType = vacancyType;
             Address = address;
@@ -281,6 +284,13 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "IsAnonymousEmployer")]
         public bool IsAnonymousEmployer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description the employer would prefer to be
+        /// displayed on the vacancy
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "AnonymousAboutTheEmployer")]
+        public string AnonymousAboutTheEmployer { get; set; }
 
         /// <summary>
         /// Gets or sets the number of positions available for this vacancy

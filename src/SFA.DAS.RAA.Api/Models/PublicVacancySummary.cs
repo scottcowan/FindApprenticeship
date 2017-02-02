@@ -116,6 +116,10 @@
         [Required]
         public bool? IsAnonymousEmployer { get; set; }
         /// <summary>
+        /// The description the employer would prefer to be displayed on the vacancy
+        /// </summary>
+        public string AnonymousAboutTheEmployer { get; set; }
+        /// <summary>
         /// The number of positions available for this vacancy
         /// </summary>
         [Required]
