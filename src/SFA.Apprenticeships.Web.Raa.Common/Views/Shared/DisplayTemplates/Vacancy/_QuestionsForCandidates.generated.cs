@@ -147,18 +147,16 @@ WriteAttribute("class", Tuple.Create(" class=\"", 1153), Tuple.Create("\"", 1265
 , 1187), false)
 );
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
+WriteLiteral(">\r\n                            <p>");
 
             
             #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
-                        Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyQuestionsViewModel.FirstQuestion));
+                           Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyQuestionsViewModel.FirstQuestion));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        </div>\r\n");
+WriteLiteral("</p>\r\n                        </div>\r\n");
 
 WriteLiteral("                        ");
 
@@ -190,15 +188,15 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1876), Tuple.Create("\"", 1915)
+WriteAttribute("class", Tuple.Create(" class=\"", 1883), Tuple.Create("\"", 1922)
             
             #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
-, Tuple.Create(Tuple.Create("", 1884), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 1891), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1884), false)
-, Tuple.Create(Tuple.Create(" ", 1902), Tuple.Create("sfa-if-first", 1903), true)
+, 1891), false)
+, Tuple.Create(Tuple.Create(" ", 1909), Tuple.Create("sfa-if-first", 1910), true)
 );
 
 WriteLiteral(">\r\n                        <h3");
@@ -218,29 +216,27 @@ WriteLiteral("                            ");
             #line hidden
 WriteLiteral("\r\n                        </h3>\r\n                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2310), Tuple.Create("\"", 2423)
-, Tuple.Create(Tuple.Create("", 2318), Tuple.Create("sfa-text-editor-generated", 2318), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 2317), Tuple.Create("\"", 2430)
+, Tuple.Create(Tuple.Create("", 2325), Tuple.Create("sfa-text-editor-generated", 2325), true)
             
             #line 36 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
-, Tuple.Create(Tuple.Create(" ", 2343), Tuple.Create<System.Object, System.Int32>(Model.VacancyQuestionsViewModel.SecondQuestion.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create(" ", 2350), Tuple.Create<System.Object, System.Int32>(Model.VacancyQuestionsViewModel.SecondQuestion.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 2344), false)
+, 2351), false)
 );
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
+WriteLiteral(">\r\n                            <p>");
 
             
             #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
-                        Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyQuestionsViewModel.SecondQuestion));
+                           Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyQuestionsViewModel.SecondQuestion));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        </div>\r\n");
+WriteLiteral("</p>\r\n                        </div>\r\n");
 
 WriteLiteral("                        ");
 

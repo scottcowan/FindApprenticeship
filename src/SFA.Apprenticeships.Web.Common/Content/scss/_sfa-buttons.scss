@@ -111,3 +111,24 @@ $secondary-button-bg: transparent;
 }
 
 
+// Apply to an edit button related to content in a <p> tag 
+.sfa-edit-button-p { 
+    display: table;
+    margin-top: -15px;
+    margin-bottom: 20px;
+    @include media(tablet) {
+        margin-top: -15px;
+        margin-bottom: 20px;
+    }
+}
+
+// Apply to an edit button related to a header with the class .heading-xlarge
+.sfa-edit-button-heading-xlarge { 
+    display: table;
+    margin-top: -30px;
+    margin-bottom: 30px;
+    @include media(tablet) {
+        margin-top: -60px;
+        margin-bottom: 60px;
+    }  
+}  
