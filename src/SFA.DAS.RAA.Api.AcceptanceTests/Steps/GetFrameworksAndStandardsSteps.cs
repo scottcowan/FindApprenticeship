@@ -212,29 +212,33 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 
         private async Task GetFrameworkById(string requestUri)
         {
-            var framework = new Fixture().Build<ApprenticeshipFramework>()
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+             m => m.Query<ApprenticeshipFramework>(ReferenceRepository.GetFrameworkByIdSql, It.IsAny<object>(), null, null))
+             .Returns(new List<ApprenticeshipFramework>());
+
+            var frameworkWithId = new Fixture().Build<ApprenticeshipFramework>()
                 .With(f => f.ApprenticeshipFrameworkId, 2)
                 .With(f => f.ApprenticeshipFrameworkStatusTypeId, 1)
                 .With(f => f.ApprenticeshipOccupationId, 1)
                 .Create();
 
-            var occupation = new Fixture().Build<ApprenticeshipOccupation>()
+            var occupationWithId = new Fixture().Build<ApprenticeshipOccupation>()
                 .With(o => o.ApprenticeshipOccupationId, 1)
                 .With(o => o.CodeName, "CodeName1")
                 .Create();
 
-            ScenarioContext.Current.Add("framework", framework);
-            ScenarioContext.Current.Add("occupation", occupation);
+            ScenarioContext.Current.Add("frameworkWithId", frameworkWithId);
+            ScenarioContext.Current.Add("occupationWithId", occupationWithId);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
                 m => m.Query<ApprenticeshipFramework>(ReferenceRepository.GetFrameworkByIdSql,
-                It.Is<object>(o => o.GetHashCode() == new { frameworkId = framework.ApprenticeshipFrameworkId }.GetHashCode()), null, null))
-                .Returns(new[] { framework });
+                It.Is<object>(o => o.GetHashCode() == new { frameworkId = frameworkWithId.ApprenticeshipFrameworkId }.GetHashCode()), null, null))
+                .Returns(new[] { frameworkWithId });
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
                 m => m.Query<ApprenticeshipOccupation>(ReferenceRepository.GetOccupationByIdSql,
-                It.Is<object>(o => o.GetHashCode() == new { occupationId = occupation.ApprenticeshipOccupationId }.GetHashCode()), null, null))
-                .Returns(new[] { occupation });
+                It.Is<object>(o => o.GetHashCode() == new { occupationId = occupationWithId.ApprenticeshipOccupationId }.GetHashCode()), null, null))
+                .Returns(new[] { occupationWithId });
 
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
 
@@ -252,30 +256,45 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 
                     var responseFramework =
                         JsonConvert.DeserializeObject<Framework>(content);
-                    ScenarioContext.Current.Add("responseFramework",
-                        responseFramework);
+                    if (responseFramework != null && new Framework().Equals(responseFramework))
+                    {
+                        responseFramework = null;
+                    }
+                    ScenarioContext.Current.Add(requestUri, responseFramework);
                 }
             }
         }
 
-        [Then(@"The response status is : NotFound")]
-        public void ThenTheResponseStatusIsNotFound()
+        [Then(@"I do not see the information for the framework with id: (.*)")]
+        public void ThenIDoNotSeeTheInformationForTheFrameworkWithId(int frameworkId)
         {
-            ScenarioContext.Current.Pending();
-        }
-
-        [Then(@"I do not see the information for the framework with id:(.*)")]
-        public void ThenIDoNotSeeTheInformationForTheFrameworkWithId(int p0)
-        {
-            ScenarioContext.Current.Pending();
+            var requestUri = string.Format(UriFormats.GetFrameworksByIdUri, frameworkId);
+            var responseFramework = ScenarioContext.Current.Get<Framework>(requestUri);
+            responseFramework.Should().BeNull();
         }
 
         [Then(@"I see the information for the framework with id: (.*)")]
-        public void ThenISeeTheInformationForTheFrameworkWithId(int p0)
+        public void ThenISeeTheInformationForTheFrameworkWithId(int frameworkId)
         {
-            var occupations = ScenarioContext.Current.Get<List<ApprenticeshipOccupation>>("occupations");
-            var responseFramework = ScenarioContext.Current.Get<Framework>("responseFramework");
+            var requestUri = string.Format(UriFormats.GetFrameworksByIdUri, frameworkId);
+            var frameworkWithId = ScenarioContext.Current.Get<ApprenticeshipFramework>("frameworkWithId");
+            var occupationWithId = ScenarioContext.Current.Get<ApprenticeshipOccupation>("occupationWithId");
+
+            var responseFramework = ScenarioContext.Current.Get<Framework>(requestUri);
+
             responseFramework.Should().NotBeNull();
+            responseFramework.CodeName.Should().NotBeNullOrEmpty();
+            responseFramework.FullName.Should().NotBeNullOrEmpty();
+            responseFramework.ParentCategoryCodeName.Should().NotBeNullOrEmpty();
+            responseFramework.ShortName.Should().NotBeNullOrEmpty();
+            responseFramework.Status.Should().Be(FrameworkStatusType.Active);
+
+            responseFramework.Id.Should().Be(frameworkWithId.ApprenticeshipFrameworkId);
+            responseFramework.CodeName.Should().Be(frameworkWithId.CodeName);
+            responseFramework.FullName.Should().Be(frameworkWithId.FullName);
+            responseFramework.ShortName.Should().Be(frameworkWithId.ShortName);
+            responseFramework.Status.Should().Be((FrameworkStatusType)frameworkWithId.ApprenticeshipFrameworkStatusTypeId);
+            responseFramework.ParentCategoryCodeName.Should().Be(occupationWithId.CodeName);
         }
 
 

@@ -35,8 +35,8 @@
         public static string GetStandardSql = "SELECT * FROM Reference.Standard ORDER BY FullName;";
         public static string GetEducationLevelSql = "SELECT * FROM Reference.EducationLevel;";
 
-        public static string GetFrameworkByIdSql = "SELECT * FROM ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @FrameworkId";
-        public static string GetOccupationByIdSql = "SELECT * FROM ApprenticeshipOccupation WHERE ApprenticeshipOccupationId = @OccupationId";
+        public static string GetFrameworkByIdSql = "SELECT * FROM dbo.ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @FrameworkId";
+        public static string GetOccupationByIdSql = "SELECT * FROM dbo.ApprenticeshipOccupation WHERE ApprenticeshipOccupationId = @OccupationId";
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
@@ -468,7 +468,8 @@
                 frameworkId
             };
 
-            var apprenticeshipFramework = _getOpenConnection.Query<ApprenticeshipFramework>(GetFrameworkByIdSql, sqlParams).FirstOrDefault();
+            var apprenticeshipFramework = 
+                _getOpenConnection.Query<ApprenticeshipFramework>(GetFrameworkByIdSql, sqlParams).FirstOrDefault();
             var framework = _mapper.Map<ApprenticeshipFramework, Framework>(apprenticeshipFramework);
             if (apprenticeshipFramework != null)
             {
@@ -479,8 +480,6 @@
                 };
                 var apprenticeshipOccupation = _getOpenConnection.Query<ApprenticeshipOccupation>(GetOccupationByIdSql, sqlParam1)
                     .FirstOrDefault();
-                //var occupation =
-                //    apprenticeshipOccupations.FirstOrDefault(x => x.ApprenticeshipOccupationId == apprenticeshipFramework.ApprenticeshipOccupationId);
                 if (apprenticeshipOccupation != null) framework.ParentCategoryCodeName = apprenticeshipOccupation.CodeName;
             }
             _logger.Debug($"Found {apprenticeshipFramework}");

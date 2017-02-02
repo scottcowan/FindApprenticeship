@@ -127,7 +127,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 20
 testRunner.Given("I request the framework with id: 264", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 21
-testRunner.Then("The response status is : NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 22
 testRunner.And("I do not see the information for the framework with id: 264", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
