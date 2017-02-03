@@ -64,7 +64,7 @@
             //Process pages
             while (vacancySummaries.Any())
             {
-                var rangeLength = Math.Min(10, vacancySummaries.Count);
+                var rangeLength = Math.Min(Environment.ProcessorCount, vacancySummaries.Count);
                 var vacancySummariesToProcess = vacancySummaries.Take(rangeLength);
                 await Task.WhenAll(vacancySummariesToProcess.Select(ProcessVacancySummaryPage));
                 vacancySummaries.RemoveRange(0, rangeLength);
