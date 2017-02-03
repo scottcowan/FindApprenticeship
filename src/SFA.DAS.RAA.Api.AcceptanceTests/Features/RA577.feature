@@ -18,9 +18,15 @@ And I see all the latest standards
 
 @RA577 @GetFrameworkByIdReturnNotFound
 Scenario:Get framework by id that has the status ceased
-Given I request the framework with id: 264
+Given I request the framework whose status is ceased: 264
 Then The response status is: NotFound
 And I do not see the information for the framework with id: 264
+
+@RA577 @GetFrameworkByIdReturnUnknown
+Scenario:Get framework by id that does not exists
+Given I request the framework with id: 999
+Then The response status is: NotFound
+And I do not see the information for the framework with id: 999
 
 @RA577 @GetFrameworkByIdReturnSuccess
 Scenario: Get Framework by id that does exist and is active
@@ -39,3 +45,9 @@ Scenario: Get Standard by id that does not exists
 Given I request the standard with id: 999
 Then The response status is: NotFound
 And I see do not see the information for the framework with id: 999
+
+@RA577 @GetStandardByIdReturnCeased
+Scenario: Get Standard by id that is ceased
+Given I request the standard whose status is ceased: 180
+Then The response status is: NotFound
+And I see do not see the information for the framework with id: 180
