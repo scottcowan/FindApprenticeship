@@ -306,6 +306,23 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 
         private async Task GetStandardById(string requestUri)
         {
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+             m => m.Query<Standard>(ReferenceRepository.GetStandardByIdSql, It.IsAny<object>(), null, null))
+             .Returns(new List<Standard>());
+
+            var standard = new Fixture().Build<Standard>()
+                .With(s => s.StandardId, 2)
+                .With(s=>s.ApprenticeshipFrameworkStatusTypeId,1)
+                .Create();
+
+            ScenarioContext.Current.Add("standard", standard);
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<Standard>(ReferenceRepository.GetStandardByIdSql,
+                It.Is<object>(o => o.GetHashCode() == new { standardId = standard.StandardId }.GetHashCode()), null, null))
+                .Returns(new[] { standard });
+
+
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
 
             using (var response = await httpClient.GetAsync(requestUri))
