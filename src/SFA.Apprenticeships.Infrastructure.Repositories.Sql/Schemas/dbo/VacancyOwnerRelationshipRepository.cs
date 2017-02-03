@@ -10,6 +10,15 @@
 
     public class VacancyOwnerRelationshipRepository : IVacancyOwnerRelationshipReadRepository, IVacancyOwnerRelationshipWriteRepository
     {
+        public const string SelectByProviderSiteAndEmployerIdSql = @"
+                SELECT * FROM dbo.VacancyOwnerRelationship
+                WHERE ProviderSiteID = @ProviderSiteId
+                AND EmployerId = @EmployerId";
+        public const string SelectByIdsSql = @"
+                SELECT *
+                FROM   dbo.VacancyOwnerRelationship
+                WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds";
+
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -23,10 +32,7 @@
 
         public VacancyOwnerRelationship GetByProviderSiteAndEmployerId(int providerSiteId, int employerId, bool liveOnly = true)
         {
-            var sql = @"
-                SELECT * FROM dbo.VacancyOwnerRelationship
-                WHERE ProviderSiteID = @ProviderSiteId
-                AND EmployerId = @EmployerId";
+            var sql = SelectByProviderSiteAndEmployerIdSql;
 
             if (liveOnly)
             {
@@ -51,11 +57,7 @@
 
             _logger.Debug("Calling database to get vacancy parties with Ids={0}", string.Join(", ", vacancyOwnerRelationshipIdsArray));
 
-            string sql = @"
-                SELECT *
-                FROM   dbo.VacancyOwnerRelationship
-                WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds
-" + (currentOnly ? "AND StatusTypeId = @StatusTypeId" : "");
+            var sql = SelectByIdsSql + (currentOnly ? "AND StatusTypeId = @StatusTypeId" : "");
 
             List<Entities.VacancyOwnerRelationship> vacancyOwnerRelationships = new List<Entities.VacancyOwnerRelationship>();
             var splitVacancyOwnerRelationshipIdsArray = DbHelpers.SplitIds(vacancyOwnerRelationshipIdsArray);

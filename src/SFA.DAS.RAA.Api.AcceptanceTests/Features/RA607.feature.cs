@@ -31,8 +31,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner(null, 0);
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "RA607", "\tIn order to begin the process of creating a vacancy via the API\r\n\tAs a provider " +
-                    "or emloyer\r\n\tI want to be able to link an employer to a provider site and specif" +
-                    "y the vacancies location", ProgrammingLanguage.CSharp, ((string[])(null)));
+                    "or employer\r\n\tI want to be able to link an employer to a provider site and speci" +
+                    "fy the vacancies location", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -127,6 +127,32 @@ this.ScenarioSetup(scenarioInfo);
 #line 22
  testRunner.And("I do not see the employer link for the employer identified with EDSURN: 123456789" +
                     " and the provider site identified with EDSURN: 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Link an employer to a provider site")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA607")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA607")]
+        public virtual void LinkAnEmployerToAProviderSite()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Link an employer to a provider site", new string[] {
+                        "RA607"});
+#line 25
+this.ScenarioSetup(scenarioInfo);
+#line 26
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
+ testRunner.And("I request to link employer identified with EDSURN: 123456789 to provider site ide" +
+                    "ntified with EDSURN: 987654321 with description: <p>Employer description</p> and" +
+                    " website: test.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 28
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 29
+ testRunner.And("I see the employer link for the employer identified with EDSURN: 123456789 and th" +
+                    "e provider site identified with EDSURN: 987654321 with description: <p>Employer " +
+                    "description</p> and website: test.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

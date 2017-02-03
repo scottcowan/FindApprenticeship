@@ -11,6 +11,7 @@
     using Apprenticeships.Infrastructure.EmployerDataService.EmployerDataService;
     using Apprenticeships.Infrastructure.Postcode.Configuration;
     using Apprenticeships.Infrastructure.Repositories.Sql.Common;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.RaaApi;
@@ -86,6 +87,9 @@
 
             //Setup mock for unknown vacancies
             MockGetOpenConnection.Setup(m => m.Query<Vacancy>(It.IsAny<string>(), It.IsAny<object>(), null, null)).Returns(new List<Vacancy>());
+
+            //Setup mock for unknown vacancy owner relationships
+            MockGetOpenConnection.Setup(m => m.Query<VacancyOwnerRelationship>(It.IsAny<string>(), It.IsAny<object>(), null, null)).Returns(new List<VacancyOwnerRelationship>());
 
             //Setup mocks for generic id lookups (should overwrite in any tests that rely on specifics)
             MockGetOpenConnection.Setup(
