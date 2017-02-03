@@ -203,6 +203,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RA607.feature</DependentUpon>
     </Compile>
+    <Compile Include="Steps\CreateVacancySteps.cs" />
     <Compile Include="Steps\GetRegionsSteps.cs" />
     <Compile Include="Steps\GetLocalAuthoritySteps.cs" />
     <Compile Include="Steps\GetCountiesSteps.cs" />

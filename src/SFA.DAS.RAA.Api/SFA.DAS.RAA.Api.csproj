@@ -286,6 +286,7 @@
     <Compile Include="Services\ApiKeyAuthenticationService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Strategies\CreateVacancyStrategy.cs" />
     <Compile Include="Strategies\EditWageStrategy.cs" />
     <Compile Include="Strategies\GetAllLiveVacancySummariesStrategy.cs" />
     <Compile Include="Strategies\GetRegionsStrategy.cs" />
@@ -293,6 +294,7 @@
     <Compile Include="Strategies\GetCountiesStrategy.cs" />
     <Compile Include="Strategies\GetPublicVacancyStrategies.cs" />
     <Compile Include="Strategies\GetVacancySummariesStrategy.cs" />
+    <Compile Include="Strategies\ICreateVacancyStrategy.cs" />
     <Compile Include="Strategies\IEditWageStrategy.cs" />
     <Compile Include="Strategies\IGetAllLiveVacancySummariesStrategy.cs" />
     <Compile Include="Strategies\IGetRegionsStrategy.cs" />

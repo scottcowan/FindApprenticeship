@@ -156,6 +156,32 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Create a vacancy at the employer\'s location")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA607")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA607")]
+        public virtual void CreateAVacancyAtTheEmployersLocation()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a vacancy at the employer\'s location", new string[] {
+                        "RA607"});
+#line 32
+this.ScenarioSetup(scenarioInfo);
+#line 33
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 34
+ testRunner.And("I request to create a SpecificLocation vacancy for vacancy owner relationship wit" +
+                    "h id: 42 and 3 positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 35
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 36
+ testRunner.And("I see that the vacancy\'s status is Draft", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 37
+ testRunner.And("I see the SpecificLocation vacancy for vacancy owner relationship with id: 42 and" +
+                    " 3 positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
