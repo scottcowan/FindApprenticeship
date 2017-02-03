@@ -1,8 +1,9 @@
 ﻿namespace SFA.DAS.RAA.Api.UnitTests.Strategies
 {
+    using System.Threading.Tasks;
     using Api.Strategies;
-    using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories.Models;
     using Moq;
     using NUnit.Framework;
@@ -12,47 +13,45 @@
     public class GetAllLiveVacancySummariesStrategyTests
     {
         [Test]
-        public void PageAndPageSizeAreAddedToQuery()
+        public async Task PageAndPageSizeAreAddedToQuery()
         {
             const int page = 3;
             const int pageSize = 7;
 
-            var getVacancySummariesStrategy = new Mock<IGetVacancySummaryStrategies>();
+            var vacancySummariesStrategy = new Mock<IVacancySummaryRepository>();
 
-            var strategy = new GetAllLiveVacancySummariesStrategy(getVacancySummariesStrategy.Object);
+            var strategy = new GetAllLiveVacancySummariesStrategy(vacancySummariesStrategy.Object);
 
-            strategy.GetAllLiveVacancySummaries(page, pageSize);
+            await strategy.GetAllLiveVacancySummaries(page, pageSize);
 
-            int resultsCount;
-            getVacancySummariesStrategy.Verify(
+            vacancySummariesStrategy.Verify(
                 s =>
-                    s.GetWithStatus(
+                    s.GetByStatusAsync(
                         It.Is<VacancySummaryByStatusQuery>(
                             q =>
                                 q.DesiredStatuses.Length == 1 && q.DesiredStatuses[0] == VacancyStatus.Live &&
-                                q.RequestedPage == page && q.PageSize == pageSize), out resultsCount));
+                                q.RequestedPage == page && q.PageSize == pageSize)));
         }
 
         [Test]
-        public void PageAndPageSizeAreLimited()
+        public async Task PageAndPageSizeAreLimited()
         {
             const int page = -3;
             const int pageSize = 777;
 
-            var getVacancySummariesStrategy = new Mock<IGetVacancySummaryStrategies>();
+            var vacancySummariesStrategy = new Mock<IVacancySummaryRepository>();
 
-            var strategy = new GetAllLiveVacancySummariesStrategy(getVacancySummariesStrategy.Object);
+            var strategy = new GetAllLiveVacancySummariesStrategy(vacancySummariesStrategy.Object);
 
-            strategy.GetAllLiveVacancySummaries(page, pageSize);
+            await strategy.GetAllLiveVacancySummaries(page, pageSize);
 
-            int resultsCount;
-            getVacancySummariesStrategy.Verify(
+            vacancySummariesStrategy.Verify(
                 s =>
-                    s.GetWithStatus(
+                    s.GetByStatusAsync(
                         It.Is<VacancySummaryByStatusQuery>(
                             q =>
                                 q.DesiredStatuses.Length == 1 && q.DesiredStatuses[0] == VacancyStatus.Live &&
-                                q.RequestedPage == 1 && q.PageSize == 250), out resultsCount));
+                                q.RequestedPage == 1 && q.PageSize == 250)));
         }
     }
 }

@@ -6,6 +6,7 @@ using DbVacancySummary = SFA.Apprenticeships.Infrastructure.Repositories.Sql.Sch
 
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 {
+    using System.Threading.Tasks;
     using Common;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
@@ -270,6 +271,30 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
         public IList<VacancySummary> GetByStatus(VacancySummaryByStatusQuery query, out int totalRecords)
         {
+            var vacancies = _getOpenConnection.Query<DbVacancySummary>(GetByStatusSql(query), GetByStatusSqlParams(query));
+
+            // return the total record count as well
+            totalRecords = vacancies.Any() ? vacancies.First().TotalResultCount : 0;
+
+            var mapped = Mapper.Map<IList<DbVacancySummary>, IList<VacancySummary>>(vacancies);
+
+            return mapped;
+        }
+
+        public async Task<ListWithTotalCount<VacancySummary>> GetByStatusAsync(VacancySummaryByStatusQuery query)
+        {
+            var vacancies = await _getOpenConnection.QueryAsync<DbVacancySummary>(GetByStatusSql(query), GetByStatusSqlParams(query));
+
+            // return the total record count as well
+            var totalRecords = vacancies.Any() ? vacancies.First().TotalResultCount : 0;
+
+            var mapped = Mapper.Map<IList<DbVacancySummary>, IList<VacancySummary>>(vacancies);
+
+            return new ListWithTotalCount<VacancySummary> {List = mapped, TotalCount = totalRecords};
+        }
+
+        private static object GetByStatusSqlParams(VacancySummaryByStatusQuery query)
+        {
             var sqlParams = new
             {
                 Skip = query.PageSize * (query.RequestedPage - 1),
@@ -279,7 +304,12 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                 VacancyStatuses = query.DesiredStatuses.Select(s => (int)s)
             };
 
-            string orderByField = "";
+            return sqlParams;
+        }
+
+        private static string GetByStatusSql(VacancySummaryByStatusQuery query)
+        {
+            var orderByField = "";
             switch (query.OrderByField)
             {
                 case VacancySummaryOrderByColumn.Title:
@@ -321,15 +351,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     {(!string.IsNullOrEmpty(orderByField) ? ("ORDER BY " + orderByField + (query.Order == Order.Descending ? " DESC" : "")) : "")}
                     {(query.PageSize > 0 ? "OFFSET (@skip) ROWS FETCH NEXT (@take) ROWS ONLY" : "")}";
 
-
-            var vacancies = _getOpenConnection.Query<DbVacancySummary>(sql, sqlParams);
-
-            // return the total record count as well
-            totalRecords = vacancies.Any() ? vacancies.First().TotalResultCount : 0;
-
-            var mapped = Mapper.Map<IList<DbVacancySummary>, IList<VacancySummary>>(vacancies);
-
-            return mapped;
+            return sql;
         }
 
         public IList<RegionalTeamMetrics> GetRegionalTeamMetrics(VacancySummaryByStatusQuery query)
