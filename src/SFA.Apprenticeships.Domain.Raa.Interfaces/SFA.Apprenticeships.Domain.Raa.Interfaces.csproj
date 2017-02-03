@@ -107,6 +107,7 @@
     <Compile Include="Repositories\IVacancyWriteRepository.cs" />
     <Compile Include="Repositories\Models\ApiUserSearchParameters.cs" />
     <Compile Include="Repositories\Models\EmployerSearchParameters.cs" />
+    <Compile Include="Repositories\Models\ListWithTotalCount.cs" />
     <Compile Include="Repositories\Models\ManageVacancySearchMode.cs" />
     <Compile Include="Repositories\Models\RegionalTeamMetrics.cs" />
     <Compile Include="Repositories\Models\ProviderUserSearchParameters.cs" />

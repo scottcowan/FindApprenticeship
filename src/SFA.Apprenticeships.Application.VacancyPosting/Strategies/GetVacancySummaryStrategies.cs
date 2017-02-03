@@ -3,20 +3,15 @@ namespace SFA.Apprenticeships.Application.VacancyPosting.Strategies
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Interfaces.Vacancy;
-    using Vacancy;
 
     public class GetVacancySummaryStrategies : IGetVacancySummaryStrategies
     {
-        private readonly IVacancyReadRepository _vacancyReadRepository;
         private readonly IVacancySummaryService _vacancySummaryService;
 
-        public GetVacancySummaryStrategies(IVacancyReadRepository vacancyReadRepository,
-                                            IVacancySummaryService vacancySummaryService)
+        public GetVacancySummaryStrategies(IVacancySummaryService vacancySummaryService)
         {
-            _vacancyReadRepository = vacancyReadRepository;
             _vacancySummaryService = vacancySummaryService;
         }
 
