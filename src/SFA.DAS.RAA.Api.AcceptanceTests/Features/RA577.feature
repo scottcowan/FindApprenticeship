@@ -9,6 +9,7 @@ Given On requesting for all frameworks
 Then The response status is: OK
 And I see all the latest frameworks
 
+
 @RA577 @GetStandards
 Scenario: Requesting all standards
 Given On requesting for all standards

@@ -100,13 +100,13 @@ testRunner.And("I see all the latest frameworks", ((string)(null)), ((TechTalk.S
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting all standards", new string[] {
                         "RA577",
                         "GetStandards"});
-#line 13
-this.ScenarioSetup(scenarioInfo);
 #line 14
-testRunner.Given("On requesting for all standards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 15
-testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.Given("On requesting for all standards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 16
+testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 17
 testRunner.And("I see all the latest standards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -122,13 +122,13 @@ testRunner.And("I see all the latest standards", ((string)(null)), ((TechTalk.Sp
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get framework by id that has the status ceased", new string[] {
                         "RA577",
                         "GetFrameworkByIdReturnNotFound"});
-#line 19
-this.ScenarioSetup(scenarioInfo);
 #line 20
-testRunner.Given("I request the framework with id: 264", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 21
-testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.Given("I request the framework with id: 264", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 22
+testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 23
 testRunner.And("I do not see the information for the framework with id: 264", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -144,13 +144,13 @@ testRunner.And("I do not see the information for the framework with id: 264", ((
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Framework by id that does exist and is active", new string[] {
                         "RA577",
                         "GetFrameworkByIdReturnSuccess"});
-#line 25
-this.ScenarioSetup(scenarioInfo);
 #line 26
-testRunner.Given("I request the framework with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 27
-testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.Given("I request the framework with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 28
+testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 29
 testRunner.And("I see the information for the framework with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -166,13 +166,13 @@ testRunner.And("I see the information for the framework with id: 2", ((string)(n
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Standard by id that exists and is active", new string[] {
                         "RA577",
                         "GetStandardByIdReturnSuccess"});
-#line 31
-this.ScenarioSetup(scenarioInfo);
 #line 32
-testRunner.Given("I request the standard with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 33
-testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.Given("I request the standard with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 34
+testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 35
 testRunner.And("I see the information for the standard with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -188,13 +188,13 @@ testRunner.And("I see the information for the standard with id: 2", ((string)(nu
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Standard by id that does not exists", new string[] {
                         "RA577",
                         "GetStandardByIdReturnNotFound"});
-#line 37
-this.ScenarioSetup(scenarioInfo);
 #line 38
-testRunner.Given("I request the standard with id: 999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 39
-testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.Given("I request the standard with id: 999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 40
+testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 41
 testRunner.And("I see do not see the information for the framework with id: 999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

@@ -44,8 +44,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 var occupation = occupations[i];
                 var responseCategory = responseCategories[i];
                 responseCategory.Id.Should().Be(occupation.ApprenticeshipOccupationId);
-                int statusAsInt = (int)responseCategory.Status;
-                statusAsInt.Should().Be(occupation.ApprenticeshipOccupationStatusTypeId);
+                responseCategory.Status.Should().Be((CategoryStatus)occupation.ApprenticeshipOccupationStatusTypeId);
             }
         }
 
@@ -126,15 +125,9 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 .With(c => c.CodeName, "2")
                 .Create();
 
-            var standards = new List<DbStandard>();
-            var educationLevels = new List<EducationLevel>();
-            var sectors = new List<StandardSector>();
-            standards.Add(standardsWithId1);
-            standards.Add(standardsWithId2);
-            educationLevels.Add(educationLevelWithId1);
-            educationLevels.Add(educationLevelWithId2);
-            sectors.Add(sectorWithId1);
-            sectors.Add(sectorWithId2);
+            var standards = new List<DbStandard> { standardsWithId1, standardsWithId2 };
+            var educationLevels = new List<EducationLevel> { educationLevelWithId1, educationLevelWithId2 };
+            var sectors = new List<StandardSector> { sectorWithId1, sectorWithId2 };
             ScenarioContext.Current.Add("sectors", sectors);
             ScenarioContext.Current.Add("occupations", occupations);
             ScenarioContext.Current.Add("standards", standards);
@@ -192,7 +185,6 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             {
                 var occupation = occupations[i];
                 var standardSubjectAreaTierOne = responseStandardSubjectAreaTierOnes[i];
-                //Ideally do a full compare
                 standardSubjectAreaTierOne.Id.Should().Be(occupation.ApprenticeshipOccupationId);
                 var ssat1Sectors = standardSubjectAreaTierOne.Sectors.ToList();
                 ssat1Sectors.Count.Should().Be(sectors.Count);

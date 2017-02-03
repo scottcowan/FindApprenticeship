@@ -29,10 +29,10 @@
         public const string GetRegionByIdSql = "SELECT LocalAuthorityGroupID AS RegionId, CodeName, ShortName, FullName FROM[dbo].[LocalAuthorityGroup] WHERE LocalAuthorityGroupTypeID = 4 AND LocalAuthorityGroupID = @RegionId";
         public const string GetRegionByCodeSql = "SELECT LocalAuthorityGroupID AS RegionId, CodeName, ShortName, FullName FROM[dbo].[LocalAuthorityGroup] WHERE LocalAuthorityGroupTypeID = 4 AND CodeName = @RegionCode";
 
-        public static string GetFrameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework ORDER BY FullName;";
-        public static string GetOccupationSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
+        public static string GetFrameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework WHERE [ApprenticeshipFrameworkStatusTypeId]  = 1 ORDER BY FullName;";
+        public static string GetOccupationSql = "SELECT * FROM dbo.ApprenticeshipOccupation where [ApprenticeshipOccupationStatusTypeId] = 1 ORDER BY FullName;";
         public static string GetSectorSql = "SELECT * FROM Reference.StandardSector ORDER BY FullName;";
-        public static string GetStandardSql = "SELECT * FROM Reference.Standard ORDER BY FullName;";
+        public static string GetStandardSql = "SELECT * FROM Reference.Standard WHERE [ApprenticeshipFrameworkStatusTypeId] = 1 ORDER BY FullName;";
         public static string GetEducationLevelSql = "SELECT * FROM Reference.EducationLevel;";
 
         public static string GetFrameworkByIdSql = "SELECT * FROM dbo.ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @FrameworkId";
@@ -404,12 +404,6 @@
             _logger.Debug("Inserting new framework");
 
             const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
-
-            //TODO: Does this need to be here? If not, test and remove.
-            var sqlParams = new
-            {
-                category.Id
-            };
 
             var dbStandard = new ApprenticeshipFramework();
 
