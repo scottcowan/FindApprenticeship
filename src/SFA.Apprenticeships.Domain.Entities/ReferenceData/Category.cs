@@ -1,12 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.ReferenceData
 {
+    using Newtonsoft.Json;
     using System.Collections.Generic;
 
     public class Category
     {
         private Category()
         {
-            
+
         }
 
         public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, CategoryStatus status, IList<Category> subCategories, long? count)
@@ -23,18 +24,18 @@
 
         public Category(int id, string codeName, string fullName, CategoryType categoryType, CategoryStatus status) : this(id, codeName, fullName, null, categoryType, status, null, null)
         {
-            
+
         }
 
         //TODO: This ctor is only used in unit tests. Consider removing it. Please, oh please: remove it.
         public Category(int id, string codeName, string fullName, CategoryType categoryType, CategoryStatus status, IList<Category> subCategories) : this(id, codeName, fullName, null, categoryType, status, subCategories, null)
         {
-            
+
         }
 
         public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, CategoryStatus status) : this(id, codeName, fullName, parentCategoryCodeName, categoryType, status, null, null)
         {
-            
+
         }
 
         public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, CategoryStatus status, IList<Category> subCategories) : this(id, codeName, fullName, parentCategoryCodeName, categoryType, status, subCategories, null)
@@ -66,6 +67,7 @@
 
         public IList<Category> SubCategories { get; private set; }
 
+        [JsonIgnore]
         public long Count { get; set; }
 
         public static readonly Category UnknownSectorSubjectAreaTier1 = new Category
