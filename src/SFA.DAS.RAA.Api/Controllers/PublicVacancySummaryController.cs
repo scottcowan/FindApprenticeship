@@ -1,5 +1,6 @@
 ﻿namespace SFA.DAS.RAA.Api.Controllers
 {
+    using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.Description;
     using Models;
@@ -25,9 +26,9 @@
         [Route("vacancysummaries")]
         [ResponseType(typeof(PublicVacancySummariesPage))]
         [HttpGet]
-        public IHttpActionResult GetAllLiveVacancySummaries(int page = 1, int pageSize = 25)
+        public async Task<IHttpActionResult> GetAllLiveVacancySummaries(int page = 1, int pageSize = 25)
         {
-            return Ok(_getAllLiveVacancySummariesStrategy.GetAllLiveVacancySummaries(page, pageSize));
+            return Ok(await _getAllLiveVacancySummariesStrategy.GetAllLiveVacancySummaries(page, pageSize));
         }
     }
 }
