@@ -19,7 +19,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
-    using Standard = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.Entities.Standard;
+    using DbStandard = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.Entities.Standard;
+    using DomainStandard = Apprenticeships.Domain.Entities.Raa.Vacancies.Standard;
 
     [Binding]
     public class GetFrameworksAndStandardsSteps
@@ -109,11 +110,11 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 .With(ss => ss.ApprenticeshipOccupationId, 5)
                 .Create();
 
-            var standardsWithId1 = new Fixture().Build<Standard>()
+            var standardsWithId1 = new Fixture().Build<DbStandard>()
                 .With(s => s.EducationLevelId, 1)
                 .With(s => s.StandardSectorId, 1)
                 .Create();
-            var standardsWithId2 = new Fixture().Build<Standard>()
+            var standardsWithId2 = new Fixture().Build<DbStandard>()
                 .With(s => s.EducationLevelId, 2)
                 .With(s => s.StandardSectorId, 2)
                 .Create();
@@ -125,7 +126,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 .With(c => c.CodeName, "2")
                 .Create();
 
-            var standards = new List<Standard>();
+            var standards = new List<DbStandard>();
             var educationLevels = new List<EducationLevel>();
             var sectors = new List<StandardSector>();
             standards.Add(standardsWithId1);
@@ -148,7 +149,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 .Returns(sectors);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<Standard>(ReferenceRepository.GetStandardSql, null, null, null))
+                m => m.Query<DbStandard>(ReferenceRepository.GetStandardSql, null, null, null))
                 .Returns(standards);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
@@ -307,18 +308,18 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         private async Task GetStandardById(string requestUri)
         {
             RaaMockFactory.GetMockGetOpenConnection().Setup(
-             m => m.Query<Standard>(ReferenceRepository.GetStandardByIdSql, It.IsAny<object>(), null, null))
-             .Returns(new List<Standard>());
+             m => m.Query<DbStandard>(ReferenceRepository.GetStandardByIdSql, It.IsAny<object>(), null, null))
+             .Returns(new List<DbStandard>());
 
-            var standard = new Fixture().Build<Standard>()
+            var standard = new Fixture().Build<DbStandard>()
                 .With(s => s.StandardId, 2)
-                .With(s=>s.ApprenticeshipFrameworkStatusTypeId,1)
+                .With(s => s.ApprenticeshipFrameworkStatusTypeId, 1)
                 .Create();
 
             ScenarioContext.Current.Add("standard", standard);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<Standard>(ReferenceRepository.GetStandardByIdSql,
+                m => m.Query<DbStandard>(ReferenceRepository.GetStandardByIdSql,
                 It.Is<object>(o => o.GetHashCode() == new { standardId = standard.StandardId }.GetHashCode()), null, null))
                 .Returns(new[] { standard });
 
@@ -336,14 +337,14 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                         var responseMessage = JsonConvert.DeserializeObject<ResponseMessage>(content);
                         ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
                     }
+                    var responseStandard =
+                        JsonConvert.DeserializeObject<DomainStandard>(content);
 
-                    var responseFramework =
-                        JsonConvert.DeserializeObject<Framework>(content);
-                    if (responseFramework != null && new Framework().Equals(responseFramework))
+                    if (responseStandard != null && new DomainStandard().Equals(responseStandard))
                     {
-                        responseFramework = null;
+                        responseStandard = null;
                     }
-                    ScenarioContext.Current.Add(requestUri, responseFramework);
+                    ScenarioContext.Current.Add(requestUri, responseStandard);
                 }
             }
         }
@@ -352,18 +353,24 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         public void ThenISeeTheInformationForTheStandardWithId(int standardId)
         {
             var requestUri = string.Format(UriFormats.GetStandardssByIdUri, standardId);
-            var responseStandard = ScenarioContext.Current.Get<Standard>(requestUri);
+            var responseStandard = ScenarioContext.Current.Get<DomainStandard>(requestUri);
+            var standard = ScenarioContext.Current.Get<DbStandard>("standard");
             responseStandard.Should().NotBeNull();
+            responseStandard.Status.Should().Be(FrameworkStatusType.Active);
+            responseStandard.Status.Should()
+                .Be((FrameworkStatusType)standard.ApprenticeshipFrameworkStatusTypeId);
+            responseStandard.ApprenticeshipLevel.Should().Be((ApprenticeshipLevel)standard.EducationLevelId);
+            responseStandard.Name.Should().Be(standard.FullName);
+            responseStandard.LarsCode.Should().Be(standard.LarsCode);
+            responseStandard.ApprenticeshipSectorId.Should().Be(standard.StandardSectorId);
         }
 
         [Then(@"I see do not see the information for the framework with id: (.*)")]
         public void ThenISeeDoNotSeeTheInformationForTheFrameworkWithId(int standardId)
         {
             var requestUri = string.Format(UriFormats.GetStandardssByIdUri, standardId);
-            var responseStandard = ScenarioContext.Current.Get<Standard>(requestUri);
+            var responseStandard = ScenarioContext.Current.Get<DomainStandard>(requestUri);
             responseStandard.Should().BeNull();
         }
-
-
     }
 }
