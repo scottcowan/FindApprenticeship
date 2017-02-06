@@ -728,9 +728,20 @@
                 viewModel.Contact = vacancy.GetContactInformation(providerSite);
             }
 
-            viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
-                ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
-                : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName).FullName;
+            viewModel.FrameworkName = viewModel.TrainingDetailsViewModel.FrameworkCodeName;
+            if (!string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName))
+            {
+                var framework = _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName);
+                if (framework == null)
+                {
+                    viewModel.TrainingDetailsViewModel.FrameworkCodeName = null;
+                    viewModel.FrameworkName = null;
+                }
+                else
+                {
+                    viewModel.FrameworkName = framework.FullName;
+                }
+            }
 
             viewModel.SectorName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.SectorCodeName)
                 ? viewModel.TrainingDetailsViewModel.SectorCodeName
