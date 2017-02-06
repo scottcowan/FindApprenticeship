@@ -35,3 +35,15 @@ Scenario: Create a vacancy at the employer's location
 	Then The response status is: OK
 	And I see that the vacancy's status is Draft
 	And I see the SpecificLocation vacancy for vacancy owner relationship with id: 42 and 3 positions
+
+@RA607
+Scenario: Create a vacancy with none of the mandatory fields
+	When I authorize my request with a Provider API key
+	And I request to create a Unknown vacancy for vacancy owner relationship with id: 0 and 0 positions
+	Then The response status is: BadRequest
+	And The validation errors contain:
+		| Property            | Error                                               |
+		| ProviderSiteEdsUrn  | You must specify the provider site's EDSURN.        |
+		| EmployerDescription | Please supply a description for the employer.       |
+		| EmployerWebsiteUrl  | Please supply a valid website url for the employer. |
+	And I do not see the Unknown vacancy for vacancy owner relationship with id: 0 and 0 positions

@@ -182,6 +182,45 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Create a vacancy with none of the mandatory fields")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA607")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA607")]
+        public virtual void CreateAVacancyWithNoneOfTheMandatoryFields()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a vacancy with none of the mandatory fields", new string[] {
+                        "RA607"});
+#line 40
+this.ScenarioSetup(scenarioInfo);
+#line 41
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 42
+ testRunner.And("I request to create a Unknown vacancy for vacancy owner relationship with id: 0 a" +
+                    "nd 0 positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 43
+ testRunner.Then("The response status is: BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Error"});
+            table2.AddRow(new string[] {
+                        "ProviderSiteEdsUrn",
+                        "You must specify the provider site\'s EDSURN."});
+            table2.AddRow(new string[] {
+                        "EmployerDescription",
+                        "Please supply a description for the employer."});
+            table2.AddRow(new string[] {
+                        "EmployerWebsiteUrl",
+                        "Please supply a valid website url for the employer."});
+#line 44
+ testRunner.And("The validation errors contain:", ((string)(null)), table2, "And ");
+#line 49
+ testRunner.And("I do not see the Unknown vacancy for vacancy owner relationship with id: 0 and 0 " +
+                    "positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

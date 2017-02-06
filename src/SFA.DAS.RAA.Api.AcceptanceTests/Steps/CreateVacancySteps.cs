@@ -33,14 +33,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [When(@"I request to create a (.*) vacancy for vacancy owner relationship with id: (.*) and (.*) positions")]
         public async Task WhenIRequestToCreateASpecificLocationVacancyForVacancyOwnerRelationshipWithIdAndPositions(string vacancyLocationTypeString, int vacancyOwnerRelationshipId, int positions)
         {
-            var vacancyLocationType = (VacancyLocationType)Enum.Parse(typeof(VacancyLocationType), vacancyLocationTypeString);
-
-            var vacancy = new Vacancy
-            {
-                VacancyLocationType = vacancyLocationType,
-                VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
-                NumberOfPositions = positions
-            };
+            var vacancy = GetVacancy(vacancyLocationTypeString, vacancyOwnerRelationshipId, positions);
 
             const string createVacancyUri = UriFormats.CreateVacancyUri;
 
@@ -69,10 +62,35 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             }
         }
 
+        private static Vacancy GetVacancy(string vacancyLocationTypeString, int vacancyOwnerRelationshipId, int positions)
+        {
+            var vacancyLocationType = (VacancyLocationType) Enum.Parse(typeof(VacancyLocationType), vacancyLocationTypeString);
+
+            var vacancy = new Vacancy
+            {
+                VacancyLocationType = vacancyLocationType,
+                VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
+                NumberOfPositions = positions
+            };
+            return vacancy;
+        }
+
         [Then(@"I see the (.*) vacancy for vacancy owner relationship with id: (.*) and (.*) positions")]
         public void ThenISeeTheSpecificLocationVacancyForVacancyOwnerRelationshipWithIdAndPositions(string vacancyLocationTypeString, int vacancyOwnerRelationshipId, int positions)
         {
             var responseVacancy = ScenarioContext.Current.Get<Vacancy>("responseVacancy");
+            var expectedVacancy = GetVacancy(vacancyLocationTypeString, vacancyOwnerRelationshipId, positions);
+            expectedVacancy.Status = VacancyStatus.Draft;
+            responseVacancy.Equals(expectedVacancy).Should().BeTrue();
+        }
+
+        [Then(@"I do not see the (.*) vacancy for vacancy owner relationship with id: (.*) and (.*) positions")]
+        public void ThenIDoNotSeeTheSpecificLocationVacancyForVacancyOwnerRelationshipWithIdAndPositions(string vacancyLocationTypeString, int vacancyOwnerRelationshipId, int positions)
+        {
+            var responseVacancy = ScenarioContext.Current.Get<Vacancy>("responseVacancy");
+            var expectedVacancy = GetVacancy(vacancyLocationTypeString, vacancyOwnerRelationshipId, positions);
+            responseVacancy.Should().BeNull();
+            responseVacancy.Equals(expectedVacancy).Should().BeFalse();
         }
 
         [Then(@"I see that the vacancy's status is (.*)")]
