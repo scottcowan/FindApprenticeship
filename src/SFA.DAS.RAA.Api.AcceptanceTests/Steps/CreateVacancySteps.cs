@@ -7,7 +7,6 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
-    using Api.Models;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Constants;
     using Extensions;
@@ -79,6 +78,9 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         public void ThenISeeTheSpecificLocationVacancyForVacancyOwnerRelationshipWithIdAndPositions(string vacancyLocationTypeString, int vacancyOwnerRelationshipId, int positions)
         {
             var responseVacancy = ScenarioContext.Current.Get<Vacancy>("responseVacancy");
+            responseVacancy.Should().NotBeNull();
+            responseVacancy.VacancyId.Should().NotBe(0);
+            responseVacancy.VacancyReferenceNumber.Should().NotBe(0);
             var expectedVacancy = GetVacancy(vacancyLocationTypeString, vacancyOwnerRelationshipId, positions);
             expectedVacancy.Status = VacancyStatus.Draft;
             responseVacancy.Equals(expectedVacancy).Should().BeTrue();
@@ -88,8 +90,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         public void ThenIDoNotSeeTheSpecificLocationVacancyForVacancyOwnerRelationshipWithIdAndPositions(string vacancyLocationTypeString, int vacancyOwnerRelationshipId, int positions)
         {
             var responseVacancy = ScenarioContext.Current.Get<Vacancy>("responseVacancy");
-            var expectedVacancy = GetVacancy(vacancyLocationTypeString, vacancyOwnerRelationshipId, positions);
             responseVacancy.Should().BeNull();
+            var expectedVacancy = GetVacancy(vacancyLocationTypeString, vacancyOwnerRelationshipId, positions);
             responseVacancy.Equals(expectedVacancy).Should().BeFalse();
         }
 

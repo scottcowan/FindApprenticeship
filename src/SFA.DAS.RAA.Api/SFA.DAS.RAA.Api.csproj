@@ -304,6 +304,7 @@
     <Compile Include="Strategies\ILinkEmployerStrategy.cs" />
     <Compile Include="Strategies\LinkEmployerStrategy.cs" />
     <Compile Include="Validators\EmployerProviderSiteLinkRequestValidator.cs" />
+    <Compile Include="Validators\VacancyValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configs\settings.config" />

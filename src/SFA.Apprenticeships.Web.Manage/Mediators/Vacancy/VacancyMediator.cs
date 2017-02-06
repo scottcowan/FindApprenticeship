@@ -145,7 +145,7 @@
                     case VacancySource.Av:
                         return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvmsWithValidationErrors,
                             vacancyViewModel, validationResult, VacancyViewModelMessages.VacancyAuthoredInAvms, UserMessageLevel.Info);
-                    case VacancySource.Api:
+                    case VacancySource.LegacyApi:
                         return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors,
                             vacancyViewModel, validationResult, VacancyViewModelMessages.VacancyAuthoredInApi, UserMessageLevel.Info);
                     case VacancySource.Raa:
@@ -162,7 +162,7 @@
                 case VacancySource.Av:
                     return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvms, vacancyViewModel,
                         VacancyViewModelMessages.VacancyAuthoredInAvms, UserMessageLevel.Info);
-                case VacancySource.Api:
+                case VacancySource.LegacyApi:
                     return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApi, vacancyViewModel,
                         VacancyViewModelMessages.VacancyAuthoredInApi, UserMessageLevel.Info);
                 case VacancySource.Raa:

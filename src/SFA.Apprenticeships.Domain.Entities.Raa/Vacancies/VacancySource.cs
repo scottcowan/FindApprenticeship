@@ -4,7 +4,8 @@
     {
         Unknown = 0,
         Av = 1,
-        Api = 2,
-        Raa = 3
+        LegacyApi = 2,
+        Raa = 3,
+        Api = 4
     }
 }

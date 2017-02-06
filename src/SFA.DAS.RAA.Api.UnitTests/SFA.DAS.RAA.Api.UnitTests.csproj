@@ -80,6 +80,7 @@
     <Compile Include="Strategies\EditWageStrategyTests.cs" />
     <Compile Include="Strategies\GetAllLiveVacancySummariesStrategyTests.cs" />
     <Compile Include="Validators\EmployerProviderSiteLinkValidatorTests.cs" />
+    <Compile Include="Validators\VacancyValidatorMinimalTests.cs" />
     <Compile Include="Validators\WageUpdateValidatorAmountTests.cs" />
     <Compile Include="Validators\WageUpdateValidatorTypeTests.cs" />
   </ItemGroup>

@@ -205,13 +205,13 @@ this.ScenarioSetup(scenarioInfo);
                         "Property",
                         "Error"});
             table2.AddRow(new string[] {
-                        "ProviderSiteEdsUrn",
+                        "VacancyLocationType",
                         "You must specify the provider site\'s EDSURN."});
             table2.AddRow(new string[] {
-                        "EmployerDescription",
+                        "VacancyOwnerRelationshipId",
                         "Please supply a description for the employer."});
             table2.AddRow(new string[] {
-                        "EmployerWebsiteUrl",
+                        "NumberOfPositions",
                         "Please supply a valid website url for the employer."});
 #line 44
  testRunner.And("The validation errors contain:", ((string)(null)), table2, "And ");
