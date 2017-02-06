@@ -42,8 +42,6 @@ Scenario: Create a vacancy with none of the mandatory fields
 	And I request to create a Unknown vacancy for vacancy owner relationship with id: 0 and 0 positions
 	Then The response status is: BadRequest
 	And The validation errors contain:
-		| Property                   | Error                                               |
-		| VacancyLocationType        | You must specify the provider site's EDSURN.        |
-		| VacancyOwnerRelationshipId | Please supply a description for the employer.       |
-		| NumberOfPositions          | Please supply a valid website url for the employer. |
+		| Property                   | Error                                                                                                                                   |
+		| VacancyOwnerRelationshipId | Please supply a valid vacancy owner relationship id. This must exist and be associated with a provider site your API key has access to. |
 	And I do not see the Unknown vacancy for vacancy owner relationship with id: 0 and 0 positions

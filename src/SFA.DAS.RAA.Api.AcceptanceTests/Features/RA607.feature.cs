@@ -205,17 +205,12 @@ this.ScenarioSetup(scenarioInfo);
                         "Property",
                         "Error"});
             table2.AddRow(new string[] {
-                        "VacancyLocationType",
-                        "You must specify the provider site\'s EDSURN."});
-            table2.AddRow(new string[] {
                         "VacancyOwnerRelationshipId",
-                        "Please supply a description for the employer."});
-            table2.AddRow(new string[] {
-                        "NumberOfPositions",
-                        "Please supply a valid website url for the employer."});
+                        "Please supply a valid vacancy owner relationship id. This must exist and be assoc" +
+                            "iated with a provider site your API key has access to."});
 #line 44
  testRunner.And("The validation errors contain:", ((string)(null)), table2, "And ");
-#line 49
+#line 47
  testRunner.And("I do not see the Unknown vacancy for vacancy owner relationship with id: 0 and 0 " +
                     "positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden

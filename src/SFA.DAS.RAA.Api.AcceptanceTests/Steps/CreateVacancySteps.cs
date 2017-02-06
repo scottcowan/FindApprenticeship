@@ -81,9 +81,13 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             responseVacancy.Should().NotBeNull();
             responseVacancy.VacancyId.Should().NotBe(0);
             responseVacancy.VacancyReferenceNumber.Should().NotBe(0);
+            responseVacancy.VacancySource.Should().Be(VacancySource.Api);
             var expectedVacancy = GetVacancy(vacancyLocationTypeString, vacancyOwnerRelationshipId, positions);
             expectedVacancy.Status = VacancyStatus.Draft;
-            responseVacancy.Equals(expectedVacancy).Should().BeTrue();
+            expectedVacancy.VacancyId = responseVacancy.VacancyId;
+            expectedVacancy.VacancyReferenceNumber = responseVacancy.VacancyReferenceNumber;
+            expectedVacancy.VacancySource = responseVacancy.VacancySource;
+            Equals(responseVacancy, expectedVacancy).Should().BeTrue();
         }
 
         [Then(@"I do not see the (.*) vacancy for vacancy owner relationship with id: (.*) and (.*) positions")]
@@ -92,7 +96,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             var responseVacancy = ScenarioContext.Current.Get<Vacancy>("responseVacancy");
             responseVacancy.Should().BeNull();
             var expectedVacancy = GetVacancy(vacancyLocationTypeString, vacancyOwnerRelationshipId, positions);
-            responseVacancy.Equals(expectedVacancy).Should().BeFalse();
+            Equals(responseVacancy, expectedVacancy).Should().BeFalse();
         }
 
         [Then(@"I see that the vacancy's status is (.*)")]
