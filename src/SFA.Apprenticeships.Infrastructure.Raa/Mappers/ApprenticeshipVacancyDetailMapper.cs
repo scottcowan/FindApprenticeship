@@ -22,7 +22,6 @@
             //Manually mapping rather than using automapper as the two enties are significantly different
 
             var subcategory = vacancy.GetSubCategory(categories);
-            LogSubCategory(vacancy, logService, subcategory);
 
             var detail = new ApprenticeshipVacancyDetail
             {
@@ -91,14 +90,6 @@
             };
 
             return detail;
-        }
-
-        private static void LogSubCategory(VacancySummary vacancy, ILogService logService, Category subcategory)
-        {
-            if (!subcategory.IsValid())
-            {
-                logService.Warn("Cannot find a sub category for the apprenticship with Id {0}", vacancy.VacancyId);
-            }
         }
 
         private static Address GetVacancyAddress(PostalAddress address)
