@@ -92,140 +92,110 @@ WriteLiteral(" - ");
             
             #line default
             #line hidden
-WriteLiteral("</strong>\r\n    </p>\r\n</div>\r\n<section");
-
-WriteLiteral(" class=\"sfa-section-bordered\"");
-
-WriteLiteral(">\r\n    <p>\r\n        <i");
+WriteLiteral("</strong>\r\n    </p>\r\n</div>\r\n\r\n    <p>\r\n        <i");
 
 WriteLiteral(" class=\"fa fa-envelope-o\"");
 
-WriteLiteral("></i>We\'ve sent you an email confirming your application\r\n    </p>\r\n</section>\r\n<" +
-"section");
-
-WriteLiteral(" class=\"sfa-section-bordered\"");
-
-WriteLiteral(">\r\n    <h2");
+WriteLiteral("></i>We\'ve sent you an email confirming your application\r\n    </p>\r\n\r\n<hr/>\r\n\r\n<h" +
+"2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
-WriteLiteral(">What happens next</h2>\r\n    <div");
+WriteLiteral(">What happens next</h2>\r\n\r\n<p>\r\n    You’ll be contacted if you’re eligible for a " +
+"traineeship. You can see the applications you\'ve made by visiting <a");
 
-WriteLiteral(" class=\"text form-group\"");
-
-WriteLiteral(">\r\n        <p>\r\n            You’ll be contacted if you’re eligible for a trainees" +
-"hip. You can see the applications you\'ve made by visiting <a");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 958), Tuple.Create("\"", 1014)
+WriteAttribute("href", Tuple.Create(" href=\"", 826), Tuple.Create("\"", 882)
             
-            #line 23 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-                                                     , Tuple.Create(Tuple.Create("", 965), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+            #line 24 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
+                                             , Tuple.Create(Tuple.Create("", 833), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 965), false)
+, 833), false)
 );
 
-WriteLiteral(">my applications</a>.\r\n        </p>\r\n        <h3");
+WriteLiteral(">my applications</a>.\r\n</p>\r\n<h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">Training provider</h3>\r\n        <p>");
+WriteLiteral(">Training provider</h3>\r\n<p>");
 
             
-            #line 26 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-      Write(Model.ProviderContactInfo);
+            #line 27 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
+Write(Model.ProviderContactInfo);
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n    </div>\r\n    <div");
-
-WriteLiteral(" class=\"form-group form-group-compound get-started\"");
-
-WriteLiteral(">\r\n        <a");
+WriteLiteral("</p>\r\n\r\n<a");
 
 WriteLiteral(" role=\"button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1266), Tuple.Create("\'", 1325)
+WriteAttribute("href", Tuple.Create(" href=\'", 1030), Tuple.Create("\'", 1089)
             
             #line 29 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1273), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
+, Tuple.Create(Tuple.Create("", 1037), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
             
             #line default
             #line hidden
-, 1273), false)
+, 1037), false)
 );
 
-WriteLiteral(">Find a traineeship</a>\r\n    </div>\r\n    <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n");
+WriteLiteral(">Find a traineeship</a>\r\n\r\n");
 
             
-            #line 32 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-        
-            
-            #line default
-            #line hidden
-            
-            #line 32 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-         if (ViewBag.SearchReturnUrl != null)
-        {
+            #line 31 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
+ if (ViewBag.SearchReturnUrl != null)
+{
 
             
             #line default
             #line hidden
-WriteLiteral("            <p >\r\n                <a");
+WriteLiteral("    <p >\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1487), Tuple.Create("\"", 1518)
+WriteAttribute("href", Tuple.Create(" href=\"", 1179), Tuple.Create("\"", 1210)
             
-            #line 35 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1494), Tuple.Create<System.Object, System.Int32>(ViewBag.SearchReturnUrl
+            #line 34 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 1186), Tuple.Create<System.Object, System.Int32>(ViewBag.SearchReturnUrl
             
             #line default
             #line hidden
-, 1494), false)
+, 1186), false)
 );
 
 WriteLiteral(" title=\"Return to search results\"");
 
 WriteLiteral(" id=\"lnk-return-search-results\"");
 
-WriteLiteral(">Return to search results</a>\r\n            </p>\r\n");
+WriteLiteral(">Return to search results</a>\r\n    </p>\r\n");
 
             
-            #line 37 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-        }
+            #line 36 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
+}
 
-            
-            #line default
-            #line hidden
-WriteLiteral("    </div>\r\n</section>\r\n\r\n<div");
-
-WriteLiteral(" class=\"text form-group\"");
-
-WriteLiteral(">\r\n    <p>\r\n        <a");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 1719), Tuple.Create("\"", 1746)
-            
-            #line 43 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1726), Tuple.Create<System.Object, System.Int32>(ViewBag.FeedbackUrl
             
             #line default
             #line hidden
-, 1726), false)
+WriteLiteral("\r\n<hr/>\r\n\r\n<p>\r\n    <a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 1341), Tuple.Create("\"", 1368)
+            
+            #line 41 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 1348), Tuple.Create<System.Object, System.Int32>(ViewBag.FeedbackUrl
+            
+            #line default
+            #line hidden
+, 1348), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(" rel=\"external\"");
 
-WriteLiteral(">What did you think of this service?</a>\r\n        <br>(30 second survey, this wil" +
-"l open in a new tab)\r\n    </p>\r\n</div>\r\n");
+WriteLiteral(">What did you think of this service?</a>\r\n    <br>(30 second survey, this will op" +
+"en in a new tab)\r\n</p>\r\n\r\n");
 
         }
     }

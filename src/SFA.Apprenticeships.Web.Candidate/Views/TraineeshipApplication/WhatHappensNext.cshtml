@@ -11,36 +11,34 @@
         <strong class="heading-medium">@Html.DisplayFor(m => m.VacancyTitle) - @Html.DisplayFor(m => m.VacancyReference)</strong>
     </p>
 </div>
-<section class="sfa-section-bordered">
+
     <p>
         <i class="fa fa-envelope-o"></i>We've sent you an email confirming your application
     </p>
-</section>
-<section class="sfa-section-bordered">
-    <h2 class="heading-medium">What happens next</h2>
-    <div class="text form-group">
-        <p>
-            You’ll be contacted if you’re eligible for a traineeship. You can see the applications you've made by visiting <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">my applications</a>.
-        </p>
-        <h3 class="heading-small">Training provider</h3>
-        <p>@Model.ProviderContactInfo</p>
-    </div>
-    <div class="form-group form-group-compound get-started">
-        <a role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)'>Find a traineeship</a>
-    </div>
-    <div class="form-group">
-        @if (ViewBag.SearchReturnUrl != null)
-        {
-            <p >
-                <a href="@ViewBag.SearchReturnUrl" title="Return to search results" id="lnk-return-search-results">Return to search results</a>
-            </p>
-        }
-    </div>
-</section>
 
-<div class="text form-group">
-    <p>
-        <a href="@ViewBag.FeedbackUrl" target="_blank" rel="external">What did you think of this service?</a>
-        <br>(30 second survey, this will open in a new tab)
+<hr/>
+
+<h2 class="heading-medium">What happens next</h2>
+
+<p>
+    You’ll be contacted if you’re eligible for a traineeship. You can see the applications you've made by visiting <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">my applications</a>.
+</p>
+<h3 class="heading-small">Training provider</h3>
+<p>@Model.ProviderContactInfo</p>
+
+<a role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)'>Find a traineeship</a>
+
+@if (ViewBag.SearchReturnUrl != null)
+{
+    <p >
+        <a href="@ViewBag.SearchReturnUrl" title="Return to search results" id="lnk-return-search-results">Return to search results</a>
     </p>
-</div>
+}
+
+<hr/>
+
+<p>
+    <a href="@ViewBag.FeedbackUrl" target="_blank" rel="external">What did you think of this service?</a>
+    <br>(30 second survey, this will open in a new tab)
+</p>
+
