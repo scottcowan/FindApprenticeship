@@ -3,16 +3,24 @@ using TechTalk.SpecFlow;
 
 namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
+    using System.Collections.Generic;
+    using System.Dynamic;
     using System.Net;
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
+    using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo;
     using Constants;
     using Extensions;
+    using Factories;
     using FluentAssertions;
     using Models;
+    using Moq;
     using Newtonsoft.Json;
+    using Ploeh.AutoFixture;
+    using VacancyOwnerRelationship = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities.VacancyOwnerRelationship;
 
     [Binding]
     public class CreateVacancySteps
@@ -32,6 +40,22 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [When(@"I request to create a (.*) vacancy for vacancy owner relationship with id: (.*) and (.*) positions")]
         public async Task WhenIRequestToCreateASpecificLocationVacancyForVacancyOwnerRelationshipWithIdAndPositions(VacancyLocationType vacancyLocationType, int vacancyOwnerRelationshipId, int positions)
         {
+            const int vorOwnedId = 42;
+            const int providerSiteId = 24;
+
+            var vorOwned = new Fixture().Build<VacancyOwnerRelationship>()
+                .With(vor => vor.VacancyOwnerRelationshipId, vorOwnedId)
+                .With(vor => vor.ProviderSiteID, 24)
+                .Create();
+
+            RaaMockFactory.GetMockGetOpenConnection()
+                .Setup(
+                    m =>
+                        m.Query<VacancyOwnerRelationship>(
+                            It.Is<string>(s => s.StartsWith(VacancyOwnerRelationshipRepository.SelectByIdsSql)),
+                            It.Is<object>(o => o.GetPropertyValue<int[]>("VacancyOwnerRelationshipIds")[0] == vorOwnedId), null, null))
+                .Returns(new[] {vorOwned});
+
             var vacancy = GetVacancy(vacancyLocationType, vacancyOwnerRelationshipId, positions);
 
             const string createVacancyUri = UriFormats.CreateVacancyUri;

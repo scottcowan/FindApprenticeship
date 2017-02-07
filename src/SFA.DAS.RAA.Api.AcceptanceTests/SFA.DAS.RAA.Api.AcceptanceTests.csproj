@@ -188,6 +188,7 @@
     <Compile Include="DependencyResolution\AcceptanceTestsRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="Extensions\HttpClientExtensions.cs" />
+    <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Features\RA578.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
