@@ -69,17 +69,18 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get second page of live vacancy summaries")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get second page of public live vacancy summaries")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA584")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA584")]
-        public virtual void GetSecondPageOfLiveVacancySummaries()
+        public virtual void GetSecondPageOfPublicLiveVacancySummaries()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get second page of live vacancy summaries", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get second page of public live vacancy summaries", new string[] {
                         "RA584"});
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.When("I request page 2 of the list of 13 live vacancy summaries with page size: 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request page 2 of the list of 13 public live vacancy summaries with page size: " +
+                    "5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 10

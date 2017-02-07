@@ -28,5 +28,7 @@
         public const string GetRegionsUri = "reference/regions";
         public const string RegionIdUriFormat = "reference/region/{0}";
         public const string RegionCodeUriFormat = "reference/region/code/{0}";
+
+        public const string VacancySummariesUriFormat = "vacancies";
     }
 }

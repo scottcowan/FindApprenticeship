@@ -20,7 +20,7 @@ namespace SFA.DAS.RAA.Api.Strategies
             _vacancySummaryRepository = vacancySummaryRepository;
         }
 
-        public VacancySummariesPage GetVacancySummaries(string ukprn, VacanciesSummaryFilterTypes filterType, int page, int pageSize)
+        public VacancySummariesPage GetVacancySummaries(string ukprn, string searchString, VacanciesSummaryFilterTypes filterType, VacancySearchMode searchMode, VacancyType vacancyType, Order order, VacancySummaryOrderByColumn orderBy, int page, int pageSize)
         {
             //TODO: Support employer access
 
@@ -28,27 +28,27 @@ namespace SFA.DAS.RAA.Api.Strategies
             {
                 page = 1;
             }
-            if (pageSize > 50)
+            if (pageSize > 200)
             {
-                pageSize = 50;
+                pageSize = 200;
             }
 
             var provider = _providerReadRepository.GetByUkprn(ukprn);
             var providerSites = _providerSiteReadRepository.GetByProviderId(provider.ProviderId);
             var providerSiteId = providerSites.First().ProviderSiteId;
-
+            
             var query = new VacancySummaryQuery
             {
                 ProviderId = provider.ProviderId,
                 ProviderSiteId = providerSiteId,
-                OrderByField = VacancySummaryOrderByColumn.Title,
+                OrderByField = orderBy,
                 Filter = filterType,
                 PageSize = pageSize,
                 RequestedPage = page,
-                //SearchMode = vacanciesSummarySearch.SearchMode,
-                //SearchString = searchString,
-                Order = Order.Ascending,
-                VacancyType = VacancyType.Apprenticeship
+                SearchMode = searchMode,
+                SearchString = searchString,
+                Order = order,
+                VacancyType = vacancyType
             };
             int totalRecords;
             var vacancySummaries = _vacancySummaryRepository.GetSummariesForProvider(query, out totalRecords);
