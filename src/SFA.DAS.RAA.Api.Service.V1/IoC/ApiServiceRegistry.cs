@@ -19,6 +19,7 @@
             For<IVacancyManagementService>().Use<ApiVacancyManagementService>();
             For<IProviderService>().Use<ApiProviderService>();
             For<IVacancyPostingService>().Use<ApiVacancyPostingService>();
+            For<IVacancySummaryService>().Use<ApiVacancySummaryService>();
         }
     }
 }

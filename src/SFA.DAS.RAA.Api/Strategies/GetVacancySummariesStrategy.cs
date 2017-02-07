@@ -25,13 +25,12 @@ namespace SFA.DAS.RAA.Api.Strategies
             //TODO: Support employer access
 
             if (page < 1)
-            {
                 page = 1;
-            }
-            if (pageSize > 200)
-            {
+            
+            if (pageSize == 0)
+                pageSize = 50;
+            else if (pageSize > 200)
                 pageSize = 200;
-            }
 
             var provider = _providerReadRepository.GetByUkprn(ukprn);
             var providerSites = _providerSiteReadRepository.GetByProviderId(provider.ProviderId);

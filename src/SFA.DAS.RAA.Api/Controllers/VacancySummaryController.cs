@@ -31,7 +31,7 @@ namespace SFA.DAS.RAA.Api.Controllers
             VacancySummaryOrderByColumn orderBy = VacancySummaryOrderByColumn.Title, 
             VacanciesSummaryFilterTypes filterType = VacanciesSummaryFilterTypes.All, 
             int page = 1, 
-            int pageSize = 25)
+            int pageSize = 0)
         {
             return Ok(_getVacancySummariesStrategy.GetVacancySummaries(User.GetUkprn(), searchString, filterType, searchMode, vacancyType, order, orderBy, page, pageSize));
         }
