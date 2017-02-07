@@ -14,8 +14,13 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// Initializes a new instance of the Framework class.
         /// </summary>
+        /// <param name="parentCategoryCodeName"></param>
         /// <param name="status">Possible values include: 'Active', 'Ceased',
         /// 'PendingClosure'</param>
+        /// <param name="id"></param>
+        /// <param name="codeName"></param>
+        /// <param name="shortName"></param>
+        /// <param name="fullName"></param>
         public Framework(int? id = default(int?), string codeName = default(string), string shortName = default(string), string fullName = default(string), string parentCategoryCodeName = default(string), string status = default(string))
         {
             Id = id;
