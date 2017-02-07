@@ -3,6 +3,7 @@
 @{
     var state = string.IsNullOrWhiteSpace(Model) ? string.Empty : "open";
 }
+<div class="form-group">
     <details class="@state" @state>
         <summary><span class="summary">@ViewData["Label"]</span></summary>
         <div class="detail-content sfa-inset sfa-inset-yellow">
