@@ -73,11 +73,15 @@
     <Compile Include="ApiClient.cs" />
     <Compile Include="Employer.cs" />
     <Compile Include="EmployerExtensions.cs" />
+    <Compile Include="FrameworkOperations.cs" />
+    <Compile Include="FrameworkOperationsExtensions.cs" />
     <Compile Include="IApiClient.cs" />
     <Compile Include="IEmployer.cs" />
+    <Compile Include="IFrameworkOperations.cs" />
     <Compile Include="IPublicVacancyOperations.cs" />
     <Compile Include="IPublicVacancySummaryOperations.cs" />
     <Compile Include="IReference.cs" />
+    <Compile Include="IStandardOperations.cs" />
     <Compile Include="IVacancyManagement.cs" />
     <Compile Include="IVacancyOperations.cs" />
     <Compile Include="IVacancySummaryOperations.cs" />
@@ -109,6 +113,8 @@
     <Compile Include="PublicVacancySummaryOperationsExtensions.cs" />
     <Compile Include="Reference.cs" />
     <Compile Include="ReferenceExtensions.cs" />
+    <Compile Include="StandardOperations.cs" />
+    <Compile Include="StandardOperationsExtensions.cs" />
     <Compile Include="VacancyManagement.cs" />
     <Compile Include="VacancyManagementExtensions.cs" />
     <Compile Include="VacancyOperations.cs" />

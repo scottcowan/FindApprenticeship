@@ -71,6 +71,16 @@
             return Task.FromResult(_referenceDataProvider.GetCountyById(countyId));
         }
 
+        public Task<Framework> GetFrameworkById(int frameworkId)
+        {
+            return Task.FromResult(_referenceDataProvider.GetFrameworkById(frameworkId));
+        }
+
+        public Task<Standard> GetStandardById(int standardId)
+        {
+            return Task.FromResult(_referenceDataProvider.GetStandardById(standardId));
+        }
+
         public Task<County> GetCountyByCode(string countyCode)
         {
             return Task.FromResult(_referenceDataProvider.GetCountyByCode(countyCode));

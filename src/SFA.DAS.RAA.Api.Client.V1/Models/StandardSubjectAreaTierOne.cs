@@ -4,12 +4,9 @@
 
 namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
-    using System.Collections.Generic;
+    using System.Linq;
 
-    /// <summary>
-    /// The information related to a StandardSubjectAreaTierOne
-    /// </summary>
-    public class StandardSubjectAreaTierOne
+    public partial class StandardSubjectAreaTierOne
     {
         /// <summary>
         /// Initializes a new instance of the StandardSubjectAreaTierOne class.
@@ -17,12 +14,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         public StandardSubjectAreaTierOne() { }
 
         /// <summary>
-        /// StandardSubjectAreaTierOne instance class
+        /// Initializes a new instance of the StandardSubjectAreaTierOne class.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="sectors"></param>
-        public StandardSubjectAreaTierOne(int id, string name, IEnumerable<Sector> sectors)
+        public StandardSubjectAreaTierOne(int? id = default(int?), string name = default(string), System.Collections.Generic.IList<Sector> sectors = default(System.Collections.Generic.IList<Sector>))
         {
             Id = id;
             Name = name;
@@ -30,35 +24,19 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
-        /// Gets or sets the StandardSubjectAreaTierOne's primary identifier
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the StandardSubjectAreaTierOne's name
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets StandardSubjectAreaTierOne's sectors 
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Sectors")]
-        public IEnumerable<Sector> Sectors { get; set; }
+        public System.Collections.Generic.IList<Sector> Sectors { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
-            }
-        }
     }
 }

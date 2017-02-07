@@ -30,7 +30,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// 'Frameworks', 'Standards', 'Sectors'</param>
         /// <param name="apprenticeshipLevel">Possible values include:
         /// 'Unknown', 'Intermediate', 'Advanced', 'Higher',
-        /// 'FoundationDegree', 'Degree', 'Masters'</param>
+        /// 'FoundationDegree', 'Degree', 'Masters', 'Traineeship'</param>
         /// <param name="status">Possible values include: 'Unknown', 'Draft',
         /// 'Live', 'Referred', 'Deleted', 'Submitted', 'Closed',
         /// 'Withdrawn', 'Completed', 'PostedInError', 'ReservedForQA'</param>
@@ -584,7 +584,8 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
 
         /// <summary>
         /// Gets or sets possible values include: 'Unknown', 'Intermediate',
-        /// 'Advanced', 'Higher', 'FoundationDegree', 'Degree', 'Masters'
+        /// 'Advanced', 'Higher', 'FoundationDegree', 'Degree', 'Masters',
+        /// 'Traineeship'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ApprenticeshipLevel")]
         public string ApprenticeshipLevel { get; set; }

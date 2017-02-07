@@ -4,10 +4,9 @@
 
 namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
-    /// <summary>
-    /// The information related to a Standard
-    /// </summary>
-    public class Standard
+    using System.Linq;
+
+    public partial class Standard
     {
         /// <summary>
         /// Initializes a new instance of the Standard class.
@@ -15,80 +14,57 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         public Standard() { }
 
         /// <summary>
-        /// Standard class
+        /// Initializes a new instance of the Standard class.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="apprenticeshipSectorId"></param>
-        /// <param name="apprenticeshipLevel"></param>
-        /// <param name="status"></param>
-        /// <param name="larsCode"></param>
-        public Standard(int id, string name, int apprenticeshipSectorId, string apprenticeshipLevel, string status, int larsCode)
+        /// <param name="apprenticeshipLevel">Possible values include:
+        /// 'Unknown', 'Intermediate', 'Advanced', 'Higher',
+        /// 'FoundationDegree', 'Degree', 'Masters', 'Traineeship'</param>
+        /// <param name="status">Possible values include: 'Active', 'Ceased',
+        /// 'PendingClosure'</param>
+        public Standard(int? id = default(int?), int? apprenticeshipSectorId = default(int?), string name = default(string), string apprenticeshipLevel = default(string), string status = default(string), int? larsCode = default(int?))
         {
             Id = id;
-            Name = name;
             ApprenticeshipSectorId = apprenticeshipSectorId;
+            Name = name;
             ApprenticeshipLevel = apprenticeshipLevel;
             Status = status;
             LarsCode = larsCode;
         }
 
         /// <summary>
-        /// Gets or sets the standard's primary identifier
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the standard's name
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ApprenticeshipSectorId")]
+        public int? ApprenticeshipSectorId { get; set; }
+
+        /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets standard's the ApprenticeshipSectorId 
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "ApprenticeshipSectorId")]
-        public int ApprenticeshipSectorId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the standard's ApprenticeshipLevel 
+        /// Gets or sets possible values include: 'Unknown', 'Intermediate',
+        /// 'Advanced', 'Higher', 'FoundationDegree', 'Degree', 'Masters',
+        /// 'Traineeship'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ApprenticeshipLevel")]
         public string ApprenticeshipLevel { get; set; }
 
         /// <summary>
-        /// Gets or sets the standard's Status  
+        /// Gets or sets possible values include: 'Active', 'Ceased',
+        /// 'PendingClosure'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Status")]
         public string Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the standard's LarsCode  
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "LarsCode")]
-        public int LarsCode { get; set; }
+        public int? LarsCode { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
-            }
-            if (ApprenticeshipLevel == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ApprenticeshipLevel");
-            }
-            if (Status == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Status");
-            }
-        }
     }
 }

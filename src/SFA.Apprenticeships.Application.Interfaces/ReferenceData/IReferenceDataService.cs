@@ -30,6 +30,10 @@
 
         Task<County> GetCountyById(int countyId);
 
+        Task<Framework> GetFrameworkById(int frameworkId);
+
+        Task<Standard> GetStandardById(int standardId);
+
         Task<County> GetCountyByCode(string countyCode);
 
         Task<County> GetCountyByName(string countyName);

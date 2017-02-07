@@ -4,12 +4,9 @@
 
 namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
-    using System.Collections.Generic;
+    using System.Linq;
 
-    /// <summary>
-    /// The information related to a Category
-    /// </summary>
-    public class Category
+    public partial class Category
     {
         /// <summary>
         /// Initializes a new instance of the Category class.
@@ -17,96 +14,62 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         public Category() { }
 
         /// <summary>
-        /// Category class
+        /// Initializes a new instance of the Category class.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="fullName"></param>
-        /// <param name="codeName"></param>
-        /// <param name="parentCategoryCodeName"></param>
-        /// <param name="status"></param>
-        /// <param name="categoryType"></param>
-        /// <param name="subCategories"></param>
-        public Category(int id, string fullName, string codeName, string parentCategoryCodeName, string status, string categoryType, IList<Category> subCategories)
+        /// <param name="categoryType">Possible values include:
+        /// 'SectorSubjectAreaTier1', 'Framework', 'StandardSector',
+        /// 'Standard', 'Combined'</param>
+        /// <param name="status">Possible values include: 'Active', 'Ceased',
+        /// 'PendingClosure'</param>
+        public Category(int? id = default(int?), string fullName = default(string), string codeName = default(string), string parentCategoryCodeName = default(string), string categoryType = default(string), string status = default(string), System.Collections.Generic.IList<Category> subCategories = default(System.Collections.Generic.IList<Category>))
         {
             Id = id;
             FullName = fullName;
             CodeName = codeName;
             ParentCategoryCodeName = parentCategoryCodeName;
-            Status = status;
             CategoryType = categoryType;
+            Status = status;
             SubCategories = subCategories;
         }
 
         /// <summary>
-        /// Gets or sets the category's primary identifier
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the category's fullname
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "FullName")]
         public string FullName { get; set; }
 
         /// <summary>
-        /// Gets or sets category's the CodeName  
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CodeName")]
-        public string CodeName { get; set; }
+        public string CodeName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the category's ParentCategoryCodeName  
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ParentCategoryCodeName")]
         public string ParentCategoryCodeName { get; set; }
 
         /// <summary>
-        /// Gets or sets the category's Status  
+        /// Gets possible values include: 'SectorSubjectAreaTier1',
+        /// 'Framework', 'StandardSector', 'Standard', 'Combined'
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "CategoryType")]
+        public string CategoryType { get; private set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Active', 'Ceased',
+        /// 'PendingClosure'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Status")]
         public string Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the category's CategoryType  
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "CategoryType")]
-        public string CategoryType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the category's SubCategories 
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "SubCategories")]
-        public IList<Category> SubCategories { get; set; }
+        public System.Collections.Generic.IList<Category> SubCategories { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (FullName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "FullName");
-            }
-            if (CodeName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CodeName");
-            }
-            if (ParentCategoryCodeName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ParentCategoryCodeName");
-            }
-            if (CategoryType == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CategoryType");
-            }
-            if (Status == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Status");
-            }
-        }
     }
 }

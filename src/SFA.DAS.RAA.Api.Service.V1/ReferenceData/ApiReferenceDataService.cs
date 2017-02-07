@@ -12,8 +12,10 @@
     using System.Threading.Tasks;
     using ApiCategory = Client.V1.Models.Category;
     using ApiCounty = Client.V1.Models.County;
+    using ApiFramework = Client.V1.Models.Framework;
     using ApiLocalAuthority = Client.V1.Models.LocalAuthority;
     using ApiRegion = Client.V1.Models.Region;
+    using ApiStandard = Client.V1.Models.Standard;
     using ApiStandardSubjectAreaTierOne = Client.V1.Models.StandardSubjectAreaTierOne;
 
     public class ApiReferenceDataService : IReferenceDataService
@@ -59,7 +61,7 @@
             if (_apiClientProvider.IsEnabled())
             {
                 var apiClient = _apiClientProvider.GetApiClient();
-                var apiResult = await apiClient.Reference.GetFrameworksWithHttpMessagesAsync();
+                var apiResult = await apiClient.FrameworkOperations.GetFrameworksWithHttpMessagesAsync();
                 return ApiClientMappers.Map<IList<ApiCategory>, IList<Category>>(apiResult.Body);
             }
             return await _referenceDataService.GetFrameworks();
@@ -70,10 +72,34 @@
             if (_apiClientProvider.IsEnabled())
             {
                 var apiClient = _apiClientProvider.GetApiClient();
-                var apiResult = await apiClient.Reference.GetStandardsWithHttpMessagesAsync();
+                var apiResult = await apiClient.StandardOperations.GetStandardsWithHttpMessagesAsync();
                 return ApiClientMappers.Map<IList<ApiStandardSubjectAreaTierOne>, IList<StandardSubjectAreaTierOne>>(apiResult.Body);
             }
             return await _referenceDataService.GetStandardSubjectAreaTierOnes();
+        }
+
+        public async Task<Standard> GetStandardById(int standardId)
+        {
+            if (_apiClientProvider.IsEnabled())
+            {
+                var apiClient = _apiClientProvider.GetApiClient();
+
+                var apiResult = await apiClient.StandardOperations.GetStandardByIdWithHttpMessagesAsync(standardId);
+                return ApiClientMappers.Map<ApiStandard, Standard>(apiResult.Body);
+            }
+            return await _referenceDataService.GetStandardById(standardId);
+        }
+
+        public async Task<Framework> GetFrameworkById(int frameworkId)
+        {
+            if (_apiClientProvider.IsEnabled())
+            {
+                var apiClient = _apiClientProvider.GetApiClient();
+
+                var apiResult = await apiClient.FrameworkOperations.GetFrameworkByIdWithHttpMessagesAsync(frameworkId);
+                return ApiClientMappers.Map<ApiFramework, Framework>(apiResult.Body);
+            }
+            return await _referenceDataService.GetFrameworkById(frameworkId);
         }
 
         public IEnumerable<Sector> GetSectors()

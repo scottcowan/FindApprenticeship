@@ -4,12 +4,9 @@
 
 namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
-    using System.Collections.Generic;
+    using System.Linq;
 
-    /// <summary>
-    /// The information related to a Sector
-    /// </summary>
-    public class Sector
+    public partial class Sector
     {
         /// <summary>
         /// Initializes a new instance of the Sector class.
@@ -17,13 +14,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         public Sector() { }
 
         /// <summary>
-        /// Sector instance class
+        /// Initializes a new instance of the Sector class.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="apprenticeshipOccupationId"></param>
-        /// <param name="standards"></param>
-        public Sector(int id, string name, int apprenticeshipOccupationId, IEnumerable<Standard> standards)
+        public Sector(int? id = default(int?), string name = default(string), int? apprenticeshipOccupationId = default(int?), System.Collections.Generic.IList<Standard> standards = default(System.Collections.Generic.IList<Standard>))
         {
             Id = id;
             Name = name;
@@ -32,41 +25,24 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
-        /// Gets or sets the sector's primary identifier
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the sector's name
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets sector's the ApprenticeshipOccupationId  
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ApprenticeshipOccupationId")]
-        public int ApprenticeshipOccupationId { get; set; }
+        public int? ApprenticeshipOccupationId { get; set; }
 
         /// <summary>
-        /// Gets or sets the sector's Standards 
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Standards")]
-        public IEnumerable<Standard> Standards { get; set; }
+        public System.Collections.Generic.IList<Standard> Standards { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
-            }
-        }
     }
 }
