@@ -4,8 +4,6 @@
 
 namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
-    using System.Linq;
-
     /// <summary>
     /// The information related to a UK county
     /// </summary>

@@ -81,6 +81,11 @@
     <Compile Include="IVacancyManagement.cs" />
     <Compile Include="IVacancyOperations.cs" />
     <Compile Include="IVacancySummaryOperations.cs" />
+    <Compile Include="Models\Sector.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\StandardSubjectAreaTierOne.cs" />
+    <Compile Include="Models\Standard.cs" />
+    <Compile Include="Models\Framework.cs" />
     <Compile Include="Models\County.cs" />
     <Compile Include="Models\EmployerProviderSiteLink.cs" />
     <Compile Include="Models\EmployerProviderSiteLinkRequest.cs" />

@@ -1,13 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.ReferenceData
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IReferenceDataService
-    { 
+    {
         IEnumerable<Category> GetCategories();
 
         Category GetSubCategoryByName(string subCategoryName);
@@ -18,7 +18,9 @@
 
         Category GetCategoryByCode(string categoryCode);
 
-        IEnumerable<Category> GetFrameworks();
+        Task<IEnumerable<Category>> GetFrameworks();
+
+        Task<IEnumerable<StandardSubjectAreaTierOne>> GetStandardSubjectAreaTierOnes();
 
         IEnumerable<Sector> GetSectors();
 

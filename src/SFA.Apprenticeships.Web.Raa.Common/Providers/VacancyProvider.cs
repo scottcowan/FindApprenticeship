@@ -9,8 +9,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
+    using Application.Interfaces.Vacancy;
     using Application.Interfaces.VacancyPosting;
-    using Application.Vacancy;
     using Configuration;
     using Converters;
     using Domain.Entities.Applications;
@@ -30,7 +30,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Application.Interfaces.Vacancy;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -782,7 +781,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 if (viewModel.TrainingDetailsViewModel != null)
                     viewModel.TrainingDetailsViewModel.StandardId = null;
             }
-            
+
             if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
             {
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
@@ -840,7 +839,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         public List<SelectListItem> GetSectorsAndFrameworks()
         {
-            var categories = _referenceDataService.GetFrameworks();
+            var categories = _referenceDataService.GetFrameworks().Result;
 
             var sectorsAndFrameworkItems = new List<SelectListItem>
             {
