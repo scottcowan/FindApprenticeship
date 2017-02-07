@@ -4,6 +4,6 @@
 
     public interface ICreateVacancyStrategy
     {
-        Vacancy CreateVacancy(Vacancy vacancy);
+        Vacancy CreateVacancy(Vacancy vacancy, string ukprn);
     }
 }

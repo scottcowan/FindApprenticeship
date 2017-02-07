@@ -11,6 +11,10 @@
             RuleFor(v => v.VacancyOwnerRelationshipId)
                 .NotEqual(0)
                 .WithMessage(VacancyMessages.VacancyOwnerRelationshipId.RequiredErrorText);
+
+            RuleFor(v => v.VacancyGuid)
+                .NotEmpty()
+                .WithMessage(VacancyMessages.VacancyGuid.RequiredErrorText);
         }
     }
 }
