@@ -547,7 +547,7 @@ WriteLiteral(" itemtype=\"http://schema.org/PostalAddress\"");
 
 WriteLiteral(">\r\n                        <h3");
 
-WriteLiteral(" class=\"heading-small\"");
+WriteLiteral(" class=\"heading-small sfa-no-top-margin\"");
 
 WriteLiteral(">Address</h3>\r\n");
 
@@ -839,7 +839,7 @@ WriteLiteral(" itemtype=\"http://schema.org/PostalAddress\"");
 
 WriteLiteral(">\r\n                                <h3");
 
-WriteLiteral(" class=\"heading-small\"");
+WriteLiteral(" class=\"heading-small sfa-no-top-margin\"");
 
 WriteLiteral(">\r\n                                    Address\r\n");
 
@@ -901,11 +901,11 @@ WriteLiteral("                                        <div");
 
 WriteLiteral(" class=\"left-grey-border\"");
 
-WriteLiteral(">\r\n                                            <h3");
+WriteLiteral(">\r\n                                            <h4");
 
 WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">Hidden full address</h3>\r\n                                            <div");
+WriteLiteral(">Hidden full address</h4>\r\n                                            <div");
 
 WriteLiteral(" itemprop=\"address\"");
 
@@ -1150,7 +1150,7 @@ WriteLiteral(" itemtype=\"http://schema.org/PostalAddress\"");
 
 WriteLiteral(">\r\n                                <h3");
 
-WriteLiteral(" class=\"heading-small\"");
+WriteLiteral(" class=\"heading-small sfa-no-top-margin\"");
 
 WriteLiteral(">\r\n                                    Addresses\r\n");
 
@@ -1262,11 +1262,11 @@ WriteLiteral("                                                        <tr>\r\n  
 
 WriteLiteral(" class=\"left-grey-border\"");
 
-WriteLiteral(">\r\n                                                                    <h3");
+WriteLiteral(">\r\n                                                                    <h4");
 
 WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">Hidden full address</h3>\r\n                                                      " +
+WriteLiteral(">Hidden full address</h4>\r\n                                                      " +
 "              <p");
 
 WriteLiteral(" class=\"sfa-small-bottom-margin\"");
@@ -1583,7 +1583,7 @@ WriteLiteral(" class=\"editable-item\"");
 
 WriteLiteral(">\r\n                                <h3");
 
-WriteLiteral(" class=\"heading-small\"");
+WriteLiteral(" class=\"heading-small sfa-no-top-margin\"");
 
 WriteLiteral(">\r\n                                    Additional location information\r\n");
 
@@ -1598,15 +1598,15 @@ WriteLiteral("                                    ");
             #line hidden
 WriteLiteral("\r\n                                </h3>\r\n                                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 23021), Tuple.Create("\"", 23143)
-, Tuple.Create(Tuple.Create("", 23029), Tuple.Create("sfa-text-editor-generated", 23029), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 23093), Tuple.Create("\"", 23215)
+, Tuple.Create(Tuple.Create("", 23101), Tuple.Create("sfa-text-editor-generated", 23101), true)
             
             #line 289 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create(" ", 23054), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.AdditionalLocationInformation.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create(" ", 23126), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.AdditionalLocationInformation.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 23055), false)
+, 23127), false)
 );
 
 WriteLiteral(">\r\n");
@@ -1700,24 +1700,24 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 24413), Tuple.Create("\"", 24593)
-, Tuple.Create(Tuple.Create("", 24419), Tuple.Create("https://www.google.com/maps/embed/v1/view?center=", 24419), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 24485), Tuple.Create("\"", 24665)
+, Tuple.Create(Tuple.Create("", 24491), Tuple.Create("https://www.google.com/maps/embed/v1/view?center=", 24491), true)
             
             #line 308 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                            , Tuple.Create(Tuple.Create("", 24468), Tuple.Create<System.Object, System.Int32>(Model.Address.GeoPoint.Latitude
+                                                                            , Tuple.Create(Tuple.Create("", 24540), Tuple.Create<System.Object, System.Int32>(Model.Address.GeoPoint.Latitude
             
             #line default
             #line hidden
-, 24468), false)
-, Tuple.Create(Tuple.Create("", 24500), Tuple.Create(",", 24500), true)
+, 24540), false)
+, Tuple.Create(Tuple.Create("", 24572), Tuple.Create(",", 24572), true)
             
             #line 308 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                                             , Tuple.Create(Tuple.Create("", 24501), Tuple.Create<System.Object, System.Int32>(Model.Address.GeoPoint.Longitude
+                                                                                                             , Tuple.Create(Tuple.Create("", 24573), Tuple.Create<System.Object, System.Int32>(Model.Address.GeoPoint.Longitude
             
             #line default
             #line hidden
-, 24501), false)
-, Tuple.Create(Tuple.Create("", 24534), Tuple.Create("&amp;zoom=9&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 24534), true)
+, 24573), false)
+, Tuple.Create(Tuple.Create("", 24606), Tuple.Create("&amp;zoom=9&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 24606), true)
 );
 
 WriteLiteral("></iframe>\r\n                            <p");
@@ -1771,16 +1771,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 25522), Tuple.Create("\"", 25643)
-, Tuple.Create(Tuple.Create("", 25528), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 25528), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 25594), Tuple.Create("\"", 25715)
+, Tuple.Create(Tuple.Create("", 25600), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 25600), true)
             
             #line 323 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                    , Tuple.Create(Tuple.Create("", 25573), Tuple.Create<System.Object, System.Int32>(Html.Raw(queryForMap)
+                                                                    , Tuple.Create(Tuple.Create("", 25645), Tuple.Create<System.Object, System.Int32>(Html.Raw(queryForMap)
             
             #line default
             #line hidden
-, 25573), false)
-, Tuple.Create(Tuple.Create("", 25595), Tuple.Create("&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 25595), true)
+, 25645), false)
+, Tuple.Create(Tuple.Create("", 25667), Tuple.Create("&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 25667), true)
 );
 
 WriteLiteral("></iframe>\r\n                        <p");
@@ -1828,16 +1828,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 26233), Tuple.Create("\"", 26407)
-, Tuple.Create(Tuple.Create("", 26239), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 26239), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 26305), Tuple.Create("\"", 26479)
+, Tuple.Create(Tuple.Create("", 26311), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 26311), true)
             
             #line 332 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 26284), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.LocationAddresses.First().Address.Postcode)
+                                                                , Tuple.Create(Tuple.Create("", 26356), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.LocationAddresses.First().Address.Postcode)
             
             #line default
             #line hidden
-, 26284), false)
-, Tuple.Create(Tuple.Create("", 26343), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 26343), true)
+, 26356), false)
+, Tuple.Create(Tuple.Create("", 26415), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 26415), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");

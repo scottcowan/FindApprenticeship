@@ -82,7 +82,10 @@ Custom margins
   margin-right: 10px !important; }
 
 .sfa-large-bottom-margin {
-  margin-bottom: 15px !important; }
+  margin-bottom: 10px !important; }
+  @media (min-width: 641px) {
+    .sfa-large-bottom-margin {
+      margin-bottom: 20px !important; } }
 
 .sfa-xlarge-bottom-margin {
   margin-bottom: 15px !important; }
@@ -101,6 +104,12 @@ Custom margins
   @media (min-width: 641px) {
     .sfa-xlarge-top-margin {
       margin-top: 30px !important; } }
+
+.sfa-large-top-margin {
+  margin-top: 10px !important; }
+  @media (min-width: 641px) {
+    .sfa-large-top-margin {
+      margin-top: 20px !important; } }
 
 .sfa-p-margin-bottom {
   margin-bottom: 1.05263em; }
@@ -156,6 +165,9 @@ Custom form elements
     .sfa-input-auto-width {
       margin-bottom: 0px;
       width: auto !important; } }
+
+.sfa-form-control-auto {
+  width: auto !important; }
 
 .sfa-form-radio, .sfa-form-checkbox {
   padding-left: 18px; }
@@ -309,6 +321,9 @@ Alignment
     .sfa-pull-right-tablet {
       float: right !important; } }
 
+.sfa-display-inline {
+  display: inline; }
+
 /* -------------------------------------------------------------------
 Custom expand content
 ------------------------------------------------------------------- */
@@ -346,6 +361,8 @@ Inset boxes
 ------------------------------------------------------------------- */
 .sfa-inset {
   padding: 15px; }
+  .sfa-inset .form-control {
+    background-color: #fff; }
   .sfa-inset-yellow {
     background-color: #fff2d3; }
   .sfa-inset-light-grey {

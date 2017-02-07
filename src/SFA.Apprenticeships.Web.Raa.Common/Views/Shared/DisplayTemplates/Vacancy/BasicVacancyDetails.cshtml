@@ -35,13 +35,12 @@
             @Html.HiddenFor(model => model.Status)
 
             @Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new { type = "text", size = 12, @class = "form-control-4-4", rows = "2" })
-            @Html.EditorFor(m => m.TitleComment, "Comment", Html.GetLabelFor(m => m.TitleComment))
             @Html.ValidationMessageFor(m => m.TitleComment)
+            @Html.EditorFor(m => m.TitleComment, "Comment", Html.GetLabelFor(m => m.TitleComment))
 
             @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { type = "text", size = 12, @class = "form-control form-control-4-4", rows = "5" })
-            @Html.EditorFor(m => m.ShortDescriptionComment, "Comment", Html.GetLabelFor(m => m.ShortDescriptionComment))
             @Html.ValidationMessageFor(m => m.ShortDescriptionComment)
-
+            @Html.EditorFor(m => m.ShortDescriptionComment, "Comment", Html.GetLabelFor(m => m.ShortDescriptionComment))
             <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyType)))">
                 <fieldset class="inline">
                     <a name="@Html.NameFor(m => m.VacancyType).ToString().ToLower()"></a>
@@ -160,14 +159,14 @@
                     </p>
                     @Html.TextBoxFor(m => m.OfflineApplicationUrl, new { @class = "form-control form-control-3-4", type = "text", size = 12, id = "apprenticeship-offline-application-url" })
                 </div>
-
                 @Html.EditorFor(m => m.OfflineApplicationUrlComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationUrlComment))
+
                 @Html.ValidationMessageFor(m => m.OfflineApplicationUrlComment)
 
                     @* ReSharper disable once Html.IdNotResolved *@
-                    @Html.FormTextAreaFor(m => m.OfflineApplicationInstructions, containerHtmlAttributes: new { @class="sfa-no-bottom-margin" }, controlHtmlAttributes: new { type = "text", size = 12, @class = "form-control form-control-4-4", id = "apprenticheship-offline-application-instructions", rows = "5" })
-                    @Html.EditorFor(m => m.OfflineApplicationInstructionsComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationInstructionsComment))
                     @Html.ValidationMessageFor(m => m.OfflineApplicationInstructionsComment)
+                    @Html.FormTextAreaFor(m => m.OfflineApplicationInstructions, controlHtmlAttributes: new { type = "text", size = 12, @class = "form-control form-control-4-4", id = "apprenticheship-offline-application-instructions", rows = "5" })
+                    @Html.EditorFor(m => m.OfflineApplicationInstructionsComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationInstructionsComment))
             </div>
         </div>
     </div>

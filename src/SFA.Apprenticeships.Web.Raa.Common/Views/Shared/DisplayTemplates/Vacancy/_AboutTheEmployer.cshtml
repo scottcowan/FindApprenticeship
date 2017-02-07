@@ -86,7 +86,7 @@
                 @if (Model.IsSingleLocation)
                 {
                     <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
-                        <h3 class="heading-small">Address</h3>
+                        <h3 class="heading-small sfa-no-top-margin">Address</h3>
                         @if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
                         {
                             <div itemprop="address">
@@ -127,7 +127,7 @@
                         if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
                         {
                             <div id="vacancy-address" class="editable-item" itemscope itemtype="http://schema.org/PostalAddress">
-                                <h3 class="heading-small">
+                                <h3 class="heading-small sfa-no-top-margin">
                                     Address
                                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
                                 </h3>
@@ -139,7 +139,7 @@
                                     if (Model.IsManageReviewerView)
                                     {
                                         <div class="left-grey-border">
-                                            <h3 class="heading-small">Hidden full address</h3>
+                                            <h4 class="heading-small">Hidden full address</h4>
                                             <div itemprop="address">
                                                 <p class="sfa-small-bottom-margin font-xsmall" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1</p>
                                                 <p class="sfa-small-bottom-margin font-xsmall" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2</p>
@@ -170,7 +170,7 @@
                             var midIndex = (Model.NewVacancyViewModel.LocationAddresses.Count + 1) / 2;
                             <p></p>
                             <div id="vacancy-address" class="editable-item grid-row" itemscope itemtype="http://schema.org/PostalAddress">
-                                <h3 class="heading-small">
+                                <h3 class="heading-small sfa-no-top-margin">
                                     Addresses
                                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
                                 </h3>
@@ -205,7 +205,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="left-grey-border">
-                                                                    <h3 class="heading-small">Hidden full address</h3>
+                                                                    <h4 class="heading-small">Hidden full address</h4>
                                                                     <p class="sfa-small-bottom-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine1</p>
                                                                     <p class="sfa-small-bottom-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine2</p>
                                                                     <p class="sfa-small-bottom-margin" itemprop="addressLocality">@locationAddress.Address.Town @locationAddress.Address.Postcode</p>
@@ -282,7 +282,7 @@
                         if (!string.IsNullOrWhiteSpace(Model.NewVacancyViewModel.AdditionalLocationInformation))
                         {
                             <div class="editable-item">
-                                <h3 class="heading-small">
+                                <h3 class="heading-small sfa-no-top-margin">
                                     Additional location information
                                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.NewVacancyViewModel.AdditionalLocationInformationComment, Model.LocationsLink))
                                 </h3>

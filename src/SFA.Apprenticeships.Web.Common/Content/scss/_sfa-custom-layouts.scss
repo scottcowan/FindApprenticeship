@@ -110,7 +110,10 @@ Custom margins
 }
 
 .sfa-large-bottom-margin {
-    margin-bottom: 15px !important;
+    margin-bottom: 10px !important;
+    @include media(tablet){
+        margin-bottom: 20px !important;
+    }
 }
 
 .sfa-xlarge-bottom-margin {
@@ -131,6 +134,13 @@ Custom margins
     margin-top: 15px !important;
     @include media(tablet){
         margin-top: 30px !important;
+    }
+}
+
+.sfa-large-top-margin {
+    margin-top: 10px !important;
+    @include media(tablet){
+        margin-top: 20px !important;
     }
 }
 
@@ -204,6 +214,10 @@ Custom form elements
         margin-bottom:0px;
         width:auto !important;
     }
+}
+
+.sfa-form-control-auto {
+    width:auto !important;
 }
 
 .sfa-form-radio, .sfa-form-checkbox {
@@ -409,6 +423,10 @@ Alignment
     }
 }
 
+.sfa-display-inline {
+    display:inline;
+}
+
 
 /* -------------------------------------------------------------------
 Custom expand content
@@ -458,6 +476,9 @@ Inset boxes
 
 .sfa-inset {
     padding:15px;
+    .form-control {
+        background-color:$page-colour;
+    }
     &-yellow {
         background-color:$yellow-25;
     }
