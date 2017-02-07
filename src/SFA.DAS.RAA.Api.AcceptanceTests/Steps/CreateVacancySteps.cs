@@ -4,14 +4,15 @@ using TechTalk.SpecFlow;
 namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
     using System.Collections.Generic;
-    using System.Dynamic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
-    using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
     using Constants;
     using Extensions;
     using Factories;
@@ -20,11 +21,15 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Moq;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
+    using UnitTests.Factories;
+    using DbVacancy = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.Vacancy;
     using VacancyOwnerRelationship = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities.VacancyOwnerRelationship;
 
     [Binding]
     public class CreateVacancySteps
     {
+        private const int ProviderSiteId = 24;
+
         [When(@"I request to create a (.*) vacancy for employer identified with EDSURN: (.*) and provider site identified with EDSURN: (.*) with description: (.*) and website: (.*)")]
         public void WhenIRequestToCreateAVacancyForEmployerAndProviderSite(string vacancyLocationTypeString, int employerEdsUrn, int providerSiteEdsUrn, string description, string website)
         {
@@ -41,11 +46,20 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         public async Task WhenIRequestToCreateASpecificLocationVacancyForVacancyOwnerRelationshipWithIdAndPositions(VacancyLocationType vacancyLocationType, int vacancyOwnerRelationshipId, int positions)
         {
             const int vorOwnedId = 42;
-            const int providerSiteId = 24;
-
+            
             var vorOwned = new Fixture().Build<VacancyOwnerRelationship>()
                 .With(vor => vor.VacancyOwnerRelationshipId, vorOwnedId)
                 .With(vor => vor.ProviderSiteID, 24)
+                .Create();
+
+            var providerSite = new Fixture().Build<ProviderSite>()
+                .With(ps => ps.ProviderSiteId, ProviderSiteId)
+                .Create();
+
+            var providerSiteRelationship = new Fixture().Build<ProviderSiteRelationship>()
+                .With(psr => psr.ProviderId, RaaApiUserFactory.SkillsFundingAgencyProviderId)
+                .With(psr => psr.ProviderSiteId, providerSite.ProviderSiteId)
+                .With(psr => psr.ProviderSiteRelationShipTypeId, 1)
                 .Create();
 
             RaaMockFactory.GetMockGetOpenConnection()
@@ -53,8 +67,23 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                     m =>
                         m.Query<VacancyOwnerRelationship>(
                             It.Is<string>(s => s.StartsWith(VacancyOwnerRelationshipRepository.SelectByIdsSql)),
-                            It.Is<object>(o => o.GetPropertyValue<int[]>("VacancyOwnerRelationshipIds")[0] == vorOwnedId), null, null))
+                            It.Is<object>(o => o.GetPropertyValue<int[]>("VacancyOwnerRelationshipIds")[0] == vorOwnedId),
+                            null, null))
                 .Returns(new[] {vorOwned});
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<ProviderSite>(It.Is<string>(s => s.StartsWith(ProviderSiteRepository.SelectByProviderIdSql)), It.Is<object>(o => o.GetPropertyValue<int>("providerId") == RaaApiUserFactory.SkillsFundingAgencyProviderId), null, null))
+                .Returns(new[] { providerSite });
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<ProviderSiteRelationship>(It.Is<string>(s => s.StartsWith(ProviderSiteRepository.SelectProviderSiteRelationshipsByProviderSiteIdsSql)), It.Is<object>(o => o.GetPropertyValue<IEnumerable<int>>("providerSiteIds").Contains(ProviderSiteId)), null, null))
+                .Returns(new[] { providerSiteRelationship });
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<int>(ReferenceNumberRepository.GetNextVacancyReferenceNumberSql, null, null, null))
+                .Returns(new [] {450987});
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(m => m.Insert(It.IsAny<DbVacancy>(), null)).Returns(3453);
 
             var vacancy = GetVacancy(vacancyLocationType, vacancyOwnerRelationshipId, positions);
 
@@ -89,6 +118,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         {
             var vacancy = new Vacancy
             {
+                VacancyGuid = Guid.NewGuid(),
                 VacancyLocationType = vacancyLocationType,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
                 NumberOfPositions = positions
@@ -108,7 +138,12 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             expectedVacancy.Status = VacancyStatus.Draft;
             expectedVacancy.VacancyId = responseVacancy.VacancyId;
             expectedVacancy.VacancyReferenceNumber = responseVacancy.VacancyReferenceNumber;
-            expectedVacancy.VacancySource = responseVacancy.VacancySource;
+            expectedVacancy.VacancyGuid = responseVacancy.VacancyGuid;
+            expectedVacancy.VacancySource = VacancySource.Api;
+            expectedVacancy.ContractOwnerId = RaaApiUserFactory.SkillsFundingAgencyProviderId;
+            expectedVacancy.OriginalContractOwnerId = RaaApiUserFactory.SkillsFundingAgencyProviderId;
+            expectedVacancy.VacancyManagerId = ProviderSiteId;
+            expectedVacancy.DeliveryOrganisationId = ProviderSiteId;
             Equals(responseVacancy, expectedVacancy).Should().BeTrue();
         }
 
