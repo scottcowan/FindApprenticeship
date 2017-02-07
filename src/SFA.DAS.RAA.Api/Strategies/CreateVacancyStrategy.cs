@@ -6,6 +6,7 @@
     using Apprenticeships.Application.Provider.Strategies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies.Constants;
+    using Apprenticeships.Domain.Interfaces.Repositories;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using FluentValidation;
     using FluentValidation.Results;
@@ -20,14 +21,16 @@
         private readonly IProviderReadRepository _providerReadRepository;
         private readonly IVacancyOwnerRelationshipReadRepository _vacancyOwnerRelationshipReadRepository;
         private readonly IGetOwnedProviderSitesStrategy _getOwnedProviderSitesStrategy;
+        private readonly IReferenceNumberRepository _referenceNumberRepository;
 
-        public CreateVacancyStrategy(IVacancyReadRepository vacancyreadRepository, IVacancyWriteRepository vacancyWriteRepository, IProviderReadRepository providerReadRepository, IVacancyOwnerRelationshipReadRepository vacancyOwnerRelationshipReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy)
+        public CreateVacancyStrategy(IVacancyReadRepository vacancyreadRepository, IVacancyWriteRepository vacancyWriteRepository, IProviderReadRepository providerReadRepository, IVacancyOwnerRelationshipReadRepository vacancyOwnerRelationshipReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy, IReferenceNumberRepository referenceNumberRepository)
         {
             _vacancyreadRepository = vacancyreadRepository;
             _vacancyWriteRepository = vacancyWriteRepository;
             _providerReadRepository = providerReadRepository;
             _vacancyOwnerRelationshipReadRepository = vacancyOwnerRelationshipReadRepository;
             _getOwnedProviderSitesStrategy = getOwnedProviderSitesStrategy;
+            _referenceNumberRepository = referenceNumberRepository;
         }
 
         public Vacancy CreateVacancy(Vacancy vacancy, string ukprn)
@@ -37,6 +40,9 @@
             {
                 throw new SecurityException(Constants.VacancyMessages.UnauthorizedProviderAccess);
             }
+
+            vacancy.ContractOwnerId = provider.ProviderId;
+            vacancy.OriginalContractOwnerId = provider.ProviderId;
 
             var validationResult = _vacancyValidator.Validate(vacancy);
 
@@ -62,6 +68,9 @@
                     {
                         validationResult.Errors.Add(new ValidationFailure("VacancyOwnerRelationshipId", VacancyMessages.VacancyOwnerRelationshipId.Unauthorized));
                     }
+
+                    vacancy.VacancyManagerId = vacancyOwnerRelationship.ProviderSiteId;
+                    vacancy.DeliveryOrganisationId = vacancyOwnerRelationship.ProviderSiteId;
                 }
             }
 
@@ -70,9 +79,15 @@
                 throw new ValidationException(validationResult.Errors);
             }
 
+            vacancy.VacancyReferenceNumber = _referenceNumberRepository.GetNextVacancyReferenceNumber();
+            
+            //Ignore any passed in status and set to draft
             vacancy.Status = VacancyStatus.Draft;
+            vacancy.VacancySource = VacancySource.Api;
 
-            return vacancy;
+            var createdVacancy = _vacancyWriteRepository.Create(vacancy);
+
+            return createdVacancy;
         }
     }
 }

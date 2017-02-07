@@ -8,6 +8,7 @@
     using Apprenticeships.Application.Provider.Strategies;
     using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Domain.Interfaces.Repositories;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using Factories;
     using FluentAssertions;
@@ -29,6 +30,9 @@
         private readonly Mock<IProviderReadRepository> _providerReadRepository = new Mock<IProviderReadRepository>();
         private readonly Mock<IVacancyOwnerRelationshipReadRepository> _vacancyOwnerRelationshipReadRepository = new Mock<IVacancyOwnerRelationshipReadRepository>();
         private readonly Mock<IGetOwnedProviderSitesStrategy> _getOwnedProviderSitesStrategy = new Mock<IGetOwnedProviderSitesStrategy>();
+        private readonly Mock<IReferenceNumberRepository> _referenceNumberRepository = new Mock<IReferenceNumberRepository>();
+
+        private ICreateVacancyStrategy _createVacancyStrategy;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -69,6 +73,8 @@
             ownedProviderSite.ProviderSiteRelationships = new List<ProviderSiteRelationship> { providerSiteRelationship };
 
             _getOwnedProviderSitesStrategy.Setup(ps => ps.GetOwnedProviderSites(RaaApiUserFactory.SkillsFundingAgencyProviderId)).Returns(new[] { ownedProviderSite });
+
+            _createVacancyStrategy = new CreateVacancyStrategy(_vacancyReadRepository.Object, _vacancyWriteRepository.Object, _providerReadRepository.Object, _vacancyOwnerRelationshipReadRepository.Object, _getOwnedProviderSitesStrategy.Object, _referenceNumberRepository.Object);
         }
 
         [Test]
@@ -80,9 +86,7 @@
                 VacancyOwnerRelationshipId = VorIdOwned
             };
 
-            var strategy = new CreateVacancyStrategy(_vacancyReadRepository.Object, _vacancyWriteRepository.Object, _providerReadRepository.Object, _vacancyOwnerRelationshipReadRepository.Object, _getOwnedProviderSitesStrategy.Object);
-
-            Action action = () => strategy.CreateVacancy(vacancy, "100000");
+            Action action = () => _createVacancyStrategy.CreateVacancy(vacancy, "100000");
             action.ShouldThrow<SecurityException>().WithMessage("You do not have permission to create a vacancy for specified provider.");
         }
 
@@ -97,9 +101,7 @@
 
             _vacancyReadRepository.Setup(r => r.GetByVacancyGuid(vacancy.VacancyGuid)).Returns(vacancy);
 
-            var strategy = new CreateVacancyStrategy(_vacancyReadRepository.Object, _vacancyWriteRepository.Object, _providerReadRepository.Object, _vacancyOwnerRelationshipReadRepository.Object, _getOwnedProviderSitesStrategy.Object);
-
-            Action action = () => strategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
+            Action action = () => _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
             action.ShouldThrow<ValidationException>()
                 .And.Errors.Any(e => e.PropertyName == "VacancyGuid" && e.ErrorMessage == "The supplied guid has been used to create a vacancy before. Please supply a unique guid.").Should().BeTrue();
         }
@@ -113,9 +115,7 @@
                 VacancyOwnerRelationshipId = VorIdNotFound
             };
 
-            var strategy = new CreateVacancyStrategy(_vacancyReadRepository.Object, _vacancyWriteRepository.Object, _providerReadRepository.Object, _vacancyOwnerRelationshipReadRepository.Object, _getOwnedProviderSitesStrategy.Object);
-
-            Action action = () => strategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
+            Action action = () => _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
             action.ShouldThrow<ValidationException>()
                 .And.Errors.Any(e => e.PropertyName == "VacancyOwnerRelationshipId" && e.ErrorMessage == "Please supply a valid vacancy owner relationship id. This must exist and be associated with a provider site your API key has access to.").Should().BeTrue();
         }
@@ -129,9 +129,7 @@
                 VacancyOwnerRelationshipId = VorIdNotOwned
             };
 
-            var strategy = new CreateVacancyStrategy(_vacancyReadRepository.Object, _vacancyWriteRepository.Object, _providerReadRepository.Object, _vacancyOwnerRelationshipReadRepository.Object, _getOwnedProviderSitesStrategy.Object);
-
-            Action action = () => strategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
+            Action action = () => _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
             action.ShouldThrow<ValidationException>()
                 .And.Errors.Any(e => e.PropertyName == "VacancyOwnerRelationshipId" && e.ErrorMessage == "You do not have permission to create a vacancy for the specified vacancy owner relationship.").Should().BeTrue();
         }
@@ -145,10 +143,16 @@
                 VacancyOwnerRelationshipId = VorIdOwned
             };
 
-            var strategy = new CreateVacancyStrategy(_vacancyReadRepository.Object, _vacancyWriteRepository.Object, _providerReadRepository.Object, _vacancyOwnerRelationshipReadRepository.Object, _getOwnedProviderSitesStrategy.Object);
+            const int newVacancyId = 356;
+            const int newVacancyReferenceNumber = 34534;
 
-            var createdVacancy = strategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
+            _referenceNumberRepository.Setup(r => r.GetNextVacancyReferenceNumber()).Returns(newVacancyReferenceNumber);
+            _vacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns<Vacancy>(v => { v.VacancyId = newVacancyId; return v; });
 
+            var createdVacancy = _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
+
+            createdVacancy.VacancyId.Should().Be(newVacancyId);
+            createdVacancy.VacancyReferenceNumber.Should().Be(newVacancyReferenceNumber);
             createdVacancy.Status.Should().Be(VacancyStatus.Draft);
             createdVacancy.ContractOwnerId.Should().Be(RaaApiUserFactory.SkillsFundingAgencyProviderId);
             createdVacancy.OriginalContractOwnerId.Should().Be(RaaApiUserFactory.SkillsFundingAgencyProviderId);
