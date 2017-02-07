@@ -117,8 +117,13 @@
                                 <fieldset>
                                     <p class="form-hint">@Html.Label(WageViewModelMessages.AmountMessages.HelpText)</p>
                                     <div class="form-group">
+                                        @Html.ValidationMessageWithSeverityFor(m => m.Wage.Amount, Html.GetValidationType(m => m.Wage.Amount))
+
                                         <p class="sfa-display-inline">£</p>
-                                        @Html.FormTextFor(m => m.Wage.Amount, labelHtmlAttributes: new { style = "display: none" }, controlHtmlAttributes: new { @class = "form-control-1-4", type = "number", size = 12 })
+                                        <a name="@Html.NameFor(m => m.Wage.Amount).ToString().ToLower()"></a>
+                                        @Html.LabelFor(m => m.Wage.Amount, new { @class = "sfa-hide" })
+                                        @Html.TextBoxFor(m => m.Wage.Amount, new { @class="form-control form-control-1-4 sfa-form-control-1-4" })
+
                                         @Html.DropDownListFor(m => m.Wage.Unit, Model.WageUnits, new { @class = "form-control sfa-form-control-auto" })
                                     </div>
                                  </fieldset>
@@ -130,14 +135,20 @@
                                     <div class="form-group">
                                         @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.AmountLowerBound))
                                         @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.AmountUpperBound))
+                                        @Html.ValidationMessageWithSeverityFor(m => m.Wage.AmountLowerBound, Html.GetValidationType(m => m.Wage.AmountLowerBound))
+                                        @Html.ValidationMessageWithSeverityFor(m => m.Wage.AmountUpperBound, Html.GetValidationType(m => m.Wage.AmountUpperBound))
 
                                         <p class="sfa-display-inline">£</p>
 
-                                        @Html.FormTextFor(m => m.Wage.AmountLowerBound, labelHtmlAttributes: new { style = "display: none" }, controlHtmlAttributes: new { @class = "form-control-1-4", type = "number", size = 12, placeholder = "min" })
+                                        <a name="@Html.NameFor(m => m.Wage.AmountLowerBound).ToString().ToLower()"></a>
+                                        @Html.LabelFor(m => m.Wage.AmountLowerBound, new { @class = "sfa-hide" })
+                                        @Html.TextBoxFor(m => m.Wage.AmountLowerBound, new { @class = "form-control form-control-1-4 sfa-form-control-1-4", type = "number", size = 12, placeholder = "min" })
 
-                                        <p class="sfa-display-inline">to £</p>
+                                        <p class="sfa-display-inline"><span class="secondary-text" style="padding:0 0.5em;">to</span> £</p>
 
-                                        @Html.FormTextFor(m => m.Wage.AmountUpperBound, labelHtmlAttributes: new { style = "display: none" }, controlHtmlAttributes: new { @class = "form-control-1-4", type = "number", size = 12, placeholder = "max" })
+                                        <a name="@Html.NameFor(m => m.Wage.AmountUpperBound).ToString().ToLower()"></a>
+                                        @Html.LabelFor(m => m.Wage.AmountUpperBound, new { @class = "sfa-hide" })
+                                        @Html.TextBoxFor(m => m.Wage.AmountUpperBound, new { @class = "form-control form-control-1-4 sfa-form-control-1-4", type = "number", size = 12, placeholder = "max" })
 
                                         @Html.DropDownListFor(m => m.Wage.RangeUnit, Model.WageUnits, new { @class = "form-control sfa-form-control-auto" })
                                     </div>
@@ -183,14 +194,14 @@
                 
                 <a name="@Html.NameFor(m => m.Duration).ToString().ToLower()"></a>
                 @Html.LabelFor(m => m.Duration, new { @class = "form-label-bold" })
+                @Html.ValidationMessageWithSeverityFor(m => m.Duration, Html.GetValidationType(m => m.Duration))
                 @Html.TextBoxFor(m => m.Duration, new { @class = "form-control-1-8 form-control", type = "tel", size = 12 })
                 @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes, new { @class = "form-control sfa-form-control-auto" })
-                @Html.ValidationMessageWithSeverityFor(m => m.Duration, Html.GetValidationType(m => m.Duration))
             </div>
 
             @if (Model.VacancySource != VacancySource.Raa)
             {
-                @Html.FormTextAreaFor(model => model.ExpectedDuration, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" })
+                @Html.FormTextAreaFor(model => model.ExpectedDuration, controlHtmlAttributes: new { type = "text", rows="1", @class = "form-control-1-2" })
             }
             @Html.EditorFor(m => m.DurationComment, "Comment", Html.GetLabelFor(m => m.DurationComment))
         </fieldset>

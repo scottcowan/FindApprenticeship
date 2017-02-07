@@ -8,55 +8,54 @@
     var vacancyText = Model.VacancyText;
 }
 
-<div class="success-banner">
-    <h1 class="heading-large sfa-no-bottom-margin">
-        <i class="fa fa-check"></i>
-        @if (Model.Resubmitted)
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <div class="govuk-box-highlight">
+            <h1 class="bold-large">
+                @if (Model.Resubmitted)
+                {
+                    @:@(vacancyText) resubmitted for approval
+                }
+                else
+                {
+                    @:@(vacancyText) submitted for approval
+                }
+            </h1>
+        </div>
+        
+        <h2 class="heading-medium">Next steps</h2>
+
+        @if (Model.IsMultiLocationVacancy)
         {
-            <span>@vacancyText resubmitted for approval</span>
+            <p>
+                Once your vacancy has been reviewed and approved by a Skills Funding Agency adviser, it will be split into separate adverts for each location.
+            </p>
+            <p>
+                You'll be notified via your recruitment homepage if any changes are necessary before the adverts go live.
+            </p>
         }
         else
         {
-            <span>@vacancyText submitted for approval</span>
+            <p>
+                @if (Model.VacancyType == VacancyType.Traineeship)
+                {
+                    @:Your traineeship opportunity will now be reviewed by a Skills Funding Agency adviser.
+                }
+                else
+                {
+                    @:Your vacancy advert will now be reviewed by a Skills Funding Agency adviser.
+                }
+                You’ll be notified via your recruitment home page if any changes are
+                necessary before the advert goes live.
+            </p>
         }
-    </h1>
+        <h2 class="heading-medium">
+            Create another apprenticeship vacancy or traineeship opportunity
+            <span class="heading-secondary ">Use a fresh template or continue with a draft</span>
+        </h2>
+        <div class="form-group inline sfa-xlarge-top-margin">
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })" class="button">Start new opportunity or vacancy</a>
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)" class="button sfa-button-secondary">Return to recruitment home</a>
+        </div>
+    </div>
 </div>
-<section>
-    <hgroup class="hgroup-medium text">
-        <h2 class="heading-medium">Next steps</h2>
-    </hgroup>
-    @if (Model.IsMultiLocationVacancy)
-    {
-        <p>
-            Once your vacancy has been reviewed and approved by a Skills Funding Agency adviser, it will be split into separate adverts for each location.
-        </p>
-        <p>
-            You'll be notified via your recruitment homepage if any changes are necessary before the adverts go live.
-        </p>
-    }
-    else
-    {
-        <p>
-            @if (Model.VacancyType == VacancyType.Traineeship)
-            {
-                <span>Your traineeship opportunity will now be reviewed by a Skills Funding Agency adviser.</span>
-            }
-            else
-            {
-                <span>Your vacancy advert will now be reviewed by a Skills Funding Agency adviser.</span>
-            }
-            You’ll be notified via your recruitment home page if any changes are
-            necessary before the advert goes live.
-        </p>
-    }
-</section>
-<section class="sfa-section-bordered">
-    <div class="hgroup-medium text">
-        <h2 class="heading-medium">Create another apprenticeship vacancy or traineeship opportunity</h2>
-        <span class="heading-secondary ">Use a fresh template or continue with a draft</span>
-    </div>
-    <div class="form-group inline">
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })" class="button">Start new opportunity or vacancy</a>
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)" class="button sfa-button-secondary">Return to recruitment home</a>
-    </div>
-</section>
