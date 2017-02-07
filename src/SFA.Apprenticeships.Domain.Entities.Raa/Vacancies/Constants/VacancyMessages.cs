@@ -11,6 +11,7 @@
         public static class VacancyGuid
         {
             public const string RequiredErrorText = "Please supply a valid vacancy guid. The guid must not have been used to create a vacancy before.";
+            public const string DuplicateGuid = "The supplied guid has been used to create a vacancy before. Please supply a unique guid.";
         }
     }
 }

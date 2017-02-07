@@ -1,9 +1,9 @@
 ﻿namespace SFA.DAS.RAA.Api.Strategies
 {
+    using System;
     using System.Linq;
     using System.Security;
     using Apprenticeships.Application.Provider.Strategies;
-    using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies.Constants;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
@@ -15,12 +15,16 @@
     {
         private readonly VacancyValidator _vacancyValidator = new VacancyValidator();
 
+        private readonly IVacancyReadRepository _vacancyreadRepository;
+        private readonly IVacancyWriteRepository _vacancyWriteRepository;
         private readonly IProviderReadRepository _providerReadRepository;
         private readonly IVacancyOwnerRelationshipReadRepository _vacancyOwnerRelationshipReadRepository;
         private readonly IGetOwnedProviderSitesStrategy _getOwnedProviderSitesStrategy;
 
-        public CreateVacancyStrategy(IProviderReadRepository providerReadRepository, IVacancyOwnerRelationshipReadRepository vacancyOwnerRelationshipReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy)
+        public CreateVacancyStrategy(IVacancyReadRepository vacancyreadRepository, IVacancyWriteRepository vacancyWriteRepository, IProviderReadRepository providerReadRepository, IVacancyOwnerRelationshipReadRepository vacancyOwnerRelationshipReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy)
         {
+            _vacancyreadRepository = vacancyreadRepository;
+            _vacancyWriteRepository = vacancyWriteRepository;
             _providerReadRepository = providerReadRepository;
             _vacancyOwnerRelationshipReadRepository = vacancyOwnerRelationshipReadRepository;
             _getOwnedProviderSitesStrategy = getOwnedProviderSitesStrategy;
@@ -35,6 +39,15 @@
             }
 
             var validationResult = _vacancyValidator.Validate(vacancy);
+
+            if (vacancy.VacancyGuid != Guid.Empty)
+            {
+                if (_vacancyreadRepository.GetByVacancyGuid(vacancy.VacancyGuid) != null)
+                {
+                    validationResult.Errors.Add(new ValidationFailure("VacancyGuid", VacancyMessages.VacancyGuid.DuplicateGuid));
+                }
+            }
+
             var vacancyOwnerRelationship = _vacancyOwnerRelationshipReadRepository.GetByIds(new[] {vacancy.VacancyOwnerRelationshipId}).SingleOrDefault();
             if (vacancy.VacancyOwnerRelationshipId != 0)
             {
@@ -51,6 +64,7 @@
                     }
                 }
             }
+
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult.Errors);
