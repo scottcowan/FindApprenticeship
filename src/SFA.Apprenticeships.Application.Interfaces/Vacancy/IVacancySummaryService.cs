@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace SFA.Apprenticeships.Application.Vacancy
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancy
 {
+    using System.Collections.Generic;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories.Models;

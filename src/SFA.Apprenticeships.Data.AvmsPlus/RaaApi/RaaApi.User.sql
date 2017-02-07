@@ -5,7 +5,7 @@
 	[UserTypeId] INT NOT NULL, 
 	[ReferencedEntityId] INT NOT NULL, 
 	[ReferencedEntityGuid] UNIQUEIDENTIFIER NULL, 
-	[ReferencedEntitySurrogateId] INT NOT NULL, 
+	[ReferencedEntitySurrogateId] INT NULL, 
 	CONSTRAINT FK_RaaApiUser_RaaApiUserType FOREIGN KEY ([UserTypeId]) REFERENCES [RaaApi].[UserType]([UserTypeId])
 )
 

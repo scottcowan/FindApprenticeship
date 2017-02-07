@@ -14,7 +14,6 @@
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.RaaApi;
-    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities;
     using Apprenticeships.Infrastructure.WebServices.Wcf;
     using Constants;
@@ -54,10 +53,10 @@
                 RetrieveServiceEndpoint = "http://localhost"
             });
             
-            //Setup mock for unkown user
+            //Setup mock for unknown user
             MockGetOpenConnection.Setup(m => m.Query<RaaApiUser>(It.IsAny<string>(), It.IsAny<object>(), null, null)).Returns(new List<RaaApiUser>());
 
-            //Setup mocks for the two valid users
+            //Setup mocks for the three valid users
             var validProviderApiUser = RaaApiUserFactory.GetValidProviderApiUser(ApiKeys.ProviderApiKey);
             MockGetOpenConnection.Setup(
                 m => m.Query<RaaApiUser>(RaaApiUserRepository.SelectSql, It.Is<object>(o => o.GetHashCode() == new { ApiKey = ApiKeys.ProviderApiKey }.GetHashCode()), null, null))
@@ -66,6 +65,10 @@
             MockGetOpenConnection.Setup(
                 m => m.Query<RaaApiUser>(RaaApiUserRepository.SelectSql, It.Is<object>(o => o.GetHashCode() == new { ApiKey = ApiKeys.EmployerApiKey }.GetHashCode()), null, null))
                 .Returns(new [] { RaaApiUserFactory.GetValidEmployerApiUser(ApiKeys.EmployerApiKey) });
+
+            MockGetOpenConnection.Setup(
+                m => m.Query<RaaApiUser>(RaaApiUserRepository.SelectSql, It.Is<object>(o => o.GetHashCode() == new { ApiKey = ApiKeys.AgencyApiKey }.GetHashCode()), null, null))
+                .Returns(new [] { RaaApiUserFactory.GetValidAgencyApiUser(ApiKeys.AgencyApiKey) });
 
             //Setup mock for unknown provider
             MockGetOpenConnection.Setup(m => m.Query<Provider>(It.IsAny<string>(), It.IsAny<object>(), null, null)).Returns(new List<Provider>());

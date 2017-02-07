@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
 {
     using System;
+    using System.Threading.Tasks;
     using Builders;
     using Candidate.Mediators.Application;
     using Candidate.Providers;
@@ -20,28 +21,28 @@
 
         [TestCase(VacancyStatuses.Live)]
         [TestCase(VacancyStatuses.Expired)]
-        public void Ok(VacancyStatuses vacancyStatus)
+        public async Task Ok(VacancyStatuses vacancyStatus)
         {
             var candidateId = Guid.NewGuid();
             var traineeshipApplicationProvider = new Mock<ITraineeshipApplicationProvider>();
 
             traineeshipApplicationProvider
                 .Setup(p => p.GetApplicationViewModelEx(candidateId, TestVacancyId))
-                .Returns(new TraineeshipApplicationViewModelBuilder()
+                .Returns(Task.FromResult(new TraineeshipApplicationViewModelBuilder()
                     .WithVacancyStatus(vacancyStatus)
-                    .Build());
+                    .Build()));
 
             var mediator = new TraineeshipApplicationMediatorBuilder()
                 .With(traineeshipApplicationProvider)
                 .Build();
 
-            var response = mediator.View(candidateId, TestVacancyId);
+            var response = await mediator.View(candidateId, TestVacancyId);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.View.Ok, true);
         }
 
         [Test]
-        public void ApplicationNotFound()
+        public async Task ApplicationNotFound()
         {
             var viewModel = new TraineeshipApplicationViewModelBuilder()
                 .HasError(ApplicationViewModelStatus.ApplicationNotFound, MyApplicationsPageMessages.ApplicationNotFound)
@@ -51,19 +52,19 @@
 
             traineeshipApplicationProvider
                 .Setup(p => p.GetApplicationViewModelEx(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(viewModel);
+                .Returns(Task.FromResult(viewModel));
 
             var mediator = new TraineeshipApplicationMediatorBuilder()
                 .With(traineeshipApplicationProvider)
                 .Build();
 
-            var response = mediator.View(Guid.NewGuid(), TestVacancyId);
+            var response = await mediator.View(Guid.NewGuid(), TestVacancyId);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.View.ApplicationNotFound, true);
         }
 
         [Test]
-        public void HasError()
+        public async Task HasError()
         {
             var viewModel = new TraineeshipApplicationViewModelBuilder()
                 .HasError(ApplicationViewModelStatus.Error, ApplicationPageMessages.ViewApplicationFailed)
@@ -73,13 +74,13 @@
 
             traineeshipApplicationProvider
                 .Setup(p => p.GetApplicationViewModelEx(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(viewModel);
+                .Returns(Task.FromResult(viewModel));
 
             var mediator = new TraineeshipApplicationMediatorBuilder()
                 .With(traineeshipApplicationProvider)
                 .Build();
 
-            var response = mediator.View(Guid.NewGuid(), TestVacancyId);
+            var response = await mediator.View(Guid.NewGuid(), TestVacancyId);
 
             response.AssertMessage(
                 TraineeshipApplicationMediatorCodes.View.Error,

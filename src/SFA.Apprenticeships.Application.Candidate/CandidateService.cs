@@ -21,6 +21,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using UserAccount.Strategies;
     using IUpdateUsernameStrategy = Strategies.IUpdateUsernameStrategy;
 
@@ -234,7 +235,7 @@
             _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
         }
 
-        public ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
+        public async Task<ApprenticeshipApplicationDetail> CreateApplication(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
 
@@ -242,7 +243,7 @@
                 "Calling CandidateService to create an apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
-            return _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
+            return await _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
         }
 
         public ApprenticeshipApplicationDetail GetApplication(Guid candidateId, int vacancyId)
@@ -256,7 +257,7 @@
             return _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
         }
 
-        public TraineeshipApplicationDetail CreateTraineeshipApplication(Guid candidateId, int vacancyId)
+        public async Task<TraineeshipApplicationDetail> CreateTraineeshipApplication(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
 
@@ -264,7 +265,7 @@
                 "Calling CandidateService to create a traineeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
-            return _createTraineeshipApplicationStrategy.CreateApplication(candidateId, vacancyId);
+            return await _createTraineeshipApplicationStrategy.CreateApplication(candidateId, vacancyId);
         }
 
         public void ArchiveApplication(Guid candidateId, int vacancyId)
@@ -369,24 +370,24 @@
             return _getCandidateTraineeshipApplicationsStrategy.GetApplications(candidateId);
         }
 
-        public ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Guid candidateId, int vacancyId)
+        public async Task<ApprenticeshipVacancyDetail> GetApprenticeshipVacancyDetail(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
             Condition.Requires(vacancyId);
 
             _logger.Debug("Calling CandidateService to get the apprenticeship vacancy ID {0} for candidate ID {1}.", vacancyId, candidateId);
 
-            return _candidateApprenticeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
+            return await _candidateApprenticeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
         }
 
-        public TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Guid candidateId, int vacancyId)
+        public async Task<TraineeshipVacancyDetail> GetTraineeshipVacancyDetail(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
             Condition.Requires(vacancyId);
 
             _logger.Debug("Calling CandidateService to get the traineeship vacancy ID {0} for candidate ID {1}.", vacancyId, candidateId);
 
-            return _candidateTraineeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
+            return await _candidateTraineeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
         }
 
         public void SendMobileVerificationCode(Candidate candidate)
@@ -417,14 +418,14 @@
             _submitContactMessageStrategy.SubmitMessage(contactMessage);
         }
 
-        public ApplicationDetail SaveVacancy(Guid candidateId, int vacancyId)
+        public async Task<ApplicationDetail> SaveVacancy(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
             Condition.Requires(vacancyId);
 
             _logger.Info("Calling CandidateService to save vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
 
-            return _saveVacancyStrategy.SaveVacancy(candidateId, vacancyId);
+            return await _saveVacancyStrategy.SaveVacancy(candidateId, vacancyId);
         }
 
         public ApplicationDetail DeleteSavedVacancy(Guid candidateId, int vacancyId)
@@ -515,13 +516,13 @@
             return _unsubscribeStrategy.Unsubscribe(subscriberId, subscriptionType);
         }
 
-        public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> GetSuggestedApprenticeshipVacancies(ApprenticeshipSearchParameters searchParameters, Guid candidateId, int vacancyId)
+        public async Task<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>> GetSuggestedApprenticeshipVacancies(ApprenticeshipSearchParameters searchParameters, Guid candidateId, int vacancyId)
         {
             Condition.Requires(searchParameters).IsNotNull();
             Condition.Requires(vacancyId);
 
             var candidateApplications = GetApprenticeshipApplications(candidateId);
-            return _apprenticeshipVacancySuggestionsStrategy.GetSuggestedApprenticeshipVacancies(searchParameters, candidateApplications, vacancyId);
+            return await _apprenticeshipVacancySuggestionsStrategy.GetSuggestedApprenticeshipVacancies(searchParameters, candidateApplications, vacancyId);
         }
     }
 }

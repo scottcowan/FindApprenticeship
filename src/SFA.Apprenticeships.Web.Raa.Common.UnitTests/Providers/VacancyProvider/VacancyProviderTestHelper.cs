@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Vacancies;
@@ -10,9 +11,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Moq;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using ViewModels.Vacancy;
 
     public static class VacancyProviderTestHelper
@@ -35,7 +34,7 @@
             {
                 var vacancy = new Vacancy { VacancyReferenceNumber = vacancyReferenceNumber };
                 postingService.Setup(ps => ps.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(vacancy);
-                postingService.Setup(ps => ps.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+                postingService.Setup(ps => ps.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(Task.FromResult(vacancy));
             }
 
             var vacancyLockingService = new Mock<IVacancyLockingService>();

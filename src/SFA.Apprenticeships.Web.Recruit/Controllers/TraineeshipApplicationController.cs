@@ -12,6 +12,7 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Traineeship;
     using System;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -30,9 +31,9 @@
         }
 
         [HttpGet]
-        public ActionResult Review(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public async Task<ActionResult> Review(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var response = _traineeshipApplicationMediator.Review(applicationSelectionViewModel);
+            var response = await _traineeshipApplicationMediator.Review(applicationSelectionViewModel);
 
             switch (response.Code)
             {
@@ -46,22 +47,22 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewSaveAndExit(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
+        public async Task<ActionResult> ReviewSaveAndExit(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
             switch (traineeshipApplicationViewModel.Status)
             {
                 case ApplicationStatuses.Submitted:
-                    return SetToSubmitted(traineeshipApplicationViewModel);
+                    return await SetToSubmitted(traineeshipApplicationViewModel);
                 case ApplicationStatuses.InProgress:
-                    return PromoteToInProgress(traineeshipApplicationViewModel);
+                    return await PromoteToInProgress(traineeshipApplicationViewModel);
                 default:
                     throw new InvalidOperationException("Invalid status change");
             }
         }
 
-        private ActionResult PromoteToInProgress(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
+        private async Task<ActionResult> PromoteToInProgress(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
-            var response = _traineeshipApplicationMediator.PromoteToInProgress(traineeshipApplicationViewModel);
+            var response = await _traineeshipApplicationMediator.PromoteToInProgress(traineeshipApplicationViewModel);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -88,9 +89,9 @@
             }
         }
 
-        private ActionResult SetToSubmitted(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
+        private async Task<ActionResult> SetToSubmitted(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
-            var response = _traineeshipApplicationMediator.ReviewSetToSubmitted(traineeshipApplicationViewModel);
+            var response = await _traineeshipApplicationMediator.ReviewSetToSubmitted(traineeshipApplicationViewModel);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();

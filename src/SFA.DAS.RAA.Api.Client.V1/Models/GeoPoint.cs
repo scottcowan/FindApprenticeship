@@ -6,6 +6,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// A global geographic coordinate
+    /// </summary>
     public partial class GeoPoint
     {
         /// <summary>
@@ -16,7 +19,15 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// Initializes a new instance of the GeoPoint class.
         /// </summary>
-        public GeoPoint(double? longitude = default(double?), double? latitude = default(double?), int? easting = default(int?), int? northing = default(int?))
+        /// <param name="longitude">Longitude component of a lat/long
+        /// pair</param>
+        /// <param name="latitude">Latitude component of a lat/long
+        /// pair</param>
+        /// <param name="easting">Easting component of a northing/easting
+        /// pair</param>
+        /// <param name="northing">Northing component of a northing/easting
+        /// pair</param>
+        public GeoPoint(double longitude, double latitude, int easting, int northing)
         {
             Longitude = longitude;
             Latitude = latitude;
@@ -25,24 +36,38 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
+        /// Gets or sets longitude component of a lat/long pair
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Longitude")]
-        public double? Longitude { get; set; }
+        public double Longitude { get; set; }
 
         /// <summary>
+        /// Gets or sets latitude component of a lat/long pair
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Latitude")]
-        public double? Latitude { get; set; }
+        public double Latitude { get; set; }
 
         /// <summary>
+        /// Gets or sets easting component of a northing/easting pair
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Easting")]
-        public int? Easting { get; set; }
+        public int Easting { get; set; }
 
         /// <summary>
+        /// Gets or sets northing component of a northing/easting pair
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Northing")]
-        public int? Northing { get; set; }
+        public int Northing { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

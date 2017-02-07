@@ -1,17 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using System.Threading.Tasks;
     using ViewModels.Applications;
 
     public interface ITraineeshipApplicationProvider
     {
-        TraineeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId);
+        Task<TraineeshipApplicationViewModel> GetApplicationViewModel(Guid candidateId, int vacancyId);
 
-        TraineeshipApplicationViewModel GetApplicationViewModelEx(Guid candidateId, int vacancyId);
+        Task<TraineeshipApplicationViewModel> GetApplicationViewModelEx(Guid candidateId, int vacancyId);
 
-        TraineeshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId, TraineeshipApplicationViewModel traineeshipApplicationViewModel);
+        Task<TraineeshipApplicationViewModel> SubmitApplication(Guid candidateId, int vacancyId, TraineeshipApplicationViewModel traineeshipApplicationViewModel);
 
-        WhatHappensNextTraineeshipViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId);
+        Task<WhatHappensNextTraineeshipViewModel> GetWhatHappensNextViewModel(Guid candidateId, int vacancyId);
 
         TraineeshipApplicationViewModel PatchApplicationViewModel(Guid candidateId, TraineeshipApplicationViewModel savedModel, TraineeshipApplicationViewModel submittedModel);
     }

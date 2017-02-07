@@ -94,9 +94,7 @@
     <Compile Include="IServiceStrategy{T}.cs" />
     <Compile Include="IVacancyDataProvider.cs" />
     <Compile Include="IAllVacanciesProvider.cs" />
-    <Compile Include="IVacancyManagementService.cs" />
     <Compile Include="IVacancySearchProvider.cs" />
-    <Compile Include="IVacancySummaryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteMap\ISiteMapVacancyProvider.cs" />
     <Compile Include="SiteMap\SiteMapVacancy.cs" />

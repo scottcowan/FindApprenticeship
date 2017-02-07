@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
     using System;
+    using System.Threading.Tasks;
     using CuttingEdge.Conditions;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
@@ -59,7 +60,7 @@
             }
         }
 
-        public TVacancyDetail GetVacancyDetails(int vacancyId)
+        public async Task<TVacancyDetail> GetVacancyDetails(int vacancyId)
         {
             Condition.Requires(vacancyId);
 
@@ -67,7 +68,7 @@
 
             try
             {
-                return _vacancyDataProvider.GetVacancyDetails(vacancyId);
+                return await _vacancyDataProvider.GetVacancyDetails(vacancyId);
             }
             catch (Exception e)
             {

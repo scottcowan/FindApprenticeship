@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
@@ -100,7 +101,7 @@
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>(), It.IsAny<bool>())).Returns(employerWithGeocode);
             MockLocalAuthorityLookupService.Setup(m => m.GetLocalAuthorityCode(employerWithGeocode.Address.Postcode)).Returns(localAuthorityCode);
             MockProviderService.Setup(s => s.GetProvider(Ukprn, true)).Returns(new Provider());
-            MockVacancyPostingService.Setup(s => s.GetVacancy(It.IsAny<Guid>())).Returns(new Fixture().Create<Vacancy>());
+            MockVacancyPostingService.Setup(s => s.GetVacancy(It.IsAny<Guid>())).Returns(Task.FromResult(new Fixture().Create<Vacancy>()));
 
             var provider = GetVacancyPostingProvider();
 
@@ -149,7 +150,7 @@
                 .Returns(localAuthorityCode);
             var vacancy = new Fixture().Create<Vacancy>();
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))
-                .Returns(vacancy);
+                .Returns(Task.FromResult(vacancy));
 
             MockProviderService.Setup(s => s.GetProvider(Ukprn, true)).Returns(new Provider());
 
@@ -200,7 +201,7 @@
 
             var vacancy = new Fixture().Create<Vacancy>();
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))
-                .Returns(vacancy);
+                .Returns(Task.FromResult(vacancy));
 
             MockProviderService.Setup(s => s.GetProvider(Ukprn, true)).Returns(new Provider());
 

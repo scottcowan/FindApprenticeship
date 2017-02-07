@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
 {
     using System;
+    using System.Threading.Tasks;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using Common.Providers;
@@ -10,9 +11,7 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using ViewModels.Vacancy;
 
     [TestFixture]
@@ -20,7 +19,7 @@
     public class UpdateQuestionsViewModelTests
     {
         [Test]
-        public void ShouldReturnOKIfTheUserCanLockTheVacancy()
+        public async Task ShouldReturnOKIfTheUserCanLockTheVacancy()
         {
             //Arrange
             const string userName = "userName";
@@ -59,7 +58,7 @@
 
             //Arrange: get AV, update retrieved AV with NVVM, save modified AV returning same modified AV, map AV to new NVVM with same properties as input
             vacancyPostingService.Setup(
-                vps => vps.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+                vps => vps.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(Task.FromResult(vacancy));
 
             vacancyPostingService.Setup(vps => vps.UpdateVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av);
 
@@ -79,7 +78,7 @@
             var expectedResult = new QAActionResult<VacancyQuestionsViewModel>(QAActionResultCode.Ok, viewModel);
 
             //Act
-            var result = vacancyProvider.UpdateVacancyWithComments(viewModel);
+            var result = await vacancyProvider.UpdateVacancyWithComments(viewModel);
             
             //Assert
             vacancyPostingService.Verify(
@@ -93,7 +92,7 @@
         }
 
         [Test]
-        public void ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
+        public async Task ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
         {
             const int vacanyReferenceNumber = 1;
             const string userName = "userName";
@@ -106,7 +105,7 @@
 
             currentUserService.Setup(cus => cus.CurrentUserName).Returns(userName);
             vacancyPostingService.Setup(vps => vps.GetVacancyByReferenceNumber(vacanyReferenceNumber))
-                .Returns(new Vacancy {VacancyReferenceNumber = vacanyReferenceNumber});
+                .Returns(Task.FromResult(new Vacancy {VacancyReferenceNumber = vacanyReferenceNumber}));
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(userName, It.IsAny<Vacancy>()))
                 .Returns(false);
             
@@ -117,7 +116,7 @@
                     .With(currentUserService)
                     .Build();
 
-            var result = vacancyProvider.UpdateVacancyWithComments(vacancyQuestionsViewModel);
+            var result = await vacancyProvider.UpdateVacancyWithComments(vacancyQuestionsViewModel);
 
             result.Code.Should().Be(QAActionResultCode.InvalidVacancy);
             result.ViewModel.Should().BeNull();

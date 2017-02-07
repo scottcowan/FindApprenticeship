@@ -9,12 +9,16 @@ using System.Diagnostics;
 
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Dapper-like database access methods. Intended to be used for read-only queries, perhaps on a read-only database connection.
     /// </summary>
     public interface IGetOpenConnection
     {
         IDbConnection GetOpenConnection();
+
+        Task<IDbConnection> GetOpenConnectionAsync();
 
         /// <summary>
         /// Execute a query. Very similar to Dapper's IDbConnection.Query except:
@@ -32,6 +36,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
         /// <param name="commandType"></param>
         /// <returns></returns>
         IList<T> Query<T>(string sql, object param = null, int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?));
+
+        Task<IList<T>> QueryAsync<T>(string sql, object param = null, int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?));
 
         /// <summary>
         /// Execute a query. Very similar to Dapper's IDbConnection.Query except:
@@ -306,6 +312,13 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
             return conn;
         }
 
+        public async Task<IDbConnection> GetOpenConnectionAsync()
+        {
+            var conn = new SqlConnection(ConnectionString);
+            await conn.OpenAsync();
+            return conn;
+        }
+
         public IList<T> Query<T>(string sql, object param = null, int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?))
         {
             // TODO: Log that user did this query
@@ -318,6 +331,20 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
                         (IList<T>)
                             conn.Query<T>(sql, param, transaction: null, buffered: true,
                                 commandTimeout: commandTimeout, commandType: commandType);
+                }
+            }
+            );
+        }
+
+        public async Task<IList<T>> QueryAsync<T>(string sql, object param = null, int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?))
+        {
+            // TODO: Log that user did this query
+
+            return await RetryPolicy.ExecuteAsync(async () => 
+            {
+                using (var conn = await GetOpenConnectionAsync())
+                {
+                    return (IList<T>) await conn.QueryAsync<T>(sql, param, null, commandTimeout, commandType);
                 }
             }
             );

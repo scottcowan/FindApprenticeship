@@ -14,6 +14,7 @@
     using Ploeh.AutoFixture;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Web.Common.Configuration;
 
     [TestFixture]
@@ -40,7 +41,7 @@
             var vacancyPostingService = new Mock<IVacancyPostingService>();
 
             vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(vacancy);
+                .Returns(Task.FromResult(vacancy));
             vacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(locationAddresses);
 
             //set up so that a bunch of vacancy reference numbers are created that are not the same as the one supplied above
@@ -117,7 +118,7 @@
         }
 
         [Test]
-        public void ApproveVacancy()
+        public async Task ApproveVacancy()
         {
             //Arrange
             var vacancyReferenceNumber = 1;
@@ -132,7 +133,7 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
-            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(Task.FromResult(vacancy));
 
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(It.IsAny<string>(), It.IsAny<Vacancy>()))
                 .Returns(true);
@@ -145,7 +146,7 @@
                     .Build();
 
             //Act
-            var result = vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+            var result = await vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
             result.Should().Be(QAActionResultCode.Ok);
@@ -160,7 +161,7 @@
         }
 
         [Test]
-        public void ApproveVacancyShouldCallGeocodeServiceIfAddressIsNotGeocoded()
+        public async Task ApproveVacancyShouldCallGeocodeServiceIfAddressIsNotGeocoded()
         {
             //Arrange
             const int vacancyReferenceNumber = 1;
@@ -182,7 +183,7 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
-            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(Task.FromResult(vacancy));
 
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(It.IsAny<string>(), It.IsAny<Vacancy>()))
                 .Returns(true);
@@ -196,14 +197,14 @@
                     .Build();
 
             //Act
-            var result = vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+            var result = await vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
             geocodingService.Verify(s => s.GetGeoPointFor(address));
         }
 
         [Test]
-        public void ApproveVacancyShoulReturnErrorIfGeocodeServiceFails()
+        public async Task ApproveVacancyShoulReturnErrorIfGeocodeServiceFails()
         {
             //Arrange
             const int vacancyReferenceNumber = 1;
@@ -225,7 +226,7 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
-            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(Task.FromResult(vacancy));
 
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(It.IsAny<string>(), It.IsAny<Vacancy>()))
                 .Returns(true);
@@ -242,7 +243,7 @@
                     .Build();
 
             //Act
-            var result = vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+            var result = await vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
             result.Should().Be(QAActionResultCode.GeocodingFailure);
@@ -250,7 +251,7 @@
 
         [TestCase(1)]
         [TestCase(10)]
-        public void ApproveMultilocationVacancyShouldCallGeoCodeVacancyIfLocationIsNotGeocoded(int locationAddressCount)
+        public async Task ApproveMultilocationVacancyShouldCallGeoCodeVacancyIfLocationIsNotGeocoded(int locationAddressCount)
         {
             //Arrange
             const int vacancyReferenceNumber = 1;
@@ -277,7 +278,7 @@
             var geocodingService = new Mock<IGeoCodeLookupService>();
 
             vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(vacancy);
+                .Returns(Task.FromResult(vacancy));
             vacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(locationAddresses);
 
             //set up so that a bunch of vacancy reference numbers are created that are not the same as the one supplied above
@@ -296,7 +297,7 @@
                     .Build();
 
             //Act
-            vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+            await vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
             geocodingService.Verify(s => s.GetGeoPointFor(It.IsAny<PostalAddress>()), Times.Exactly(locationAddressCount));
@@ -305,7 +306,7 @@
 
         [TestCase(1)]
         [TestCase(10)]
-        public void ApproveMultilocationVacancyShouldReturnErrorIfGeoCodeVacancyFails(int locationAddressCount)
+        public async Task ApproveMultilocationVacancyShouldReturnErrorIfGeoCodeVacancyFails(int locationAddressCount)
         {
             //Arrange
             const int vacancyReferenceNumber = 1;
@@ -332,7 +333,7 @@
             var geocodingService = new Mock<IGeoCodeLookupService>();
 
             vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(vacancy);
+                .Returns(Task.FromResult(vacancy));
             vacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(locationAddresses);
             geocodingService.Setup(s => s.GetGeoPointFor(It.IsAny<PostalAddress>()))
                 .Throws(new CustomException(Application.Interfaces.Locations.ErrorCodes.GeoCodeLookupProviderFailed));
@@ -353,7 +354,7 @@
                     .Build();
 
             //Act
-            var result = vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+            var result = await vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
             result.Should().Be(QAActionResultCode.GeocodingFailure);
@@ -361,7 +362,7 @@
         }
 
         [Test]
-        public void ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
+        public async Task ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
         {
             const int vacanyReferenceNumber = 1;
             const string userName = "userName";
@@ -372,7 +373,7 @@
 
             currentUserService.Setup(cus => cus.CurrentUserName).Returns(userName);
             vacancyPostingService.Setup(vps => vps.GetVacancyByReferenceNumber(vacanyReferenceNumber))
-                .Returns(new Vacancy { VacancyReferenceNumber = vacanyReferenceNumber });
+                .Returns(Task.FromResult(new Vacancy { VacancyReferenceNumber = vacanyReferenceNumber }));
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(userName, It.IsAny<Vacancy>()))
                 .Returns(false);
 
@@ -383,7 +384,7 @@
                     .With(currentUserService)
                     .Build();
 
-            var result = vacancyProvider.ApproveVacancy(vacanyReferenceNumber);
+            var result = await vacancyProvider.ApproveVacancy(vacanyReferenceNumber);
 
             result.Should().Be(QAActionResultCode.InvalidVacancy);
         }

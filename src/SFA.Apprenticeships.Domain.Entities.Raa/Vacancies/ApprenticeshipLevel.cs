@@ -9,6 +9,7 @@
         Higher = 4,
         FoundationDegree = 5,
         Degree = 6,
-        Masters = 7
+        Masters = 7,
+        Traineeship = 8
     }
 }

@@ -21,6 +21,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Validators;
     using ViewModels.Account;
@@ -126,9 +127,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
         protected SelectList GetSearchFields(bool addRefineOption = false, string selectedValue = "All")
         {
+            var allDisplayName = addRefineOption && selectedValue == "All" ? "-- Refine search --" : "All";
+
             var searchFieldsOptions = new List<object>
             {
-                new { FieldName = ApprenticeshipSearchField.All.ToString(), DisplayName = "All"},
+                new { FieldName = ApprenticeshipSearchField.All.ToString(), DisplayName = allDisplayName},
                 new { FieldName = ApprenticeshipSearchField.JobTitle.ToString(), DisplayName = "Job title"},
                 new { FieldName = ApprenticeshipSearchField.Description.ToString(), DisplayName = "Description"},
                 new { FieldName = ApprenticeshipSearchField.Employer.ToString(), DisplayName = "Employer"},
@@ -140,11 +143,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             if (searchFactors != null && searchFactors.ProviderFactors != null && searchFactors.ProviderFactors.Enabled)
             {
                 searchFieldsOptions.Insert(4, new { FieldName = ApprenticeshipSearchField.Provider.ToString(), DisplayName = "Training Provider" });
-            }
-
-            if (addRefineOption && selectedValue == "All")
-            {
-                searchFieldsOptions.Add(new { FieldName = selectedValue, DisplayName = "-- Refine search --" });
             }
 
             var searchFields = new SelectList(
@@ -384,7 +382,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SaveSearch.Ok, viewModel, VacancySearchResultsPageMessages.SaveSearchSuccess, UserMessageLevel.Success);
         }
 
-        public MediatorResponse<ApprenticeshipVacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId)
+        public async Task<MediatorResponse<ApprenticeshipVacancyDetailViewModel>> Details(string vacancyIdString, Guid? candidateId)
         {
             int vacancyId;
 
@@ -393,17 +391,17 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
                 return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
-            var vacancyDetailViewModel = _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = await _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             return GetDetails(vacancyDetailViewModel);
         }
 
-        public MediatorResponse<ApprenticeshipVacancyDetailViewModel> DetailsByReferenceNumber(string vacancyReferenceNumberString, Guid? candidateId)
+        public async Task<MediatorResponse<ApprenticeshipVacancyDetailViewModel>> DetailsByReferenceNumber(string vacancyReferenceNumberString, Guid? candidateId)
         {
             int vacancyReferenceNumber;
             if (VacancyHelper.TryGetVacancyReferenceNumber(vacancyReferenceNumberString, out vacancyReferenceNumber))
             {
-                var vacancyDetailViewModel = _apprenticeshipVacancyProvider.GetVacancyDetailViewModelByReferenceNumber(candidateId, vacancyReferenceNumber);
+                var vacancyDetailViewModel = await _apprenticeshipVacancyProvider.GetVacancyDetailViewModelByReferenceNumber(candidateId, vacancyReferenceNumber);
                 return GetDetails(vacancyDetailViewModel);
             }
             return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
@@ -447,7 +445,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
         }
 
-        public MediatorResponse<ApprenticeshipVacancyDetailViewModel> RedirectToExternalWebsite(string vacancyIdString)
+        public async Task<MediatorResponse<ApprenticeshipVacancyDetailViewModel>> RedirectToExternalWebsite(string vacancyIdString)
         {
             int vacancyId;
 
@@ -456,7 +454,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
                 return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound);
             }
 
-            var vacancyDetailViewModel = _apprenticeshipVacancyProvider.IncrementClickThroughFor(vacancyId);
+            var vacancyDetailViewModel = await _apprenticeshipVacancyProvider.IncrementClickThroughFor(vacancyId);
 
             if (vacancyDetailViewModel == null)
             {

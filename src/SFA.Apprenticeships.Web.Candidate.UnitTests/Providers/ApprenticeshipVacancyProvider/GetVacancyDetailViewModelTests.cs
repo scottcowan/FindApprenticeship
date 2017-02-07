@@ -2,6 +2,7 @@
 {
     using System;
     using System.ServiceModel;
+    using System.Threading.Tasks;
     using Application.Interfaces.Candidates;
     using Constants.Pages;
     using Domain.Entities.Exceptions;
@@ -14,7 +15,7 @@
     public class GetVacancyDetailViewModelTests
     {
         [Test]
-        public void CandidateService_GetApprenticeshipVacancyDetail_ServerTooBusyException()
+        public async Task CandidateService_GetApprenticeshipVacancyDetail_ServerTooBusyException()
         {
             var candidateId = Guid.NewGuid();
             const int vacancyId = 1;
@@ -25,7 +26,7 @@
             candidateService.Setup(cs => cs.GetApprenticeshipVacancyDetail(candidateId, vacancyId)).Throws(customException);
             var provider = new ApprenticeshipVacancyProviderBuilder().With(candidateService).Build();
 
-            var viewModel = provider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var viewModel = await provider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             viewModel.ViewModelMessage.Should().Be(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed);
         }

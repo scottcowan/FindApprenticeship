@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.ReferenceData
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
@@ -55,54 +56,54 @@
             return _referenceDataProvider.GetReleaseNotes(dasApplication);
         }
 
-        public IEnumerable<County> GetCounties()
+        public Task<IEnumerable<County>> GetCounties()
         {
-            return _referenceDataProvider.GetCounties();
+            return Task.FromResult(_referenceDataProvider.GetCounties());
         }
 
-        public County GetCountyById(int countyId)
+        public Task<County> GetCountyById(int countyId)
         {
-            return _referenceDataProvider.GetCountyById(countyId);
+            return Task.FromResult(_referenceDataProvider.GetCountyById(countyId));
         }
 
-        public County GetCountyByCode(string countyCode)
+        public Task<County> GetCountyByCode(string countyCode)
         {
-            return _referenceDataProvider.GetCountyByCode(countyCode);
+            return Task.FromResult(_referenceDataProvider.GetCountyByCode(countyCode));
         }
 
-        public County GetCountyByName(string countyName)
+        public Task<County> GetCountyByName(string countyName)
         {
-            return _referenceDataProvider.GetCountyByName(countyName);
+            return Task.FromResult(_referenceDataProvider.GetCountyByName(countyName));
         }
 
-        public IEnumerable<LocalAuthority> GetLocalAuthorities()
+        public Task<IEnumerable<LocalAuthority>> GetLocalAuthorities()
         {
-            return _referenceDataProvider.GetLocalAuthorities();
+            return Task.FromResult(_referenceDataProvider.GetLocalAuthorities());
         }
 
-        public LocalAuthority GetLocalAuthorityById(int localAuthorityId)
+        public Task<LocalAuthority> GetLocalAuthorityById(int localAuthorityId)
         {
-            return _referenceDataProvider.GetLocalAuthorityById(localAuthorityId);
+            return Task.FromResult(_referenceDataProvider.GetLocalAuthorityById(localAuthorityId));
         }
 
-        public LocalAuthority GetLocalAuthorityByCode(string localAuthorityCodeName)
+        public Task<LocalAuthority> GetLocalAuthorityByCode(string localAuthorityCodeName)
         {
-            return _referenceDataProvider.GetLocalAuthorityByCode(localAuthorityCodeName);
+            return Task.FromResult(_referenceDataProvider.GetLocalAuthorityByCode(localAuthorityCodeName));
         }
 
-        public IEnumerable<Region> GetRegions()
+        public Task<IEnumerable<Region>> GetRegions()
         {
-            return _referenceDataProvider.GetRegions();
+            return Task.FromResult(_referenceDataProvider.GetRegions());
         }
 
-        public Region GetRegionById(int regionId)
+        public Task<Region> GetRegionById(int regionId)
         {
-            return _referenceDataProvider.GetRegionById(regionId);
+            return Task.FromResult(_referenceDataProvider.GetRegionById(regionId));
         }
 
-        public Region GetRegionByCode(string regionCode)
+        public Task<Region> GetRegionByCode(string regionCode)
         {
-            return _referenceDataProvider.GetRegionByCode(regionCode);
+            return Task.FromResult(_referenceDataProvider.GetRegionByCode(regionCode));
         }
     }
 }

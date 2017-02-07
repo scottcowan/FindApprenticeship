@@ -22,7 +22,7 @@
 
         public void Authorise(Vacancy vacancy)
         {
-            if (!_currentUserService.IsInRole(Roles.Faa) && !_currentUserService.IsInRole(Roles.Api))
+            if (!_currentUserService.IsInRole(Roles.Faa) && (!_currentUserService.IsInRole(Roles.Api) || _currentUserService.IsInRole(Roles.Agency)))
             {
                 // Only Provider Users require authorisation (QA users are always authorised).
                 return;

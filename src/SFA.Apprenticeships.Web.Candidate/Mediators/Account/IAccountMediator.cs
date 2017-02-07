@@ -3,6 +3,7 @@
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 {
     using System;
+    using System.Threading.Tasks;
     using ViewModels.Account;
     using ViewModels.MyApplications;
 
@@ -12,7 +13,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 
         MediatorResponse Archive(Guid candidateId, int vacancyId);
 
-        MediatorResponse Delete(Guid candidateId, int vacancyId);
+        Task<MediatorResponse> Delete(Guid candidateId, int vacancyId);
 
         MediatorResponse DismissTraineeshipPrompts(Guid candidateId);
 
@@ -28,9 +29,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 
         MediatorResponse AcceptTermsAndConditions(Guid candidateId);
 
-        MediatorResponse ApprenticeshipVacancyDetails(Guid candidateId, int vacancyId);
+        Task<MediatorResponse> ApprenticeshipVacancyDetails(Guid candidateId, int vacancyId);
 
-        MediatorResponse TraineeshipVacancyDetails(Guid candidateId, int vacancyId);
+        Task<MediatorResponse> TraineeshipVacancyDetails(Guid candidateId, int vacancyId);
 
         MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId, string returnUrl);
 

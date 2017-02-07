@@ -85,8 +85,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 9
  testRunner.And("I request the vacancy details for the vacancy with no identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
- testRunner.Then("The response status is: BadRequest with response message: Please specify either a" +
-                    " vacancyId, a vacancyReferenceNumber or a vacancyGuid.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 11
  testRunner.And("I do not see the vacancy details for the vacancy with no identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -504,6 +503,32 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by reference number for an agency user")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByReferenceNumber")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("AgencyUser")]
+        public virtual void GetVacancyDetailsByReferenceNumberForAnAgencyUser()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number for an agency user", new string[] {
+                        "RA388",
+                        "GetVacancyByReferenceNumber",
+                        "AgencyUser"});
+#line 128
+this.ScenarioSetup(scenarioInfo);
+#line 129
+ testRunner.When("I authorize my request with an Agency API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 130
+ testRunner.And("I request the vacancy details for the vacancy with reference number: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 131
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 132
+ testRunner.And("I see the vacancy details for the vacancy with reference number: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Increase fixed wage by £20 per week without authorization")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
@@ -513,16 +538,16 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week without authorization", new string[] {
                         "RA388",
                         "EditWage"});
-#line 128
+#line 135
 this.ScenarioSetup(scenarioInfo);
-#line 129
+#line 136
  testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 130
+#line 137
  testRunner.When("I request to change the wage for the vacancy with id: 42 to Custom £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 131
+#line 138
  testRunner.Then("The response status is: Unauthorized with response message: Authorization has bee" +
                     "n denied for this request.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 132
+#line 139
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -538,18 +563,18 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week on a traineeship vacancy", new string[] {
                         "RA388",
                         "EditWage"});
-#line 135
+#line 142
 this.ScenarioSetup(scenarioInfo);
-#line 136
+#line 143
  testRunner.Given("I have a Live Traineeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 137
+#line 144
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 138
+#line 145
  testRunner.And("I request to change the wage for the vacancy with id: 42 to Custom £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 139
+#line 146
  testRunner.Then("The response status is: BadRequest with response message: You can only edit the w" +
                     "age of an Apprenticeship vacancy.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 140
+#line 147
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -565,18 +590,18 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week on a submitted vacancy", new string[] {
                         "RA388",
                         "EditWage"});
-#line 143
+#line 150
 this.ScenarioSetup(scenarioInfo);
-#line 144
+#line 151
  testRunner.Given("I have a Submitted Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekl" +
                     "y", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 145
+#line 152
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 146
+#line 153
  testRunner.And("I request to change the wage for the vacancy with id: 42 to Custom £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 147
+#line 154
  testRunner.Then("The response status is: BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 148
+#line 155
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -592,19 +617,19 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week on a archived vacancy", new string[] {
                         "RA388",
                         "EditWage"});
-#line 151
+#line 158
 this.ScenarioSetup(scenarioInfo);
-#line 152
+#line 159
  testRunner.Given("I have a Completed Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekl" +
                     "y", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 153
+#line 160
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 154
+#line 161
  testRunner.And("I request to change the wage for the vacancy with id: 42 to Custom £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 155
+#line 162
  testRunner.Then("The response status is: BadRequest with response message: You can only edit the w" +
                     "age of a vacancy that is live or closed.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 156
+#line 163
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -620,17 +645,17 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week", new string[] {
                         "RA388",
                         "EditWage"});
-#line 159
+#line 166
 this.ScenarioSetup(scenarioInfo);
-#line 160
+#line 167
  testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 161
+#line 168
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 162
+#line 169
  testRunner.And("I request to change the wage for the vacancy with id: 42 to Custom £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 163
+#line 170
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 164
+#line 171
  testRunner.And("I see that the wage details for the vacancy with id: 42 have been updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -646,18 +671,18 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Change fixed wage to wage range and increase by £20 per week", new string[] {
                         "RA388",
                         "EditWage"});
-#line 167
+#line 174
 this.ScenarioSetup(scenarioInfo);
-#line 168
+#line 175
  testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 169
+#line 176
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 170
+#line 177
  testRunner.And("I request to change the wage for the vacancy with id: 42 to CustomRange £220 - £2" +
                     "40 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 171
+#line 178
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 172
+#line 179
  testRunner.And("I see that the wage details for the vacancy with id: 42 have been updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -673,15 +698,15 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Decrease fixed wage by £20 per week", new string[] {
                         "RA388",
                         "EditWage"});
-#line 175
+#line 182
 this.ScenarioSetup(scenarioInfo);
-#line 176
+#line 183
  testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 177
+#line 184
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 178
+#line 185
  testRunner.And("I request to change the wage for the vacancy with id: 42 to Custom £180 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 179
+#line 186
  testRunner.Then("The response status is: BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -690,9 +715,9 @@ this.ScenarioSetup(scenarioInfo);
             table1.AddRow(new string[] {
                         "Amount",
                         "The new fixed wage must be higher than the original figure."});
-#line 180
+#line 187
  testRunner.And("The validation errors contain:", ((string)(null)), table1, "And ");
-#line 183
+#line 190
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -708,15 +733,15 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Change fixed wage to national minumum wage", new string[] {
                         "RA388",
                         "EditWage"});
-#line 186
+#line 193
 this.ScenarioSetup(scenarioInfo);
-#line 187
+#line 194
  testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 188
+#line 195
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 189
+#line 196
  testRunner.And("I request to change the wage for the vacancy with id: 42 to NationalMinimum", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 190
+#line 197
  testRunner.Then("The response status is: BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -726,9 +751,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Type",
                         "You can only change the type of a Custom (fixed) wage to CustomRange (wage range)" +
                             "."});
-#line 191
+#line 198
  testRunner.And("The validation errors contain:", ((string)(null)), table2, "And ");
-#line 194
+#line 201
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

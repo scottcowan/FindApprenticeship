@@ -32,9 +32,7 @@
                 MockProviderService.Object,
                 MockConfigurationService.Object,
                 MockVacancyPostingService.Object,
-                MockEmployerService.Object,
-                new Mock<IApiClientProvider>().Object, 
-                new Mock<ILogService>().Object);
+                MockEmployerService.Object);
         }
     }
 }

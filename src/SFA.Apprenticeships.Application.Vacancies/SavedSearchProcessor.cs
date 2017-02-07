@@ -1,11 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancies
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
     using Domain.Entities.Locations;
@@ -16,11 +10,15 @@
     using Entities;
     using Extensions;
     using Factories;
+    using Interfaces;
     using Interfaces.Locations;
     using Interfaces.Vacancies;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Vacancy;
 
     public class SavedSearchProcessor : ISavedSearchProcessor
@@ -61,7 +59,7 @@
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-            
+
             var candidateIds = _savedSearchReadRepository.GetCandidateIds();
 
             var message = string.Format("Querying candidate saved searches took {0}", stopwatch.Elapsed);
@@ -129,7 +127,7 @@
 
                     if (savedSearch.AlertsEnabled)
                     {
-                        var savedSearchAlert = _savedSearchAlertRepository.GetUnsentSavedSearchAlert(savedSearch) ?? new SavedSearchAlert {Parameters = savedSearch};
+                        var savedSearchAlert = _savedSearchAlertRepository.GetUnsentSavedSearchAlert(savedSearch) ?? new SavedSearchAlert { Parameters = savedSearch };
                         savedSearchAlert.Results = results;
 
                         _savedSearchAlertRepository.Save(savedSearchAlert);

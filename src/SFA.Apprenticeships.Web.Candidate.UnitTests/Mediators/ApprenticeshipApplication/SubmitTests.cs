@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
+    using System.Threading.Tasks;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
@@ -21,7 +22,7 @@
         private const int ValidVacancyId = 1;
 
         [Test]
-        public void AcceptSubmitValidationError()
+        public async Task AcceptSubmitValidationError()
         {
             var postedViewModel = new ApprenticeshipApplicationPreviewViewModel
             {
@@ -39,17 +40,17 @@
             };
 
             ApprenticeshipApplicationProvider.Setup(
-                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(Task.FromResult(viewModel));
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(viewModel);
+                .Returns(Task.FromResult<ApprenticeshipApplicationViewModel>(viewModel));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
 
             response.AssertValidationResult(ApprenticeshipApplicationMediatorCodes.Submit.AcceptSubmitValidationError);
         }
 
         [Test]
-        public void ErrorGettingApplicationViewModel()
+        public async Task ErrorGettingApplicationViewModel()
         {
             var postedViewModel = new ApprenticeshipApplicationPreviewViewModel
             {
@@ -63,10 +64,10 @@
             };
 
             ApprenticeshipApplicationProvider.Setup(
-                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(Task.FromResult(viewModel));
             ApprenticeshipApplicationProvider.Setup(p => p.CreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(new ApprenticeshipApplicationViewModel(MyApplicationsPageMessages.ApplicationNotFound,
-                    ApplicationViewModelStatus.ApplicationNotFound));
+                .Returns(Task.FromResult(new ApprenticeshipApplicationViewModel(MyApplicationsPageMessages.ApplicationNotFound,
+                    ApplicationViewModelStatus.ApplicationNotFound)));
             ApprenticeshipApplicationProvider.Setup(
                 p =>
                     p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(),
@@ -74,15 +75,15 @@
                 .Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>(
                     (cid, svm, vm) => vm);
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(viewModel);
+                .Returns(Task.FromResult<ApprenticeshipApplicationViewModel>(viewModel));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound, false);
         }
 
         [Test]
-        public void GetApplicationViewModelError()
+        public async Task GetApplicationViewModelError()
         {
             var postedViewModel = new ApprenticeshipApplicationPreviewViewModel
             {
@@ -105,18 +106,18 @@
                 ViewModelMessage = "An error message"
             };
             ApprenticeshipApplicationProvider.Setup(
-                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(savedViewModel);
+                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(Task.FromResult(savedViewModel));
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(submittedApplicationViewModel);
+                .Returns(Task.FromResult(submittedApplicationViewModel));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
 
             response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Submit.Error,
                 ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, false, true);
         }
 
         [Test]
-        public void IncorrectState()
+        public async Task IncorrectState()
         {
             var postedViewModel = new ApprenticeshipApplicationPreviewViewModel
             {
@@ -134,18 +135,18 @@
             };
 
             ApprenticeshipApplicationProvider.Setup(
-                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(Task.FromResult(viewModel));
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(viewModel);
+                .Returns(Task.FromResult<ApprenticeshipApplicationViewModel>(viewModel));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
 
             response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState,
                 MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Info, false);
         }
 
         [Test]
-        public void Ok()
+        public async Task Ok()
         {
             var postedViewModel = new ApprenticeshipApplicationPreviewViewModel
             {
@@ -162,9 +163,9 @@
             };
 
             ApprenticeshipApplicationProvider.Setup(
-                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(Task.FromResult(viewModel));
             ApprenticeshipApplicationProvider.Setup(p => p.CreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(new ApprenticeshipApplicationViewModel());
+                .Returns(Task.FromResult(new ApprenticeshipApplicationViewModel()));
             ApprenticeshipApplicationProvider.Setup(
                 p =>
                     p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(),
@@ -172,15 +173,15 @@
                 .Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>(
                     (cid, svm, vm) => vm);
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(viewModel);
+                .Returns(Task.FromResult<ApprenticeshipApplicationViewModel>(viewModel));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.Submit.Ok, false, true);
         }
 
         [Test]
-        public void SubmitApplicationError()
+        public async Task SubmitApplicationError()
         {
             var postedViewModel = new ApprenticeshipApplicationPreviewViewModel
             {
@@ -196,18 +197,18 @@
             };
 
             ApprenticeshipApplicationProvider.Setup(
-                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(Task.FromResult(viewModel));
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(viewModel);
+                .Returns(Task.FromResult<ApprenticeshipApplicationViewModel>(viewModel));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
 
             response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Submit.Error,
                 ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, false, true);
         }
 
         [Test]
-        public void VacancyExpired()
+        public async Task VacancyExpired()
         {
             var postedViewModel = new ApprenticeshipApplicationPreviewViewModel
             {
@@ -221,16 +222,16 @@
             };
 
             ApprenticeshipApplicationProvider.Setup(
-                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(Task.FromResult(viewModel));
 
             ApprenticeshipApplicationProvider.Setup(p => p.CreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(new ApprenticeshipApplicationViewModel
+                .Returns(Task.FromResult(new ApprenticeshipApplicationViewModel
                 {
                     VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                     {
                         VacancyStatus = VacancyStatuses.Expired
                     }
-                });
+                }));
 
             ApprenticeshipApplicationProvider.Setup(
                 p =>
@@ -239,15 +240,15 @@
                 .Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>(
                     (cid, svm, vm) => vm);
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(viewModel);
+                .Returns(Task.FromResult<ApprenticeshipApplicationViewModel>(viewModel));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound, false);
         }
 
         [Test]
-        public void VacancyNotFound()
+        public async Task VacancyNotFound()
         {
             var postedViewModel = new ApprenticeshipApplicationPreviewViewModel
             {
@@ -262,17 +263,17 @@
             };
 
             ApprenticeshipApplicationProvider.Setup(
-                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(Task.FromResult(viewModel));
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(viewModel);
+                .Returns(Task.FromResult<ApprenticeshipApplicationViewModel>(viewModel));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound, false);
         }
 
         [Test]
-        public void VacancyNotFound_GatewayError()
+        public async Task VacancyNotFound_GatewayError()
         {
             var postedViewModel = new ApprenticeshipApplicationPreviewViewModel
             {
@@ -298,18 +299,18 @@
                 };
 
             ApprenticeshipApplicationProvider.Setup(
-                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(savedViewModel);
+                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(Task.FromResult(savedViewModel));
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(submittedViewModel);
+                .Returns(Task.FromResult(submittedViewModel));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
 
             response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Submit.Error,
                 ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, false, true);
         }
 
         [Test]
-        public void ValidationError()
+        public async Task ValidationError()
         {
             var postedViewModel = new ApprenticeshipApplicationPreviewViewModel
             {
@@ -335,11 +336,11 @@
             };
 
             ApprenticeshipApplicationProvider.Setup(
-                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+                p => p.GetApplicationPreviewViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(Task.FromResult(viewModel));
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(viewModel);
+                .Returns(Task.FromResult<ApprenticeshipApplicationViewModel>(viewModel));
 
-            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
+            var response = await Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
 
             response.AssertValidationResult(ApprenticeshipApplicationMediatorCodes.Submit.ValidationError);
         }

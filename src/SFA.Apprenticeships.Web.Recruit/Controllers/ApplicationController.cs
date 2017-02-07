@@ -13,6 +13,7 @@
     using Raa.Common.ViewModels.Application;
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -28,9 +29,9 @@
         }
 
         [HttpGet]
-        public ActionResult VacancyApplications(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
+        public async Task<ActionResult> VacancyApplications(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
         {
-            var response = _applicationMediator.GetVacancyApplicationsViewModel(vacancyApplicationsSearch);
+            var response = await _applicationMediator.GetVacancyApplicationsViewModel(vacancyApplicationsSearch);
             if (response.Message != null)
             {
                 SetUserMessage(response.Message.Text, response.Message.Level);
@@ -52,9 +53,9 @@
         }
 
         [HttpGet]
-        public ActionResult ShareApplications(int vacancyReferenceNumber)
+        public async Task<ActionResult> ShareApplications(int vacancyReferenceNumber)
         {
-            var response = _applicationMediator.ShareApplications(vacancyReferenceNumber);
+            var response = await _applicationMediator.ShareApplications(vacancyReferenceNumber);
 
             switch (response.Code)
             {
@@ -66,10 +67,9 @@
         }
 
         [HttpPost]
-        public ActionResult ShareApplications(ShareApplicationsViewModel viewModel)
+        public async Task<ActionResult> ShareApplications(ShareApplicationsViewModel viewModel)
         {
-
-            var response = _applicationMediator.ShareApplications(viewModel, Url);
+            var response = await _applicationMediator.ShareApplications(viewModel, Url);
 
             switch (response.Code)
             {
@@ -85,86 +85,86 @@
         }
 
         [HttpGet]
-        public ActionResult BulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<ActionResult> BulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            var response = _applicationMediator.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
+            var response = await _applicationMediator.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
             return View(response.ViewModel);
         }
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "BulkSearchApplicationsAction")]
-        public ActionResult BulkFilterApplicationsAll(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<ActionResult> BulkFilterApplicationsAll(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.FilterType = VacancyApplicationsFilterTypes.All;
-            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+            return await BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "BulkSearchApplicationsAction")]
-        public ActionResult BulkFilterApplicationsNew(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<ActionResult> BulkFilterApplicationsNew(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.FilterType = VacancyApplicationsFilterTypes.New;
-            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+            return await BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "BulkSearchApplicationsAction")]
-        public ActionResult BulkFilterApplicationsInProgress(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<ActionResult> BulkFilterApplicationsInProgress(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.FilterType = VacancyApplicationsFilterTypes.InProgress;
-            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+            return await BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "BulkOrderApplicationsAction")]
-        public ActionResult BulkOrderApplicationsLastName(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<ActionResult> BulkOrderApplicationsLastName(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.OrderByField = VacancyApplicationsSearchViewModel.OrderByFieldLastName;
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order = bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending;
-            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+            return await BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "BulkOrderApplicationsAction")]
-        public ActionResult BulkOrderApplicationsFirstName(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<ActionResult> BulkOrderApplicationsFirstName(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.OrderByField = VacancyApplicationsSearchViewModel.OrderByFieldFirstName;
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order = bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending;
-            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+            return await BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "BulkOrderApplicationsAction")]
-        public ActionResult BulkOrderApplicationsManagerNotes(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<ActionResult> BulkOrderApplicationsManagerNotes(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.OrderByField = VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes;
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order = bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending;
-            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+            return await BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "BulkOrderApplicationsAction")]
-        public ActionResult BulkOrderApplicationsSubmitted(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<ActionResult> BulkOrderApplicationsSubmitted(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.OrderByField = VacancyApplicationsSearchViewModel.OrderByFieldSubmitted;
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order = bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending;
-            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+            return await BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "BulkOrderApplicationsAction")]
-        public ActionResult BulkOrderApplicationsStatus(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<ActionResult> BulkOrderApplicationsStatus(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.OrderByField = VacancyApplicationsSearchViewModel.OrderByFieldStatus;
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order = bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending;
-            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+            return await BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmBulkDeclineCandidatesAction")]
-        public ActionResult ConfirmBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<ActionResult> ConfirmBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            var response = _applicationMediator.ConfirmBulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+            var response = await _applicationMediator.ConfirmBulkDeclineCandidates(bulkDeclineCandidatesViewModel);
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.Ok:
@@ -179,17 +179,17 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "EditBulkDeclineCandidatesAction")]
-        public ActionResult EditBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<ActionResult> EditBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+            return await BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "SendBulkUnsuccessfulDecisionAction")]
-        public ActionResult SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<ActionResult> SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.UnSuccessfulReasonRequired = true;
-            var response = _applicationMediator.SendBulkUnsuccessfulDecision(bulkDeclineCandidatesViewModel);
+            var response = await _applicationMediator.SendBulkUnsuccessfulDecision(bulkDeclineCandidatesViewModel);
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.SendBulkUnsuccessfulDecision.Ok:

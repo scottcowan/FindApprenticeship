@@ -5,6 +5,7 @@
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
+    using Interfaces.Vacancy;
 
     public class VacancySummaryService : IVacancySummaryService
     {

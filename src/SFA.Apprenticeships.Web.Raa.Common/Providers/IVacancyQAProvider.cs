@@ -13,33 +13,33 @@
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 
-        QAActionResultCode ApproveVacancy(int vacancyReferenceNumber);
+        Task<QAActionResultCode> ApproveVacancy(int vacancyReferenceNumber);
 
-        QAActionResultCode RejectVacancy(int vacancyReferenceNumber);
+        Task<QAActionResultCode> RejectVacancy(int vacancyReferenceNumber);
 
-        VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber);
+        Task<VacancyViewModel> ReserveVacancyForQA(int vacancyReferenceNumber);
 
-        VacancyViewModel ReviewVacancy(int vacancyReferenceNumber);
+        Task<VacancyViewModel> ReviewVacancy(int vacancyReferenceNumber);
 
-        NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
+        Task<NewVacancyViewModel> GetNewVacancyViewModel(int vacancyReferenceNumber);
 
-        TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
+        Task<TrainingDetailsViewModel> GetTrainingDetailsViewModel(int vacancyReferenceNumber);
 
-        FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber);
+        Task<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(int vacancyReferenceNumber);
 
-        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber);
+        Task<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber);
 
-        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
+        Task<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
 
-        QAActionResult<FurtherVacancyDetailsViewModel> UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel);
+        Task<QAActionResult<FurtherVacancyDetailsViewModel>> UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel);
 
-        QAActionResult<NewVacancyViewModel> UpdateVacancyWithComments(NewVacancyViewModel viewModel);
+        Task<QAActionResult<NewVacancyViewModel>> UpdateVacancyWithComments(NewVacancyViewModel viewModel);
 
-        QAActionResult<TrainingDetailsViewModel> UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
+        Task<QAActionResult<TrainingDetailsViewModel>> UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
 
-        QAActionResult<VacancyRequirementsProspectsViewModel> UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
+        Task<QAActionResult<VacancyRequirementsProspectsViewModel>> UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
 
-        QAActionResult<VacancyQuestionsViewModel> UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
+        Task<QAActionResult<VacancyQuestionsViewModel>> UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
 
         List<SelectListItem> GetSectorsAndFrameworks();
 
@@ -47,17 +47,17 @@
 
         List<SelectListItem> GetSectors();
 
-        void RemoveLocationAddresses(Guid vacancyGuid);
+        Task RemoveLocationAddresses(Guid vacancyGuid);
 
-        NewVacancyViewModel UpdateEmployerInformationWithComments(NewVacancyViewModel existingVacancy);
+        Task<NewVacancyViewModel> UpdateEmployerInformationWithComments(NewVacancyViewModel existingVacancy);
 
-        LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid, bool isAnonymousEmployer = false);
+        Task<LocationSearchViewModel> LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid, bool isAnonymousEmployer = false);
 
-        LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
+        Task<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel);
 
-        VacancyViewModel GetVacancyById(int vacancyId);
+        Task<VacancyViewModel> GetVacancyById(int vacancyId);
 
-        VacancyViewModel GetVacancy(Guid vacancyGuid);
+        Task<VacancyViewModel> GetVacancy(Guid vacancyGuid);
 
         Task<VacancyViewModel> GetVacancy(int vacancyReferenceNumber);
 
@@ -67,6 +67,6 @@
 
         DashboardVacancySummaryViewModel GetNextAvailableVacancy();
 
-        void UnReserveVacancyForQA(int vacancyReferenceNumber);
+        Task UnReserveVacancyForQA(int vacancyReferenceNumber);
     }
 }

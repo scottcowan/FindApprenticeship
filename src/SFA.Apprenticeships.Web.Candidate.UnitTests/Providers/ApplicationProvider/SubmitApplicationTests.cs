@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApplicationProvider
 {
     using System;
+    using System.Threading.Tasks;
     using Application.Interfaces.Candidates;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
@@ -20,14 +21,14 @@
         const int ValidVacancyId = 1;
 
         [Test]
-        public void GivenViewModelHasError_ThenItIsReturned()
+        public async Task GivenViewModelHasError_ThenItIsReturned()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
 
             candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns((ApprenticeshipApplicationDetail)null);
 
-            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+            var returnedViewModel = await new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).Build()
                 .SubmitApplication(candidateId, ValidVacancyId);
 
@@ -37,17 +38,17 @@
         }
 
         [Test]
-        public void GivenApplicationIsInCorrectState_ThenModelIsReturnedWithThatState()
+        public async Task GivenApplicationIsInCorrectState_ThenModelIsReturnedWithThatState()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
             var apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
 
-            apprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new ApprenticeshipVacancyDetailViewModel());
+            apprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult(new ApprenticeshipVacancyDetailViewModel()));
             candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetail());
             candidateService.Setup(cs => cs.SubmitApplication(candidateId, ValidVacancyId)).Throws(new CustomException(Domain.Entities.ErrorCodes.EntityStateError));
 
-            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+            var returnedViewModel = await new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyProvider).Build()
                 .SubmitApplication(candidateId, ValidVacancyId);
 
@@ -57,16 +58,16 @@
         }
 
         [Test]
-        public void GivenCustomException_ThenFailedApplicationViewModelIsReturned()
+        public async Task GivenCustomException_ThenFailedApplicationViewModelIsReturned()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
             var apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
-            apprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new ApprenticeshipVacancyDetailViewModel());
+            apprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult(new ApprenticeshipVacancyDetailViewModel()));
             candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetail());
             candidateService.Setup(cs => cs.SubmitApplication(candidateId, ValidVacancyId)).Throws(new CustomException(ErrorCodes.ApplicationCreationFailed));
 
-            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+            var returnedViewModel = await new ApprenticeshipApplicationProviderBuilder()
                 .With(apprenticeshipVacancyProvider).With(candidateService).Build()
                 .SubmitApplication(candidateId, ValidVacancyId);
 
@@ -77,16 +78,16 @@
         }
 
         [Test]
-        public void GivenException_ThenFailedApplicationViewModelIsReturned()
+        public async Task GivenException_ThenFailedApplicationViewModelIsReturned()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
             var apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
-            apprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new ApprenticeshipVacancyDetailViewModel());
+            apprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult(new ApprenticeshipVacancyDetailViewModel()));
             candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetail());
             candidateService.Setup(cs => cs.SubmitApplication(candidateId, ValidVacancyId)).Throws<Exception>();
 
-            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+            var returnedViewModel = await new ApprenticeshipApplicationProviderBuilder()
                 .With(apprenticeshipVacancyProvider).With(candidateService).Build()
                 .SubmitApplication(candidateId, ValidVacancyId);
 
@@ -97,15 +98,15 @@
         }
 
         [Test]
-        public void GivenSuccessfulSubmission_ThenSuccessfulViewModelIsReturned()
+        public async Task GivenSuccessfulSubmission_ThenSuccessfulViewModelIsReturned()
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
             var apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
-            apprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new ApprenticeshipVacancyDetailViewModel());
+            apprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(Task.FromResult(new ApprenticeshipVacancyDetailViewModel()));
             candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetail());
 
-            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+            var returnedViewModel = await new ApprenticeshipApplicationProviderBuilder()
                 .With(apprenticeshipVacancyProvider).With(candidateService).Build()
                 .SubmitApplication(candidateId, ValidVacancyId);
 

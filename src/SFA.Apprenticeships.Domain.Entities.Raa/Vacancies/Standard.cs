@@ -13,5 +13,7 @@
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
         public FrameworkStatusType Status { get; set; }
+
+        public int LarsCode { get; set; }
     }
 }

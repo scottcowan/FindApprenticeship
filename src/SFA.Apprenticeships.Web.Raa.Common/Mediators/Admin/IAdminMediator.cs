@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Domain.Entities.Raa.Reference;
     using ViewModels.Admin;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
@@ -31,7 +33,7 @@
         MediatorResponse<ApiUserViewModel> SaveApiUser(ApiUserViewModel viewModel);
         MediatorResponse<ApiUserViewModel> ResetApiUserPassword(ApiUserViewModel viewModel);
         MediatorResponse<byte[]> GetApiUsersBytes();
-        MediatorResponse<TransferVacanciesResultsViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel);
+        Task<MediatorResponse<TransferVacanciesResultsViewModel>> GetVacancyDetails(TransferVacanciesViewModel viewModel);
         MediatorResponse<ManageVacancyTransferResultsViewModel> ManageVacanciesTransfers(ManageVacancyTransferViewModel vacancyTransferViewModel);
         MediatorResponse<ProviderUserSearchResultsViewModel> SearchProviderUsers(ProviderUserSearchViewModel searchViewModel, string ukprn);
         MediatorResponse<ProviderUserViewModel> GetProviderUser(int providerUserId);
@@ -45,6 +47,12 @@
         MediatorResponse<List<Category>> GetFrameworks();
         MediatorResponse<byte[]> GetFrameworksBytes();
         MediatorResponse<byte[]> GetStandardsBytes();
-        MediatorResponse<EditCategoryViewModel> UpdateFramework(EditCategoryViewModel entity);
+        MediatorResponse<EditCategoryViewModel> UpdateFramework(EditCategoryViewModel category);
+        MediatorResponse<EditCategoryViewModel> InsertFramework(EditCategoryViewModel category);
+        MediatorResponse<Standard> InsertStandard(Standard standard);
+        MediatorResponse<List<Sector>>  GetSectors();
+        MediatorResponse<List<Occupation>> GetOccupations();
+        MediatorResponse<EditSectorViewModel> UpdateSector(EditSectorViewModel sector);
+        MediatorResponse<EditSectorViewModel> InsertSector(EditSectorViewModel sector);
     }
 }

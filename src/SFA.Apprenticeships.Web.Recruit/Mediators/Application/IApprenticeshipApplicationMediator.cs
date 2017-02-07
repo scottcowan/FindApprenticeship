@@ -1,23 +1,24 @@
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 {
+    using System.Threading.Tasks;
     using Common.Mediators;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
 
     public interface IApprenticeshipApplicationMediator
     {
-        MediatorResponse<ApprenticeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> ReviewAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> ReviewRejectCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> ReviewRevertToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> ReviewSetToSubmitted(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> PromoteToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel applicationSelectionViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
-        MediatorResponse<ApplicationSelectionViewModel> RevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> View(string application);
+        Task<MediatorResponse<ApprenticeshipApplicationViewModel>> Review(ApplicationSelectionViewModel applicationSelectionViewModel);
+        Task<MediatorResponse<ApprenticeshipApplicationViewModel>> ReviewAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
+        Task<MediatorResponse<ApprenticeshipApplicationViewModel>> ReviewRejectCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
+        Task<MediatorResponse<ApprenticeshipApplicationViewModel>> ReviewRevertToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
+        Task<MediatorResponse<ApprenticeshipApplicationViewModel>> ReviewSetToSubmitted(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
+        Task<MediatorResponse<ApprenticeshipApplicationViewModel>> PromoteToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
+        Task<MediatorResponse<ApprenticeshipApplicationViewModel>> ConfirmSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
+        Task<MediatorResponse<ApprenticeshipApplicationViewModel>> SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
+        Task<MediatorResponse<ApprenticeshipApplicationViewModel>> ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
+        Task<MediatorResponse<ApprenticeshipApplicationViewModel>> SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel applicationSelectionViewModel);
+        Task<MediatorResponse<ApprenticeshipApplicationViewModel>> ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
+        Task<MediatorResponse<ApplicationSelectionViewModel>> RevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
+        Task<MediatorResponse<ApprenticeshipApplicationViewModel>> View(string application);
     }
 }

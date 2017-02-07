@@ -25,9 +25,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Raa.Common.Mappers;
     using StructureMap;
     using StructureMap.Configuration.DSL;
-    using Application.Interfaces.ReferenceData;
     using Application.Location;
-    using Application.ReferenceData;
     using Application.VacancyPosting.Strategies;
     using Domain.Interfaces.Repositories;
     using Infrastructure.Raa.Mappers;
@@ -38,7 +36,9 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Mediators.Reporting;
     using Raa.Common.Providers;
     using Application.Interfaces;
+    using Application.Interfaces.Api;
     using Application.Interfaces.Security;
+    using Application.Interfaces.Vacancy;
     using Application.Provider.Strategies;
     using Application.Vacancy;
     using Infrastructure.Security;
@@ -87,7 +87,6 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
         {
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<IOrganisationService>().Use<OrganisationService>();
-            For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
             For<IAddressSearchService>().Use<AddressSearchService>();

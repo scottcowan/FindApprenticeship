@@ -7,6 +7,7 @@
     using Raa.Common.ViewModels.Admin;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     [TestFixture]
     [Parallelizable]
@@ -53,7 +54,7 @@
                 vps =>
                     vps.GetVacancyByReferenceNumber(
                         vacancyTransferViewModel.VacancyReferenceNumbers.FirstOrDefault()))
-                .Returns(_existingVacancy);
+                .Returns(Task.FromResult(_existingVacancy));
 
             MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_existingVacancy.VacancyOwnerRelationshipId, false)).Returns(_vacancyOwnerRelationship);
 
@@ -71,12 +72,12 @@
             v.VacancyManagerId == vacancyTransferViewModel.ProviderSiteId && v.ContractOwnerId == vacancyTransferViewModel.ProviderId && 
             v.VacancyOwnerRelationshipId == _vacancyOwnerRelationshipWithRelationship.VacancyOwnerRelationshipId)));
             //Neither VOR should have been updated
-            MockProviderService.Verify(mps => mps.SaveVacancyOwnerRelationship(It.Is<VacancyOwnerRelationship>(vp => vp.VacancyOwnerRelationshipId == _vacancyOwnerRelationship.VacancyOwnerRelationshipId)), Times.Never);
-            MockProviderService.Verify(mps => mps.SaveVacancyOwnerRelationship(It.Is<VacancyOwnerRelationship>(vp => vp.VacancyOwnerRelationshipId == _vacancyOwnerRelationshipWithRelationship.VacancyOwnerRelationshipId)), Times.Never);
+            MockProviderService.Verify(mps => mps.SaveVacancyOwnerRelationship(It.Is<VacancyOwnerRelationship>(vp => vp.VacancyOwnerRelationshipId == _vacancyOwnerRelationship.VacancyOwnerRelationshipId), It.IsAny<string>()), Times.Never);
+            MockProviderService.Verify(mps => mps.SaveVacancyOwnerRelationship(It.Is<VacancyOwnerRelationship>(vp => vp.VacancyOwnerRelationshipId == _vacancyOwnerRelationshipWithRelationship.VacancyOwnerRelationshipId), It.IsAny<string>()), Times.Never);
         }
 
         [Test]
-        public void TransferVacancy_IfNoRelationshipExists_CreateVacancyOwnerRelationship()
+        public async Task TransferVacancy_IfNoRelationshipExists_CreateVacancyOwnerRelationship()
         {
             const int newVorId = 1234;
 
@@ -91,7 +92,7 @@
                 vps =>
                     vps.GetVacancyByReferenceNumber(
                         vacancyTransferViewModel.VacancyReferenceNumbers.FirstOrDefault()))
-                .Returns(_existingVacancy);
+                .Returns(Task.FromResult(_existingVacancy));
 
             MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_existingVacancy.VacancyOwnerRelationshipId, false)).Returns(_vacancyOwnerRelationship);
             
@@ -104,18 +105,18 @@
                                 vor.EmployerId == _vacancyOwnerRelationship.EmployerId &&
                                 vor.ProviderSiteId == vacancyTransferViewModel.ProviderSiteId &&
                                 vor.EmployerDescription == _vacancyOwnerRelationship.EmployerDescription &&
-                                vor.EmployerWebsiteUrl == _vacancyOwnerRelationship.EmployerWebsiteUrl)))
-                .Returns<VacancyOwnerRelationship>(
-                    vor =>
+                                vor.EmployerWebsiteUrl == _vacancyOwnerRelationship.EmployerWebsiteUrl), It.IsAny<string>()))
+                .Returns<VacancyOwnerRelationship, string>(
+                    (vor, edsUrn) =>
                     {
                         vor.VacancyOwnerRelationshipId = newVorId;
-                        return vor;
+                        return Task.FromResult(vor);
                     });
 
             var vacancyPostingProvider = GetVacancyPostingProvider();
 
             //Act
-            vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
+            await vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
 
             //Assert
             //A new VOR should have been created for the new provider and provider site
@@ -128,7 +129,7 @@
                                 vor.EmployerId == _vacancyOwnerRelationship.EmployerId &&
                                 vor.ProviderSiteId == vacancyTransferViewModel.ProviderSiteId &&
                                 vor.EmployerDescription == _vacancyOwnerRelationship.EmployerDescription &&
-                                vor.EmployerWebsiteUrl == _vacancyOwnerRelationship.EmployerWebsiteUrl)));
+                                vor.EmployerWebsiteUrl == _vacancyOwnerRelationship.EmployerWebsiteUrl), It.IsAny<string>()));
 
             //And the vacancy should now use that new VOR as well as the new provider and provider site ids
             MockVacancyPostingService.Verify(mvps =>

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
     using System.Linq;
+    using System.Threading.Tasks;
     using Common.Constants;
     using Common.UnitTests.Mediators;
     using Constants.ViewModels;
@@ -16,7 +17,7 @@
     public class RejectVacancyTests
     {
         [Test]
-        public void ShouldGetStatusOkIfNoProblem()
+        public async Task ShouldGetStatusOkIfNoProblem()
         {
             const int vacancyReferenceNumber = 1;
             var provider = new Mock<IVacancyQAProvider>();
@@ -24,7 +25,7 @@
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.RejectVacancy(vacancyReferenceNumber);
+            var result = await mediator.RejectVacancy(vacancyReferenceNumber);
             result.Code.Should().Be(VacancyMediatorCodes.RejectVacancy.Ok);
         }
 
@@ -65,7 +66,7 @@
         }
 
         [Test]
-        public void ShouldReturnTheNextAvailableVacancyAfterRejectingOne()
+        public async Task ShouldReturnTheNextAvailableVacancyAfterRejectingOne()
         {
             const int vacancyReferenceNumber = 1;
             const int nextVacancyReferenceNumber = 2;
@@ -77,13 +78,13 @@
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.RejectVacancy(vacancyReferenceNumber);
+            var result = await mediator.RejectVacancy(vacancyReferenceNumber);
             result.AssertCodeAndMessage(VacancyMediatorCodes.RejectVacancy.Ok);
             result.ViewModel.VacancyReferenceNumber.Should().Be(nextVacancyReferenceNumber);
         }
 
         [Test]
-        public void ShouldReturnNoAvailableVacanciesIfThereArentAnyAvailableVacancies()
+        public async Task ShouldReturnNoAvailableVacanciesIfThereArentAnyAvailableVacancies()
         {
             const int vacancyReferenceNumber = 1;
             DashboardVacancySummaryViewModel nullVacancy = null;
@@ -94,21 +95,21 @@
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.RejectVacancy(vacancyReferenceNumber);
+            var result = await mediator.RejectVacancy(vacancyReferenceNumber);
             result.AssertMessage(VacancyMediatorCodes.RejectVacancy.NoAvailableVacancies, VacancyViewModelMessages.NoVacanciesAvailble, UserMessageLevel.Info);
         }
 
         [Test]
-        public void ShouldReturnInvalidVacancyIfTheVacancyIsNotAvailableToQA()
+        public async Task ShouldReturnInvalidVacancyIfTheVacancyIsNotAvailableToQA()
         {
             const int vacancyReferenceNumber = 1;
             var provider = new Mock<IVacancyQAProvider>();
 
-            provider.Setup(p => p.RejectVacancy(vacancyReferenceNumber)).Returns(QAActionResultCode.InvalidVacancy);
+            provider.Setup(p => p.RejectVacancy(vacancyReferenceNumber)).Returns(Task.FromResult(QAActionResultCode.InvalidVacancy));
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.RejectVacancy(vacancyReferenceNumber);
+            var result = await mediator.RejectVacancy(vacancyReferenceNumber);
             result.AssertMessage(VacancyMediatorCodes.RejectVacancy.InvalidVacancy, VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
         }
     }

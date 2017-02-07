@@ -4,7 +4,6 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
-
     using Interfaces;
 
     public class SetPendingDeletionStrategy : HousekeepingStrategy

@@ -3,13 +3,14 @@
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 {
     using System;
+    using System.Threading.Tasks;
     using ViewModels.Applications;
 
     public interface ITraineeshipApplicationMediator
     {
-        MediatorResponse<TraineeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString);
+        Task<MediatorResponse<TraineeshipApplicationViewModel>> Apply(Guid candidateId, string vacancyIdString);
 
-        MediatorResponse<TraineeshipApplicationViewModel> Submit(Guid candidateId, int vacancyId, TraineeshipApplicationViewModel viewModel);
+        Task<MediatorResponse<TraineeshipApplicationViewModel>> Submit(Guid candidateId, int vacancyId, TraineeshipApplicationViewModel viewModel);
 
         MediatorResponse<TraineeshipApplicationViewModel> AddEmptyQualificationRows(TraineeshipApplicationViewModel viewModel);
 
@@ -17,8 +18,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 
         MediatorResponse<TraineeshipApplicationViewModel> AddEmptyTrainingCourseRows(TraineeshipApplicationViewModel viewModel);
 
-        MediatorResponse<WhatHappensNextTraineeshipViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle);
+        Task<MediatorResponse<WhatHappensNextTraineeshipViewModel>> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle);
 
-        MediatorResponse<TraineeshipApplicationViewModel> View(Guid candidateId, int vacancyId);
+        Task<MediatorResponse<TraineeshipApplicationViewModel>> View(Guid candidateId, int vacancyId);
     }
 }

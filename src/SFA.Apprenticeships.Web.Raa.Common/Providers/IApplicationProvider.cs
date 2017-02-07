@@ -2,17 +2,18 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
 
     public interface IApplicationProvider
     {
-        VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch);
+        Task<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch);
 
-        ShareApplicationsViewModel GetShareApplicationsViewModel(int vacancyReferenceNumber);
+        Task<ShareApplicationsViewModel> GetShareApplicationsViewModel(int vacancyReferenceNumber);
 
-        ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel);
+        Task<ApprenticeshipApplicationViewModel> GetApprenticeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel);
 
         void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes, bool publishUpdate);
 
@@ -23,15 +24,15 @@
         ApplicationSelectionViewModel SetStateInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
         ApplicationSelectionViewModel SetTraineeshipStateInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
 
-        TraineeshipApplicationViewModel GetTraineeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel);
+        Task<TraineeshipApplicationViewModel> GetTraineeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel);
 
         void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes, bool publishUpdate);
 
-        void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks
+        Task ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks
             , DateTime linkExpiryDateTime, string recipientEmailAddress, string optionalMessage = null);
         ApplicationSelectionViewModel SetStateSubmitted(ApplicationSelectionViewModel applicationSelection);
         ApplicationSelectionViewModel SetTraineeshipStateSubmitted(ApplicationSelectionViewModel applicationSelection);
-        BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel);
+        Task<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel);
         BulkDeclineCandidatesViewModel SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel);
     }
 }

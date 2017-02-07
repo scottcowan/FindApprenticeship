@@ -12,13 +12,14 @@
     using Raa.Common.ViewModels.VacancyPosting;
     using Recruit.Mediators.VacancyPosting;
     using System;
+    using System.Threading.Tasks;
 
     [TestFixture]
     [Parallelizable]
     public class LocationsTests : TestsBase
     {
         [Test]
-        public void ShouldReturnAViewModelWithTheCurrentPageAsOne()
+        public async Task ShouldReturnAViewModelWithTheCurrentPageAsOne()
         {
             var vacancyGuid = Guid.NewGuid();
             const string ukprn = "ukprn";
@@ -28,17 +29,17 @@
             VacancyPostingProvider.Setup(
                 p =>
                     p.LocationAddressesViewModel(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(),
-                        It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new LocationSearchViewModel());
+                        It.IsAny<Guid>(), It.IsAny<bool>())).Returns(Task.FromResult(new LocationSearchViewModel()));
 
             var mediator = GetMediator();
 
-            var result = mediator.GetLocationAddressesViewModel(providerSiteId, employerId, ukprn, vacancyGuid, false,false);
+            var result = await mediator.GetLocationAddressesViewModel(providerSiteId, employerId, ukprn, vacancyGuid, false,false);
 
             result.ViewModel.CurrentPage.Should().Be(1);
         }
 
         [Test]
-        public void ShouldReturnErrorIfPostCodeAnywhereNotAccessible()
+        public async Task ShouldReturnErrorIfPostCodeAnywhereNotAccessible()
         {
             const string ukprn = "123567";
 
@@ -50,7 +51,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.AddLocations(viewModel, ukprn);
+            var result = await mediator.AddLocations(viewModel, ukprn);
 
             result.AssertMessage(VacancyPostingMediatorCodes.CreateVacancy.FailedGeoCodeLookup, ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);
 

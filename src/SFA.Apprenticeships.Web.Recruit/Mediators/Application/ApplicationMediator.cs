@@ -13,6 +13,7 @@
     using Raa.Common.ViewModels.Application;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -35,10 +36,10 @@
             _dateTimeService = dateTimeService;
         }
 
-        public MediatorResponse<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
+        public async Task<MediatorResponse<VacancyApplicationsViewModel>> GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
         {
             var messages = new List<string>();
-            var viewModel = _applicationProvider.GetVacancyApplicationsViewModel(vacancyApplicationsSearch);
+            var viewModel = await _applicationProvider.GetVacancyApplicationsViewModel(vacancyApplicationsSearch);
             if (viewModel.Status == VacancyStatus.Closed)
             {
                 messages.Add(VacancyViewModelMessages.Closed);
@@ -47,18 +48,18 @@
             return GetMediatorResponse(ApplicationMediatorCodes.GetVacancyApplicationsViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<ShareApplicationsViewModel> ShareApplications(int vacancyReferenceNumber)
+        public async Task<MediatorResponse<ShareApplicationsViewModel>> ShareApplications(int vacancyReferenceNumber)
         {
-            var viewModel = _applicationProvider.GetShareApplicationsViewModel(vacancyReferenceNumber);
+            var viewModel = await _applicationProvider.GetShareApplicationsViewModel(vacancyReferenceNumber);
 
             return GetMediatorResponse(ApplicationMediatorCodes.GetShareApplicationsViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<ShareApplicationsViewModel> ShareApplications(ShareApplicationsViewModel viewModel, UrlHelper urlHelper)
+        public async Task<MediatorResponse<ShareApplicationsViewModel>> ShareApplications(ShareApplicationsViewModel viewModel, UrlHelper urlHelper)
         {
             var validationResult = _shareApplicationsViewModelValidator.Validate(viewModel);
 
-            var newViewModel = _applicationProvider.GetShareApplicationsViewModel(viewModel.VacancyReferenceNumber);
+            var newViewModel = await _applicationProvider.GetShareApplicationsViewModel(viewModel.VacancyReferenceNumber);
             newViewModel.SelectedApplicationIds = viewModel.SelectedApplicationIds;
 
             if (!validationResult.IsValid)
@@ -80,21 +81,21 @@
                 applicationLinks[application.ApplicantID] = link;
             }
 
-            _applicationProvider.ShareApplications(viewModel.VacancyReferenceNumber, newViewModel.ProviderName, applicationLinks,
+            await _applicationProvider.ShareApplications(viewModel.VacancyReferenceNumber, newViewModel.ProviderName, applicationLinks,
                 _dateTimeService.TwoWeeksFromUtcNow, viewModel.RecipientEmailAddress, viewModel.OptionalMessage);
 
             return GetMediatorResponse(ApplicationMediatorCodes.ShareApplications.Ok, newViewModel);
         }
 
-        public MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<MediatorResponse<BulkDeclineCandidatesViewModel>> GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
+            var viewModel = await _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.GetBulkDeclineCandidatesViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<BulkDeclineCandidatesViewModel> ConfirmBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<MediatorResponse<BulkDeclineCandidatesViewModel>> ConfirmBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
+            var viewModel = await _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
             var originalSelectedApplicationIds = viewModel.SelectedApplicationIds.ToList();
             viewModel.SelectedApplicationIds = viewModel.SelectedApplicationIds.Where(aid => viewModel.ApplicationSummaries.Any(a => a.ApplicationId == aid)).ToList();
             var validationResult = _bulkDeclineCandidatesViewModelServerValidator.Validate(viewModel);
@@ -108,9 +109,9 @@
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.Ok, viewModel);
         }
 
-        public MediatorResponse<BulkDeclineCandidatesViewModel> SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        public async Task<MediatorResponse<BulkDeclineCandidatesViewModel>> SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
+            var viewModel = await _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
 
             var validationResult = _bulkDeclineCandidatesViewModelServerValidator.Validate(bulkDeclineCandidatesViewModel);
 

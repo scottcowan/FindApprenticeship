@@ -6,6 +6,7 @@
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
+    using Application.Interfaces.Vacancy;
     using Application.Interfaces.VacancyPosting;
     using Application.Vacancy;
     using Domain.Entities.Applications;

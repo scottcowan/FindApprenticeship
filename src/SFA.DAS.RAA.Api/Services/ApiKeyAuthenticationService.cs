@@ -51,6 +51,10 @@
                             identityClaims.Add(new Claim(ClaimTypes.Role, Roles.Employer));
                             namePostfix = "_Employer";
                             break;
+                        case RaaApiUserType.Agency:
+                            identityClaims.Add(new Claim(ClaimTypes.Role, Roles.Agency));
+                            namePostfix = "_Agency";
+                            break;
                     }
 
                     var isUnknownApiUser = Equals(user, RaaApiUser.UnknownApiUser);

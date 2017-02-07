@@ -35,24 +35,21 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Resume(int id)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _apprenticeshipApplicationMediator.Resume(UserContext.CandidateId, id);
+
+            switch (response.Code)
             {
-                var response = _apprenticeshipApplicationMediator.Resume(UserContext.CandidateId, id);
+                case ApprenticeshipApplicationMediatorCodes.Resume.HasError:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.Resume.IncorrectState:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.Resume.Ok:
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipApply, response.Parameters);
+            }
 
-                switch (response.Code)
-                {
-                    case ApprenticeshipApplicationMediatorCodes.Resume.HasError:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.Resume.IncorrectState:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.Resume.Ok:
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipApply, response.Parameters);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpGet]
@@ -61,28 +58,25 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> Apply(string id)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _apprenticeshipApplicationMediator.Apply(UserContext.CandidateId, id);
+
+            switch (response.Code)
             {
-                var response = _apprenticeshipApplicationMediator.Apply(UserContext.CandidateId, id);
+                case ApprenticeshipApplicationMediatorCodes.Apply.OfflineVacancy:
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
+                case ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.Apply.HasError:
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.Apply.IncorrectState:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.Apply.Ok:
+                    return View(response.ViewModel);
+            }
 
-                switch (response.Code)
-                {
-                    case ApprenticeshipApplicationMediatorCodes.Apply.OfflineVacancy:
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
-                    case ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.Apply.HasError:
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.Apply.IncorrectState:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.Apply.Ok:
-                        return View(response.ViewModel);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpPost]
@@ -93,33 +87,30 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         public async Task<ActionResult> Apply(int id, ApprenticeshipApplicationViewModel model)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _apprenticeshipApplicationMediator.PreviewAndSubmit(UserContext.CandidateId, id, model);
+
+            switch (response.Code)
             {
-                var response = _apprenticeshipApplicationMediator.PreviewAndSubmit(UserContext.CandidateId, id, model);
+                case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.OfflineVacancy:
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
+                case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.VacancyNotFound:
+                    return new ApprenticeshipNotFoundResult();
+                case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.IncorrectState:
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Error:
+                    ModelState.Clear();
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return View(response.ViewModel);
+                case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.ValidationError:
+                    ModelState.Clear();
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+                case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Ok:
+                    ModelState.Clear();
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipPreview, response.Parameters);
+            }
 
-                switch (response.Code)
-                {
-                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.OfflineVacancy:
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
-                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.VacancyNotFound:
-                        return new ApprenticeshipNotFoundResult();
-                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.IncorrectState:
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Error:
-                        ModelState.Clear();
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View(response.ViewModel);
-                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.ValidationError:
-                        ModelState.Clear();
-                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View(response.ViewModel);
-                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Ok:
-                        ModelState.Clear();
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipPreview, response.Parameters);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpPost]
@@ -129,46 +120,43 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         public async Task<ActionResult> Save(int id, ApprenticeshipApplicationViewModel model)
         {
-            return await Task.Run<ActionResult>(() =>
+            MediatorResponse<ApprenticeshipApplicationViewModel> response;
+
+            try
             {
-                MediatorResponse<ApprenticeshipApplicationViewModel> response;
+                response = await _apprenticeshipApplicationMediator.Save(UserContext.CandidateId, id, model);
+            }
+            catch (Exception)
+            {
+                //TODO: Remove once the cause of saving exceptions is fixed
+                var requestDebugString = Request.ToDebugString();
+                _logService.Error("Error when saving apprenticeship application. Request: {0}", requestDebugString);
+                throw;
+            }
 
-                try
-                {
-                    response = _apprenticeshipApplicationMediator.Save(UserContext.CandidateId, id, model);
-                }
-                catch (Exception)
-                {
-                    //TODO: Remove once the cause of saving exceptions is fixed
-                    var requestDebugString = Request.ToDebugString();
-                    _logService.Error("Error when saving apprenticeship application. Request: {0}", requestDebugString);
-                    throw;
-                }
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.Save.OfflineVacancy:
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
+                case ApprenticeshipApplicationMediatorCodes.Save.VacancyNotFound:
+                    return new ApprenticeshipNotFoundResult();
+                case ApprenticeshipApplicationMediatorCodes.Save.Error:
+                    ModelState.Clear();
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return View("Apply", response.ViewModel);
+                case ApprenticeshipApplicationMediatorCodes.Save.ValidationError:
+                    ModelState.Clear();
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View("Apply", response.ViewModel);
+                case ApprenticeshipApplicationMediatorCodes.Save.IncorrectState:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.Save.Ok:
+                    ModelState.Clear();
+                    return View("Apply", response.ViewModel);
+            }
 
-                switch (response.Code)
-                {
-                    case ApprenticeshipApplicationMediatorCodes.Save.OfflineVacancy:
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
-                    case ApprenticeshipApplicationMediatorCodes.Save.VacancyNotFound:
-                        return new ApprenticeshipNotFoundResult();
-                    case ApprenticeshipApplicationMediatorCodes.Save.Error:
-                        ModelState.Clear();
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View("Apply", response.ViewModel);
-                    case ApprenticeshipApplicationMediatorCodes.Save.ValidationError:
-                        ModelState.Clear();
-                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View("Apply", response.ViewModel);
-                    case ApprenticeshipApplicationMediatorCodes.Save.IncorrectState:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.Save.Ok:
-                        ModelState.Clear();
-                        return View("Apply", response.ViewModel);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpPost]
@@ -177,42 +165,39 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<JsonResult> AutoSave(int id, ApprenticeshipApplicationViewModel model)
         {
-            return await Task.Run(() =>
+            MediatorResponse<AutoSaveResultViewModel> response;
+
+            try
             {
-                MediatorResponse<AutoSaveResultViewModel> response;
+                response = await _apprenticeshipApplicationMediator.AutoSave(UserContext.CandidateId, id, model);
+            }
+            catch (Exception)
+            {
+                //TODO: Remove once the cause of the null candidate objects is fixed
+                var requestDebugString = Request.ToDebugString();
+                _logService.Error("Error when auto saving apprenticeship application. Request: {0}", requestDebugString);
+                throw;
+            }
 
-                try
-                {
-                    response = _apprenticeshipApplicationMediator.AutoSave(UserContext.CandidateId, id, model);
-                }
-                catch (Exception)
-                {
-                    //TODO: Remove once the cause of the null candidate objects is fixed
-                    var requestDebugString = Request.ToDebugString();
-                    _logService.Error("Error when auto saving apprenticeship application. Request: {0}", requestDebugString);
-                    throw;
-                }
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.AutoSave.VacancyNotFound:
+                    return new JsonResult { Data = response.ViewModel };
+                case ApprenticeshipApplicationMediatorCodes.AutoSave.HasError:
+                    ModelState.Clear();
+                    return new JsonResult { Data = response.ViewModel };
+                case ApprenticeshipApplicationMediatorCodes.AutoSave.ValidationError:
+                    ModelState.Clear();
+                    return new JsonResult { Data = response.ViewModel };
+                case ApprenticeshipApplicationMediatorCodes.AutoSave.IncorrectState:
+                    ModelState.Clear();
+                    return new JsonResult { Data = response.ViewModel };
+                case ApprenticeshipApplicationMediatorCodes.AutoSave.Ok:
+                    ModelState.Clear();
+                    return new JsonResult { Data = response.ViewModel };
+            }
 
-                switch (response.Code)
-                {
-                    case ApprenticeshipApplicationMediatorCodes.AutoSave.VacancyNotFound:
-                        return new JsonResult { Data = response.ViewModel };
-                    case ApprenticeshipApplicationMediatorCodes.AutoSave.HasError:
-                        ModelState.Clear();
-                        return new JsonResult { Data = response.ViewModel };
-                    case ApprenticeshipApplicationMediatorCodes.AutoSave.ValidationError:
-                        ModelState.Clear();
-                        return new JsonResult { Data = response.ViewModel };
-                    case ApprenticeshipApplicationMediatorCodes.AutoSave.IncorrectState:
-                        ModelState.Clear();
-                        return new JsonResult { Data = response.ViewModel };
-                    case ApprenticeshipApplicationMediatorCodes.AutoSave.Ok:
-                        ModelState.Clear();
-                        return new JsonResult { Data = response.ViewModel };
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpPost]
@@ -272,29 +257,26 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> Preview(int id)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _apprenticeshipApplicationMediator.Preview(UserContext.CandidateId, id);
+
+            switch (response.Code)
             {
-                var response = _apprenticeshipApplicationMediator.Preview(UserContext.CandidateId, id);
+                case ApprenticeshipApplicationMediatorCodes.Preview.OfflineVacancy:
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
+                case ApprenticeshipApplicationMediatorCodes.Preview.VacancyNotFound:
+                    return new ApprenticeshipNotFoundResult();
+                case ApprenticeshipApplicationMediatorCodes.Preview.HasError:
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.Preview.IncorrectState:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.Preview.Ok:
+                    // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
+                    ViewBag.VacancyId = id;
+                    return View(response.ViewModel);
+            }
 
-                switch (response.Code)
-                {
-                    case ApprenticeshipApplicationMediatorCodes.Preview.OfflineVacancy:
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
-                    case ApprenticeshipApplicationMediatorCodes.Preview.VacancyNotFound:
-                        return new ApprenticeshipNotFoundResult();
-                    case ApprenticeshipApplicationMediatorCodes.Preview.HasError:
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.Preview.IncorrectState:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.Preview.Ok:
-                        // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
-                        ViewBag.VacancyId = id;
-                        return View(response.ViewModel);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpPost]
@@ -303,35 +285,32 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Preview(int id, ApprenticeshipApplicationPreviewViewModel model)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _apprenticeshipApplicationMediator.Submit(UserContext.CandidateId, id, model);
+
+            switch (response.Code)
             {
-                var response = _apprenticeshipApplicationMediator.Submit(UserContext.CandidateId, id, model);
+                case ApprenticeshipApplicationMediatorCodes.Submit.AcceptSubmitValidationError:
+                    ModelState.Clear();
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+                case ApprenticeshipApplicationMediatorCodes.Submit.ValidationError:
+                    ModelState.Clear();
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View("Apply", response.ViewModel);
+                case ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound:
+                    return new ApprenticeshipNotFoundResult();
+                case ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.Submit.Error:
+                    ModelState.Clear();
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipPreview, response.Parameters);
+                case ApprenticeshipApplicationMediatorCodes.Submit.Ok:
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipWhatNext, response.Parameters);
+            }
 
-                switch (response.Code)
-                {
-                    case ApprenticeshipApplicationMediatorCodes.Submit.AcceptSubmitValidationError:
-                        ModelState.Clear();
-                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View(response.ViewModel);
-                    case ApprenticeshipApplicationMediatorCodes.Submit.ValidationError:
-                        ModelState.Clear();
-                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View("Apply", response.ViewModel);
-                    case ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound:
-                        return new ApprenticeshipNotFoundResult();
-                    case ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.Submit.Error:
-                        ModelState.Clear();
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipPreview, response.Parameters);
-                    case ApprenticeshipApplicationMediatorCodes.Submit.Ok:
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipWhatNext, response.Parameters);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpGet]
@@ -340,22 +319,19 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> WhatHappensNext(string id, string vacancyReference, string vacancyTitle)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _apprenticeshipApplicationMediator.WhatHappensNext(UserContext.CandidateId, id, vacancyReference, vacancyTitle, ViewBag.SearchReturnUrl as string);
+
+            switch (response.Code)
             {
-                var response = _apprenticeshipApplicationMediator.WhatHappensNext(UserContext.CandidateId, id, vacancyReference, vacancyTitle, ViewBag.SearchReturnUrl as string);
+                case ApprenticeshipApplicationMediatorCodes.WhatHappensNext.OfflineVacancy:
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
+                case ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound:
+                    return new ApprenticeshipNotFoundResult();
+                case ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok:
+                    return View(response.ViewModel);
+            }
 
-                switch (response.Code)
-                {
-                    case ApprenticeshipApplicationMediatorCodes.WhatHappensNext.OfflineVacancy:
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
-                    case ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound:
-                        return new ApprenticeshipNotFoundResult();
-                    case ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok:
-                        return View(response.ViewModel);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpGet]
@@ -364,24 +340,21 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> View(int id)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _apprenticeshipApplicationMediator.View(UserContext.CandidateId, id);
+
+            switch (response.Code)
             {
-                var response = _apprenticeshipApplicationMediator.View(UserContext.CandidateId, id);
+                case ApprenticeshipApplicationMediatorCodes.View.Error:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.View.ApplicationNotFound:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.View.Ok:
+                    return View(response.ViewModel);
+            }
 
-                switch (response.Code)
-                {
-                    case ApprenticeshipApplicationMediatorCodes.View.Error:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.View.ApplicationNotFound:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.View.Ok:
-                        return View(response.ViewModel);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
 
@@ -391,23 +364,20 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> CandidateApplicationFeedback(int id)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _apprenticeshipApplicationMediator.CandidateApplicationFeedback(UserContext.CandidateId, id);
+            switch (response.Code)
             {
-                var response = _apprenticeshipApplicationMediator.CandidateApplicationFeedback(UserContext.CandidateId, id);
-                switch (response.Code)
-                {
-                    case ApprenticeshipApplicationMediatorCodes.View.Error:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.View.ApplicationNotFound:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case ApprenticeshipApplicationMediatorCodes.View.Ok:
-                        return View(response.ViewModel);
-                }
+                case ApprenticeshipApplicationMediatorCodes.View.Error:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.View.ApplicationNotFound:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                case ApprenticeshipApplicationMediatorCodes.View.Ok:
+                    return View(response.ViewModel);
+            }
 
-                throw new InvalidMediatorCodeException(response.Code);
-            });
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpPost]
@@ -416,12 +386,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<JsonResult> SaveVacancy(int id)
         {
-            return await Task.Run(() =>
-            {
-                var response = _apprenticeshipApplicationMediator.SaveVacancy(UserContext.CandidateId, id);
+            var response = await _apprenticeshipApplicationMediator.SaveVacancy(UserContext.CandidateId, id);
 
-                return SavedVacancyResultFromViewModel(response);
-            });
+            return SavedVacancyResultFromViewModel(response);
         }
 
         [HttpDelete]

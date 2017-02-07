@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
@@ -65,7 +66,7 @@
         public void SetUp()
         {
             MockVacancyPostingService.Setup(mock => mock.GetVacancyByReferenceNumber(It.IsAny<int>()))
-                .Returns(_existingVacancy);
+                .Returns(Task.FromResult(_existingVacancy));
             MockVacancyPostingService.Setup(mock => mock.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);
             MockReferenceDataService.Setup(mock => mock.GetSectors())
@@ -104,7 +105,7 @@
         [TestCase(4, ApprenticeshipLevel.FoundationDegree)]
         [TestCase(5, ApprenticeshipLevel.Degree)]
         [TestCase(6, ApprenticeshipLevel.Masters)]
-        public void ShouldUpdateApprenticeshipLevelIfTrainingTypeStandard(int standardId, ApprenticeshipLevel expectedApprenticeshipLevel)
+        public async Task ShouldUpdateApprenticeshipLevelIfTrainingTypeStandard(int standardId, ApprenticeshipLevel expectedApprenticeshipLevel)
         {
             // Arrange.
             var trainingDetailsViewModel = new TrainingDetailsViewModel
@@ -122,7 +123,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.UpdateVacancy(trainingDetailsViewModel);
+            var viewModel = await provider.UpdateVacancy(trainingDetailsViewModel);
 
             // Assert.
             viewModel.ApprenticeshipLevel.Should().Be(expectedApprenticeshipLevel);
@@ -134,7 +135,7 @@
         [TestCase(4, ApprenticeshipLevel.FoundationDegree)]
         [TestCase(5, ApprenticeshipLevel.Degree)]
         [TestCase(6, ApprenticeshipLevel.Masters)]
-        public void ShouldCreateApprenticeshipLevelIfTrainingTypeStandard(int standardId, ApprenticeshipLevel expectedApprenticeshipLevel)
+        public async Task ShouldCreateApprenticeshipLevelIfTrainingTypeStandard(int standardId, ApprenticeshipLevel expectedApprenticeshipLevel)
         {
             // Arrange.
             var trainingDetailsViewModel = new TrainingDetailsViewModel
@@ -152,14 +153,14 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.UpdateVacancy(trainingDetailsViewModel);
+            var viewModel = await provider.UpdateVacancy(trainingDetailsViewModel);
 
             // Assert.
             viewModel.ApprenticeshipLevel.Should().Be(expectedApprenticeshipLevel);
         }
 
         [Test]
-        public void ShouldUpdateNullFrameworkCodeIfTrainingTypeStandard()
+        public async Task ShouldUpdateNullFrameworkCodeIfTrainingTypeStandard()
         {
             // Arrange.
             var trainingDetailsViewModel = new TrainingDetailsViewModel
@@ -177,14 +178,14 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.UpdateVacancy(trainingDetailsViewModel);
+            var viewModel = await provider.UpdateVacancy(trainingDetailsViewModel);
 
             // Assert.
             viewModel.FrameworkCodeName.Should().BeNullOrEmpty();
         }
 
         [Test]
-        public void ShouldCreateNullFrameworkCodeIfTrainingTypeStandard()
+        public async Task ShouldCreateNullFrameworkCodeIfTrainingTypeStandard()
         {
             // Arrange.
             var trainingDetailsViewModel = new TrainingDetailsViewModel
@@ -204,14 +205,14 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.UpdateVacancy(trainingDetailsViewModel);
+            var viewModel = await provider.UpdateVacancy(trainingDetailsViewModel);
 
             // Assert.
             viewModel.FrameworkCodeName.Should().BeNullOrEmpty();
         }
 
         [Test]
-        public void ShouldFillApprenticeshipLevelIfTrainingTypeIsStandardAndApprenticeshipLevelIsUnknown()
+        public async Task ShouldFillApprenticeshipLevelIfTrainingTypeIsStandardAndApprenticeshipLevelIsUnknown()
         {
             // Arrange.
             var trainingDetailsViewModel = new TrainingDetailsViewModel
@@ -229,21 +230,21 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.UpdateVacancy(trainingDetailsViewModel);
+            var viewModel = await provider.UpdateVacancy(trainingDetailsViewModel);
 
             // Assert.
             viewModel.ApprenticeshipLevel.Should().NotBe(ApprenticeshipLevel.Unknown);
         }
 
         [Test]
-        public void ShouldGetSectorsAndFrameworks()
+        public async Task ShouldGetSectorsAndFrameworks()
         {
             // Arrange.
             MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>())).Returns(new TrainingDetailsViewModel());
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.GetTrainingDetailsViewModel(VacancyReferenceNumber);
+            var viewModel = await provider.GetTrainingDetailsViewModel(VacancyReferenceNumber);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -252,7 +253,7 @@
         }
 
         [Test]
-        public void ShouldNotGetBlacklistedSectorsAndFrameworks()
+        public async Task ShouldNotGetBlacklistedSectorsAndFrameworks()
         {
             // Arrange.
             MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>())).Returns(new TrainingDetailsViewModel());
@@ -260,7 +261,7 @@
             var blackListCodes = _webConfiguration.BlacklistedCategoryCodes.Split(',').Select(each => each.Trim()).ToArray();
 
             // Act.
-            var viewModel = provider.GetTrainingDetailsViewModel(VacancyReferenceNumber);
+            var viewModel = await provider.GetTrainingDetailsViewModel(VacancyReferenceNumber);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -270,14 +271,14 @@
         }
 
         [Test]
-        public void ShouldDefaultApprenticeshipLevel()
+        public async Task ShouldDefaultApprenticeshipLevel()
         {
             // Arrange.
             MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>())).Returns(new TrainingDetailsViewModel());
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.GetTrainingDetailsViewModel(VacancyReferenceNumber);
+            var viewModel = await provider.GetTrainingDetailsViewModel(VacancyReferenceNumber);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -285,7 +286,7 @@
         }
 
         [Test]
-        public void ShouldSetTrainingTypeIfTraineeship()
+        public async Task ShouldSetTrainingTypeIfTraineeship()
         {
             // Arrange.
             MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>())).Returns(new TrainingDetailsViewModel
@@ -295,7 +296,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.GetTrainingDetailsViewModel(VacancyReferenceNumber);
+            var viewModel = await provider.GetTrainingDetailsViewModel(VacancyReferenceNumber);
 
             // Assert.
             viewModel.Should().NotBeNull();

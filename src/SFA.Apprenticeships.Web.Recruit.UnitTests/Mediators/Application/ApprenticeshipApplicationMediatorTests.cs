@@ -14,54 +14,55 @@
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Recruit.Mediators.Application;
     using System;
+    using System.Threading.Tasks;
 
     [TestFixture]
     public class ApprenticeshipApplicationMediatorTests
     {
         [Test]
-        public void ShouldReturnNoVacancyIdIfNoVacancyGuidIsSuppliedOnReview()
+        public async Task ShouldReturnNoVacancyIdIfNoVacancyGuidIsSuppliedOnReview()
         {
             var logService = new Mock<ILogService>();
             var mediator = new ApprenticeshipApplicationMediator(null, null, null, null, logService.Object);
 
             var viewModel = new ApplicationSelectionViewModel(new VacancyApplicationsSearchViewModel(), Guid.Empty);
 
-            var respone = mediator.Review(viewModel);
+            var respone = await mediator.Review(viewModel);
 
             respone.AssertCodeAndMessage(ApprenticeshipApplicationMediatorCodes.Review.NoApplicationId, false, false);
             logService.Verify(l => l.Info("Review vacancy failed: VacancyGuid is empty."));
         }
 
         [Test]
-        public void ShouldReturnNoVacancyIdIfNoVacancyGuidIsSuppliedOnConfirmSuccessfulDecision()
+        public async Task ShouldReturnNoVacancyIdIfNoVacancyGuidIsSuppliedOnConfirmSuccessfulDecision()
         {
             var logService = new Mock<ILogService>();
             var mediator = new ApprenticeshipApplicationMediator(null, null, null, null, logService.Object);
 
             var viewModel = new ApplicationSelectionViewModel(new VacancyApplicationsSearchViewModel(), Guid.Empty);
 
-            var respone = mediator.ConfirmSuccessfulDecision(viewModel);
+            var respone = await mediator.ConfirmSuccessfulDecision(viewModel);
 
             respone.AssertCodeAndMessage(ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.NoApplicationId, false, false);
             logService.Verify(l => l.Error("Confirm successful decision failed: VacancyGuid is empty."));
         }
 
         [Test]
-        public void ShouldReturnNoVacancyIdIfNoVacancyGuidIsSuppliedOnConfirmUnsuccessfulDecision()
+        public async Task ShouldReturnNoVacancyIdIfNoVacancyGuidIsSuppliedOnConfirmUnsuccessfulDecision()
         {
             var logService = new Mock<ILogService>();
             var mediator = new ApprenticeshipApplicationMediator(null, null, null, null, logService.Object);
 
             var viewModel = new ApplicationSelectionViewModel(new VacancyApplicationsSearchViewModel(), Guid.Empty);
 
-            var respone = mediator.ConfirmUnsuccessfulDecision(viewModel);
+            var respone = await mediator.ConfirmUnsuccessfulDecision(viewModel);
 
             respone.AssertCodeAndMessage(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.NoApplicationId, false, false);
             logService.Verify(l => l.Error("Confirm unsuccessful decision failed: VacancyGuid is empty."));
         }
 
         [Test]
-        public void ShouldUpdateCommentsWhenSettingStatusToInProgress()
+        public async Task ShouldUpdateCommentsWhenSettingStatusToInProgress()
         {
             // Arrange
             var mockApplicationProvider = new Mock<IApplicationProvider>();
@@ -74,7 +75,7 @@
             mockValidator.Setup(m => m.Validate(viewModel)).Returns(new ValidationResult());
 
             // Act
-            var response = mediator.PromoteToInProgress(viewModel);
+            var response = await mediator.PromoteToInProgress(viewModel);
 
             //Assert
             response.ViewModel.Status.Should().Be(ApplicationStatuses.InProgress);
@@ -84,7 +85,7 @@
         }
 
         [Test]
-        public void ShouldUpdateCommentsWhenSettingStatusToSubmitted()
+        public async Task ShouldUpdateCommentsWhenSettingStatusToSubmitted()
         {
             // Arrange
             var mockApplicationProvider = new Mock<IApplicationProvider>();
@@ -97,7 +98,7 @@
             mockValidator.Setup(m => m.Validate(viewModel)).Returns(new ValidationResult());
 
             // Act
-            var response = mediator.ReviewSetToSubmitted(viewModel);
+            var response = await mediator.ReviewSetToSubmitted(viewModel);
 
             //Assert
             response.ViewModel.Status.Should().Be(ApplicationStatuses.Submitted);

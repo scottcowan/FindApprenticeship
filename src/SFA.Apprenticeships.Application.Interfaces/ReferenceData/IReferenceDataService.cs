@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.ReferenceData
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
@@ -23,24 +24,24 @@
 
         IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication);
 
-        IEnumerable<County> GetCounties();
+        Task<IEnumerable<County>> GetCounties();
 
-        County GetCountyById(int countyId);
+        Task<County> GetCountyById(int countyId);
 
-        County GetCountyByCode(string countyCode);
+        Task<County> GetCountyByCode(string countyCode);
 
-        County GetCountyByName(string countyName);
+        Task<County> GetCountyByName(string countyName);
 
-        IEnumerable<LocalAuthority> GetLocalAuthorities();
+        Task<IEnumerable<LocalAuthority>> GetLocalAuthorities();
 
-        LocalAuthority GetLocalAuthorityById(int localAuthorityId);
+        Task<LocalAuthority> GetLocalAuthorityById(int localAuthorityId);
 
-        LocalAuthority GetLocalAuthorityByCode(string localAuthorityCode);
+        Task<LocalAuthority> GetLocalAuthorityByCode(string localAuthorityCode);
 
-        IEnumerable<Region> GetRegions();
+        Task<IEnumerable<Region>> GetRegions();
 
-        Region GetRegionById(int regionId);
+        Task<Region> GetRegionById(int regionId);
 
-        Region GetRegionByCode(string regionCode);
+        Task<Region> GetRegionByCode(string regionCode);
     }
 }

@@ -12,31 +12,31 @@
 
     public interface IVacancyPostingProvider
     {
-        NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
+        Task<NewVacancyViewModel> GetNewVacancyViewModel(int vacancyReferenceNumber);
 
-        NewVacancyViewModel GetNewVacancyViewModel(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions);
+        Task<NewVacancyViewModel> GetNewVacancyViewModel(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions);
 
-        NewVacancyViewModel UpdateVacancy(NewVacancyViewModel newVacancyViewModel);
+        Task<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel newVacancyViewModel);
 
-        VacancyMinimumData UpdateVacancy(VacancyMinimumData vacancyMinimumData);
+        Task<VacancyMinimumData> UpdateVacancy(VacancyMinimumData vacancyMinimumData);
 
-        TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
+        Task<TrainingDetailsViewModel> GetTrainingDetailsViewModel(int vacancyReferenceNumber);
 
-        TrainingDetailsViewModel UpdateVacancy(TrainingDetailsViewModel viewModel);
+        Task<TrainingDetailsViewModel> UpdateVacancy(TrainingDetailsViewModel viewModel);
 
-        FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber);
+        Task<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(int vacancyReferenceNumber);
 
-        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber);
+        Task<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber);
 
-        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
+        Task<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
 
-        VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel);
+        Task<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel);
 
-        FurtherVacancyDetailsViewModel UpdateVacancy(FurtherVacancyDetailsViewModel viewModel);
+        Task<FurtherVacancyDetailsViewModel> UpdateVacancy(FurtherVacancyDetailsViewModel viewModel);
 
-        FurtherVacancyDetailsViewModel UpdateVacancyDates(FurtherVacancyDetailsViewModel viewModel);
+        Task<FurtherVacancyDetailsViewModel> UpdateVacancyDates(FurtherVacancyDetailsViewModel viewModel);
 
-        VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
+        Task<VacancyRequirementsProspectsViewModel> UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
 
         Task<VacancyViewModel> GetVacancy(int vacancyReferenceNumber);
 
@@ -44,7 +44,7 @@
 
         List<VacancyLocationAddressViewModel> GetLocationsAddressViewModels(int vacancyId);
 
-        VacancyViewModel SubmitVacancy(int vacancyReferenceNumber);
+        Task<VacancyViewModel> SubmitVacancy(int vacancyReferenceNumber);
 
         List<SelectListItem> GetSectorsAndFrameworks();
 
@@ -56,21 +56,21 @@
 
         VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 
-        VacancyOwnerRelationshipViewModel CloneVacancy(int vacancyReferenceNumber);
+        Task<VacancyOwnerRelationshipViewModel> CloneVacancy(int vacancyReferenceNumber);
 
-        LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid, bool isAnonymousEmployer = false);
+        Task<LocationSearchViewModel> LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid, bool isAnonymousEmployer = false);
 
-        VacancyViewModel GetVacancy(Guid vacancyReferenceNumber);
+        Task<VacancyViewModel> GetVacancy(Guid vacancyReferenceNumber);
 
-        void RemoveVacancyLocationInformation(Guid vacancyGuid);
+        Task RemoveVacancyLocationInformation(Guid vacancyGuid);
 
-        void RemoveLocationAddresses(Guid vacancyGuid);
+        Task RemoveLocationAddresses(Guid vacancyGuid);
 
-        LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
+        Task<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel);
 
-        void EmptyVacancyLocation(int vacancyReferenceNumber);
+        Task EmptyVacancyLocation(int vacancyReferenceNumber);
         void CreateVacancy(VacancyMinimumData vacancyMinimumData);
-        void TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel);
-        FurtherVacancyDetailsViewModel CloseVacancy(FurtherVacancyDetailsViewModel viewModel);
+        Task TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel);
+        Task<FurtherVacancyDetailsViewModel> CloseVacancy(FurtherVacancyDetailsViewModel viewModel);
     }
 }

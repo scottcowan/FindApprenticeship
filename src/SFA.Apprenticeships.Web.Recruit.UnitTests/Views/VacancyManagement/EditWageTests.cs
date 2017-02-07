@@ -163,7 +163,7 @@
             vacancyWageHeader.InnerText.Should().Be("Wage displayed");
             var vacancyWage = view.GetElementbyId("vacancy-wage");
             vacancyWage.Should().NotBeNull();
-            vacancyWage.InnerText.Should().Contain("&#163;120.00 - &#163;208.50 (based on 30 paid hours per week)");
+            vacancyWage.InnerText.Should().Contain("&#163;121.50 - &#163;211.50 (based on 30 paid hours per week)");
 
             //Wage choices should not be visible
             view.GetElementbyId("wage-type-label").Should().BeNull();
@@ -196,13 +196,13 @@
             customWageFixedHelpText.Should().BeNull();
             var customWageFixedHintText = view.GetElementbyId("custom-wage-fixed-hint-text");
             customWageFixedHintText.Should().NotBeNull();
-            customWageFixedHintText.InnerText.Should().Be("The new increased wage must be more than &#163;208.50");
+            customWageFixedHintText.InnerText.Should().Be("The new increased wage must be more than &#163;211.50");
 
             var customWageRangeHelpText = view.GetElementbyId("custom-wage-range-help-text");
             customWageRangeHelpText.Should().BeNull();
             var customWageRangeHintText = view.GetElementbyId("custom-wage-range-hint-text");
             customWageRangeHintText.Should().NotBeNull();
-            customWageRangeHintText.InnerText.Should().Be("The minimum amount in the wage range must be more than &#163;208.50");
+            customWageRangeHintText.InnerText.Should().Be("The minimum amount in the wage range must be more than &#163;211.50");
 
             var amountInput = view.GetElementbyId("Amount");
             amountInput.Should().NotBeNull();
@@ -236,7 +236,7 @@
             vacancyWageHeader.InnerText.Should().Be("Wage displayed");
             var vacancyWage = view.GetElementbyId("vacancy-wage");
             vacancyWage.Should().NotBeNull();
-            vacancyWage.InnerText.Should().Contain("&#163;102.00 (based on 30 paid hours per week)");
+            vacancyWage.InnerText.Should().Contain("&#163;105.00 (based on 30 paid hours per week)");
 
             //Wage choices should be visible
             var wageTypeLabel = view.GetElementbyId("wage-type-label");
@@ -275,13 +275,13 @@
             customWageFixedHelpText.Should().BeNull();
             var customWageFixedHintText = view.GetElementbyId("custom-wage-fixed-hint-text");
             customWageFixedHintText.Should().NotBeNull();
-            customWageFixedHintText.InnerText.Should().Be("The new increased wage must be more than &#163;102.00");
+            customWageFixedHintText.InnerText.Should().Be("The new increased wage must be more than &#163;105.00");
 
             var customWageRangeHelpText = view.GetElementbyId("custom-wage-range-help-text");
             customWageRangeHelpText.Should().BeNull();
             var customWageRangeHintText = view.GetElementbyId("custom-wage-range-hint-text");
             customWageRangeHintText.Should().NotBeNull();
-            customWageRangeHintText.InnerText.Should().Be("The minimum amount in the wage range must be more than &#163;102.00");
+            customWageRangeHintText.InnerText.Should().Be("The minimum amount in the wage range must be more than &#163;105.00");
 
             var amountInput = view.GetElementbyId("Amount");
             amountInput.Should().NotBeNull();
@@ -352,13 +352,13 @@
             customWageFixedHelpText.Should().BeNull();
             var customWageFixedHintText = view.GetElementbyId("custom-wage-fixed-hint-text");
             customWageFixedHintText.Should().NotBeNull();
-            customWageFixedHintText.InnerText.Should().Be("The new increased wage must be more than &#163;102.00");
+            customWageFixedHintText.InnerText.Should().Be("The new increased wage must be more than &#163;105.00");
 
             var customWageRangeHelpText = view.GetElementbyId("custom-wage-range-help-text");
             customWageRangeHelpText.Should().BeNull();
             var customWageRangeHintText = view.GetElementbyId("custom-wage-range-hint-text");
             customWageRangeHintText.Should().NotBeNull();
-            customWageRangeHintText.InnerText.Should().Be("The minimum amount in the wage range must be more than &#163;102.00");
+            customWageRangeHintText.InnerText.Should().Be("The minimum amount in the wage range must be more than &#163;105.00");
 
             var amountInput = view.GetElementbyId("Amount");
             amountInput.Should().NotBeNull();

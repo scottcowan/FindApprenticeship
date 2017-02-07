@@ -4,6 +4,7 @@
     {
         Unknown = 0,
         Provider = 1,
-        Employer = 2
+        Employer = 2,
+        Agency = 3
     }
 }

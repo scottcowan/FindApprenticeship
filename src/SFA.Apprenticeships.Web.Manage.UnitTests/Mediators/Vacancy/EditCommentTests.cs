@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
     using System;
+    using System.Threading.Tasks;
     using Common.UnitTests.Mediators;
     using Common.ViewModels;
     using Domain.Entities.Raa.Vacancies;
@@ -16,11 +17,11 @@
     public class EditCommentTests
     {
         [Test]
-        public void GetVacancySummaryViewModelShouldgetViewModelFromProvider()
+        public async Task GetVacancySummaryViewModelShouldgetViewModelFromProvider()
         {
             const int vacancyReferenceNumber = 1;
             var vacancyProvider = new Mock<IVacancyQAProvider>();
-            vacancyProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(new FurtherVacancyDetailsViewModel
+            vacancyProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(Task.FromResult(new FurtherVacancyDetailsViewModel
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
@@ -28,21 +29,21 @@
                     PossibleStartDate = new DateViewModel(DateTime.UtcNow)
                 },
                 Wage = new WageViewModel() { Type = WageType.ApprenticeshipMinimum, Classification = WageClassification.ApprenticeshipMinimum, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
-            });
+            }));
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
 
-            mediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
+            await mediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
             vacancyProvider.Verify(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber));
         }
 
         [Test]
-        public void GetVacancySummaryViewModelShoudReturnValidationFailedIfValidationFailed()
+        public async Task GetVacancySummaryViewModelShoudReturnValidationFailedIfValidationFailed()
         {
             const int vacancyReferenceNumber = 1;
             var vacancyPostingProvider = new Mock<IVacancyQAProvider>();
-            vacancyPostingProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(new FurtherVacancyDetailsViewModel
+            vacancyPostingProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(Task.FromResult(new FurtherVacancyDetailsViewModel
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
@@ -50,32 +51,32 @@
                     PossibleStartDate = new DateViewModel(DateTime.UtcNow)
                 },
                 Wage = new WageViewModel() { Type = WageType.ApprenticeshipMinimum, Classification = WageClassification.ApprenticeshipMinimum, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
-            });
+            }));
 
             var mediator = new VacancyMediatorBuilder().With(vacancyPostingProvider).Build();
 
-            var response = mediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
+            var response = await mediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
             response.AssertValidationResult(VacancyMediatorCodes.GetVacancySummaryViewModel.FailedValidation);
         }
 
         [Test]
-        public void GetVacancySummaryViewModelShoudReturnOkIfValidationPassed()
+        public async Task GetVacancySummaryViewModelShoudReturnOkIfValidationPassed()
         {
             const int vacancyReferenceNumber = 1;
             var vacancyProvider = new Mock<IVacancyQAProvider>();
-            vacancyProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(GetValidVacancySummaryViewModel(vacancyReferenceNumber));
+            vacancyProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(Task.FromResult(GetValidVacancySummaryViewModel(vacancyReferenceNumber)));
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
 
-            var response = mediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
+            var response = await mediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
             response.AssertCodeAndMessage(VacancyMediatorCodes.GetVacancySummaryViewModel.Ok);
         }
 
 
         [Test]
-        public void UpdateVacancyWillNotUpdateVacancyIfViewModelIsNotValid()
+        public async Task UpdateVacancyWillNotUpdateVacancyIfViewModelIsNotValid()
         {
             var vacancyProvider = new Mock<IVacancyQAProvider>();
 
@@ -90,14 +91,14 @@
                 Wage = new WageViewModel() { Type = WageType.ApprenticeshipMinimum, Classification = WageClassification.ApprenticeshipMinimum, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
             };
 
-            var result = mediator.UpdateVacancy(viewModel);
+            var result = await mediator.UpdateVacancy(viewModel);
 
             result.AssertValidationResult(VacancyMediatorCodes.UpdateVacancy.FailedValidation);
             vacancyProvider.Verify(vp => vp.UpdateVacancyWithComments(viewModel), Times.Never);
         }
 
         [Test]
-        public void UpdateVacancyWithAVacancyThatAcceptsWarningsWithWarningsShouldUpdateVacancy()
+        public async Task UpdateVacancyWithAVacancyThatAcceptsWarningsWithWarningsShouldUpdateVacancy()
         {
             var vacancyProvider = new Mock<IVacancyQAProvider>();
 
@@ -107,17 +108,17 @@
             viewModel.AcceptWarnings = true;
 
             vacancyProvider.Setup(vp => vp.UpdateVacancyWithComments(viewModel))
-                .Returns(new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.Ok,
-                    new FurtherVacancyDetailsViewModel()));
+                .Returns(Task.FromResult(new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.Ok,
+                    new FurtherVacancyDetailsViewModel())));
 
-            var result = mediator.UpdateVacancy(viewModel);
+            var result = await mediator.UpdateVacancy(viewModel);
 
             result.AssertCodeAndMessage(VacancyMediatorCodes.UpdateVacancy.Ok);
             vacancyProvider.Verify(vp => vp.UpdateVacancyWithComments(viewModel));
         }
 
         [Test]
-        public void UpdateVacancyWithAVacancyThatDontAcceptsWarningsWithWarningsShouldNotUpdateVacancy()
+        public async Task UpdateVacancyWithAVacancyThatDontAcceptsWarningsWithWarningsShouldNotUpdateVacancy()
         {
             var vacancyProvider = new Mock<IVacancyQAProvider>();
 
@@ -126,22 +127,22 @@
             viewModel.VacancyDatesViewModel.ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(10));
             viewModel.AcceptWarnings = false;
 
-            var result = mediator.UpdateVacancy(viewModel);
+            var result = await mediator.UpdateVacancy(viewModel);
 
             result.AssertValidationResult(VacancyMediatorCodes.UpdateVacancy.FailedValidation);
             vacancyProvider.Verify(vp => vp.UpdateVacancyWithComments(viewModel), Times.Never);
         }
 
         [Test]
-        public void GetVacancyQuestionsViewModelShouldGetViewmodelFromProvider()
+        public async Task GetVacancyQuestionsViewModelShouldGetViewmodelFromProvider()
         {
             const int vacancyReferenceNumber = 1;
             var vacancyProvider = new Mock<IVacancyQAProvider>();
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
             var viewModel = new VacancyQuestionsViewModel();
-            vacancyProvider.Setup(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber)).Returns(viewModel);
+            vacancyProvider.Setup(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber)).Returns(Task.FromResult(viewModel));
 
-            var result = mediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
+            var result = await mediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
 
             result.AssertCodeAndMessage(VacancyMediatorCodes.GetVacancyQuestionsViewModel.Ok);
             vacancyProvider.Verify(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber));

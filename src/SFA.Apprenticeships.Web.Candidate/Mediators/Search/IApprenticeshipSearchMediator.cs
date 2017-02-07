@@ -3,6 +3,7 @@ using SFA.Apprenticeships.Web.Common.Mediators;
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 {
     using System;
+    using System.Threading.Tasks;
     using Domain.Entities.Vacancies;
     using ViewModels.Account;
     using ViewModels.VacancySearch;
@@ -17,12 +18,12 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
         MediatorResponse<ApprenticeshipSearchViewModel> SaveSearch(Guid candidateId, ApprenticeshipSearchViewModel viewModel);
 
-        MediatorResponse<ApprenticeshipVacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId);
+        Task<MediatorResponse<ApprenticeshipVacancyDetailViewModel>> Details(string vacancyIdString, Guid? candidateId);
 
-        MediatorResponse<ApprenticeshipVacancyDetailViewModel> DetailsByReferenceNumber(string vacancyReferenceNumberString, Guid? candidateId);
+        Task<MediatorResponse<ApprenticeshipVacancyDetailViewModel>> DetailsByReferenceNumber(string vacancyReferenceNumberString, Guid? candidateId);
 
         MediatorResponse<SavedSearchViewModel> RunSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel apprenticeshipSearchViewModel);
 
-        MediatorResponse<ApprenticeshipVacancyDetailViewModel> RedirectToExternalWebsite(string id);
+        Task<MediatorResponse<ApprenticeshipVacancyDetailViewModel>> RedirectToExternalWebsite(string id);
     }
 }

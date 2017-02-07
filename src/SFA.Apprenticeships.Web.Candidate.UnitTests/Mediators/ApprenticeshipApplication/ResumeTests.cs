@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
+    using System.Threading.Tasks;
     using Builders;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
@@ -21,68 +22,68 @@
         private const int InvalidVacancyId = 99999;
 
         [Test]
-        public void ApplicationExpired()
+        public async Task ApplicationExpired()
         {
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(new ApprenticeshipApplicationViewModel
+                .Returns(Task.FromResult(new ApprenticeshipApplicationViewModel
                 {
                     Status = ApplicationStatuses.ExpiredOrWithdrawn
-                });
+                }));
 
-            var response = Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
+            var response = await Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
 
             response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Resume.HasError,
                 MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning, false);
         }
 
         [Test]
-        public void HasError()
+        public async Task HasError()
         {
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), InvalidVacancyId))
-                .Returns(new ApprenticeshipApplicationViewModel("Vacancy not found"));
+                .Returns(Task.FromResult(new ApprenticeshipApplicationViewModel("Vacancy not found")));
 
-            var response = Mediator.Resume(Guid.NewGuid(), InvalidVacancyId);
+            var response = await Mediator.Resume(Guid.NewGuid(), InvalidVacancyId);
 
             response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Resume.HasError, "Vacancy not found",
                 UserMessageLevel.Warning, false);
         }
 
         [Test]
-        public void IncorrectState()
+        public async Task IncorrectState()
         {
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(new ApprenticeshipApplicationViewModelBuilder().WithStatus(ApplicationStatuses.Submitted).Build);
+                .Returns(Task.FromResult(new ApprenticeshipApplicationViewModelBuilder().WithStatus(ApplicationStatuses.Submitted).Build()));
 
-            var response = Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
+            var response = await Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
 
             response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Resume.IncorrectState,
                 MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Info, false);
         }
 
         [Test]
-        public void Ok()
+        public async Task Ok()
         {
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(new ApprenticeshipApplicationViewModelBuilder().WithVacancyStatus(VacancyStatuses.Live).Build);
+                .Returns(Task.FromResult(new ApprenticeshipApplicationViewModelBuilder().WithVacancyStatus(VacancyStatuses.Live).Build()));
 
-            var response = Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
+            var response = await Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.Resume.Ok, false, true);
         }
 
         [Test]
-        public void VacancyExpired()
+        public async Task VacancyExpired()
         {
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(new ApprenticeshipApplicationViewModel
+                .Returns(Task.FromResult(new ApprenticeshipApplicationViewModel
                 {
                     VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                     {
                         VacancyStatus = VacancyStatuses.Expired
                     }
-                });
+                }));
 
-            var response = Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
+            var response = await Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
 
             response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Resume.HasError,
                 MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning, false);

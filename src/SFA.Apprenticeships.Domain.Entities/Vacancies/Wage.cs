@@ -3,6 +3,9 @@
     using System;
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Object containing all the wage information for a vacancy
+    /// </summary>
     public class Wage
     {
         public Wage()
@@ -23,6 +26,9 @@
             Unit = CorrectWageUnit(type, unit);
         }
 
+        /// <summary>
+        /// The basic type of the wage. Defines which additional properties will be set
+        /// </summary>
         public WageType Type { get; set; }
 
         public string ReasonForType { get; set; }

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using Application.Interfaces;
+    using Application.Interfaces.Vacancy;
     using Application.Vacancy;
     using Common.Attributes;
     using Domain.Entities.Raa.Vacancies;
