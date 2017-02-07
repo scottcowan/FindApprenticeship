@@ -65,8 +65,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetFrameworks", tracingParameters);
             }
             // Construct URL
-            //var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _baseUrl = "http://local-restapi.findapprenticeship.service.gov.uk/";
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "frameworks").ToString();
             // Create HTTP transport objects
             System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
