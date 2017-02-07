@@ -5,6 +5,7 @@
     using System.Web.Http.Description;
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Web.Common.Extensions;
     using Models;
     using Providers;
     using Strategies;
@@ -50,7 +51,7 @@
         [HttpPost]
         public IHttpActionResult CreateVacancy(Vacancy vacancy)
         {
-            return Ok(_createVacancyStrategy.CreateVacancy(vacancy));
+            return Ok(_createVacancyStrategy.CreateVacancy(vacancy, User.GetUkprn()));
         }
     }
 }

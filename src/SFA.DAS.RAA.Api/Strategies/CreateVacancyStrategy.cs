@@ -1,7 +1,9 @@
 ﻿namespace SFA.DAS.RAA.Api.Strategies
 {
     using System.Linq;
+    using System.Security;
     using Apprenticeships.Application.Provider.Strategies;
+    using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies.Constants;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
@@ -13,20 +15,24 @@
     {
         private readonly VacancyValidator _vacancyValidator = new VacancyValidator();
 
+        private readonly IProviderReadRepository _providerReadRepository;
         private readonly IVacancyOwnerRelationshipReadRepository _vacancyOwnerRelationshipReadRepository;
         private readonly IGetOwnedProviderSitesStrategy _getOwnedProviderSitesStrategy;
-        private readonly IProviderSiteReadRepository _providerSiteReadRepository;
 
-        public CreateVacancyStrategy(IVacancyOwnerRelationshipReadRepository vacancyOwnerRelationshipReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy, IProviderSiteReadRepository providerSiteReadRepository)
+        public CreateVacancyStrategy(IProviderReadRepository providerReadRepository, IVacancyOwnerRelationshipReadRepository vacancyOwnerRelationshipReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy)
         {
+            _providerReadRepository = providerReadRepository;
             _vacancyOwnerRelationshipReadRepository = vacancyOwnerRelationshipReadRepository;
-            _providerSiteReadRepository = providerSiteReadRepository;
             _getOwnedProviderSitesStrategy = getOwnedProviderSitesStrategy;
         }
 
         public Vacancy CreateVacancy(Vacancy vacancy, string ukprn)
         {
-            vacancy.Status = VacancyStatus.Draft;
+            var provider = _providerReadRepository.GetByUkprn(ukprn, false);
+            if (provider == null)
+            {
+                throw new SecurityException(Constants.VacancyMessages.UnauthorizedProviderAccess);
+            }
 
             var validationResult = _vacancyValidator.Validate(vacancy);
             var vacancyOwnerRelationship = _vacancyOwnerRelationshipReadRepository.GetByIds(new[] {vacancy.VacancyOwnerRelationshipId}).SingleOrDefault();
@@ -38,10 +44,10 @@
                 }
                 else
                 {
-                    var ownedProviderSites = _getOwnedProviderSitesStrategy.GetOwnedProviderSites(provider.ProviderId);
-                    if (ownedProviderSites.All(ps => ps.ProviderSiteId != providerSite.ProviderSiteId))
+                    var ownedProviderSites = _getOwnedProviderSitesStrategy.GetOwnedProviderSites(provider.ProviderId).ToList();
+                    if (ownedProviderSites.All(ps => ps.ProviderSiteId != vacancyOwnerRelationship.ProviderSiteId))
                     {
-                        throw new SecurityException(EmployerProviderSiteLinkMessages.UnauthorizedProviderSiteAccess);
+                        validationResult.Errors.Add(new ValidationFailure("VacancyOwnerRelationshipId", VacancyMessages.VacancyOwnerRelationshipId.Unauthorized));
                     }
                 }
             }
@@ -49,6 +55,8 @@
             {
                 throw new ValidationException(validationResult.Errors);
             }
+
+            vacancy.Status = VacancyStatus.Draft;
 
             return vacancy;
         }
