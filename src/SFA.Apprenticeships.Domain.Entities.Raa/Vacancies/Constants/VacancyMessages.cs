@@ -24,5 +24,17 @@
             public const string RequiredErrorText = "Please supply the number of positions for this vacancy";
             public const string LengthErrorText = "There must be at least 1 position for this vacancy";
         }
+
+        public static class EmployerWebsiteUrl
+        {
+            public const string InvalidUrlText = "Please supply a valid website url for the employer. If you do not supply a url the value from the associated vacancy owner relationship will be used.";
+        }
+
+        public static class EmployerDescription
+        {
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "The description for the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText + ". If you do not supply a description the value from the associated vacancy owner relationship will be used.";
+            public const string WhiteListInvalidTagErrorText = "The description for the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText + ". If you do not supply a description the value from the associated vacancy owner relationship will be used.";
+        }
     }
 }

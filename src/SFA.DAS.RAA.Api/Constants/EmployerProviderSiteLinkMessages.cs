@@ -23,6 +23,7 @@
             public const string WhiteListInvalidCharacterErrorText = "The description for the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText + ".";
             public const string WhiteListInvalidTagErrorText = "The description for the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText + ".";
         }
+
         public static class EmployerWebsiteUrl
         {
             public const string InvalidUrlText = "Please supply a valid website url for the employer.";

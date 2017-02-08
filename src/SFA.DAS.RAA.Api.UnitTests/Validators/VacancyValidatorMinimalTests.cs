@@ -101,5 +101,66 @@
                 }
             }
         }
+
+        [TestCase(null, true)]
+        [TestCase("", true)]
+        [TestCase("www.google.com", true)]
+        [TestCase("http://www.google.com", true)]
+        [TestCase("https://www.google.com", true)]
+        [TestCase("www\\asdf\\com", false)]
+        [TestCase("cantbemissingdot", false)]
+        [TestCase("canbeanythingwithcorrect.chars", true)]
+        [TestCase("cantbeincorrechars@%", false)]
+        [TestCase("www.me-you.com", true)]
+        public void ShouldValidateWebSiteUrl(string websiteUrl, bool expectValid)
+        {
+            var vacancy = new Vacancy
+            {
+                EmployerWebsiteUrl = websiteUrl
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.EmployerWebsiteUrl, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.EmployerWebsiteUrl, vacancy).WithErrorMessage("Please supply a valid website url for the employer. If you do not supply a url the value from the associated vacancy owner relationship will be used.");
+            }
+        }
+
+        [Test]
+        public void EmployerDescriptionIsNotRequired()
+        {
+            var vacancy = new Vacancy
+            {
+                EmployerDescription = null
+            };
+
+            _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.EmployerDescription, vacancy);
+        }
+
+        [TestCase("Employer description", true, null)]
+        [TestCase("<p>Employer description</p>", true, null)]
+        [TestCase("|Employer description|", false, "The description for the employer contains some invalid characters. If you do not supply a description the value from the associated vacancy owner relationship will be used.")]
+        [TestCase("<script>Employer description</script>", false, "The description for the employer contains some invalid tags. If you do not supply a description the value from the associated vacancy owner relationship will be used.")]
+        [TestCase("<input>Employer description</input>", false, "The description for the employer contains some invalid tags. If you do not supply a description the value from the associated vacancy owner relationship will be used.")]
+        [TestCase("<object>Employer description</object>", false, "The description for the employer contains some invalid tags. If you do not supply a description the value from the associated vacancy owner relationship will be used.")]
+        public void EmployerDescriptionInputValidation(string employerDescription, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                EmployerDescription = employerDescription
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.EmployerDescription, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.EmployerDescription, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
     }
 }

@@ -160,6 +160,7 @@
     <Compile Include="Vacancies\Validation\WageUpdateValidator.cs" />
     <Compile Include="Vacancies\WageRange.cs" />
     <Compile Include="Vacancies\WageUpdate.cs" />
+    <Compile Include="Whitelists.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">

@@ -1,8 +1,9 @@
 ﻿namespace SFA.DAS.RAA.Api.Validators
 {
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
-    using Apprenticeships.Domain.Entities.Raa.Vacancies.Constants;
+    using Apprenticeships.Web.Common.Validators;
     using FluentValidation;
+    using VacancyMessages = Apprenticeships.Domain.Entities.Raa.Vacancies.Constants.VacancyMessages;
 
     public class VacancyValidator : AbstractValidator<Vacancy>
     {
@@ -28,6 +29,17 @@
                 .GreaterThanOrEqualTo(1)
                 .WithMessage(VacancyMessages.NumberOfPositions.LengthErrorText)
                 .When(x => x.VacancyLocationType == VacancyLocationType.SpecificLocation);
+
+            RuleFor(x => x.EmployerWebsiteUrl)
+                .Must(Common.IsValidUrl)
+                .WithMessage(VacancyMessages.EmployerWebsiteUrl.InvalidUrlText)
+                .When(x => !string.IsNullOrEmpty(x.EmployerWebsiteUrl));
+
+            RuleFor(x => x.EmployerDescription)
+                .Matches(VacancyMessages.EmployerDescription.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyMessages.EmployerDescription.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyMessages.EmployerDescription.WhiteListInvalidTagErrorText);
         }
     }
 }
