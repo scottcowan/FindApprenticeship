@@ -3,24 +3,32 @@
     using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Infrastructure.Common.Mappers;
     using Client.V1.Models;
-    using ApiGeoPoint = Client.V1.Models.GeoPoint;
-    using ApiPostalAddress = Client.V1.Models.PostalAddress;
-    using ApiWage = Client.V1.Models.Wage;
-    using ApiVacancySummary = Client.V1.Models.VacancySummary;
-    using ApiVacancy = Client.V1.Models.Vacancy;
-    using ApiWageUpdate = Client.V1.Models.WageUpdate;
+    using ApiCategory = Client.V1.Models.Category;
     using ApiCounty = Client.V1.Models.County;
+    using ApiFramework = Client.V1.Models.Framework;
+    using ApiGeoPoint = Client.V1.Models.GeoPoint;
     using ApiLocalAuthority = Client.V1.Models.LocalAuthority;
+    using ApiPostalAddress = Client.V1.Models.PostalAddress;
     using ApiRegion = Client.V1.Models.Region;
+    using ApiStandard = Client.V1.Models.Standard;
+    using ApiStandardSubjectAreaTierOne = Client.V1.Models.StandardSubjectAreaTierOne;
+    using ApiVacancy = Client.V1.Models.Vacancy;
+    using ApiVacancySummary = Client.V1.Models.VacancySummary;
+    using ApiWage = Client.V1.Models.Wage;
+    using ApiWageUpdate = Client.V1.Models.WageUpdate;
+    using Category = Apprenticeships.Domain.Entities.ReferenceData.Category;
+    using County = Apprenticeships.Domain.Entities.Raa.Reference.County;
+    using Framework = Apprenticeships.Domain.Entities.Raa.Reference.Framework;
     using GeoPoint = Apprenticeships.Domain.Entities.Raa.Locations.GeoPoint;
+    using LocalAuthority = Apprenticeships.Domain.Entities.Raa.Reference.LocalAuthority;
     using PostalAddress = Apprenticeships.Domain.Entities.Raa.Locations.PostalAddress;
-    using VacancySummary = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancySummary;
+    using Region = Apprenticeships.Domain.Entities.Raa.Reference.Region;
+    using Standard = Apprenticeships.Domain.Entities.Raa.Vacancies.Standard;
+    using StandardSubjectAreaTierOne = Apprenticeships.Domain.Entities.Raa.Vacancies.StandardSubjectAreaTierOne;
     using Vacancy = Apprenticeships.Domain.Entities.Raa.Vacancies.Vacancy;
+    using VacancySummary = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancySummary;
     using Wage = Apprenticeships.Domain.Entities.Vacancies.Wage;
     using WageUpdate = Apprenticeships.Domain.Entities.Raa.Vacancies.WageUpdate;
-    using County = Apprenticeships.Domain.Entities.Raa.Reference.County;
-    using LocalAuthority = Apprenticeships.Domain.Entities.Raa.Reference.LocalAuthority;
-    using Region = Apprenticeships.Domain.Entities.Raa.Reference.Region;
 
     public class ApiClientMappers : MapperEngine
     {
@@ -124,6 +132,11 @@
                 .ForMember(dest => dest.VacancyOwnerRelationshipId, opt => opt.MapFrom(src => src.EmployerProviderSiteLinkId))
                 .ForMember(dest => dest.VacancyOwnerRelationshipGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.StatusType, opt => opt.UseValue(VacancyOwnerRelationshipStatusTypes.Live));
+
+            Mapper.CreateMap<ApiCategory, Category>();
+            Mapper.CreateMap<ApiStandardSubjectAreaTierOne, StandardSubjectAreaTierOne>();
+            Mapper.CreateMap<ApiFramework, Framework>();
+            Mapper.CreateMap<ApiStandard, Standard>();
         }
     }
 }

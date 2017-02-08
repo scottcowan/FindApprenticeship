@@ -41,7 +41,7 @@
 
         Task<QAActionResult<VacancyQuestionsViewModel>> UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
 
-        List<SelectListItem> GetSectorsAndFrameworks();
+        Task<List<SelectListItem>> GetSectorsAndFrameworks();
 
         List<StandardViewModel> GetStandards();
 

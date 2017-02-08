@@ -478,9 +478,9 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
-        public ActionResult SelectFramework(TrainingDetailsViewModel viewModel)
+        public async Task<ActionResult> SelectFramework(TrainingDetailsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.SelectFrameworkAsTrainingType(viewModel);
+            var response = await _vacancyPostingMediator.SelectFrameworkAsTrainingType(viewModel);
 
             ModelState.Clear();
 
@@ -489,9 +489,9 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
-        public ActionResult SelectStandard(TrainingDetailsViewModel viewModel)
+        public async Task<ActionResult> SelectStandard(TrainingDetailsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.SelectStandardAsTrainingType(viewModel);
+            var response = await _vacancyPostingMediator.SelectStandardAsTrainingType(viewModel);
 
             ModelState.Clear();
 
