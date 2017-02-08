@@ -75,13 +75,21 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication
             #line hidden
 WriteLiteral("\r\n\r\n\r\n<div");
 
-WriteLiteral(" class=\"govuk-box-highlight\"");
+WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(">\r\n    <h1");
+WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bold-large\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
-WriteLiteral(">Apprenticeship application submitted</h1>\r\n</div>\r\n\r\n<p><i");
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"govuk-box-highlight sfa-govuk-box-highlight\"");
+
+WriteLiteral(">\r\n            <h1");
+
+WriteLiteral(" class=\"bold-large sfa-large-bottom-margin\"");
+
+WriteLiteral(">Apprenticeship application submitted</h1>\r\n        </div>\r\n\r\n        <p><i");
 
 WriteLiteral(" class=\"fa fa-envelope-o\"");
 
@@ -92,56 +100,62 @@ WriteLiteral(" class=\"bold-small\"");
 WriteLiteral(">");
 
             
-            #line 14 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                                                                                                 Write(Html.DisplayFor(m => m.VacancyTitle));
+            #line 16 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                                                                                                         Write(Html.DisplayFor(m => m.VacancyTitle));
 
             
             #line default
             #line hidden
-WriteLiteral("</strong> application</p>\r\n<p> You can also <a");
+WriteLiteral("</strong> application</p>\r\n        \r\n        <p> You can also <a");
 
 WriteLiteral(" title=\"Track the progress of your application\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 706), Tuple.Create("\"", 762)
+WriteAttribute("href", Tuple.Create(" href=\"", 865), Tuple.Create("\"", 921)
             
-            #line 15 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 713), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+            #line 18 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+  , Tuple.Create(Tuple.Create("", 872), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 713), false)
+, 872), false)
 );
 
-WriteLiteral(">track the progress</a> of your application</p>\r\n<p>You’ll be contacted if you’ve" +
-" been selected for the next stage of the application process.</p>\r\n<details>\r\n  " +
-"  <summary><span");
+WriteLiteral(">track the progress</a> of your application</p>\r\n        <p>You’ll be contacted i" +
+"f you’ve been selected for the next stage of the application process.</p>\r\n     " +
+"   <details>\r\n            <summary><span");
 
 WriteLiteral(" class=\"summary\"");
 
-WriteLiteral(">Contact the provider</span></summary>\r\n    <div");
+WriteLiteral(">Contact the provider</span></summary>\r\n            <div");
 
 WriteLiteral(" class=\"detail-content\"");
 
 WriteLiteral(">");
 
             
-            #line 19 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                           Write(Model.ProviderContactInfo);
+            #line 22 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                                   Write(Model.ProviderContactInfo);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n</details>\r\n<hr/>\r\n\r\n    \r\n");
+WriteLiteral("</div>\r\n        </details>\r\n        <hr />\r\n\r\n\r\n");
 
             
-            #line 24 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
- if ((Model.SuggestedVacancies == null || !Model.SuggestedVacancies.Any()) && (Model.SavedAndDraftApplications == null || !Model.SavedAndDraftApplications.Any()))
-{
+            #line 27 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 27 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+         if ((Model.SuggestedVacancies == null || !Model.SuggestedVacancies.Any()) && (Model.SavedAndDraftApplications == null || !Model.SavedAndDraftApplications.Any()))
+        {
 
             
             #line default
             #line hidden
-WriteLiteral("    <a");
+WriteLiteral("            <a");
 
 WriteLiteral(" id=\"find-apprenticeship-btn\"");
 
@@ -149,100 +163,100 @@ WriteLiteral(" role=\"button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1320), Tuple.Create("\'", 1382)
+WriteAttribute("href", Tuple.Create(" href=\'", 1548), Tuple.Create("\'", 1610)
             
-            #line 26 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1327), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+            #line 29 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 1555), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 1327), false)
+, 1555), false)
 );
 
 WriteLiteral(">Find an apprenticeship</a>\r\n");
 
             
-            #line 27 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-}
-else
-{
-    if (Model.SavedAndDraftApplications != null && Model.SavedAndDraftApplications.Any())
-    {
+            #line 30 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+        }
+        else
+        {
+            if (Model.SavedAndDraftApplications != null && Model.SavedAndDraftApplications.Any())
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("        <h2");
+WriteLiteral("                <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Saved apprenticeships</h2>\r\n");
 
-WriteLiteral("        <div");
+WriteLiteral("                <div");
 
 WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 34 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-            
+            #line 37 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                    
             
             #line default
             #line hidden
             
-            #line 34 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-             for (int i = 0; i < Math.Min(3, Model.SavedAndDraftApplications.Count); i++)
-            {
+            #line 37 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                     for (int i = 0; i < Math.Min(3, Model.SavedAndDraftApplications.Count); i++)
+                    {
 
             
             #line default
             #line hidden
-WriteLiteral("                <div");
+WriteLiteral("                        <div");
 
 WriteLiteral(" class=\"column-one-third\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1768), Tuple.Create("\"", 1832)
-, Tuple.Create(Tuple.Create("", 1773), Tuple.Create("saved-vacancy-", 1773), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 2076), Tuple.Create("\"", 2140)
+, Tuple.Create(Tuple.Create("", 2081), Tuple.Create("saved-vacancy-", 2081), true)
             
-            #line 36 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1787), Tuple.Create<System.Object, System.Int32>(Model.SavedAndDraftApplications[i].VacancyId
+            #line 39 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 2095), Tuple.Create<System.Object, System.Int32>(Model.SavedAndDraftApplications[i].VacancyId
             
             #line default
             #line hidden
-, 1787), false)
+, 2095), false)
 );
 
-WriteLiteral(">\r\n                            \r\n");
+WriteLiteral(">\r\n\r\n");
 
             
-            #line 38 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                        
+            #line 41 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                            
             
             #line default
             #line hidden
             
-            #line 38 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                         if (Model.SavedAndDraftApplications[i].IsPositiveAboutDisability)
+            #line 41 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                             if (Model.SavedAndDraftApplications[i].IsPositiveAboutDisability)
                         {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <a");
+WriteLiteral("                                <a");
 
 WriteLiteral(" href=\"https://www.gov.uk/looking-for-work-if-disabled\"");
 
-WriteLiteral(">\r\n                                <img");
+WriteLiteral(">\r\n                                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2109), Tuple.Create("\"", 2176)
+WriteAttribute("src", Tuple.Create(" src=\"", 2401), Tuple.Create("\"", 2468)
             
-            #line 41 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 2115), Tuple.Create<System.Object, System.Int32>(Url.Content("~/content/_assets/img/logo-ticks-small-2x.png")
+            #line 44 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 2407), Tuple.Create<System.Object, System.Int32>(Url.Content("~/content/_assets/img/logo-ticks-small-2x.png")
             
             #line default
             #line hidden
-, 2115), false)
+, 2407), false)
 );
 
 WriteLiteral(" width=\"37\"");
@@ -253,45 +267,45 @@ WriteLiteral(" align=\"right\"");
 
 WriteLiteral(" alt=\"\"");
 
-WriteLiteral(">\r\n                            </a>\r\n");
+WriteLiteral(">\r\n                                </a>\r\n");
 
             
-            #line 43 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                        }
+            #line 46 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                            }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <h3");
+WriteLiteral("\r\n                            <h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2339), Tuple.Create("\"", 2470)
+WriteAttribute("href", Tuple.Create(" href=\"", 2643), Tuple.Create("\"", 2774)
             
-            #line 45 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 2346), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new {id = Model.SavedAndDraftApplications[i].VacancyId.ToString()})
+            #line 48 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 2650), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new {id = Model.SavedAndDraftApplications[i].VacancyId.ToString()})
             
             #line default
             #line hidden
-, 2346), false)
+, 2650), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 45 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                                                                                                                                                                                    Write(Model.SavedAndDraftApplications[i].Title);
+            #line 48 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                                                                                                                                                                                        Write(Model.SavedAndDraftApplications[i].Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a></h3>\r\n                        <p><b>Closing date:</b> ");
+WriteLiteral("</a></h3>\r\n                            <p><b>Closing date:</b> ");
 
             
-            #line 46 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                                           Write(Model.SavedAndDraftApplications[i].ClosingDate.ToFriendlyClosingToday());
+            #line 49 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                                               Write(Model.SavedAndDraftApplications[i].ClosingDate.ToFriendlyClosingToday());
 
             
             #line default
@@ -299,59 +313,68 @@ WriteLiteral("</a></h3>\r\n                        <p><b>Closing date:</b> ");
 WriteLiteral("</p>\r\n");
 
             
-            #line 47 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                        
+            #line 50 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                            
             
             #line default
             #line hidden
             
-            #line 47 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                         if (@Model.SavedAndDraftApplications[i].ApplicationStatus == ApplicationStatuses.Saved)
+            #line 50 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                             if (@Model.SavedAndDraftApplications[i].ApplicationStatus == ApplicationStatuses.Saved)
                         {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <p><a");
+WriteLiteral("                                <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2824), Tuple.Create("\"", 2954)
+WriteAttribute("href", Tuple.Create(" href=\"", 3140), Tuple.Create("\"", 3270)
             
-            #line 49 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 2831), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString()})
+            #line 52 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 3147), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString()})
             
             #line default
             #line hidden
-, 2831), false)
+, 3147), false)
 );
 
 WriteLiteral(">Apply</a></p>\r\n");
 
             
-            #line 50 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                        }
-                        else
-                        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                            <p><a");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 3088), Tuple.Create("\"", 3220)
-            
             #line 53 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 3095), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResume, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString() })
+                            }
+                            else
+                            {
+
             
             #line default
             #line hidden
-, 3095), false)
+WriteLiteral("                                <p><a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 3420), Tuple.Create("\"", 3552)
+            
+            #line 56 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 3427), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResume, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString() })
+            
+            #line default
+            #line hidden
+, 3427), false)
 );
 
 WriteLiteral(">Resume</a></p>\r\n");
 
             
-            #line 54 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                        }
+            #line 57 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        </div>\r\n");
+
+            
+            #line 59 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                    }
 
             
             #line default
@@ -359,36 +382,27 @@ WriteLiteral(">Resume</a></p>\r\n");
 WriteLiteral("                </div>\r\n");
 
             
-            #line 56 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+            #line 61 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
             }
+            else if (Model.SuggestedVacancies != null && Model.SuggestedVacancies.Any())
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("        </div>\r\n");
-
-            
-            #line 58 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-    }
-    else if (Model.SuggestedVacancies != null && Model.SuggestedVacancies.Any())
-    {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <h2");
+WriteLiteral("                <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
-WriteLiteral(">\r\n            Similar apprenticeships\r\n            <span");
+WriteLiteral(">\r\n                    Similar apprenticeships\r\n                    <span");
 
 WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(">Also in the ");
 
             
-            #line 63 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                                                    Write(Model.SuggestedVacanciesCategory);
+            #line 66 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                                                            Write(Model.SuggestedVacanciesCategory);
 
             
             #line default
@@ -396,8 +410,8 @@ WriteLiteral(">Also in the ");
 WriteLiteral(" sub-category and within ");
 
             
-            #line 63 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                                                                                                              Write(Model.SuggestedVacanciesSearchDistance);
+            #line 66 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                                                                                                                      Write(Model.SuggestedVacanciesSearchDistance);
 
             
             #line default
@@ -405,79 +419,79 @@ WriteLiteral(" sub-category and within ");
 WriteLiteral(" miles of ");
 
             
-            #line 63 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                                                                                                                                                               Write(Model.SuggestedVacanciesSearchLocation);
+            #line 66 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                                                                                                                                                                       Write(Model.SuggestedVacanciesSearchLocation);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n        </h2>\r\n");
+WriteLiteral("</span>\r\n                </h2>\r\n");
 
-WriteLiteral("        <div");
+WriteLiteral("                <div");
 
 WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 66 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-            
+            #line 69 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                    
             
             #line default
             #line hidden
             
-            #line 66 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-             for (int i = 0; i < Math.Min(3, Model.SuggestedVacancies.Count()); i++)
-            {
+            #line 69 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                     for (int i = 0; i < Math.Min(3, Model.SuggestedVacancies.Count()); i++)
+                    {
 
             
             #line default
             #line hidden
-WriteLiteral("                <div");
+WriteLiteral("                        <div");
 
 WriteLiteral(" class=\"column-one-third\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 3895), Tuple.Create("\"", 3956)
-, Tuple.Create(Tuple.Create("", 3900), Tuple.Create("suggested-vacancy-", 3900), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 4343), Tuple.Create("\"", 4404)
+, Tuple.Create(Tuple.Create("", 4348), Tuple.Create("suggested-vacancy-", 4348), true)
             
-            #line 68 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 3918), Tuple.Create<System.Object, System.Int32>(Model.SuggestedVacancies[i].VacancyId
+            #line 71 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 4366), Tuple.Create<System.Object, System.Int32>(Model.SuggestedVacancies[i].VacancyId
             
             #line default
             #line hidden
-, 3918), false)
+, 4366), false)
 );
 
-WriteLiteral(">\r\n                            \r\n");
+WriteLiteral(">\r\n\r\n");
 
             
-            #line 70 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                        
+            #line 73 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                            
             
             #line default
             #line hidden
             
-            #line 70 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                         if (Model.SuggestedVacancies[i].IsPositiveAboutDisability)
+            #line 73 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                             if (Model.SuggestedVacancies[i].IsPositiveAboutDisability)
                         {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <a");
+WriteLiteral("                                <a");
 
 WriteLiteral(" href=\"https://www.gov.uk/looking-for-work-if-disabled\"");
 
-WriteLiteral(">\r\n                                <img");
+WriteLiteral(">\r\n                                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4226), Tuple.Create("\"", 4293)
+WriteAttribute("src", Tuple.Create(" src=\"", 4658), Tuple.Create("\"", 4725)
             
-            #line 73 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 4232), Tuple.Create<System.Object, System.Int32>(Url.Content("~/content/_assets/img/logo-ticks-small-2x.png")
+            #line 76 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 4664), Tuple.Create<System.Object, System.Int32>(Url.Content("~/content/_assets/img/logo-ticks-small-2x.png")
             
             #line default
             #line hidden
-, 4232), false)
+, 4664), false)
 );
 
 WriteLiteral(" width=\"37\"");
@@ -488,103 +502,104 @@ WriteLiteral(" align=\"right\"");
 
 WriteLiteral(" alt=\"\"");
 
-WriteLiteral(">\r\n                            </a>\r\n");
+WriteLiteral(">\r\n                                </a>\r\n");
 
             
-            #line 75 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                        }
+            #line 78 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                            }
 
             
             #line default
             #line hidden
-WriteLiteral("                            \r\n                        <h3");
+WriteLiteral("\r\n                            <h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4484), Tuple.Create("\"", 4608)
+WriteAttribute("href", Tuple.Create(" href=\"", 4900), Tuple.Create("\"", 5024)
             
-            #line 77 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 4491), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new {id = Model.SuggestedVacancies[i].VacancyId.ToString()})
+            #line 80 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 4907), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new {id = Model.SuggestedVacancies[i].VacancyId.ToString()})
             
             #line default
             #line hidden
-, 4491), false)
+, 4907), false)
 );
 
 WriteLiteral(">");
-
-            
-            #line 77 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                                                                                                                                                                             Write(Model.SuggestedVacancies[i].VacancyTitle);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</a></h3>\r\n                        <p><b>Distance:</b> ");
-
-            
-            #line 78 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                                       Write(Model.SuggestedVacancies[i].Distance);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" miles</p>\r\n                </div>\r\n");
 
             
             #line 80 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                                                                                                                                                                                 Write(Model.SuggestedVacancies[i].VacancyTitle);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a></h3>\r\n                            <p><b>Distance:</b> ");
+
+            
+            #line 81 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                                           Write(Model.SuggestedVacancies[i].Distance);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" miles</p>\r\n                        </div>\r\n");
+
+            
+            #line 83 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                </div>\r\n");
+
+            
+            #line 85 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
             }
 
-            
-            #line default
-            #line hidden
-WriteLiteral("        </div>\r\n");
-
-            
-            #line 82 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-    }
-        
-    if (Model.SuggestedVacanciesSearchViewModel != null){
+            if (Model.SuggestedVacanciesSearchViewModel != null)
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("            <p>View apprenticeships in the <a");
+WriteLiteral("                <p>View apprenticeships in the <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4931), Tuple.Create("\"", 5083)
+WriteAttribute("href", Tuple.Create(" href=\"", 5401), Tuple.Create("\"", 5553)
             
-            #line 85 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 4938), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, Model.SuggestedVacanciesSearchViewModel)
+            #line 89 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 5408), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, Model.SuggestedVacanciesSearchViewModel)
             
             #line default
             #line hidden
-, 4938), false)
-, Tuple.Create(Tuple.Create("", 5064), Tuple.Create("&FromSubmitted=true", 5064), true)
+, 5408), false)
+, Tuple.Create(Tuple.Create("", 5534), Tuple.Create("&FromSubmitted=true", 5534), true)
 );
 
-WriteAttribute("title", Tuple.Create(" title=\"", 5084), Tuple.Create("\"", 5164)
-, Tuple.Create(Tuple.Create("", 5092), Tuple.Create("View", 5092), true)
-, Tuple.Create(Tuple.Create(" ", 5096), Tuple.Create("apprenticeships", 5097), true)
-, Tuple.Create(Tuple.Create(" ", 5112), Tuple.Create("in", 5113), true)
-, Tuple.Create(Tuple.Create(" ", 5115), Tuple.Create("sub-category", 5116), true)
-, Tuple.Create(Tuple.Create(" ", 5128), Tuple.Create("\'", 5129), true)
+WriteAttribute("title", Tuple.Create(" title=\"", 5554), Tuple.Create("\"", 5634)
+, Tuple.Create(Tuple.Create("", 5562), Tuple.Create("View", 5562), true)
+, Tuple.Create(Tuple.Create(" ", 5566), Tuple.Create("apprenticeships", 5567), true)
+, Tuple.Create(Tuple.Create(" ", 5582), Tuple.Create("in", 5583), true)
+, Tuple.Create(Tuple.Create(" ", 5585), Tuple.Create("sub-category", 5586), true)
+, Tuple.Create(Tuple.Create(" ", 5598), Tuple.Create("\'", 5599), true)
             
-            #line 85 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                                                                                                                                                                    , Tuple.Create(Tuple.Create("", 5130), Tuple.Create<System.Object, System.Int32>(Model.SuggestedVacanciesCategory
+            #line 89 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                                                                                                                                                                        , Tuple.Create(Tuple.Create("", 5600), Tuple.Create<System.Object, System.Int32>(Model.SuggestedVacanciesCategory
             
             #line default
             #line hidden
-, 5130), false)
-, Tuple.Create(Tuple.Create("", 5163), Tuple.Create("\'", 5163), true)
+, 5600), false)
+, Tuple.Create(Tuple.Create("", 5633), Tuple.Create("\'", 5633), true)
 );
 
 WriteLiteral(">");
 
             
-            #line 85 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                                                                                                                                                                                                                                                                                   Write(Model.SuggestedVacanciesCategory);
+            #line 89 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+                                                                                                                                                                                                                                                                                       Write(Model.SuggestedVacanciesCategory);
 
             
             #line default
@@ -592,9 +607,9 @@ WriteLiteral(">");
 WriteLiteral("</a> sub-category.</p>\r\n");
 
             
-            #line 86 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-    }
-}
+            #line 90 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+            }
+        }
 
             
             #line default
@@ -602,60 +617,66 @@ WriteLiteral("</a> sub-category.</p>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 89 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
- if (ViewBag.SearchReturnUrl != null)
-{
+            #line 93 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 93 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+         if (ViewBag.SearchReturnUrl != null)
+        {
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("            <div");
 
 WriteLiteral(" id=\"search-return-link\"");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5341), Tuple.Create("\"", 5372)
+WriteAttribute("href", Tuple.Create(" href=\"", 5859), Tuple.Create("\"", 5890)
             
-            #line 92 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 5348), Tuple.Create<System.Object, System.Int32>(ViewBag.SearchReturnUrl
+            #line 96 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 5866), Tuple.Create<System.Object, System.Int32>(ViewBag.SearchReturnUrl
             
             #line default
             #line hidden
-, 5348), false)
+, 5866), false)
 );
 
 WriteLiteral(" title=\"Return to search results\"");
 
 WriteLiteral(" id=\"lnk-return-search-results\"");
 
-WriteLiteral(">Return to search results</a>\r\n    </div>\r\n");
+WriteLiteral(">Return to search results</a>\r\n            </div>\r\n");
 
-            
-            #line 94 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-}
-
-            
-            #line default
-            #line hidden
-WriteLiteral("<hr/>\r\n\r\n<p>\r\n    <a");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 5503), Tuple.Create("\"", 5530)
             
             #line 98 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 5510), Tuple.Create<System.Object, System.Int32>(ViewBag.FeedbackUrl
+        }
+
             
             #line default
             #line hidden
-, 5510), false)
+WriteLiteral("        <hr />\r\n\r\n        <p>\r\n            <a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 6062), Tuple.Create("\"", 6089)
+            
+            #line 102 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
+, Tuple.Create(Tuple.Create("", 6069), Tuple.Create<System.Object, System.Int32>(ViewBag.FeedbackUrl
+            
+            #line default
+            #line hidden
+, 6069), false)
 );
 
 WriteLiteral(" rel=\"external\"");
 
-WriteLiteral(">What did you think of this service?</a>\r\n    <br>(30 second survey, this will op" +
-"en in a new tab)\r\n</p>\r\n");
+WriteLiteral(">What did you think of this service?</a>\r\n            <br>(30 second survey, this" +
+" will open in a new tab)\r\n        </p>\r\n\r\n    </div>\r\n</div>\r\n");
 
         }
     }
