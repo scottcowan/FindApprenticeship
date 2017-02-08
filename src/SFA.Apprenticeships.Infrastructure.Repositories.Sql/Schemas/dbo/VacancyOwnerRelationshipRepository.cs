@@ -57,7 +57,7 @@
 
             _logger.Debug("Calling database to get vacancy parties with Ids={0}", string.Join(", ", vacancyOwnerRelationshipIdsArray));
 
-            var sql = SelectByIdsSql + (currentOnly ? "AND StatusTypeId = @StatusTypeId" : "");
+            var sql = SelectByIdsSql + (currentOnly ? " AND StatusTypeId = @StatusTypeId" : "");
 
             List<Entities.VacancyOwnerRelationship> vacancyOwnerRelationships = new List<Entities.VacancyOwnerRelationship>();
             var splitVacancyOwnerRelationshipIdsArray = DbHelpers.SplitIds(vacancyOwnerRelationshipIdsArray);

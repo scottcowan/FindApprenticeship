@@ -5,7 +5,7 @@ MERGE INTO [dbo].[VacancySource] AS Target
 USING (VALUES 
   (0, 'UNK', 'UNK', 'Unknown'),
   (1, 'AV', 'AV', 'AVMS'),
-  (2, 'LAPI', 'LAPI', 'Legacy API'),
+  (2, 'LPI', 'LAPI', 'Legacy API'),
   (3, 'RAA', 'RAA', 'RAA'),
   (4, 'API', 'API', 'API')
 ) 

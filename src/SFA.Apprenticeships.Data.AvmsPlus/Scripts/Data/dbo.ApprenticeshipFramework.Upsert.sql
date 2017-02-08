@@ -578,6 +578,8 @@ UPDATE ApprenticeshipFramework SET FullName = N'Life Sciences and Chemical Scien
 GO
 UPDATE ApprenticeshipFramework SET FullName = N'Manufacturing Engineering' WHERE ApprenticeshipFrameworkId = 282
 GO
+UPDATE ApprenticeshipFramework SET FullName = N'Trade Business Services', ApprenticeshipOccupationId = 13, ApprenticeshipFrameworkStatusTypeId = 1 WHERE CodeName = 616
+GO
 
 INSERT INTO ApprenticeshipFramework (ApprenticeshipFrameworkId, ApprenticeshipOccupationId, CodeName, ShortName, FullName, ApprenticeshipFrameworkStatusTypeId)
 VALUES (340, 17, 618, 618, N'Sustainable Resource Operations and Management', 1)
