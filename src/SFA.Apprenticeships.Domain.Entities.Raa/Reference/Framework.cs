@@ -3,8 +3,14 @@
     using ReferenceData;
     using System.ComponentModel.DataAnnotations;
 
+    /// <summary>
+    /// Framework instance
+    /// </summary>
     public class Framework
     {
+        /// <summary>
+        /// Framework constructor
+        /// </summary>
         public Framework()
         {
             Status = FrameworkStatusType.Active;
@@ -54,11 +60,21 @@
             return new Category(Id, CategoryPrefixes.GetFrameworkCode(CodeName), FullName, CategoryPrefixes.GetSectorSubjectAreaTier1Code(ParentCategoryCodeName), CategoryType.Framework, (CategoryStatus)(int)Status);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         protected bool Equals(Framework other)
         {
             return Id == other.Id && string.Equals(CodeName, other.CodeName) && string.Equals(ShortName, other.ShortName) && string.Equals(FullName, other.FullName) && string.Equals(ParentCategoryCodeName, other.ParentCategoryCodeName) && Status == other.Status;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -67,6 +83,10 @@
             return Equals((Framework)obj);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             unchecked
