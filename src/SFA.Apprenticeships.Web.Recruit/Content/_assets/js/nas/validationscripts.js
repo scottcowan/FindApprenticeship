@@ -12,7 +12,7 @@ $(document).ready(function () {
             $(element).removeClass('error');
 
             if ($(element).parents('.form-date').length === 0)
-                $(element).parent('.form-group').addClass("error");
+                $(element).parents('.form-group').first().addClass("error");
             else
                 $(element).parents('form-group').last().addClass('error');
 

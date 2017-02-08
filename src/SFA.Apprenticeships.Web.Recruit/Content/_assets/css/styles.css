@@ -3328,6 +3328,10 @@ input[type=number] {
   .success-summary .success-dismiss {
     color: #28a197; }
 
+.sfa-govuk-box-highlight {
+  padding-left: 0.5em;
+  padding-right: 0.5em; }
+
 .sfa-icon-green {
   color: #28a197; }
 

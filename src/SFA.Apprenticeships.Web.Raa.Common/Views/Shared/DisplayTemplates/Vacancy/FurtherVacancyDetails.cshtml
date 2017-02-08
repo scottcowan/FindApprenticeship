@@ -113,10 +113,9 @@
                                 </label>
                             </fieldset>
 
-                            <div id="custom-wage-fixed-panel" class="toggle-content panel panel-border-narrow sfa-medium-top-margin">
+                            <div id="custom-wage-fixed-panel" class="toggle-content panel panel-border-narrow sfa-medium-top-margin form-group">
                                 <fieldset>
                                     <p class="form-hint">@Html.Label(WageViewModelMessages.AmountMessages.HelpText)</p>
-                                    <div class="form-group">
                                         @Html.ValidationMessageWithSeverityFor(m => m.Wage.Amount, Html.GetValidationType(m => m.Wage.Amount))
 
                                         <p class="sfa-display-inline">£</p>
@@ -125,14 +124,12 @@
                                         @Html.TextBoxFor(m => m.Wage.Amount, new { @class="form-control form-control-1-4 sfa-form-control-1-4" })
 
                                         @Html.DropDownListFor(m => m.Wage.Unit, Model.WageUnits, new { @class = "form-control sfa-form-control-auto" })
-                                    </div>
                                  </fieldset>
                             </div>
 
-                            <div id="custom-wage-range-panel" class="toggle-content panel panel-border-narrow sfa-medium-top-margin" >
+                            <div id="custom-wage-range-panel" class="toggle-content panel panel-border-narrow sfa-medium-top-margin form-group" >
                                 <fieldset>
                                     <p class="form-hint">@Html.Label(WageViewModelMessages.AmountRangeMessages.HelpText, new { @class = "form-hint" })</p>
-                                    <div class="form-group">
                                         @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.AmountLowerBound))
                                         @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.AmountUpperBound))
                                         @Html.ValidationMessageWithSeverityFor(m => m.Wage.AmountLowerBound, Html.GetValidationType(m => m.Wage.AmountLowerBound))
@@ -151,7 +148,6 @@
                                         @Html.TextBoxFor(m => m.Wage.AmountUpperBound, new { @class = "form-control form-control-1-4 sfa-form-control-1-4", type = "number", size = 12, placeholder = "max" })
 
                                         @Html.DropDownListFor(m => m.Wage.RangeUnit, Model.WageUnits, new { @class = "form-control sfa-form-control-auto" })
-                                    </div>
                                 </fieldset>
                             </div>
                         </div>

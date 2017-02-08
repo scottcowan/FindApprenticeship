@@ -7,94 +7,101 @@
 }
 
 
-<div class="govuk-box-highlight">
-    <h1 class="bold-large">Apprenticeship application submitted</h1>
-</div>
-
-<p><i class="fa fa-envelope-o"></i>We've sent you an email confirming your <strong class="bold-small">@Html.DisplayFor(m => m.VacancyTitle)</strong> application</p>
-<p> You can also <a title="Track the progress of your application" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">track the progress</a> of your application</p>
-<p>You’ll be contacted if you’ve been selected for the next stage of the application process.</p>
-<details>
-    <summary><span class="summary">Contact the provider</span></summary>
-    <div class="detail-content">@Model.ProviderContactInfo</div>
-</details>
-<hr/>
-
-    
-@if ((Model.SuggestedVacancies == null || !Model.SuggestedVacancies.Any()) && (Model.SavedAndDraftApplications == null || !Model.SavedAndDraftApplications.Any()))
-{
-    <a id="find-apprenticeship-btn" role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)'>Find an apprenticeship</a>
-}
-else
-{
-    if (Model.SavedAndDraftApplications != null && Model.SavedAndDraftApplications.Any())
-    {
-        <h2 class="heading-medium">Saved apprenticeships</h2>
-        <div class="grid-row">
-            @for (int i = 0; i < Math.Min(3, Model.SavedAndDraftApplications.Count); i++)
-            {
-                <div class="column-one-third" id="saved-vacancy-@Model.SavedAndDraftApplications[i].VacancyId">
-                            
-                        @if (Model.SavedAndDraftApplications[i].IsPositiveAboutDisability)
-                        {
-                            <a href="https://www.gov.uk/looking-for-work-if-disabled">
-                                <img src="@Url.Content("~/content/_assets/img/logo-ticks-small-2x.png")" width="37" height="30" align="right" alt="">
-                            </a>
-                        }
-
-                        <h3 class="heading-small"><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new {id = Model.SavedAndDraftApplications[i].VacancyId.ToString()})">@Model.SavedAndDraftApplications[i].Title</a></h3>
-                        <p><b>Closing date:</b> @Model.SavedAndDraftApplications[i].ClosingDate.ToFriendlyClosingToday()</p>
-                        @if (@Model.SavedAndDraftApplications[i].ApplicationStatus == ApplicationStatuses.Saved)
-                        {
-                            <p><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString()})">Apply</a></p>
-                        }
-                        else
-                        {
-                            <p><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipResume, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString() })">Resume</a></p>
-                        }
-                </div>
-            }
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <div class="govuk-box-highlight sfa-govuk-box-highlight">
+            <h1 class="bold-large sfa-large-bottom-margin">Apprenticeship application submitted</h1>
         </div>
-    }
-    else if (Model.SuggestedVacancies != null && Model.SuggestedVacancies.Any())
-    {
-        <h2 class="heading-medium">
-            Similar apprenticeships
-            <span class="heading-secondary ">Also in the @Model.SuggestedVacanciesCategory sub-category and within @Model.SuggestedVacanciesSearchDistance miles of @Model.SuggestedVacanciesSearchLocation</span>
-        </h2>
-        <div class="grid-row">
-            @for (int i = 0; i < Math.Min(3, Model.SuggestedVacancies.Count()); i++)
-            {
-                <div class="column-one-third" id="suggested-vacancy-@Model.SuggestedVacancies[i].VacancyId">
-                            
-                        @if (Model.SuggestedVacancies[i].IsPositiveAboutDisability)
-                        {
-                            <a href="https://www.gov.uk/looking-for-work-if-disabled">
-                                <img src="@Url.Content("~/content/_assets/img/logo-ticks-small-2x.png")" width="37" height="30" align="right" alt="">
-                            </a>
-                        }
-                            
-                        <h3 class="heading-small"><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new {id = Model.SuggestedVacancies[i].VacancyId.ToString()})">@Model.SuggestedVacancies[i].VacancyTitle</a></h3>
-                        <p><b>Distance:</b> @Model.SuggestedVacancies[i].Distance miles</p>
-                </div>
-            }
-        </div>
-    }
+
+        <p><i class="fa fa-envelope-o"></i>We've sent you an email confirming your <strong class="bold-small">@Html.DisplayFor(m => m.VacancyTitle)</strong> application</p>
         
-    if (Model.SuggestedVacanciesSearchViewModel != null){
-            <p>View apprenticeships in the <a href="@Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, Model.SuggestedVacanciesSearchViewModel)&FromSubmitted=true" title="View apprenticeships in sub-category '@Model.SuggestedVacanciesCategory'">@Model.SuggestedVacanciesCategory</a> sub-category.</p>
-    }
-}
+        <p> You can also <a title="Track the progress of your application" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">track the progress</a> of your application</p>
+        <p>You’ll be contacted if you’ve been selected for the next stage of the application process.</p>
+        <details>
+            <summary><span class="summary">Contact the provider</span></summary>
+            <div class="detail-content">@Model.ProviderContactInfo</div>
+        </details>
+        <hr />
 
-@if (ViewBag.SearchReturnUrl != null)
-{
-    <div id="search-return-link" class="form-group">
-        <a href="@ViewBag.SearchReturnUrl" title="Return to search results" id="lnk-return-search-results">Return to search results</a>
+
+        @if ((Model.SuggestedVacancies == null || !Model.SuggestedVacancies.Any()) && (Model.SavedAndDraftApplications == null || !Model.SavedAndDraftApplications.Any()))
+        {
+            <a id="find-apprenticeship-btn" role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)'>Find an apprenticeship</a>
+        }
+        else
+        {
+            if (Model.SavedAndDraftApplications != null && Model.SavedAndDraftApplications.Any())
+            {
+                <h2 class="heading-medium">Saved apprenticeships</h2>
+                <div class="grid-row">
+                    @for (int i = 0; i < Math.Min(3, Model.SavedAndDraftApplications.Count); i++)
+                    {
+                        <div class="column-one-third" id="saved-vacancy-@Model.SavedAndDraftApplications[i].VacancyId">
+
+                            @if (Model.SavedAndDraftApplications[i].IsPositiveAboutDisability)
+                        {
+                                <a href="https://www.gov.uk/looking-for-work-if-disabled">
+                                    <img src="@Url.Content("~/content/_assets/img/logo-ticks-small-2x.png")" width="37" height="30" align="right" alt="">
+                                </a>
+                            }
+
+                            <h3 class="heading-small"><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new {id = Model.SavedAndDraftApplications[i].VacancyId.ToString()})">@Model.SavedAndDraftApplications[i].Title</a></h3>
+                            <p><b>Closing date:</b> @Model.SavedAndDraftApplications[i].ClosingDate.ToFriendlyClosingToday()</p>
+                            @if (@Model.SavedAndDraftApplications[i].ApplicationStatus == ApplicationStatuses.Saved)
+                        {
+                                <p><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString()})">Apply</a></p>
+                            }
+                            else
+                            {
+                                <p><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipResume, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString() })">Resume</a></p>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+            else if (Model.SuggestedVacancies != null && Model.SuggestedVacancies.Any())
+            {
+                <h2 class="heading-medium">
+                    Similar apprenticeships
+                    <span class="heading-secondary ">Also in the @Model.SuggestedVacanciesCategory sub-category and within @Model.SuggestedVacanciesSearchDistance miles of @Model.SuggestedVacanciesSearchLocation</span>
+                </h2>
+                <div class="grid-row">
+                    @for (int i = 0; i < Math.Min(3, Model.SuggestedVacancies.Count()); i++)
+                    {
+                        <div class="column-one-third" id="suggested-vacancy-@Model.SuggestedVacancies[i].VacancyId">
+
+                            @if (Model.SuggestedVacancies[i].IsPositiveAboutDisability)
+                        {
+                                <a href="https://www.gov.uk/looking-for-work-if-disabled">
+                                    <img src="@Url.Content("~/content/_assets/img/logo-ticks-small-2x.png")" width="37" height="30" align="right" alt="">
+                                </a>
+                            }
+
+                            <h3 class="heading-small"><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new {id = Model.SuggestedVacancies[i].VacancyId.ToString()})">@Model.SuggestedVacancies[i].VacancyTitle</a></h3>
+                            <p><b>Distance:</b> @Model.SuggestedVacancies[i].Distance miles</p>
+                        </div>
+                    }
+                </div>
+            }
+
+            if (Model.SuggestedVacanciesSearchViewModel != null)
+            {
+                <p>View apprenticeships in the <a href="@Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, Model.SuggestedVacanciesSearchViewModel)&FromSubmitted=true" title="View apprenticeships in sub-category '@Model.SuggestedVacanciesCategory'">@Model.SuggestedVacanciesCategory</a> sub-category.</p>
+            }
+        }
+
+        @if (ViewBag.SearchReturnUrl != null)
+        {
+            <div id="search-return-link" class="form-group">
+                <a href="@ViewBag.SearchReturnUrl" title="Return to search results" id="lnk-return-search-results">Return to search results</a>
+            </div>
+        }
+        <hr />
+
+        <p>
+            <a href="@ViewBag.FeedbackUrl" rel="external">What did you think of this service?</a>
+            <br>(30 second survey, this will open in a new tab)
+        </p>
+
     </div>
-}
-<hr/>
-
-<p>
-    <a href="@ViewBag.FeedbackUrl" rel="external">What did you think of this service?</a>
-    <br>(30 second survey, this will open in a new tab)
-</p>
+</div>

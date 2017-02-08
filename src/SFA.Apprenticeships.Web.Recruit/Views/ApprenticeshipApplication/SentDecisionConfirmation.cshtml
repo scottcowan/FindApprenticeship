@@ -5,10 +5,15 @@
     ViewBag.Title = "Sent Decision Confirmation";
 }
 
-<div class="govuk-box-highlight">
-    <h1 class="bold-large">
-       <p>@Model.CustomMessage</p>
-    </h1>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <div class="govuk-box-highlight sfa-govuk-box-highlight">
+            <h1 class="bold-large sfa-large-bottom-margin">
+                @Model.CustomMessage
+            </h1>
+        </div>
+        <div class="sfa-xlarge-top-margin inline">
+            @Html.RouteLink("Return to vacancy applications", RecruitmentRouteNames.VacancyApplications, new { Model.VacancyReferenceNumber }, new { @class = "button" })
+        </div>
+    </div>
 </div>
-
-@Html.RouteLink("Return to vacancy applications", RecruitmentRouteNames.VacancyApplications, new { Model.VacancyReferenceNumber }, new { @class = "button" })

@@ -6,11 +6,12 @@
     ViewBag.Title = "Recruit an Apprentice - Confirmation of submission";
 
     var vacancyText = Model.VacancyText;
+    var vacancyRef = Model.VacancyReferenceNumber.GetVacancyReference();
 }
 
 <div class="grid-row">
     <div class="column-two-thirds">
-        <div class="govuk-box-highlight">
+        <div class="govuk-box-highlight sfa-govuk-box-highlight">
             <h1 class="bold-large">
                 @if (Model.Resubmitted)
                 {
@@ -21,6 +22,10 @@
                     @:@(vacancyText) submitted for approval
                 }
             </h1>
+            <p>The vacancy reference number is
+                <br/>
+                <strong class="heading-medium">@vacancyRef</strong>
+            </p>
         </div>
         
         <h2 class="heading-medium">Next steps</h2>
@@ -49,10 +54,6 @@
                 necessary before the advert goes live.
             </p>
         }
-        <h2 class="heading-medium">
-            Create another apprenticeship vacancy or traineeship opportunity
-            <span class="heading-secondary ">Use a fresh template or continue with a draft</span>
-        </h2>
         <div class="form-group inline sfa-xlarge-top-margin">
             <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })" class="button">Start new opportunity or vacancy</a>
             <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)" class="button sfa-button-secondary">Return to recruitment home</a>
