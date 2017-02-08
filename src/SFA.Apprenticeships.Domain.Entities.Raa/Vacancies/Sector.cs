@@ -1,15 +1,34 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
+    /// <summary>
+    /// Sector instance
+    /// </summary>
     public class Sector
     {
+        /// <summary>
+        /// Sector's identifier
+        /// </summary>
+        [Required]
         public int Id { get; set; }
 
+        /// <summary>
+        /// Sector's Name
+        /// </summary>
+        [Required]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Sector's OccupationId
+        /// </summary>
+        [Required]
         public int ApprenticeshipOccupationId { get; set; }
 
+        /// <summary>
+        /// Sector's list of standards
+        /// </summary>
         public IEnumerable<Standard> Standards { get; set; }
 
         protected bool Equals(Sector other)
