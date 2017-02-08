@@ -38,6 +38,7 @@
         private ICreateVacancyStrategy _createVacancyStrategy;
 
         private Employer _employer;
+        private VacancyOwnerRelationship _vorOwned;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -49,7 +50,7 @@
 
             _providerReadRepository.Setup(r => r.GetByUkprn(RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString(), false)).Returns(sfaProvider);
 
-            var vorOwned = new Fixture().Build<VacancyOwnerRelationship>()
+            _vorOwned = new Fixture().Build<VacancyOwnerRelationship>()
                 .With(vor => vor.VacancyOwnerRelationshipId, VorIdOwned)
                 .With(vor => vor.ProviderSiteId, VorIdOwned)
                 .Create();
@@ -60,13 +61,13 @@
                 .Create();
 
             _vacancyOwnerRelationshipReadRepository.Setup(
-                vor => vor.GetByIds(It.Is<IEnumerable<int>>(ids => ids.Any(id => id == VorIdOwned)), true)).Returns(new[] { vorOwned });
+                vor => vor.GetByIds(It.Is<IEnumerable<int>>(ids => ids.Any(id => id == VorIdOwned)), true)).Returns(new[] { _vorOwned });
 
             _vacancyOwnerRelationshipReadRepository.Setup(
                 vor => vor.GetByIds(It.Is<IEnumerable<int>>(ids => ids.Any(id => id == VorIdNotOwned)), true)).Returns(new[] { vorNotOwned });
 
             var ownedProviderSite = new Fixture().Build<ProviderSite>()
-                .With(ps => ps.ProviderSiteId, vorOwned.ProviderSiteId)
+                .With(ps => ps.ProviderSiteId, _vorOwned.ProviderSiteId)
                 .Create();
 
             var providerSiteRelationship = new Fixture().Build<ProviderSiteRelationship>()
@@ -80,10 +81,10 @@
             _getOwnedProviderSitesStrategy.Setup(ps => ps.GetOwnedProviderSites(RaaApiUserFactory.SkillsFundingAgencyProviderId)).Returns(new[] { ownedProviderSite });
 
             _employer = new Fixture().Build<Employer>()
-                .With(e => e.EmployerId, vorOwned.EmployerId)
+                .With(e => e.EmployerId, _vorOwned.EmployerId)
                 .Create();
 
-            _getEmployerByIdStrategy.Setup(r => r.Get(vorOwned.EmployerId, true)).Returns(_employer);
+            _getEmployerByIdStrategy.Setup(r => r.Get(_vorOwned.EmployerId, true)).Returns(_employer);
             _getEmployerByEdsUrnStrategy.Setup(r => r.Get(_employer.EdsUrn)).Returns(_employer);
 
             _createVacancyStrategy = new CreateVacancyStrategy(_vacancyReadRepository.Object, _vacancyWriteRepository.Object, _providerReadRepository.Object, _vacancyOwnerRelationshipReadRepository.Object, _getOwnedProviderSitesStrategy.Object, _referenceNumberRepository.Object, _getEmployerByIdStrategy.Object, _getEmployerByEdsUrnStrategy.Object);
@@ -156,7 +157,9 @@
                 VacancyGuid = Guid.NewGuid(),
                 VacancyOwnerRelationshipId = VorIdOwned,
                 VacancyLocationType = vacancyLocationType,
-                NumberOfPositions = 2
+                NumberOfPositions = 2,
+                EmployerWebsiteUrl = "http://different.com",
+                EmployerDescription = "Different"
             };
 
             const int newVacancyId = 356;
@@ -177,6 +180,9 @@
                 createdVacancy.Address.Should().BeNull();
                 vacancy.LocalAuthorityCode.Should().BeNull();
             }
+
+            createdVacancy.EmployerWebsiteUrl.Should().Be(vacancy.EmployerWebsiteUrl);
+            createdVacancy.EmployerDescription.Should().Be(vacancy.EmployerDescription);
         }
 
         [Test]
@@ -206,6 +212,8 @@
             createdVacancy.VacancyManagerId.Should().Be(VorIdOwned);
             createdVacancy.DeliveryOrganisationId.Should().Be(VorIdOwned);
             createdVacancy.VacancySource.Should().Be(VacancySource.Api);
+            createdVacancy.EmployerWebsiteUrl.Should().Be(_vorOwned.EmployerWebsiteUrl);
+            createdVacancy.EmployerDescription.Should().Be(_vorOwned.EmployerDescription);
             //TODO: Check created date?
         }
     }

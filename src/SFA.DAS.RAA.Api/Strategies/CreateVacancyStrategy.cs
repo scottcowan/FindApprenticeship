@@ -92,6 +92,15 @@
                         vacancy.Address = null;
                         vacancy.LocalAuthorityCode = null;
                     }
+
+                    if (string.IsNullOrEmpty(vacancy.EmployerWebsiteUrl))
+                    {
+                        vacancy.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
+                    }
+                    if (string.IsNullOrEmpty(vacancy.EmployerDescription))
+                    {
+                        vacancy.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
+                    }
                 }
             }
 

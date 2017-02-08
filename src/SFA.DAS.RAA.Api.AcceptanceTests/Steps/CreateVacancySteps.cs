@@ -149,6 +149,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             expectedVacancy.DeliveryOrganisationId = ProviderSiteId;
             expectedVacancy.Wage = responseVacancy.Wage;
             expectedVacancy.EditedInRaa = responseVacancy.EditedInRaa;
+            expectedVacancy.EmployerWebsiteUrl = responseVacancy.EmployerWebsiteUrl;
+            expectedVacancy.EmployerDescription = responseVacancy.EmployerDescription;
 
             var compareLogic = new CompareLogic();
             var result = compareLogic.Compare(responseVacancy, expectedVacancy);
