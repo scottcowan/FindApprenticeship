@@ -2,6 +2,7 @@
 {
     using Newtonsoft.Json;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class Category
     {
@@ -53,18 +54,44 @@
 
         }
 
+        /// <summary>
+        /// Category's identifier
+        /// </summary>
+        [Required]
         public int Id { get; set; }
 
+        /// <summary>
+        /// Category's fullname
+        /// </summary>
+        [Required]
         public string FullName { get; set; }
 
+        /// <summary>
+        /// Category's Codename
+        /// </summary>
+        [Required]
         public string CodeName { get; private set; }
 
+        /// <summary>
+        /// Parent CategoryCode Name of the category
+        /// </summary>
         public string ParentCategoryCodeName { get; set; }
 
+        /// <summary>
+        /// The category type
+        /// </summary>
+        [Required]
         public CategoryType CategoryType { get; private set; }
 
+        /// <summary>
+        /// Status of the category
+        /// </summary>
+        [Required]
         public CategoryStatus Status { get; set; }
 
+        /// <summary>
+        /// Lists a list of frameworks
+        /// </summary>
         public IList<Category> SubCategories { get; private set; }
 
         [JsonIgnore]

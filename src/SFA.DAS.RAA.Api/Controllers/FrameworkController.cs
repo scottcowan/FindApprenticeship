@@ -9,7 +9,7 @@ namespace SFA.DAS.RAA.Api.Controllers
     using System.Web.Http.Description;
 
     /// <summary>
-    /// FrameworkController
+    /// Framework Controller for API
     /// </summary>
     public class FrameworkController : ApiController
     {
@@ -27,7 +27,7 @@ namespace SFA.DAS.RAA.Api.Controllers
         /// <summary>
         /// Gets all frameworks
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of Category objects</returns>
         [Route("frameworks")]
         [ResponseType(typeof(IEnumerable<Category>))]
         [HttpGet]
@@ -40,7 +40,7 @@ namespace SFA.DAS.RAA.Api.Controllers
         /// Returns the information for the framework identified by the primary identifier in the URL
         /// </summary>
         /// <param name="id">The framework's primary identifier</param>
-        /// <returns>The Category object</returns>
+        /// <returns>Returns a Category object</returns>
         [Route("framework/{id}")]
         [ResponseType(typeof(Framework))]
         [HttpGet]

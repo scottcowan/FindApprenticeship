@@ -26,7 +26,7 @@ namespace SFA.DAS.RAA.Api.Controllers
         /// <summary>
         /// Gets all standards
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns a list of StandardSubjectAreaTierOne </returns>
         [Route("standards")]
         [ResponseType(typeof(IEnumerable<StandardSubjectAreaTierOne>))]
         [HttpGet]

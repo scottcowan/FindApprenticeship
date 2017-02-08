@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
 {
     using ReferenceData;
+    using System.ComponentModel.DataAnnotations;
 
     public class Framework
     {
@@ -9,16 +10,39 @@
             Status = FrameworkStatusType.Active;
         }
 
+        /// <summary>
+        /// Framework's identifier
+        /// </summary>
+        [Required]
         public int Id { get; set; }
 
+        /// <summary>
+        /// Framework's codename
+        /// </summary>
+        [Required]
         public string CodeName { get; set; }
 
+        /// <summary>
+        /// Framework's shortname
+        /// </summary>
+        [Required]
         public string ShortName { get; set; }
 
+        /// <summary>
+        /// Framework's fullname
+        /// </summary>
+        [Required]
         public string FullName { get; set; }
 
+        /// <summary>
+        /// Framework's ParentCategory Code name
+        /// </summary>
         public string ParentCategoryCodeName { get; set; }
 
+        /// <summary>
+        /// Framework's status
+        /// </summary>
+        [Required]
         public FrameworkStatusType Status { get; set; }
 
         /// <summary>
