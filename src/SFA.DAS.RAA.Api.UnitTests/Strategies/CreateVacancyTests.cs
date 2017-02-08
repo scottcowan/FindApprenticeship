@@ -140,7 +140,9 @@
             var vacancy = new Vacancy
             {
                 VacancyGuid = Guid.NewGuid(),
-                VacancyOwnerRelationshipId = VorIdOwned
+                VacancyOwnerRelationshipId = VorIdOwned,
+                VacancyLocationType = VacancyLocationType.SpecificLocation,
+                NumberOfPositions = 2
             };
 
             const int newVacancyId = 356;

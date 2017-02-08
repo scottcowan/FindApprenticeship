@@ -13,5 +13,16 @@
             public const string RequiredErrorText = "Please supply a valid vacancy guid. The guid must not have been used to create a vacancy before.";
             public const string DuplicateGuid = "The supplied guid has been used to create a vacancy before. Please supply a unique guid.";
         }
+
+        public static class VacancyLocationType
+        {
+            public const string RequiredErrorText = "Please supply a vacancy location type value.";
+        }
+
+        public class NumberOfPositions
+        {
+            public const string RequiredErrorText = "Please supply the number of positions for this vacancy";
+            public const string LengthErrorText = "There must be at least 1 position for this vacancy";
+        }
     }
 }
