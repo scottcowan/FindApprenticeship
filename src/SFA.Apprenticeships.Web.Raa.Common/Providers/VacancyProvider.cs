@@ -524,7 +524,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             {
                 viewModel.TrainingType = TrainingType.Sectors;
             }
-            var sectorsAndFrameworks = GetSectorsAndFrameworks();
+            var sectorsAndFrameworks = await GetSectorsAndFrameworks();
             var standards = GetStandards();
             var sectors = GetSectors();
             viewModel.SectorsAndFrameworks = sectorsAndFrameworks;
@@ -837,9 +837,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public List<SelectListItem> GetSectorsAndFrameworks()
+        public async Task<List<SelectListItem>> GetSectorsAndFrameworks()
         {
-            var categories = _referenceDataService.GetFrameworks().Result;
+            var categories = await _referenceDataService.GetFrameworks();
 
             var sectorsAndFrameworkItems = new List<SelectListItem>
             {
@@ -1514,7 +1514,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, TrainingDetailsViewModel>(vacancy);
-            var sectorsAndFrameworks = GetSectorsAndFrameworks();
+            var sectorsAndFrameworks = await GetSectorsAndFrameworks();
             var standards = GetStandards();
             var sectors = GetSectors();
             viewModel.SectorsAndFrameworks = sectorsAndFrameworks;

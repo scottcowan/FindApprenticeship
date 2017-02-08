@@ -74,11 +74,11 @@
 
         MediatorResponse<LocationSearchViewModel> RemoveLocation(LocationSearchViewModel viewModel, int locationIndex);
 
-        MediatorResponse<TrainingDetailsViewModel> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel);
+        Task<MediatorResponse<TrainingDetailsViewModel>> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel);
 
         MediatorResponse ClearLocationInformation(Guid vacancyGuid);
 
-        MediatorResponse<TrainingDetailsViewModel> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel);
+        Task<MediatorResponse<TrainingDetailsViewModel>> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel);
 
         Task<MediatorResponse<FurtherVacancyDetailsViewModel>> UpdateVacancyDates(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings);
         Task<FurtherVacancyDetailsViewModel> GetCloseVacancyViewModel(int vacancyReferenceNumber);
