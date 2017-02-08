@@ -10,6 +10,7 @@
     using ApiLocalAuthority = Client.V1.Models.LocalAuthority;
     using ApiPostalAddress = Client.V1.Models.PostalAddress;
     using ApiRegion = Client.V1.Models.Region;
+    using ApiSector = Client.V1.Models.Sector;
     using ApiStandard = Client.V1.Models.Standard;
     using ApiStandardSubjectAreaTierOne = Client.V1.Models.StandardSubjectAreaTierOne;
     using ApiVacancy = Client.V1.Models.Vacancy;
@@ -23,6 +24,7 @@
     using LocalAuthority = Apprenticeships.Domain.Entities.Raa.Reference.LocalAuthority;
     using PostalAddress = Apprenticeships.Domain.Entities.Raa.Locations.PostalAddress;
     using Region = Apprenticeships.Domain.Entities.Raa.Reference.Region;
+    using Sector = Apprenticeships.Domain.Entities.Raa.Vacancies.Sector;
     using Standard = Apprenticeships.Domain.Entities.Raa.Vacancies.Standard;
     using StandardSubjectAreaTierOne = Apprenticeships.Domain.Entities.Raa.Vacancies.StandardSubjectAreaTierOne;
     using Vacancy = Apprenticeships.Domain.Entities.Raa.Vacancies.Vacancy;
@@ -133,7 +135,11 @@
                 .ForMember(dest => dest.VacancyOwnerRelationshipGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.StatusType, opt => opt.UseValue(VacancyOwnerRelationshipStatusTypes.Live));
 
-            Mapper.CreateMap<ApiCategory, Category>();
+            Mapper.CreateMap<ApiCategory, Category>()
+                .ForMember(dest => dest.Count, opt => opt.Ignore());
+
+            Mapper.CreateMap<ApiSector, Sector>();
+
             Mapper.CreateMap<ApiStandardSubjectAreaTierOne, StandardSubjectAreaTierOne>();
             Mapper.CreateMap<ApiFramework, Framework>();
             Mapper.CreateMap<ApiStandard, Standard>();
