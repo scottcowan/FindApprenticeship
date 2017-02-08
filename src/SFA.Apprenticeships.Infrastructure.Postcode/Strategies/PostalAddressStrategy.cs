@@ -13,7 +13,6 @@
     using Newtonsoft.Json;
     using RestSharp;
     using System.Collections.Generic;
-    using Application.Interfaces.ReferenceData;
     using Domain.Raa.Interfaces.Repositories;
 
     public class PostalAddressStrategy : IPostalAddressStrategy
@@ -31,7 +30,7 @@
 
         public PostalAddress GetPostalAddresses(string companyName, string primaryAddressableObject, string secondaryAddressableObject, string street, string town, string postcode)
         {
-            //This code assumes that we don't particularly mind how accurate the address is, we simply want to geocode as best as possible and let the user deside if the address is correct
+            //This code assumes that we don't particularly mind how accurate the address is, we simply want to geocode as best as possible and let the user decide if the address is correct
             var postalAddress = new PostalAddress
             {
                 AddressLine1 = GetAddressLine1(primaryAddressableObject, secondaryAddressableObject, street),

@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Security;
     using Api.Strategies;
+    using Apprenticeships.Application.Employer.Strategies;
     using Apprenticeships.Application.Provider.Strategies;
     using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
@@ -31,8 +32,12 @@
         private readonly Mock<IVacancyOwnerRelationshipReadRepository> _vacancyOwnerRelationshipReadRepository = new Mock<IVacancyOwnerRelationshipReadRepository>();
         private readonly Mock<IGetOwnedProviderSitesStrategy> _getOwnedProviderSitesStrategy = new Mock<IGetOwnedProviderSitesStrategy>();
         private readonly Mock<IReferenceNumberRepository> _referenceNumberRepository = new Mock<IReferenceNumberRepository>();
+        private readonly Mock<IGetByIdStrategy> _getEmployerByIdStrategy = new Mock<IGetByIdStrategy>();
+        private readonly Mock<IGetByEdsUrnStrategy> _getEmployerByEdsUrnStrategy = new Mock<IGetByEdsUrnStrategy>();
 
         private ICreateVacancyStrategy _createVacancyStrategy;
+
+        private Employer _employer;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -74,7 +79,14 @@
 
             _getOwnedProviderSitesStrategy.Setup(ps => ps.GetOwnedProviderSites(RaaApiUserFactory.SkillsFundingAgencyProviderId)).Returns(new[] { ownedProviderSite });
 
-            _createVacancyStrategy = new CreateVacancyStrategy(_vacancyReadRepository.Object, _vacancyWriteRepository.Object, _providerReadRepository.Object, _vacancyOwnerRelationshipReadRepository.Object, _getOwnedProviderSitesStrategy.Object, _referenceNumberRepository.Object);
+            _employer = new Fixture().Build<Employer>()
+                .With(e => e.EmployerId, vorOwned.EmployerId)
+                .Create();
+
+            _getEmployerByIdStrategy.Setup(r => r.Get(vorOwned.EmployerId, true)).Returns(_employer);
+            _getEmployerByEdsUrnStrategy.Setup(r => r.Get(_employer.EdsUrn)).Returns(_employer);
+
+            _createVacancyStrategy = new CreateVacancyStrategy(_vacancyReadRepository.Object, _vacancyWriteRepository.Object, _providerReadRepository.Object, _vacancyOwnerRelationshipReadRepository.Object, _getOwnedProviderSitesStrategy.Object, _referenceNumberRepository.Object, _getEmployerByIdStrategy.Object, _getEmployerByEdsUrnStrategy.Object);
         }
 
         [Test]
@@ -132,6 +144,39 @@
             Action action = () => _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
             action.ShouldThrow<ValidationException>()
                 .And.Errors.Any(e => e.PropertyName == "VacancyOwnerRelationshipId" && e.ErrorMessage == "You do not have permission to create a vacancy for the specified vacancy owner relationship.").Should().BeTrue();
+        }
+        
+        [TestCase(VacancyLocationType.SpecificLocation, true)]
+        [TestCase(VacancyLocationType.MultipleLocations, false)]
+        [TestCase(VacancyLocationType.Nationwide, true)]
+        public void CreatingVacancyAssignsEmployerAddress(VacancyLocationType vacancyLocationType, bool useEmployerAddress)
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyGuid = Guid.NewGuid(),
+                VacancyOwnerRelationshipId = VorIdOwned,
+                VacancyLocationType = vacancyLocationType,
+                NumberOfPositions = 2
+            };
+
+            const int newVacancyId = 356;
+            const int newVacancyReferenceNumber = 34534;
+
+            _referenceNumberRepository.Setup(r => r.GetNextVacancyReferenceNumber()).Returns(newVacancyReferenceNumber);
+            _vacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns<Vacancy>(v => { v.VacancyId = newVacancyId; return v; });
+
+            var createdVacancy = _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
+
+            if (useEmployerAddress)
+            {
+                createdVacancy.Address.Equals(_employer.Address).Should().BeTrue();
+                vacancy.LocalAuthorityCode.Should().Be(_employer.Address.LocalAuthorityCodeName);
+            }
+            else
+            {
+                createdVacancy.Address.Should().BeNull();
+                vacancy.LocalAuthorityCode.Should().BeNull();
+            }
         }
 
         [Test]
