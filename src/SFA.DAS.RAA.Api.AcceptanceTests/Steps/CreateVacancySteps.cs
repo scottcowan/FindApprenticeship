@@ -10,6 +10,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using System.Text;
     using System.Threading.Tasks;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Domain.Entities.Vacancies;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
@@ -17,12 +18,14 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Extensions;
     using Factories;
     using FluentAssertions;
+    using KellermanSoftware.CompareNetObjects;
     using Models;
     using Moq;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
     using UnitTests.Factories;
     using DbVacancy = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.Vacancy;
+    using VacancyLocationType = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyLocationType;
     using VacancyOwnerRelationship = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities.VacancyOwnerRelationship;
 
     [Binding]
@@ -144,6 +147,12 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             expectedVacancy.OriginalContractOwnerId = RaaApiUserFactory.SkillsFundingAgencyProviderId;
             expectedVacancy.VacancyManagerId = ProviderSiteId;
             expectedVacancy.DeliveryOrganisationId = ProviderSiteId;
+            expectedVacancy.Wage = responseVacancy.Wage;
+            expectedVacancy.EditedInRaa = responseVacancy.EditedInRaa;
+
+            var compareLogic = new CompareLogic();
+            var result = compareLogic.Compare(responseVacancy, expectedVacancy);
+            result.AreEqual.Should().BeTrue();
             Equals(responseVacancy, expectedVacancy).Should().BeTrue();
         }
 
