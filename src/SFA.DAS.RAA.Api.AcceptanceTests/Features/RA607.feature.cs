@@ -31,8 +31,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner(null, 0);
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "RA607", "\tIn order to begin the process of creating a vacancy via the API\r\n\tAs a provider " +
-                    "or emloyer\r\n\tI want to be able to link an employer to a provider site and specif" +
-                    "y the vacancies location", ProgrammingLanguage.CSharp, ((string[])(null)));
+                    "or employer\r\n\tI want to be able to link an employer to a provider site and speci" +
+                    "fy the vacancies location", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -127,6 +127,92 @@ this.ScenarioSetup(scenarioInfo);
 #line 22
  testRunner.And("I do not see the employer link for the employer identified with EDSURN: 123456789" +
                     " and the provider site identified with EDSURN: 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Link an employer to a provider site")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA607")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA607")]
+        public virtual void LinkAnEmployerToAProviderSite()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Link an employer to a provider site", new string[] {
+                        "RA607"});
+#line 25
+this.ScenarioSetup(scenarioInfo);
+#line 26
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
+ testRunner.And("I request to link employer identified with EDSURN: 123456789 to provider site ide" +
+                    "ntified with EDSURN: 987654321 with description: <p>Employer description</p> and" +
+                    " website: test.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 28
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 29
+ testRunner.And("I see the employer link for the employer identified with EDSURN: 123456789 and th" +
+                    "e provider site identified with EDSURN: 987654321 with description: <p>Employer " +
+                    "description</p> and website: test.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Create a vacancy at the employer\'s location")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA607")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA607")]
+        public virtual void CreateAVacancyAtTheEmployersLocation()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a vacancy at the employer\'s location", new string[] {
+                        "RA607"});
+#line 32
+this.ScenarioSetup(scenarioInfo);
+#line 33
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 34
+ testRunner.And("I request to create a SpecificLocation vacancy for vacancy owner relationship wit" +
+                    "h id: 42 and 3 positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 35
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 36
+ testRunner.And("I see that the vacancy\'s status is Draft", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 37
+ testRunner.And("I see the SpecificLocation vacancy for vacancy owner relationship with id: 42 and" +
+                    " 3 positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Create a vacancy with none of the mandatory fields")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA607")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA607")]
+        public virtual void CreateAVacancyWithNoneOfTheMandatoryFields()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a vacancy with none of the mandatory fields", new string[] {
+                        "RA607"});
+#line 40
+this.ScenarioSetup(scenarioInfo);
+#line 41
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 42
+ testRunner.And("I request to create a Unknown vacancy for vacancy owner relationship with id: 0 a" +
+                    "nd 0 positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 43
+ testRunner.Then("The response status is: BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Error"});
+            table2.AddRow(new string[] {
+                        "VacancyOwnerRelationshipId",
+                        "Please supply a valid vacancy owner relationship id. This must exist and be assoc" +
+                            "iated with a provider site your API key has access to."});
+#line 44
+ testRunner.And("The validation errors contain:", ((string)(null)), table2, "And ");
+#line 47
+ testRunner.And("I do not see the Unknown vacancy for vacancy owner relationship with id: 0 and 0 " +
+                    "positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

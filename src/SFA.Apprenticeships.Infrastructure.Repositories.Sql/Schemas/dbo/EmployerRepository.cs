@@ -12,7 +12,7 @@
 
     public class EmployerRepository: IEmployerReadRepository, IEmployerWriteRepository
     {
-        private const string BasicQuery =
+        public const string BasicQuery =
 @"SELECT e.*, c.FullName as County, la.CodeName as LocalAuthorityCodeName, la.FullName as LocalAuthority FROM dbo.Employer e 
 LEFT JOIN dbo.County c ON e.CountyId = c.CountyId 
 LEFT JOIN dbo.LocalAuthority la ON e.LocalAuthorityId = la.LocalAuthorityId ";

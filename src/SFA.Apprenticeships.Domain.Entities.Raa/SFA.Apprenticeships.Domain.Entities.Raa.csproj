@@ -141,6 +141,7 @@
     <Compile Include="Users\ProviderUserStatus.cs" />
     <Compile Include="Users\Role.cs" />
     <Compile Include="Vacancies\ApprenticeshipLevel.cs" />
+    <Compile Include="Vacancies\Constants\VacancyMessages.cs" />
     <Compile Include="Vacancies\Constants\Wages.cs" />
     <Compile Include="Vacancies\Constants\WageUpdateMessages.cs" />
     <Compile Include="Vacancies\Duration.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Vacancies\Validation\WageUpdateValidator.cs" />
     <Compile Include="Vacancies\WageRange.cs" />
     <Compile Include="Vacancies\WageUpdate.cs" />
+    <Compile Include="Whitelists.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">

@@ -6,6 +6,8 @@
 
     public class ReferenceNumberRepository : IReferenceNumberRepository
     {
+        public const string GetNextVacancyReferenceNumberSql = "SELECT NEXT VALUE FOR dbo.VacancyReferenceNumberSequence";
+
         private readonly IGetOpenConnection _connection;
 
         public ReferenceNumberRepository(IGetOpenConnection connection)
@@ -15,9 +17,7 @@
 
         public int GetNextVacancyReferenceNumber()
         {
-            const string sql = "SELECT NEXT VALUE FOR dbo.VacancyReferenceNumberSequence";
-
-            return _connection.Query<int>(sql).Single();
+            return _connection.Query<int>(GetNextVacancyReferenceNumberSql).Single();
         }
 
         public int GetNextLegacyApplicationId()
