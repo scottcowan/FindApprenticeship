@@ -173,12 +173,10 @@
             if (useEmployerAddress)
             {
                 createdVacancy.Address.Equals(_employer.Address).Should().BeTrue();
-                vacancy.LocalAuthorityCode.Should().Be(_employer.Address.LocalAuthorityCodeName);
             }
             else
             {
                 createdVacancy.Address.Should().BeNull();
-                vacancy.LocalAuthorityCode.Should().BeNull();
             }
 
             createdVacancy.EmployerWebsiteUrl.Should().Be(vacancy.EmployerWebsiteUrl);

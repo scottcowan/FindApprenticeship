@@ -47,7 +47,6 @@
         private Mock<ICurrentUserService> _mockCurrentUserService;
         private Mock<IUserProfileService> _mockUserProfileService;
         protected Mock<IGeoCodeLookupService> MockGeoCodingService;
-        protected Mock<ILocalAuthorityLookupService> MockLocalAuthorityService;
         private Mock<IVacancySummaryService> _mockVacancySummaryService;
 
         [SetUp]
@@ -80,7 +79,6 @@
             _mockCurrentUserService = new Mock<ICurrentUserService>();
             _mockUserProfileService = new Mock<IUserProfileService>();
             MockGeoCodingService = new Mock<IGeoCodeLookupService>();
-            MockLocalAuthorityService = new Mock<ILocalAuthorityLookupService>();
             _mockVacancySummaryService = new Mock<IVacancySummaryService>();
         }
 
@@ -100,7 +98,6 @@
                 _mockCurrentUserService.Object,
                 _mockUserProfileService.Object,
                 MockGeoCodingService.Object,
-                MockLocalAuthorityService.Object,
                 _mockVacancySummaryService.Object);
         }
 

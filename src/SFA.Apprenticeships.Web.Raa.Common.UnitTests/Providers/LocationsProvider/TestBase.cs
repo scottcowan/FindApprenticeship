@@ -38,7 +38,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
         private Mock<ICurrentUserService> _mockCurrentUserService;
         private Mock<IUserProfileService> _mockUserProfileService;
         private Mock<IGeoCodeLookupService> _mockGeoCodeLookupService;
-        private Mock<ILocalAuthorityLookupService> _mockLocalAuthorityLookupService;
         private Mock<IVacancySummaryService> _mockVacancySummaryService;
 
         [SetUp]
@@ -67,7 +66,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
             _mockCurrentUserService = new Mock<ICurrentUserService>();
             _mockUserProfileService = new Mock<IUserProfileService>();
             _mockGeoCodeLookupService = new Mock<IGeoCodeLookupService>();
-            _mockLocalAuthorityLookupService = new Mock<ILocalAuthorityLookupService>();
             _mockVacancySummaryService = new Mock<IVacancySummaryService>();
         }
 
@@ -87,7 +85,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
                 _mockCurrentUserService.Object,
                 _mockUserProfileService.Object,
                 _mockGeoCodeLookupService.Object,
-                _mockLocalAuthorityLookupService.Object,
                 _mockVacancySummaryService.Object);
         }
     }

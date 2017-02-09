@@ -234,7 +234,6 @@
                 .MapMemberFrom(v => v.DateQAApproved, v => v.DateQAApproved)
                 .MapMemberFrom(v => v.DateSubmitted, v => v.DateSubmitted)
                 .MapMemberFrom(v => v.EmployerId, v => v.EmployerId)
-                .MapMemberFrom(v => v.LocalAuthorityCode, v => v.LocalAuthorityCode)
                 .MapMemberFrom(v => v.QAUserName, v => v.QAUserName)
                 .MapMemberFrom(v => v.SectorCodeName, v => v.SectorCodeName)
                 .MapMemberFrom(v => v.SectorCodeNameComment, v => v.SectorCodeNameComment)
@@ -353,7 +352,9 @@
                             AddressLine4 = v.AddressLine4,
                             AddressLine5 = v.AddressLine5,
                             Postcode = v.PostCode,
-                            Town = v.Town
+                            Town = v.Town,
+                            CountyId = v.CountyId,
+                            LocalAuthorityId = v.LocalAuthorityId ?? 0
                         };
                     }
 
@@ -454,7 +455,9 @@
                         AddressLine4 = v.AddressLine4,
                         AddressLine5 = v.AddressLine5,
                         Postcode = v.PostCode,
-                        Town = v.Town
+                        Town = v.Town,
+                        CountyId = v.CountyId,
+                        LocalAuthorityId = v.LocalAuthorityId
                     };
 
                     if ((v.Latitude.HasValue && v.Longitude.HasValue) ||
@@ -502,7 +505,7 @@
                                              // TODO: Hacks
                                              //.MapMemberFrom(a => a.AddressLine4, a => (a.AddressLine4 + " " + a.AddressLine5).TrimEnd())
                 .ForMember(a => a.CountyId, opt => opt.MapFrom(a => a.CountyId))
-                .IgnoreMember(a => a.LocalAuthorityId)
+                .ForMember(a => a.LocalAuthorityId, opt => opt.MapFrom(a => a.LocalAuthorityId))
                 .IgnoreMember(a => a.LocalAuthorityCodeName)
                 .IgnoreMember(a => a.LocalAuthority)
                 .IgnoreMember(dpa => dpa.GeoPoint)
@@ -547,7 +550,6 @@
 
             Mapper.CreateMap<DbVacancyLocation, DomainVacancyLocation>()
                 .IgnoreMember(dvl => dvl.Address)
-                .IgnoreMember(dvl => dvl.LocalAuthorityCode)
                 .AfterMap((dbvl, dvl) =>
                 {
                     dvl.Address = new DomainPostalAddress
@@ -558,7 +560,9 @@
                         AddressLine4 = dbvl.AddressLine4,
                         AddressLine5 = dbvl.AddressLine5,
                         Postcode = dbvl.PostCode,
-                        Town = dbvl.Town
+                        Town = dbvl.Town,
+                        CountyId = dbvl.CountyId ?? 0,
+                        LocalAuthorityId = dbvl.LocalAuthorityId ?? 0
                     };
 
                     if ((dbvl.Latitude.HasValue && dbvl.Longitude.HasValue) ||

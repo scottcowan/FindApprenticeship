@@ -114,7 +114,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
             For<IEmployerService>().Use<EmployerService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
-            For<ILocalAuthorityLookupService>().Use<LocalAuthorityLookupService>();
             For<ICommunicationService>().Use<CommunicationService>();
             For<IReportingService>().Use<ReportingService>();
             For<IEncryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();

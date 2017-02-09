@@ -62,7 +62,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
         private readonly IGeoCodeLookupService _geoCodingService;
-        private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
         private readonly IVacancySummaryService _vacancySummaryService;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
@@ -71,8 +70,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService,
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
             ICurrentUserService currentUserService, IUserProfileService userProfileService,
-            IGeoCodeLookupService geocodingService, ILocalAuthorityLookupService localAuthLookupService,
-            IVacancySummaryService vacancySummaryService)
+            IGeoCodeLookupService geocodingService, IVacancySummaryService vacancySummaryService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -88,7 +86,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _currentUserService = currentUserService;
             _userProfileService = userProfileService;
             _geoCodingService = geocodingService;
-            _localAuthorityLookupService = localAuthLookupService;
             _vacancySummaryService = vacancySummaryService;
         }
 
@@ -308,7 +305,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                                 || vacancy.VacancyLocationType == VacancyLocationType.Nationwide
                                 ? employer.Address
                                 : null;
-            vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
             vacancy.EmployerDescription = vacancyMinimumData.EmployerDescription;
             vacancy.EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl;
 
@@ -358,7 +354,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 ? employer.Address : null,
                 ContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 OriginalContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
-                LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode),
                 EmployerDescription = vacancyMinimumData.EmployerDescription,
                 EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl,
                 EmployerAnonymousName = vacancyMinimumData.AnonymousEmployerDescription,
@@ -1692,8 +1687,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 //Set address
                 vacancy.Address = vacancyLocations.Single().Address;
                 vacancy.NumberOfPositions = vacancyLocations.Single().NumberOfPositions;
-                vacancy.LocalAuthorityCode =
-                    _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
                 _vacancyPostingService.UpdateVacancy(vacancy);
 
@@ -1704,8 +1697,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 foreach (var vacancyLocation in vacancyLocations)
                 {
                     vacancyLocation.VacancyId = vacancy.VacancyId;
-                    vacancyLocation.LocalAuthorityCode =
-                    _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
                 }
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
                 _vacancyPostingService.CreateVacancyLocations(vacancyLocations);

@@ -8,7 +8,6 @@
         public int VacancyId { get; set; }
         public PostalAddress Address { get; set; }
         public int NumberOfPositions { get; set; }
-        public string LocalAuthorityCode { get; set; }
         public string EmployersWebsite { get; set; }
 
         public VacancyLocation Clone()
@@ -19,7 +18,6 @@
                 VacancyId = VacancyId,
                 Address = Address.Clone(),
                 NumberOfPositions = NumberOfPositions,
-                LocalAuthorityCode = LocalAuthorityCode,
                 EmployersWebsite = EmployersWebsite
             };
         }

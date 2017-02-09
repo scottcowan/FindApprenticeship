@@ -104,7 +104,6 @@
     <Compile Include="IoC\LocationServiceRegistry.cs" />
     <Compile Include="IPostalAddressLookupProvider.cs" />
     <Compile Include="IPostcodeLookupProvider.cs" />
-    <Compile Include="LocalAuthorityLookupService.cs" />
     <Compile Include="LocationSearchService.cs" />
     <Compile Include="PostalAddressSearchService.cs" />
     <Compile Include="PostalAddressService.cs" />

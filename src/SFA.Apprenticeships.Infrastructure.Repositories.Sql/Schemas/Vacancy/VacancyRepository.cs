@@ -99,6 +99,15 @@
 
             var mapped = _mapper.Map<Vacancy, DomainVacancy>(vacancy);
 
+            _logger.Debug("Calling database to get vacancy with locations for vacancy with Id={0}", vacancyId);
+
+            var vacancyLocations =
+                _getOpenConnection.Query<Entities.VacancyLocation>("SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId ORDER BY VacancyLocationId DESC",
+                    new { VacancyId = vacancyId });
+
+            mapped.VacancyLocations = vacancyLocations.Select(vl => _mapper.Map<Entities.VacancyLocation, VacancyLocation>(vl)).ToList();
+            mapped.IsMultiLocation = mapped.VacancyLocations != null && mapped.VacancyLocations.Count > 1;
+
             PatchTrainingType(mapped);
 
             return mapped;
@@ -347,7 +356,11 @@ WHERE VacancyId = @vacancyId and NoOfOfflineApplicants is null
 
         private void PopulateLocalAuthorityId(DomainVacancy entity, Vacancy dbVacancy)
         {
-            if (!string.IsNullOrWhiteSpace(entity.LocalAuthorityCode))
+            if (entity.Address.LocalAuthorityId != 0)
+            {
+                dbVacancy.LocalAuthorityId = entity.Address.LocalAuthorityId;
+            }
+            else if (!string.IsNullOrWhiteSpace(entity.Address.LocalAuthorityCodeName))
             {
                 dbVacancy.LocalAuthorityId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT LocalAuthorityId
@@ -355,7 +368,7 @@ FROM   dbo.LocalAuthority
 WHERE  CodeName LIKE '%' + @LocalAuthorityCode",
                     new
                     {
-                        entity.LocalAuthorityCode
+                        entity.Address.LocalAuthorityCodeName
                     }).Single();
             }
             else

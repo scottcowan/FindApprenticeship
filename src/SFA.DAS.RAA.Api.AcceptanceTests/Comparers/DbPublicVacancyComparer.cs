@@ -112,7 +112,6 @@
                 && object2.FutureProspectsComment == null
                 //Ignored in mapper
                 //&& object1.LastEditedById == object2.LastEditedById 
-                && object2.LocalAuthorityCode == null
                 && object2.LocationAddressesComment == null
                 && string.Equals(object1.Description, object2.LongDescription)
                 && object2.LongDescriptionComment == null

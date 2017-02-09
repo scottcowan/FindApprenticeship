@@ -71,7 +71,6 @@
                 .ForMember(dest => dest.FrameworkCodeNameComment, opt => opt.Ignore())
                 .ForMember(dest => dest.FutureProspectsComment, opt => opt.Ignore())
                 .ForMember(dest => dest.LastEditedById, opt => opt.Ignore())
-                .ForMember(dest => dest.LocalAuthorityCode, opt => opt.Ignore())
                 .ForMember(dest => dest.LocationAddressesComment, opt => opt.Ignore())
                 .ForMember(dest => dest.LongDescriptionComment, opt => opt.Ignore())
                 .ForMember(dest => dest.NumberOfPositionsComment, opt => opt.Ignore())

@@ -35,7 +35,6 @@
                 && string.Equals(x.FutureProspects, y.FutureProspects) 
                 && string.Equals(x.FutureProspectsComment, y.FutureProspectsComment) 
                 && x.LastEditedById == y.LastEditedById 
-                && string.Equals(x.LocalAuthorityCode, y.LocalAuthorityCode) 
                 && string.Equals(x.LocationAddressesComment, y.LocationAddressesComment) 
                 && string.Equals(x.LongDescription, y.LongDescription) 
                 && string.Equals(x.LongDescriptionComment, y.LongDescriptionComment) 
@@ -144,7 +143,6 @@
             hashCode = (hashCode * 397) ^ (obj.FutureProspects != null ? obj.FutureProspects.GetHashCode() : 0);
             hashCode = (hashCode * 397) ^ (obj.FutureProspectsComment != null ? obj.FutureProspectsComment.GetHashCode() : 0);
             hashCode = (hashCode * 397) ^ obj.LastEditedById;
-            hashCode = (hashCode * 397) ^ (obj.LocalAuthorityCode != null ? obj.LocalAuthorityCode.GetHashCode() : 0);
             hashCode = (hashCode * 397) ^ (obj.LocationAddressesComment != null ? obj.LocationAddressesComment.GetHashCode() : 0);
             hashCode = (hashCode * 397) ^ (obj.LongDescription != null ? obj.LongDescription.GetHashCode() : 0);
             hashCode = (hashCode * 397) ^ (obj.LongDescriptionComment != null ? obj.LongDescriptionComment.GetHashCode() : 0);

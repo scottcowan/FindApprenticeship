@@ -85,12 +85,10 @@
                         //TODO: Make _getEmployerByIdStrategy.Get update the employer if necessary
                         employer = _getEmployerByEdsUrnStrategy.Get(employer.EdsUrn);
                         vacancy.Address = employer.Address;
-                        vacancy.LocalAuthorityCode = employer.Address.LocalAuthorityCodeName;
                     }
                     else
                     {
                         vacancy.Address = null;
-                        vacancy.LocalAuthorityCode = null;
                         vacancy.NumberOfPositions = null;
                     }
 
