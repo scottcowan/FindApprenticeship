@@ -7,16 +7,13 @@
     using System.Web;
     using Common.Providers;
     using Common.Services;
-    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Repositories.Mongo.Common.Configuration;
-    using Infrastructure.Repositories.Mongo.Vacancies.Entities;
     using IoC;
     using MongoDB.Driver;
     using Moq;
     using Recruit.EndToEndTests;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Application.Interfaces;
+    using Domain.Entities.Raa.Vacancies;
     using StructureMap;
     using StructureMap.Web.Pipeline;
     using NUnit.Framework;
@@ -24,7 +21,7 @@
     {
         protected MongoConfiguration MongoConfiguration;
         protected IContainer Container;
-        protected MongoCollection<MongoVacancy> Collection;
+        protected MongoCollection<Vacancy> Collection;
         protected string QaUserName = "qaUserName";
 
         [SetUp]

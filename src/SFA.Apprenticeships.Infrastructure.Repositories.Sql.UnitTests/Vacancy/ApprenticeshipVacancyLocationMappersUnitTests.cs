@@ -5,7 +5,7 @@
     using Ploeh.AutoFixture;
     using Schemas.Vacancy;
     using DbVacancyLocation = Schemas.Vacancy.Entities.VacancyLocation;
-    using DomainVacancyLocation = Domain.Entities.Raa.Locations.VacancyLocation;
+    using DomainVacancyLocation = Domain.Entities.Raa.Vacancies.VacancyLocation;
 
     [TestFixture]
     [Parallelizable]

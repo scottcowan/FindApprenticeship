@@ -139,7 +139,6 @@
     <Compile Include="Candidates\SavedSearchRepository.cs" />
     <Compile Include="Common\Configuration\MongoConfiguration.cs" />
     <Compile Include="Common\GenericMongoClient.cs" />
-    <Compile Include="Common\GenericMongoClient2.cs" />
     <Compile Include="Common\GlobalBsonClassMaps.cs" />
     <Compile Include="Common\IMongoAdminClient.cs" />
     <Compile Include="Common\MongoAdminClient.cs" />
@@ -154,31 +153,11 @@
     <Compile Include="Communication\IoC\CommunicationRepositoryRegistry.cs" />
     <Compile Include="Communication\Mappers\CommunicationMappers.cs" />
     <Compile Include="Communication\SavedSearchAlertRepository.cs" />
-    <Compile Include="Employers\EmployerRepository.cs" />
-    <Compile Include="Employers\Entities\MongoEmployer.cs" />
-    <Compile Include="Employers\Mappers\EmployerMappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\Entities\MongoVacancyOwnerRelationship.cs" />
-    <Compile Include="Providers\Mappers\ProviderMappers.cs" />
-    <Compile Include="Providers\VacancyOwnerRelationshipRepository.cs" />
-    <Compile Include="UserProfiles\AgencyUserRepository.cs" />
-    <Compile Include="UserProfiles\Entities\MongoAgencyUser.cs" />
-    <Compile Include="UserProfiles\Entities\MongoProviderUser.cs" />
-    <Compile Include="UserProfiles\IoC\UserProfileRepositoryRegistry.cs" />
-    <Compile Include="UserProfiles\Mappers\UserProfileMappers.cs" />
-    <Compile Include="UserProfiles\UserProfileRepository.cs" />
     <Compile Include="Users\Entities\MongoUser.cs" />
     <Compile Include="Users\IoC\UserRepositoryRegistry.cs" />
     <Compile Include="Users\Mappers\UserMappers.cs" />
     <Compile Include="Users\UserRepository.cs" />
-    <Compile Include="Vacancies\Entities\MongoVacancyLocation.cs" />
-    <Compile Include="Vacancies\IoC\VacancyReferenceNumberRegistry.cs" />
-    <Compile Include="Vacancies\VacancyLocationRepository.cs" />
-    <Compile Include="Vacancies\VacancyRepository.cs" />
-    <Compile Include="Vacancies\Entities\MongoVacancy.cs" />
-    <Compile Include="Vacancies\Entities\MongoReferenceNumber.cs" />
-    <Compile Include="Vacancies\Mappers\VacancyMappers.cs" />
-    <Compile Include="Vacancies\ReferenceNumberRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

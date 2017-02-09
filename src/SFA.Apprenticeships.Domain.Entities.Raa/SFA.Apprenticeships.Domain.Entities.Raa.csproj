@@ -111,7 +111,7 @@
     <Compile Include="Locations\GeoPoint.cs" />
     <Compile Include="Locations\GeoPointExtensionMethods.cs" />
     <Compile Include="Locations\PostalAddress.cs" />
-    <Compile Include="Locations\VacancyLocation.cs" />
+    <Compile Include="Vacancies\VacancyLocation.cs" />
     <Compile Include="Parties\Employer.cs" />
     <Compile Include="Parties\Provider.cs" />
     <Compile Include="Parties\ProviderSite.cs" />

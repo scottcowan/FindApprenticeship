@@ -2,6 +2,8 @@
 namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Reference;
 
     public class Vacancy : VacancySummary, ICreatableEntity, IUpdatableEntity, ICloneable
@@ -68,8 +70,16 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public FrameworkStatusType StandardStatus { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
+        public List<VacancyLocation> VacancyLocations { get; set; }
         public object Clone()
         {
+            List<VacancyLocation> vacancyLocations = null;
+            if (VacancyLocations != null)
+            {
+                vacancyLocations = new List<VacancyLocation>(VacancyLocations.Count);
+                vacancyLocations.AddRange(VacancyLocations.Select(vacancyLocation => vacancyLocation.Clone()));
+            }
+
             return new Vacancy
             {
                 VacancyReferenceNumber = VacancyReferenceNumber,
@@ -159,7 +169,8 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 AnonymousEmployerReasonComment = AnonymousEmployerReasonComment,
                 AnonymousEmployerDescriptionComment = AnonymousEmployerDescriptionComment,
                 AnonymousAboutTheEmployerComment = AnonymousAboutTheEmployerComment,
-                IsEmployerPositiveAboutDisability = IsEmployerPositiveAboutDisability
+                IsEmployerPositiveAboutDisability = IsEmployerPositiveAboutDisability,
+                VacancyLocations = vacancyLocations
             };
         }
 

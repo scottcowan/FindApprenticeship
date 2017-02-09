@@ -5,9 +5,9 @@
     using System.Linq;
     using Common;
     using dbo;
-    using Domain.Entities.Raa.Locations;
     using Domain.Raa.Interfaces.Repositories;
     using Application.Interfaces;
+    using Domain.Entities.Raa.Vacancies;
 
     public class VacancyLocationRepository : IVacancyLocationReadRepository, IVacancyLocationWriteRepository
     {

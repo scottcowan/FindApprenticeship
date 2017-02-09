@@ -14,7 +14,7 @@
     using System.Linq.Expressions;
     using DomainPostalAddress = Domain.Entities.Raa.Locations.PostalAddress;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
-    using DomainVacancyLocation = Domain.Entities.Raa.Locations.VacancyLocation;
+    using DomainVacancyLocation = Domain.Entities.Raa.Vacancies.VacancyLocation;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyLocationType = Domain.Entities.Raa.Vacancies.VacancyLocationType;
 
@@ -542,8 +542,8 @@
                 .MapMemberFrom(dbvl => dbvl.GeocodeEasting, dvl => dvl.Address.GeoPoint.Easting)
                 .MapMemberFrom(dbvl => dbvl.GeocodeNorthing, dvl => dvl.Address.GeoPoint.Northing)
                 // use a converter?
-                .IgnoreMember(dbvl => dbvl.CountyId)
-                .IgnoreMember(dbvl => dbvl.LocalAuthorityId);
+                .MapMemberFrom(dbvl => dbvl.CountyId, dvl => dvl.Address.CountyId)
+                .MapMemberFrom(dbvl => dbvl.LocalAuthorityId, dvl => dvl.Address.LocalAuthorityId);
 
             Mapper.CreateMap<DbVacancyLocation, DomainVacancyLocation>()
                 .IgnoreMember(dvl => dvl.Address)

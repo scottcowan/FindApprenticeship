@@ -11,6 +11,7 @@
     using System.Linq;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Vacancy = Entities.Vacancy;
+    using VacancyLocation = Domain.Entities.Raa.Vacancies.VacancyLocation;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
@@ -203,6 +204,8 @@
 
             dbVacancy.VacancyId = (int)_getOpenConnection.Insert(dbVacancy);
 
+            UpsertVacancyLocations(entity.VacancyLocations, dbVacancy.VacancyId);
+
             SaveTextFieldsFor(dbVacancy.VacancyId, entity);
             SaveAdditionalQuestionsFor(dbVacancy.VacancyId, entity);
 
@@ -212,6 +215,18 @@
             _logger.Debug("Saved apprenticeship vacancy to database with id={0}", entity.VacancyId);
 
             return _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
+        }
+
+        private void UpsertVacancyLocations(IEnumerable<VacancyLocation> vacancyLocations, int vacancyId)
+        {
+            _getOpenConnection.MutatingQuery<object>("DELETE FROM VacancyLocation WHERE VacancyId = @vacancyId", new { vacancyId });
+
+            foreach (var vacancyLocationAddress in vacancyLocations)
+            {
+                var vacancyLocation = _mapper.Map<VacancyLocation, Entities.VacancyLocation>(vacancyLocationAddress);
+                vacancyLocation.VacancyId = vacancyId;
+                _getOpenConnection.Insert(vacancyLocation);
+            }
         }
 
         public DomainVacancy Update(DomainVacancy entity)
