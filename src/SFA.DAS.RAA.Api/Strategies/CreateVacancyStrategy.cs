@@ -91,6 +91,7 @@
                     {
                         vacancy.Address = null;
                         vacancy.LocalAuthorityCode = null;
+                        vacancy.NumberOfPositions = null;
                     }
 
                     if (string.IsNullOrEmpty(vacancy.EmployerWebsiteUrl))

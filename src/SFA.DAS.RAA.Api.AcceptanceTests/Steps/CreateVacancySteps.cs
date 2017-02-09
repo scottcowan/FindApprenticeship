@@ -151,6 +151,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             expectedVacancy.EditedInRaa = responseVacancy.EditedInRaa;
             expectedVacancy.EmployerWebsiteUrl = responseVacancy.EmployerWebsiteUrl;
             expectedVacancy.EmployerDescription = responseVacancy.EmployerDescription;
+            expectedVacancy.NumberOfPositions = null;
 
             var compareLogic = new CompareLogic();
             var result = compareLogic.Compare(responseVacancy, expectedVacancy);
