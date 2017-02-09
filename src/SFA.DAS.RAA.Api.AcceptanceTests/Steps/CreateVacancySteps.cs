@@ -12,6 +12,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Vacancies;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
     using Constants;
@@ -55,6 +56,10 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 .With(vor => vor.ProviderSiteID, 24)
                 .Create();
 
+            var employer = new Fixture().Build<Employer>()
+                .With(e => e.EmployerId, vorOwned.EmployerId)
+                .Create();
+
             var providerSite = new Fixture().Build<ProviderSite>()
                 .With(ps => ps.ProviderSiteId, ProviderSiteId)
                 .Create();
@@ -87,6 +92,14 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 .Returns(new [] {450987});
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(m => m.Insert(It.IsAny<DbVacancy>(), null)).Returns(3453);
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<Employer>(It.Is<string>(s => s.StartsWith(EmployerRepository.BasicQuery)), It.Is<object>(o => o.GetHashCode() == new {vorOwned.EmployerId }.GetHashCode()), null, null))
+                .Returns(new[] { employer });
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<Employer>(It.Is<string>(s => s.StartsWith(EmployerRepository.BasicQuery)), It.Is<object>(o => o.GetHashCode() == new {employer.EdsUrn }.GetHashCode()), null, null))
+                .Returns(new[] { employer });
 
             var vacancy = GetVacancy(vacancyLocationType, vacancyOwnerRelationshipId, positions);
 
@@ -151,7 +164,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             expectedVacancy.EditedInRaa = responseVacancy.EditedInRaa;
             expectedVacancy.EmployerWebsiteUrl = responseVacancy.EmployerWebsiteUrl;
             expectedVacancy.EmployerDescription = responseVacancy.EmployerDescription;
-            expectedVacancy.NumberOfPositions = null;
+            expectedVacancy.Address = responseVacancy.Address;
 
             var compareLogic = new CompareLogic();
             var result = compareLogic.Compare(responseVacancy, expectedVacancy);

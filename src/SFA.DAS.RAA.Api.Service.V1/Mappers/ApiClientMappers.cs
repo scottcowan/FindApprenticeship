@@ -7,6 +7,7 @@
     using ApiPostalAddress = Client.V1.Models.PostalAddress;
     using ApiWage = Client.V1.Models.Wage;
     using ApiVacancySummary = Client.V1.Models.VacancySummary;
+    using ApiVacancyLocation = Client.V1.Models.VacancyLocation;
     using ApiVacancy = Client.V1.Models.Vacancy;
     using ApiWageUpdate = Client.V1.Models.WageUpdate;
     using ApiCounty = Client.V1.Models.County;
@@ -15,6 +16,7 @@
     using GeoPoint = Apprenticeships.Domain.Entities.Raa.Locations.GeoPoint;
     using PostalAddress = Apprenticeships.Domain.Entities.Raa.Locations.PostalAddress;
     using VacancySummary = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancySummary;
+    using VacancyLocation = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyLocation;
     using Vacancy = Apprenticeships.Domain.Entities.Raa.Vacancies.Vacancy;
     using Wage = Apprenticeships.Domain.Entities.Vacancies.Wage;
     using WageUpdate = Apprenticeships.Domain.Entities.Raa.Vacancies.WageUpdate;
@@ -30,6 +32,7 @@
             Mapper.CreateMap<ApiPostalAddress, PostalAddress>();
             Mapper.CreateMap<ApiWage, Wage>();
             Mapper.CreateMap<ApiVacancySummary, VacancySummary>();
+            Mapper.CreateMap<ApiVacancyLocation, VacancyLocation>();
             Mapper.CreateMap<ApiVacancy, Vacancy>();
             Mapper.CreateMap<WageUpdate, ApiWageUpdate>();
 
@@ -113,7 +116,8 @@
                 .ForMember(dest => dest.ApplicantCount, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
                 .ForMember(dest => dest.IsMultiLocation, opt => opt.Ignore())
-                .ForMember(dest => dest.OfflineVacancyType, opt => opt.Ignore());
+                .ForMember(dest => dest.OfflineVacancyType, opt => opt.Ignore())
+                .ForMember(dest => dest.VacancyLocations, opt => opt.Ignore());
 
             Mapper.CreateMap<ApiCounty, County>();
             Mapper.CreateMap<ApiLocalAuthority, LocalAuthority>();

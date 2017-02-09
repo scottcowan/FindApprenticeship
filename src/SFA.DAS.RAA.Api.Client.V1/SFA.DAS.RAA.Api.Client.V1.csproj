@@ -93,6 +93,7 @@
     <Compile Include="Models\PublicWage.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Vacancy.cs" />
+    <Compile Include="Models\VacancyLocation.cs" />
     <Compile Include="Models\VacancySummariesPage.cs" />
     <Compile Include="Models\VacancySummary.cs" />
     <Compile Include="Models\Wage.cs" />

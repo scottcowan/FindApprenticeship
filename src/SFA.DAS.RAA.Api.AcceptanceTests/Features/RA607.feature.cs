@@ -170,15 +170,15 @@ this.ScenarioSetup(scenarioInfo);
 #line 33
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 34
- testRunner.And("I request to create a MultipleLocations vacancy for vacancy owner relationship wi" +
-                    "th id: 42 and 3 positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I request to create a SpecificLocation vacancy for vacancy owner relationship wit" +
+                    "h id: 42 and 3 positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 35
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 36
  testRunner.And("I see that the vacancy\'s status is Draft", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 37
- testRunner.And("I see the MultipleLocations vacancy for vacancy owner relationship with id: 42 an" +
-                    "d 3 positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I see the SpecificLocation vacancy for vacancy owner relationship with id: 42 and" +
+                    " 3 positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

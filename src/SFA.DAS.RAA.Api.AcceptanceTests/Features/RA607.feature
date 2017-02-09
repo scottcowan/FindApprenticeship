@@ -31,10 +31,10 @@ Scenario: Link an employer to a provider site
 @RA607
 Scenario: Create a vacancy at the employer's location
 	When I authorize my request with a Provider API key
-	And I request to create a MultipleLocations vacancy for vacancy owner relationship with id: 42 and 3 positions
+	And I request to create a SpecificLocation vacancy for vacancy owner relationship with id: 42 and 3 positions
 	Then The response status is: OK
 	And I see that the vacancy's status is Draft
-	And I see the MultipleLocations vacancy for vacancy owner relationship with id: 42 and 3 positions
+	And I see the SpecificLocation vacancy for vacancy owner relationship with id: 42 and 3 positions
 
 @RA607
 Scenario: Create a vacancy with none of the mandatory fields

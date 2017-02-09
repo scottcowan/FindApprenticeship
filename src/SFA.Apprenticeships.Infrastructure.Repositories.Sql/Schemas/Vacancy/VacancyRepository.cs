@@ -99,16 +99,18 @@
 
             var mapped = _mapper.Map<Vacancy, DomainVacancy>(vacancy);
 
-            _logger.Debug("Calling database to get vacancy with locations for vacancy with Id={0}", vacancyId);
+            if (mapped != null)
+            {
+                var vacancyLocations =
+                    _getOpenConnection.Query<Entities.VacancyLocation>(
+                        "SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId ORDER BY VacancyLocationId DESC",
+                        new {VacancyId = vacancyId});
 
-            var vacancyLocations =
-                _getOpenConnection.Query<Entities.VacancyLocation>("SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId ORDER BY VacancyLocationId DESC",
-                    new { VacancyId = vacancyId });
+                mapped.VacancyLocations = _mapper.Map<IList<Entities.VacancyLocation>, List<VacancyLocation>>(vacancyLocations);
+                mapped.IsMultiLocation = mapped.VacancyLocations != null && mapped.VacancyLocations.Count > 1;
 
-            mapped.VacancyLocations = vacancyLocations.Select(vl => _mapper.Map<Entities.VacancyLocation, VacancyLocation>(vl)).ToList();
-            mapped.IsMultiLocation = mapped.VacancyLocations != null && mapped.VacancyLocations.Count > 1;
-
-            PatchTrainingType(mapped);
+                PatchTrainingType(mapped);
+            }
 
             return mapped;
         }
@@ -230,11 +232,20 @@
         {
             _getOpenConnection.MutatingQuery<object>("DELETE FROM VacancyLocation WHERE VacancyId = @vacancyId", new { vacancyId });
 
+            if (vacancyLocations == null) return;
+
             foreach (var vacancyLocationAddress in vacancyLocations)
             {
                 var vacancyLocation = _mapper.Map<VacancyLocation, Entities.VacancyLocation>(vacancyLocationAddress);
                 vacancyLocation.VacancyId = vacancyId;
-                _getOpenConnection.Insert(vacancyLocation);
+                if (vacancyLocation.VacancyLocationId == 0)
+                {
+                    _getOpenConnection.Insert(vacancyLocation);
+                }
+                else
+                {
+                    _getOpenConnection.UpdateSingle(vacancyLocation);
+                }
             }
         }
 
