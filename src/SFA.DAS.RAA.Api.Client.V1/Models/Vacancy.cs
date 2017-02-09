@@ -19,7 +19,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <param name="offlineVacancyType">Possible values include:
         /// 'Unknown', 'SingleUrl', 'MultiUrl'</param>
         /// <param name="vacancySource">Possible values include: 'Unknown',
-        /// 'Av', 'Api', 'Raa'</param>
+        /// 'Av', 'LegacyApi', 'Raa', 'Api'</param>
         /// <param name="frameworkStatus">Possible values include: 'Active',
         /// 'Ceased', 'PendingClosure'</param>
         /// <param name="standardStatus">Possible values include: 'Active',
@@ -30,7 +30,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// 'Frameworks', 'Standards', 'Sectors'</param>
         /// <param name="apprenticeshipLevel">Possible values include:
         /// 'Unknown', 'Intermediate', 'Advanced', 'Higher',
-        /// 'FoundationDegree', 'Degree', 'Masters'</param>
+        /// 'FoundationDegree', 'Degree', 'Masters', 'Traineeship'</param>
         /// <param name="status">Possible values include: 'Unknown', 'Draft',
         /// 'Live', 'Referred', 'Deleted', 'Submitted', 'Closed',
         /// 'Withdrawn', 'Completed', 'PostedInError', 'ReservedForQA'</param>
@@ -42,7 +42,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <param name="vacancyLocationType">Possible values include:
         /// 'Unknown', 'SpecificLocation', 'MultipleLocations',
         /// 'Nationwide'</param>
-        public Vacancy(string additionalLocationInformation = default(string), string additionalLocationInformationComment = default(string), string apprenticeshipLevelComment = default(string), string closingDateComment = default(string), string contactDetailsComment = default(string), string contactEmail = default(string), string contactName = default(string), string contactNumber = default(string), string createdByProviderUsername = default(string), string desiredQualifications = default(string), string desiredQualificationsComment = default(string), string desiredSkills = default(string), string desiredSkillsComment = default(string), string durationComment = default(string), bool? editedInRaa = default(bool?), string employerDescription = default(string), string employerDescriptionComment = default(string), string employerWebsiteUrl = default(string), string employerWebsiteUrlComment = default(string), string firstQuestion = default(string), string firstQuestionComment = default(string), string frameworkCodeNameComment = default(string), string futureProspects = default(string), string futureProspectsComment = default(string), int? lastEditedById = default(int?), string localAuthorityCode = default(string), string locationAddressesComment = default(string), string longDescription = default(string), string longDescriptionComment = default(string), string numberOfPositionsComment = default(string), string offlineApplicationInstructions = default(string), string offlineApplicationInstructionsComment = default(string), string offlineApplicationUrl = default(string), string offlineApplicationUrlComment = default(string), string offlineVacancyType = default(string), string otherInformation = default(string), string otherInformationComment = default(string), string personalQualities = default(string), string personalQualitiesComment = default(string), string possibleStartDateComment = default(string), string secondQuestion = default(string), string secondQuestionComment = default(string), string sectorCodeNameComment = default(string), string shortDescriptionComment = default(string), string standardIdComment = default(string), string thingsToConsider = default(string), string thingsToConsiderComment = default(string), string titleComment = default(string), string trainingProvided = default(string), string trainingProvidedComment = default(string), string vacancySource = default(string), string wageComment = default(string), string workingWeekComment = default(string), string anonymousEmployerDescriptionComment = default(string), string anonymousEmployerReasonComment = default(string), string anonymousAboutTheEmployerComment = default(string), string frameworkStatus = default(string), string standardStatus = default(string), System.DateTime? createdDateTime = default(System.DateTime?), int? vacancyId = default(int?), int? vacancyOwnerRelationshipId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), string title = default(string), string shortDescription = default(string), string workingWeek = default(string), string expectedDuration = default(string), string durationType = default(string), int? duration = default(int?), System.DateTime? closingDate = default(System.DateTime?), System.DateTime? possibleStartDate = default(System.DateTime?), bool? offlineVacancy = default(bool?), int? noOfOfflineApplicants = default(int?), System.DateTime? dateSubmitted = default(System.DateTime?), System.DateTime? dateFirstSubmitted = default(System.DateTime?), System.DateTime? dateStartedToQA = default(System.DateTime?), string qAUserName = default(string), System.DateTime? dateQAApproved = default(System.DateTime?), int? submissionCount = default(int?), int? vacancyManagerId = default(int?), int? deliveryOrganisationId = default(int?), int? parentVacancyId = default(int?), string trainingType = default(string), string apprenticeshipLevel = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string status = default(string), string employerAnonymousName = default(string), string employerAnonymousReason = default(string), bool? isAnonymousEmployer = default(bool?), string anonymousAboutTheEmployer = default(string), int? numberOfPositions = default(int?), string vacancyType = default(string), System.DateTime? updatedDateTime = default(System.DateTime?), PostalAddress address = default(PostalAddress), int? contractOwnerId = default(int?), int? originalContractOwnerId = default(int?), string regionalTeam = default(string), string vacancyLocationType = default(string), int? employerId = default(int?), string employerName = default(string), string employerLocation = default(string), int? newApplicationCount = default(int?), int? applicantCount = default(int?), string providerTradingName = default(string), System.DateTime? createdDate = default(System.DateTime?), Wage wage = default(Wage), bool? isMultiLocation = default(bool?), bool? isEmployerPositiveAboutDisability = default(bool?))
+        public Vacancy(string additionalLocationInformation = default(string), string additionalLocationInformationComment = default(string), string apprenticeshipLevelComment = default(string), string closingDateComment = default(string), string contactDetailsComment = default(string), string contactEmail = default(string), string contactName = default(string), string contactNumber = default(string), string createdByProviderUsername = default(string), string desiredQualifications = default(string), string desiredQualificationsComment = default(string), string desiredSkills = default(string), string desiredSkillsComment = default(string), string durationComment = default(string), bool? editedInRaa = default(bool?), string employerDescription = default(string), string employerDescriptionComment = default(string), string employerWebsiteUrl = default(string), string employerWebsiteUrlComment = default(string), string firstQuestion = default(string), string firstQuestionComment = default(string), string frameworkCodeNameComment = default(string), string futureProspects = default(string), string futureProspectsComment = default(string), int? lastEditedById = default(int?), string locationAddressesComment = default(string), string longDescription = default(string), string longDescriptionComment = default(string), string numberOfPositionsComment = default(string), string offlineApplicationInstructions = default(string), string offlineApplicationInstructionsComment = default(string), string offlineApplicationUrl = default(string), string offlineApplicationUrlComment = default(string), string offlineVacancyType = default(string), string otherInformation = default(string), string otherInformationComment = default(string), string personalQualities = default(string), string personalQualitiesComment = default(string), string possibleStartDateComment = default(string), string secondQuestion = default(string), string secondQuestionComment = default(string), string sectorCodeNameComment = default(string), string shortDescriptionComment = default(string), string standardIdComment = default(string), string thingsToConsider = default(string), string thingsToConsiderComment = default(string), string titleComment = default(string), string trainingProvided = default(string), string trainingProvidedComment = default(string), string vacancySource = default(string), string wageComment = default(string), string workingWeekComment = default(string), string anonymousEmployerDescriptionComment = default(string), string anonymousEmployerReasonComment = default(string), string anonymousAboutTheEmployerComment = default(string), string frameworkStatus = default(string), string standardStatus = default(string), System.DateTime? createdDateTime = default(System.DateTime?), System.Collections.Generic.IList<VacancyLocation> vacancyLocations = default(System.Collections.Generic.IList<VacancyLocation>), int? vacancyId = default(int?), int? vacancyOwnerRelationshipId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), string title = default(string), string shortDescription = default(string), string workingWeek = default(string), string expectedDuration = default(string), string durationType = default(string), int? duration = default(int?), System.DateTime? closingDate = default(System.DateTime?), System.DateTime? possibleStartDate = default(System.DateTime?), bool? offlineVacancy = default(bool?), int? noOfOfflineApplicants = default(int?), System.DateTime? dateSubmitted = default(System.DateTime?), System.DateTime? dateFirstSubmitted = default(System.DateTime?), System.DateTime? dateStartedToQA = default(System.DateTime?), string qAUserName = default(string), System.DateTime? dateQAApproved = default(System.DateTime?), int? submissionCount = default(int?), int? vacancyManagerId = default(int?), int? deliveryOrganisationId = default(int?), int? parentVacancyId = default(int?), string trainingType = default(string), string apprenticeshipLevel = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string status = default(string), string employerAnonymousName = default(string), string employerAnonymousReason = default(string), bool? isAnonymousEmployer = default(bool?), string anonymousAboutTheEmployer = default(string), int? numberOfPositions = default(int?), string vacancyType = default(string), System.DateTime? updatedDateTime = default(System.DateTime?), PostalAddress address = default(PostalAddress), int? contractOwnerId = default(int?), int? originalContractOwnerId = default(int?), string regionalTeam = default(string), string vacancyLocationType = default(string), int? employerId = default(int?), string employerName = default(string), string employerLocation = default(string), int? newApplicationCount = default(int?), int? applicantCount = default(int?), string providerTradingName = default(string), System.DateTime? createdDate = default(System.DateTime?), Wage wage = default(Wage), bool? isMultiLocation = default(bool?), bool? isEmployerPositiveAboutDisability = default(bool?))
         {
             AdditionalLocationInformation = additionalLocationInformation;
             AdditionalLocationInformationComment = additionalLocationInformationComment;
@@ -69,7 +69,6 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             FutureProspects = futureProspects;
             FutureProspectsComment = futureProspectsComment;
             LastEditedById = lastEditedById;
-            LocalAuthorityCode = localAuthorityCode;
             LocationAddressesComment = locationAddressesComment;
             LongDescription = longDescription;
             LongDescriptionComment = longDescriptionComment;
@@ -103,6 +102,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             FrameworkStatus = frameworkStatus;
             StandardStatus = standardStatus;
             CreatedDateTime = createdDateTime;
+            VacancyLocations = vacancyLocations;
             VacancyId = vacancyId;
             VacancyOwnerRelationshipId = vacancyOwnerRelationshipId;
             VacancyReferenceNumber = vacancyReferenceNumber;
@@ -283,11 +283,6 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "LocalAuthorityCode")]
-        public string LocalAuthorityCode { get; set; }
-
-        /// <summary>
-        /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "LocationAddressesComment")]
         public string LocationAddressesComment { get; set; }
 
@@ -409,7 +404,8 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         public string TrainingProvidedComment { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Unknown', 'Av', 'Api', 'Raa'
+        /// Gets or sets possible values include: 'Unknown', 'Av',
+        /// 'LegacyApi', 'Raa', 'Api'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancySource")]
         public string VacancySource { get; set; }
@@ -457,6 +453,11 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CreatedDateTime")]
         public System.DateTime? CreatedDateTime { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyLocations")]
+        public System.Collections.Generic.IList<VacancyLocation> VacancyLocations { get; set; }
 
         /// <summary>
         /// </summary>
@@ -584,7 +585,8 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
 
         /// <summary>
         /// Gets or sets possible values include: 'Unknown', 'Intermediate',
-        /// 'Advanced', 'Higher', 'FoundationDegree', 'Degree', 'Masters'
+        /// 'Advanced', 'Higher', 'FoundationDegree', 'Degree', 'Masters',
+        /// 'Traineeship'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ApprenticeshipLevel")]
         public string ApprenticeshipLevel { get; set; }
@@ -737,6 +739,16 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (this.VacancyLocations != null)
+            {
+                foreach (var element in this.VacancyLocations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
             if (this.Address != null)
             {
                 this.Address.Validate();

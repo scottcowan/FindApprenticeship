@@ -336,6 +336,7 @@
                 .MapMemberFrom(av => av.IsMultiLocation, v => v.IsMultiLocation)
                 .IgnoreMember(dvl => dvl.IsAnonymousEmployer)
                 .IgnoreMember(dvl => dvl.Address)
+                .IgnoreMember(v => v.VacancyLocations)
 
                 .AfterMap((v, av) =>
                 {
