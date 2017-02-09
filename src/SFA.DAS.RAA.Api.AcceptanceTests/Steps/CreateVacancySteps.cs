@@ -10,7 +10,6 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using System.Text;
     using System.Threading.Tasks;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
-    using Apprenticeships.Domain.Entities.Vacancies;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;

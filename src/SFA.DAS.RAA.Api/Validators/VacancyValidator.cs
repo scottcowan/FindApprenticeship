@@ -67,6 +67,11 @@
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyMessages.AnonymousAboutTheEmployer.WhiteListInvalidTagErrorText)
                 .When(IsAnonymousEmployer);
+
+            RuleFor(x => x.VacancyLocations)
+                .NotEmpty()
+                .WithMessage(VacancyMessages.VacancyLocations.RequiredErrorText)
+                .When(x => x.VacancyLocationType == VacancyLocationType.MultipleLocations);
         }
 
         private static bool IsAnonymousEmployer(Vacancy vacancy)

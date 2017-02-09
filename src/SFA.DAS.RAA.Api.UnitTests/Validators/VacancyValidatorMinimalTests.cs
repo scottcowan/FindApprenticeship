@@ -315,5 +315,17 @@
                 _vacancyValidator.ShouldHaveValidationErrorFor(v => v.AnonymousAboutTheEmployer, vacancy).WithErrorMessage(expectedErrorMessage);
             }
         }
+
+        [Test]
+        public void MultipleLocationsVacancyLocationsRequired()
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
+                VacancyLocations = null
+            };
+
+            _vacancyValidator.ShouldHaveValidationErrorFor(v => v.VacancyLocations, vacancy).WithErrorMessage("You must supply at least one vacancy location when the vacancy location type is MultipleLocations.");
+        }
     }
 }

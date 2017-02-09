@@ -159,7 +159,11 @@
                 VacancyLocationType = vacancyLocationType,
                 NumberOfPositions = 2,
                 EmployerWebsiteUrl = "http://different.com",
-                EmployerDescription = "Different"
+                EmployerDescription = "Different",
+                VacancyLocations = new List<VacancyLocation>
+                {
+                    new VacancyLocation()
+                }
             };
 
             const int newVacancyId = 356;
@@ -213,6 +217,12 @@
             createdVacancy.EmployerWebsiteUrl.Should().Be(_vorOwned.EmployerWebsiteUrl);
             createdVacancy.EmployerDescription.Should().Be(_vorOwned.EmployerDescription);
             //TODO: Check created date?
+        }
+
+        [Test]
+        public void MultipleLocationsVacancyLocationsRequired()
+        {
+            
         }
     }
 }

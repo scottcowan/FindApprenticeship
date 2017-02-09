@@ -60,5 +60,10 @@
             public const string WhiteListInvalidCharacterErrorText = "The anonymous information about the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
             public const string WhiteListInvalidTagErrorText = "The anonymous information about the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
+
+        public static class VacancyLocations
+        {
+            public const string RequiredErrorText = "You must supply at least one vacancy location when the vacancy location type is MultipleLocations.";
+        }
     }
 }
