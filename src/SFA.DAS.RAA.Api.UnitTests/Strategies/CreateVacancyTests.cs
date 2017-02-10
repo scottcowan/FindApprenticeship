@@ -6,8 +6,11 @@
     using System.Security;
     using Api.Strategies;
     using Apprenticeships.Application.Employer.Strategies;
+    using Apprenticeships.Application.Location.Strategies;
     using Apprenticeships.Application.Provider.Strategies;
+    using Apprenticeships.Domain.Entities.Exceptions;
     using Apprenticeships.Domain.Entities.Raa.Locations;
+    using Apprenticeships.Domain.Entities.Raa.Locations.Constants;
     using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Interfaces.Repositories;
@@ -35,11 +38,23 @@
         private readonly Mock<IReferenceNumberRepository> _referenceNumberRepository = new Mock<IReferenceNumberRepository>();
         private readonly Mock<IGetByIdStrategy> _getEmployerByIdStrategy = new Mock<IGetByIdStrategy>();
         private readonly Mock<IGetByEdsUrnStrategy> _getEmployerByEdsUrnStrategy = new Mock<IGetByEdsUrnStrategy>();
+        private readonly Mock<IPostalAddressStrategy> _postalAddressStrategy = new Mock<IPostalAddressStrategy>();
 
         private ICreateVacancyStrategy _createVacancyStrategy;
 
         private Employer _employer;
         private VacancyOwnerRelationship _vorOwned;
+        private PostalAddress _coventry = new PostalAddress
+        {
+            AddressLine1 = "Address Line 1",
+            Town = "Coventry",
+            Postcode = "CV1 2WT",
+            GeoPoint = new GeoPoint
+            {
+                Longitude = 1.1,
+                Latitude = 2.2
+            }
+        };
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -88,7 +103,13 @@
             _getEmployerByIdStrategy.Setup(r => r.Get(_vorOwned.EmployerId, true)).Returns(_employer);
             _getEmployerByEdsUrnStrategy.Setup(r => r.Get(_employer.EdsUrn)).Returns(_employer);
 
-            _createVacancyStrategy = new CreateVacancyStrategy(_vacancyReadRepository.Object, _vacancyWriteRepository.Object, _providerReadRepository.Object, _vacancyOwnerRelationshipReadRepository.Object, _getOwnedProviderSitesStrategy.Object, _referenceNumberRepository.Object, _getEmployerByIdStrategy.Object, _getEmployerByEdsUrnStrategy.Object);
+            _postalAddressStrategy.Setup(
+                s => s.GetPostalAddress(It.IsAny<PostalAddress>())).Throws(new CustomException("", Apprenticeships.Infrastructure.Postcode.ErrorCodes.PostalAddressGeocodeFailed));
+
+            _postalAddressStrategy.Setup(
+                s => s.GetPostalAddress(It.Is<PostalAddress>(a => a.Postcode == _coventry.Postcode))).Returns(_coventry);
+
+            _createVacancyStrategy = new CreateVacancyStrategy(_vacancyReadRepository.Object, _vacancyWriteRepository.Object, _providerReadRepository.Object, _vacancyOwnerRelationshipReadRepository.Object, _getOwnedProviderSitesStrategy.Object, _referenceNumberRepository.Object, _getEmployerByIdStrategy.Object, _getEmployerByEdsUrnStrategy.Object, _postalAddressStrategy.Object);
         }
 
         [Test]
@@ -227,6 +248,76 @@
             createdVacancy.EmployerWebsiteUrl.Should().Be(_vorOwned.EmployerWebsiteUrl);
             createdVacancy.EmployerDescription.Should().Be(_vorOwned.EmployerDescription);
             //TODO: Check created date?
+        }
+
+        [Test]
+        public void MultipleLocationsAreGeocoded()
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyGuid = Guid.NewGuid(),
+                VacancyOwnerRelationshipId = VorIdOwned,
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
+                NumberOfPositions = 2,
+                EmployerWebsiteUrl = "http://different.com",
+                EmployerDescription = "Different",
+                VacancyLocations = new List<VacancyLocation>
+                {
+                    new VacancyLocation
+                    {
+                        Address = new PostalAddress
+                        {
+                            AddressLine1 = "Address Line 1",
+                            Town = "Town",
+                            Postcode = "CV1 2WT"
+                        },
+                        NumberOfPositions = 2
+                    }
+                }
+            };
+
+            const int newVacancyId = 356;
+            const int newVacancyReferenceNumber = 34534;
+
+            _referenceNumberRepository.Setup(r => r.GetNextVacancyReferenceNumber()).Returns(newVacancyReferenceNumber);
+            _vacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns<Vacancy>(v => { v.VacancyId = newVacancyId; return v; });
+
+            var createdVacancy = _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
+
+            createdVacancy.VacancyLocations[0].Address.GeoPoint.Should().NotBeNull();
+            createdVacancy.VacancyLocations[0].Address.GeoPoint.Longitude.Should().Be(_coventry.GeoPoint.Longitude);
+            createdVacancy.VacancyLocations[0].Address.GeoPoint.Latitude.Should().Be(_coventry.GeoPoint.Latitude);
+        }
+
+        [Test]
+        public void MultipleLocationsAreValidated()
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyGuid = Guid.NewGuid(),
+                VacancyOwnerRelationshipId = VorIdOwned,
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
+                NumberOfPositions = 2,
+                EmployerWebsiteUrl = "http://different.com",
+                EmployerDescription = "Different",
+                VacancyLocations = new List<VacancyLocation>
+                {
+                    new VacancyLocation
+                    {
+                        Address = new PostalAddress
+                        {
+                            AddressLine1 = "Address Line 1",
+                            Town = "Town",
+                            Postcode = "CV1 2ZZ"
+                        },
+                        NumberOfPositions = 2
+                    }
+                }
+            };
+
+            Action action = () => _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
+            action.ShouldThrow<ValidationException>()
+                .And.Errors.Any(e => e.PropertyName == "VacancyLocations[0].Address.Postcode" && e.ErrorMessage == "The supplied postcode has not been recognized. Please supply a valid postcode.").Should().BeTrue();
         }
     }
 }

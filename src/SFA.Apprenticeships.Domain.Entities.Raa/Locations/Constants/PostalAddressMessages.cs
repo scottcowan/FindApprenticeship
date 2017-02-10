@@ -51,7 +51,8 @@
             public const string RequiredErrorText = "Please supply a value for the postcode property of the address.";
             public const string TooLongErrorText = "Postcode must not be more than 8 characters";
             public const string WhiteListRegularExpression = Whitelists.PostcodeWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "'Postcode' " + Whitelists.PostcodeWhitelist.ErrorText;
+            public const string WhiteListErrorText = "Postcode " + Whitelists.PostcodeWhitelist.ErrorText;
+            public const string NotFound = "The supplied postcode has not been recognized. Please supply a valid postcode.";
         }
     }
 }

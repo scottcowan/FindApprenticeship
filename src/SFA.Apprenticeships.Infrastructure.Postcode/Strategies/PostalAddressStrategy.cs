@@ -28,7 +28,7 @@
             _logger = logger;
         }
 
-        public PostalAddress GetPostalAddresses(string companyName, string primaryAddressableObject, string secondaryAddressableObject, string street, string town, string postcode)
+        public PostalAddress GetPostalAddress(string companyName, string primaryAddressableObject, string secondaryAddressableObject, string street, string town, string postcode)
         {
             //This code assumes that we don't particularly mind how accurate the address is, we simply want to geocode as best as possible and let the user decide if the address is correct
             var postalAddress = new PostalAddress
@@ -41,6 +41,18 @@
                 Town = town,
                 Postcode = postcode
             };
+
+            return GetPostalAddress(postalAddress, street);
+        }
+
+        public PostalAddress GetPostalAddress(PostalAddress postalAddress)
+        {
+            return GetPostalAddress(postalAddress, postalAddress.AddressLine1);
+        }
+
+        private PostalAddress GetPostalAddress(PostalAddress postalAddress, string street)
+        {
+            var postcode = postalAddress.Postcode;
 
             //Try and get the address itself from PCA. Can fail
             var postalAddressServiceConfiguration = _configurationService.Get<PostalAddressServiceConfiguration>();
@@ -81,7 +93,7 @@
                 if (!geoPoints.Any(gp => gp.IsSet()))
                 {
                     //If that fails, try street and town
-                    geoPoints = GetGeoPoints(geocodeClient, $"json.ws?Key={geocodingKey}&Location={street},{town}");
+                    geoPoints = GetGeoPoints(geocodeClient, $"json.ws?Key={geocodingKey}&Location={street},{postalAddress.Town}");
 
                     if (!geoPoints.Any(gp => gp.IsSet()))
                     {

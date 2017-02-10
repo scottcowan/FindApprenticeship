@@ -225,7 +225,7 @@
 
             _logger.Debug("Saved apprenticeship vacancy to database with id={0}", entity.VacancyId);
 
-            return _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
+            return GetByMapped(dbVacancy.VacancyId);
         }
 
         private void UpsertVacancyLocations(IEnumerable<VacancyLocation> vacancyLocations, int vacancyId)

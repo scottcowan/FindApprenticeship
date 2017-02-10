@@ -4,7 +4,10 @@
     using System.Linq;
     using System.Security;
     using Apprenticeships.Application.Employer.Strategies;
+    using Apprenticeships.Application.Location.Strategies;
     using Apprenticeships.Application.Provider.Strategies;
+    using Apprenticeships.Domain.Entities.Exceptions;
+    using Apprenticeships.Domain.Entities.Raa.Locations.Constants;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies.Constants;
     using Apprenticeships.Domain.Interfaces.Repositories;
@@ -25,8 +28,9 @@
         private readonly IReferenceNumberRepository _referenceNumberRepository;
         private readonly IGetByIdStrategy _getEmployerByIdStrategy;
         private readonly IGetByEdsUrnStrategy _getEmployerByEdsUrnStrategy;
+        private readonly IPostalAddressStrategy _postalAddressStrategy;
 
-        public CreateVacancyStrategy(IVacancyReadRepository vacancyReadRepository, IVacancyWriteRepository vacancyWriteRepository, IProviderReadRepository providerReadRepository, IVacancyOwnerRelationshipReadRepository vacancyOwnerRelationshipReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy, IReferenceNumberRepository referenceNumberRepository, IGetByIdStrategy getEmployerByIdStrategy, IGetByEdsUrnStrategy getEmployerByEdsUrnStrategy)
+        public CreateVacancyStrategy(IVacancyReadRepository vacancyReadRepository, IVacancyWriteRepository vacancyWriteRepository, IProviderReadRepository providerReadRepository, IVacancyOwnerRelationshipReadRepository vacancyOwnerRelationshipReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy, IReferenceNumberRepository referenceNumberRepository, IGetByIdStrategy getEmployerByIdStrategy, IGetByEdsUrnStrategy getEmployerByEdsUrnStrategy, IPostalAddressStrategy postalAddressStrategy)
         {
             _vacancyReadRepository = vacancyReadRepository;
             _vacancyWriteRepository = vacancyWriteRepository;
@@ -36,6 +40,7 @@
             _referenceNumberRepository = referenceNumberRepository;
             _getEmployerByIdStrategy = getEmployerByIdStrategy;
             _getEmployerByEdsUrnStrategy = getEmployerByEdsUrnStrategy;
+            _postalAddressStrategy = postalAddressStrategy;
         }
 
         public Vacancy CreateVacancy(Vacancy vacancy, string ukprn)
@@ -91,6 +96,30 @@
                     {
                         vacancy.Address = null;
                         vacancy.NumberOfPositions = null;
+                    }
+
+                    if (vacancy.VacancyLocations != null)
+                    {
+                        //Verify and geocode all addresses
+                        for (int i = 0; i < vacancy.VacancyLocations.Count; i++)
+                        {
+                            var vacancyLocation = vacancy.VacancyLocations[i];
+                            try
+                            {
+                                vacancyLocation.Address = _postalAddressStrategy.GetPostalAddress(vacancyLocation.Address);
+                            }
+                            catch (CustomException ex)
+                            {
+                                if (ex.Code == Apprenticeships.Infrastructure.Postcode.ErrorCodes.PostalAddressGeocodeFailed)
+                                {
+                                    validationResult.Errors.Add(new ValidationFailure($"VacancyLocations[{i}].Address.Postcode", PostalAddressMessages.Postcode.NotFound));
+                                }
+                                else
+                                {
+                                    throw;
+                                }
+                            }
+                        }
                     }
 
                     if (string.IsNullOrEmpty(vacancy.EmployerWebsiteUrl))

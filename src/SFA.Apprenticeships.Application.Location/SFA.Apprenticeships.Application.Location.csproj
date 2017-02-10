@@ -99,7 +99,6 @@
     <Compile Include="GeoCodeLookupService.cs" />
     <Compile Include="IAddressLookupProvider.cs" />
     <Compile Include="IGeoCodeLookupProvider.cs" />
-    <Compile Include="ILocalAuthorityLookupProvider.cs" />
     <Compile Include="ILocationLookupProvider.cs" />
     <Compile Include="IoC\LocationServiceRegistry.cs" />
     <Compile Include="IPostalAddressLookupProvider.cs" />

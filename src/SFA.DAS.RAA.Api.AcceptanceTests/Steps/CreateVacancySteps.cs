@@ -14,6 +14,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
     using Constants;
     using Extensions;
     using Factories;
@@ -90,7 +91,17 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 m => m.Query<int>(ReferenceNumberRepository.GetNextVacancyReferenceNumberSql, null, null, null))
                 .Returns(new [] {450987});
 
-            RaaMockFactory.GetMockGetOpenConnection().Setup(m => m.Insert(It.IsAny<DbVacancy>(), null)).Returns(3453);
+            RaaMockFactory.GetMockGetOpenConnection().Setup(m => m.Insert(It.IsAny<DbVacancy>(), null)).Returns(3453).Callback<DbVacancy, int?>(
+                (v, ct) =>
+                {
+                    RaaMockFactory.GetMockGetOpenConnection()
+                        .Setup(
+                            m =>
+                                m.Query<DbVacancy>(VacancyRepository.SelectByIdSql,
+                                    It.Is<object>(o => o.GetHashCode() == new {vacancyId = 3453}.GetHashCode()), null,
+                                    null))
+                        .Returns(new[] {v});
+                });
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
                 m => m.Query<Employer>(It.Is<string>(s => s.StartsWith(EmployerRepository.BasicQuery)), It.Is<object>(o => o.GetHashCode() == new {vorOwned.EmployerId }.GetHashCode()), null, null))
@@ -164,6 +175,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             expectedVacancy.EmployerWebsiteUrl = responseVacancy.EmployerWebsiteUrl;
             expectedVacancy.EmployerDescription = responseVacancy.EmployerDescription;
             expectedVacancy.Address = responseVacancy.Address;
+            expectedVacancy.VacancyLocations = new List<VacancyLocation>();
+            expectedVacancy.IsMultiLocation = false;
 
             var compareLogic = new CompareLogic();
             var result = compareLogic.Compare(responseVacancy, expectedVacancy);

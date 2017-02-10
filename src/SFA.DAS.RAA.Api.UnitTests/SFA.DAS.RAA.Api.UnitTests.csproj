@@ -152,6 +152,10 @@
       <Project>{DD096F97-415D-4676-9F90-7AEE60213F49}</Project>
       <Name>SFA.Apprenticeships.Application.Employer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
+      <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
+      <Name>SFA.Apprenticeships.Application.Location</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Provider\SFA.Apprenticeships.Application.Provider.csproj">
       <Project>{920F5834-459D-4E20-9B17-AAD52D2CC8FE}</Project>
       <Name>SFA.Apprenticeships.Application.Provider</Name>
@@ -179,6 +183,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
+      <Project>{abd48d09-c35e-42ce-8a4d-81550c2b8554}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.DAS.RAA.Api\SFA.DAS.RAA.Api.csproj">
       <Project>{50961a74-0e1b-490d-99dd-e8f1cd20f6c2}</Project>

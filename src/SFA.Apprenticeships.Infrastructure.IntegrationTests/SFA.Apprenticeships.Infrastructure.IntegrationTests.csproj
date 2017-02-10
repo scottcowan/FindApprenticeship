@@ -173,7 +173,6 @@
     <Compile Include="Elastic\Configuration\ElastricsearchConfigurationTests.cs" />
     <Compile Include="EmployerDataService\EmployerDataServiceTests.cs" />
     <Compile Include="GeoCode\GeoCodeLookupProviderTests.cs" />
-    <Compile Include="LocalAuthority\LocalAuthorityLookupProviderTests.cs" />
     <Compile Include="Location\LocationLookupProviderTests.cs" />
     <Compile Include="Monitor\Repositories\ApprenticeshipMetricsRepositoryTests.cs" />
     <Compile Include="Monitor\Repositories\CandidateMetricsRepositoryTests.cs" />
