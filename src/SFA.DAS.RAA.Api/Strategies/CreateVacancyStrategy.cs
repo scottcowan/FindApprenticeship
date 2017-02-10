@@ -82,23 +82,13 @@
                     vacancy.VacancyManagerId = vacancyOwnerRelationship.ProviderSiteId;
                     vacancy.DeliveryOrganisationId = vacancyOwnerRelationship.ProviderSiteId;
 
-                    if (vacancy.VacancyLocationType == VacancyLocationType.SpecificLocation || vacancy.VacancyLocationType == VacancyLocationType.Nationwide)
-                    {
-                        //Get the employer initially by id
-                        var employer = _getEmployerByIdStrategy.Get(vacancyOwnerRelationship.EmployerId, true);
-                        //Then by EDSURN as that will update the employer if anything has changed in EDRS. Obviously this requires knowledge of the implementation of this strategy which is wrong
-                        //TODO: Make _getEmployerByIdStrategy.Get update the employer if necessary
-                        employer = _getEmployerByEdsUrnStrategy.Get(employer.EdsUrn);
-                        vacancy.Address = employer.Address;
-                        vacancy.VacancyLocations = null;
-                    }
-                    else
-                    {
-                        vacancy.Address = null;
-                        vacancy.NumberOfPositions = null;
-                    }
+                    //Get the employer initially by id
+                    var employer = _getEmployerByIdStrategy.Get(vacancyOwnerRelationship.EmployerId, true);
+                    //Then by EDSURN as that will update the employer if anything has changed in EDRS. Obviously this requires knowledge of the implementation of this strategy which is wrong
+                    //TODO: Make _getEmployerByIdStrategy.Get update the employer if necessary
+                    employer = _getEmployerByEdsUrnStrategy.Get(employer.EdsUrn);
 
-                    if (vacancy.VacancyLocations != null)
+                    if (vacancy.VacancyLocations != null && vacancy.VacancyLocations.Count > 0)
                     {
                         //Verify and geocode all addresses
                         for (int i = 0; i < vacancy.VacancyLocations.Count; i++)
@@ -123,6 +113,22 @@
                                 }
                             }
                         }
+
+                        if (vacancy.VacancyLocations.Count == 1)
+                        {
+                            vacancy.Address = vacancy.VacancyLocations[0].Address;
+                            vacancy.NumberOfPositions = vacancy.VacancyLocations[0].NumberOfPositions;
+                            vacancy.VacancyLocations = null;
+                        }
+                        else
+                        {
+                            vacancy.Address = employer.Address;
+                        }
+                    }
+                    else
+                    {
+                        vacancy.Address = employer.Address;
+                        vacancy.VacancyLocations = null;
                     }
 
                     if (string.IsNullOrEmpty(vacancy.EmployerWebsiteUrl))

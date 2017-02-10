@@ -223,7 +223,7 @@
             CreateVacancyHistoryRow(dbVacancy.VacancyId, _currentUserService.CurrentUserName, VacancyHistoryEventType.StatusChange,
                 (int)entity.Status, StatusChangeText);
 
-            _logger.Debug("Saved apprenticeship vacancy to database with id={0}", entity.VacancyId);
+            _logger.Debug("Saved apprenticeship vacancy to database with id={0}", dbVacancy.VacancyId);
 
             return GetByMapped(dbVacancy.VacancyId);
         }
@@ -367,9 +367,6 @@ WHERE VacancyId = @vacancyId and NoOfOfflineApplicants is null
 
         private void PopulateLocalAuthorityId(DomainVacancy entity, Vacancy dbVacancy)
         {
-            dbVacancy.LocalAuthorityId = null;
-            if (entity.Address == null) return;
-
             if (entity.Address.LocalAuthorityId != 0)
             {
                 dbVacancy.LocalAuthorityId = entity.Address.LocalAuthorityId;

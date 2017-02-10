@@ -10,7 +10,6 @@
     using Apprenticeships.Application.Provider.Strategies;
     using Apprenticeships.Domain.Entities.Exceptions;
     using Apprenticeships.Domain.Entities.Raa.Locations;
-    using Apprenticeships.Domain.Entities.Raa.Locations.Constants;
     using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Interfaces.Repositories;
@@ -170,7 +169,7 @@
         }
         
         [TestCase(VacancyLocationType.SpecificLocation, true)]
-        [TestCase(VacancyLocationType.MultipleLocations, false)]
+        [TestCase(VacancyLocationType.MultipleLocations, true)]
         [TestCase(VacancyLocationType.Nationwide, true)]
         public void CreatingVacancyAssignsEmployerAddress(VacancyLocationType vacancyLocationType, bool useEmployerAddress)
         {
@@ -184,6 +183,16 @@
                 EmployerDescription = "Different",
                 VacancyLocations = vacancyLocationType == VacancyLocationType.MultipleLocations ? new List<VacancyLocation>
                 {
+                    new VacancyLocation
+                    {
+                        Address = new PostalAddress
+                        {
+                            AddressLine1 = "Address Line 1",
+                            Town = "Town",
+                            Postcode = "CV1 2WT"
+                        },
+                        NumberOfPositions = 2
+                    },
                     new VacancyLocation
                     {
                         Address = new PostalAddress
@@ -306,6 +315,16 @@
                             Postcode = "CV1 2WT"
                         },
                         NumberOfPositions = 2
+                    },
+                    new VacancyLocation
+                    {
+                        Address = new PostalAddress
+                        {
+                            AddressLine1 = "Address Line 1",
+                            Town = "Town",
+                            Postcode = "CV1 2WT"
+                        },
+                        NumberOfPositions = 2
                     }
                 }
             };
@@ -345,6 +364,16 @@
                             Postcode = "CV1 2ZZ"
                         },
                         NumberOfPositions = 2
+                    },
+                    new VacancyLocation
+                    {
+                        Address = new PostalAddress
+                        {
+                            AddressLine1 = "Address Line 1",
+                            Town = "Town",
+                            Postcode = "CV1 2WT"
+                        },
+                        NumberOfPositions = 2
                     }
                 }
             };
@@ -352,6 +381,49 @@
             Action action = () => _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
             action.ShouldThrow<ValidationException>()
                 .And.Errors.Any(e => e.PropertyName == "VacancyLocations[0].Address.Postcode" && e.ErrorMessage == "The supplied postcode has not been recognized. Please supply a valid postcode.").Should().BeTrue();
+        }
+
+        [Test]
+        public void MultipleLocationsSingleUsesAddress()
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyGuid = Guid.NewGuid(),
+                VacancyOwnerRelationshipId = VorIdOwned,
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
+                NumberOfPositions = 2,
+                EmployerWebsiteUrl = "http://different.com",
+                EmployerDescription = "Different",
+                VacancyLocations = new List<VacancyLocation>
+                {
+                    new VacancyLocation
+                    {
+                        Address = new PostalAddress
+                        {
+                            AddressLine1 = "Address Line 1",
+                            Town = "Town",
+                            Postcode = "CV1 2WT"
+                        },
+                        NumberOfPositions = 3
+                    }
+                }
+            };
+
+            const int newVacancyId = 356;
+            const int newVacancyReferenceNumber = 34534;
+
+            _referenceNumberRepository.Setup(r => r.GetNextVacancyReferenceNumber()).Returns(newVacancyReferenceNumber);
+            _vacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns<Vacancy>(v => { v.VacancyId = newVacancyId; return v; });
+
+            var createdVacancy = _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
+
+            createdVacancy.VacancyLocations.Should().BeNullOrEmpty();
+            createdVacancy.Address.AddressLine1.Should().Be(_coventry.AddressLine1);
+            createdVacancy.Address.Town.Should().Be(_coventry.Town);
+            createdVacancy.Address.Postcode.Should().Be(_coventry.Postcode);
+            createdVacancy.Address.GeoPoint.Longitude.Should().Be(_coventry.GeoPoint.Longitude);
+            createdVacancy.Address.GeoPoint.Latitude.Should().Be(_coventry.GeoPoint.Latitude);
+            createdVacancy.NumberOfPositions.Should().Be(3);
         }
     }
 }
