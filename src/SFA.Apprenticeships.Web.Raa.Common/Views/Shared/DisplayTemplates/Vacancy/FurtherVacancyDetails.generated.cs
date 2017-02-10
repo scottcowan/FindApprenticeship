@@ -1015,8 +1015,8 @@ WriteLiteral("\r\n        </div>\r\n\r\n");
             #line hidden
             
             #line 168 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-         if (Model.VacancySource != VacancySource.Raa)
-            {
+         if (Model.VacancySource.IsLegacy())
+        {
             
             
             #line default

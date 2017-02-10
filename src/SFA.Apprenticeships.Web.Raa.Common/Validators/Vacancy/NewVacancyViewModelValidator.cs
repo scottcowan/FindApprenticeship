@@ -3,6 +3,7 @@
     using FluentValidation;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Infrastructure.Presentation;
     using VacancyPosting;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
@@ -61,7 +62,7 @@
                 .Length(0, 0)
                 .When(viewModel => !viewModel.OfflineVacancy.HasValue || viewModel.OfflineVacancy.Value == false)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.ShouldBeEmpty)
-                .When(viewModel => viewModel.VacancySource == VacancySource.Raa);
+                .When(viewModel => viewModel.VacancySource.IsRaa());
             
             validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
                 .Matches(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListRegularExpression)
@@ -76,7 +77,7 @@
                 .Length(0, 0)
                 .When(viewModel => !viewModel.OfflineVacancy.HasValue || viewModel.OfflineVacancy.Value == false)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationInstructions.ShouldBeEmptyText)
-                .When(viewModel => viewModel.VacancySource == VacancySource.Raa);
+                .When(viewModel => viewModel.VacancySource.IsRaa());
 
             validator.RuleFor(viewModel => viewModel.OfflineApplicationInstructions)
                 .Matches(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListRegularExpression)

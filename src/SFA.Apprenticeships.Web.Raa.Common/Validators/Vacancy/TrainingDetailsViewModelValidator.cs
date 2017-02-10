@@ -3,6 +3,7 @@
     using FluentValidation;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Infrastructure.Presentation;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
     using Common = Validators.Common;
@@ -63,12 +64,12 @@
                 .WithMessage(VacancyViewModelMessages.ContactNameMessages.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.ContactNameMessages.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.ContactNameMessages.WhiteListErrorText)
-                .When(x => x.VacancySource == VacancySource.Raa);
+                .When(x => x.VacancySource.IsRaa());
 
             validator.RuleFor(m => m.ContactName)
                 .Matches(VacancyViewModelMessages.ContactNameMessages.FreeTextRegularExpression)
                 .WithMessage(VacancyViewModelMessages.ContactNameMessages.WhiteListErrorText)
-                .When(x => x.VacancySource != VacancySource.Raa && Common.IsNotEmpty(x.ContactName));
+                .When(x => x.VacancySource.IsLegacy() && Common.IsNotEmpty(x.ContactName));
 
             validator.RuleFor(x => x.ContactNumber)
                 .Length(8, 16)
@@ -124,7 +125,7 @@
             validator.RuleFor(x => x.TrainingProvided)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.RequiredErrorText)
-                .When(v => v.VacancySource == VacancySource.Raa);
+                .When(v => v.VacancySource.IsRaa());
         }
     }
 }

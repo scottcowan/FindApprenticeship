@@ -145,7 +145,10 @@
             
             //Ignore any passed in status and set to draft
             vacancy.Status = VacancyStatus.Draft;
-            vacancy.VacancySource = VacancySource.Api;
+            if (vacancy.VacancySource != VacancySource.Raa)
+            {
+                vacancy.VacancySource = VacancySource.Api;
+            }
 
             var createdVacancy = _vacancyWriteRepository.Create(vacancy);
 

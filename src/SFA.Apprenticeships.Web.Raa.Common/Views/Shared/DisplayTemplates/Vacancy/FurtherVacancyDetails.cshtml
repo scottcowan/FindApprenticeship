@@ -165,8 +165,8 @@
             @Html.ValidationMessageWithSeverityFor(m => m.Duration, Html.GetValidationType(m => m.Duration))
         </div>
 
-        @if (Model.VacancySource != VacancySource.Raa)
-            {
+        @if (Model.VacancySource.IsLegacy())
+        {
             @Html.FormTextAreaFor(model => model.ExpectedDuration, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" })
         }
     </fieldset>

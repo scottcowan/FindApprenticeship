@@ -250,6 +250,40 @@
             //TODO: Check created date?
         }
 
+        [TestCase(VacancySource.Unknown)]
+        [TestCase(VacancySource.Av)]
+        [TestCase(VacancySource.LegacyApi)]
+        [TestCase(VacancySource.Raa)]
+        [TestCase(VacancySource.Api)]
+        public void CreatingVacancyHonorsSource(VacancySource vacancySource)
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyGuid = Guid.NewGuid(),
+                VacancyOwnerRelationshipId = VorIdOwned,
+                VacancyLocationType = VacancyLocationType.SpecificLocation,
+                NumberOfPositions = 2,
+                VacancySource = vacancySource
+            };
+
+            const int newVacancyId = 356;
+            const int newVacancyReferenceNumber = 34534;
+
+            _referenceNumberRepository.Setup(r => r.GetNextVacancyReferenceNumber()).Returns(newVacancyReferenceNumber);
+            _vacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns<Vacancy>(v => { v.VacancyId = newVacancyId; return v; });
+
+            var createdVacancy = _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
+
+            if (vacancySource == VacancySource.Raa)
+            {
+                createdVacancy.VacancySource.Should().Be(VacancySource.Raa);
+            }
+            else
+            {
+                createdVacancy.VacancySource.Should().Be(VacancySource.Api);
+            }
+        }
+
         [Test]
         public void MultipleLocationsAreGeocoded()
         {
