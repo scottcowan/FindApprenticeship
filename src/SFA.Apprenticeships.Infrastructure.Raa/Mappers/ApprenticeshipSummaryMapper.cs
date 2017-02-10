@@ -2,12 +2,11 @@
 {
     using Application.Interfaces;
     using Domain.Entities.Extensions;
-    using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using Extensions;
     using System;
     using System.Collections.Generic;
-    using DAS.RAA.Api.Client.V1.Models;
+    using Category = Domain.Entities.ReferenceData.Category;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
     using VacancyLocationType = Domain.Entities.Vacancies.VacancyLocationType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;

@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.ReferenceData
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Interfaces.ReferenceData;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class ReferenceDataService : IReferenceDataService
     {
@@ -41,9 +41,14 @@
             return _referenceDataProvider.GetCategoryByCode(categoryCode);
         }
 
-        public IEnumerable<Category> GetFrameworks()
+        public Task<IEnumerable<Category>> GetFrameworks()
         {
-            return _referenceDataProvider.GetFrameworks();
+            return Task.FromResult(_referenceDataProvider.GetFrameworks());
+        }
+
+        public Task<IEnumerable<StandardSubjectAreaTierOne>> GetStandardSubjectAreaTierOnes()
+        {
+            return Task.FromResult(_referenceDataProvider.GetStandardSubjectAreaTierOnes());
         }
 
         public IEnumerable<Sector> GetSectors()
@@ -64,6 +69,16 @@
         public Task<County> GetCountyById(int countyId)
         {
             return Task.FromResult(_referenceDataProvider.GetCountyById(countyId));
+        }
+
+        public Task<Framework> GetFrameworkById(int frameworkId)
+        {
+            return Task.FromResult(_referenceDataProvider.GetFrameworkById(frameworkId));
+        }
+
+        public Task<Standard> GetStandardById(int standardId)
+        {
+            return Task.FromResult(_referenceDataProvider.GetStandardById(standardId));
         }
 
         public Task<County> GetCountyByCode(string countyCode)

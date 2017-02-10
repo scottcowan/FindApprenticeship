@@ -1,22 +1,23 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
+    using Application.Interfaces;
+    using Application.Interfaces.Api;
+    using Application.Interfaces.Vacancy;
+    using Application.ReferenceData;
+    using Application.Vacancies;
+    using Application.Vacancies.Entities;
+    using DAS.RAA.Api.Client.V1.Models;
+    using DAS.RAA.Api.Service.V1.Mappers;
+    using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.ReferenceData;
+    using Domain.Raa.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories.Models;
+    using Mappers;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Application.ReferenceData;
-    using Application.Vacancies;
-    using Application.Vacancies.Entities;
-    using Domain.Entities.Raa.Vacancies;
-    using Domain.Raa.Interfaces.Repositories;
-    using Mappers;
-    using Application.Interfaces;
-    using Application.Interfaces.Api;
-    using Application.Interfaces.Vacancy;
-    using DAS.RAA.Api.Client.V1.Models;
-    using DAS.RAA.Api.Service.V1.Mappers;
-    using Domain.Entities.ReferenceData;
-    using Domain.Raa.Interfaces.Repositories.Models;
+    using Category = Domain.Entities.ReferenceData.Category;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class VacancyIndexDataProvider : IVacancyIndexDataProvider
@@ -26,7 +27,7 @@
 
         private static readonly IMapper ApiClientMappers = new ApiClientMappers();
 
-        private static readonly VacancyStatus[] DesiredStatuses = {VacancyStatus.Live};
+        private static readonly VacancyStatus[] DesiredStatuses = { VacancyStatus.Live };
 
         private readonly IVacancyReadRepository _vacancyReadRepository;
         private readonly IReferenceDataProvider _referenceDataProvider;
@@ -63,7 +64,7 @@
             }
 
             var pageCount = count / pageSize;
-            if (count% pageSize != 0)
+            if (count % pageSize != 0)
             {
                 pageCount++;
             }

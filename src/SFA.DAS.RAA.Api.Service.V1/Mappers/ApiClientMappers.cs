@@ -13,6 +13,11 @@
     using ApiCounty = Client.V1.Models.County;
     using ApiLocalAuthority = Client.V1.Models.LocalAuthority;
     using ApiRegion = Client.V1.Models.Region;
+    using ApiCategory = Client.V1.Models.Category;
+    using ApiFramework = Client.V1.Models.Framework;
+    using ApiSector = Client.V1.Models.Sector;
+    using ApiStandard = Client.V1.Models.Standard;
+    using ApiStandardSubjectAreaTierOne = Client.V1.Models.StandardSubjectAreaTierOne;
     using GeoPoint = Apprenticeships.Domain.Entities.Raa.Locations.GeoPoint;
     using PostalAddress = Apprenticeships.Domain.Entities.Raa.Locations.PostalAddress;
     using VacancySummary = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancySummary;
@@ -23,6 +28,11 @@
     using County = Apprenticeships.Domain.Entities.Raa.Reference.County;
     using LocalAuthority = Apprenticeships.Domain.Entities.Raa.Reference.LocalAuthority;
     using Region = Apprenticeships.Domain.Entities.Raa.Reference.Region;
+    using Category = Apprenticeships.Domain.Entities.ReferenceData.Category;
+    using Framework = Apprenticeships.Domain.Entities.Raa.Reference.Framework;
+    using Sector = Apprenticeships.Domain.Entities.Raa.Vacancies.Sector;
+    using Standard = Apprenticeships.Domain.Entities.Raa.Vacancies.Standard;
+    using StandardSubjectAreaTierOne = Apprenticeships.Domain.Entities.Raa.Vacancies.StandardSubjectAreaTierOne;
 
     public class ApiClientMappers : MapperEngine
     {
@@ -127,6 +137,15 @@
                 .ForMember(dest => dest.VacancyOwnerRelationshipId, opt => opt.MapFrom(src => src.EmployerProviderSiteLinkId))
                 .ForMember(dest => dest.VacancyOwnerRelationshipGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.StatusType, opt => opt.UseValue(VacancyOwnerRelationshipStatusTypes.Live));
+
+            Mapper.CreateMap<ApiCategory, Category>()
+                .ForMember(dest => dest.Count, opt => opt.Ignore());
+
+            Mapper.CreateMap<ApiSector, Sector>();
+
+            Mapper.CreateMap<ApiStandardSubjectAreaTierOne, StandardSubjectAreaTierOne>();
+            Mapper.CreateMap<ApiFramework, Framework>();
+            Mapper.CreateMap<ApiStandard, Standard>();
         }
     }
 }

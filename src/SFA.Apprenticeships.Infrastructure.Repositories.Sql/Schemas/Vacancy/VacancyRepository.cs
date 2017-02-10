@@ -187,7 +187,7 @@
             {
                 result.TrainingType = TrainingType.Sectors;
             }
-            else if (result?.StandardId != null)
+            else if (result.StandardId != null)
             {
                 result.TrainingType = TrainingType.Standards;
             }
@@ -614,7 +614,7 @@ when not matched then
 
         private void UpsertComment(int vacancyId, string vacancyReferralCommentsFieldTypeCodeName, string comment)
         {
-            if(!VacancyReferalCommentsFieldType.ContainsKey(vacancyReferralCommentsFieldTypeCodeName))
+            if (!VacancyReferalCommentsFieldType.ContainsKey(vacancyReferralCommentsFieldTypeCodeName))
             {
                 throw new ArgumentException($"{vacancyReferralCommentsFieldTypeCodeName} was not recognised as a valid vacancy referral comments field type code name");
             }
@@ -759,7 +759,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             return vacancyId;
         }
 
-        public static readonly string SelectByIdSql = $@"SELECT	v.*,
+        public static readonly string SelectByIdSql = @"SELECT	v.*,
         --CASE v.ApplyOutsideNAVMS
  		--    WHEN 1 THEN 0
         --    ELSE dbo.GetApplicantCount(v.VacancyId) 

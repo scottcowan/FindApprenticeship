@@ -1,15 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference
 {
+    using Application.Interfaces;
+    using Common;
+    using Domain.Entities.Raa.Reference;
+    using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.ReferenceData;
+    using Domain.Raa.Interfaces.Repositories;
+    using Entities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Raa.Reference;
-    using Common;
-    using Domain.Entities.Raa.Vacancies;
-    using Domain.Raa.Interfaces.Repositories;
-    using Entities;
-    using Application.Interfaces;
-    using Domain.Entities.ReferenceData;
     using County = Domain.Entities.Raa.Reference.County;
     using LocalAuthority = Domain.Entities.Raa.Reference.LocalAuthority;
     using Region = Domain.Entities.Raa.Reference.Region;
@@ -28,6 +28,17 @@
         public const string GetRegionsSql = "SELECT LocalAuthorityGroupID AS RegionId, CodeName, ShortName, FullName FROM[dbo].[LocalAuthorityGroup] WHERE LocalAuthorityGroupTypeID = 4";
         public const string GetRegionByIdSql = "SELECT LocalAuthorityGroupID AS RegionId, CodeName, ShortName, FullName FROM[dbo].[LocalAuthorityGroup] WHERE LocalAuthorityGroupTypeID = 4 AND LocalAuthorityGroupID = @RegionId";
         public const string GetRegionByCodeSql = "SELECT LocalAuthorityGroupID AS RegionId, CodeName, ShortName, FullName FROM[dbo].[LocalAuthorityGroup] WHERE LocalAuthorityGroupTypeID = 4 AND CodeName = @RegionCode";
+
+        public static string GetFrameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework WHERE [ApprenticeshipFrameworkStatusTypeId]  = 1 ORDER BY FullName;";
+        public static string GetOccupationSql = "SELECT * FROM dbo.ApprenticeshipOccupation where [ApprenticeshipOccupationStatusTypeId] = 1 ORDER BY FullName;";
+        public static string GetSectorSql = "SELECT * FROM Reference.StandardSector ORDER BY FullName;";
+        public static string GetStandardSql = "SELECT * FROM Reference.Standard WHERE [ApprenticeshipFrameworkStatusTypeId] = 1 ORDER BY FullName;";
+        public static string GetEducationLevelSql = "SELECT * FROM Reference.EducationLevel;";
+
+        public static string GetFrameworkByIdSql = "SELECT * FROM dbo.ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @FrameworkId";
+        public static string GetOccupationByIdSql = "SELECT * FROM dbo.ApprenticeshipOccupation WHERE ApprenticeshipOccupationId = @OccupationId";
+
+        public static string GetStandardByIdSql = "SELECT * FROM Reference.Standard WHERE StandardId = @StandardId";
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
@@ -84,16 +95,9 @@
         {
             _logger.Debug("Getting all standards");
 
-            const string standardSql = "SELECT * FROM Reference.Standard ORDER BY FullName;";
-
-            //TODO: Does this need to be here? If not, test and remove.
-            var sqlParams = new
-            {
-            };
-
             var educationLevels = GetEducationLevels();
-            
-            var dbStandards = _getOpenConnection.Query<Entities.Standard>(standardSql, sqlParams);
+
+            var dbStandards = _getOpenConnection.Query<Entities.Standard>(GetStandardSql);
             var standards = dbStandards.Select(x =>
             {
                 var level = educationLevels.FirstOrDefault(el => el.EducationLevelId == x.EducationLevelId);
@@ -117,14 +121,8 @@
         {
             _logger.Debug("Getting all sectors");
 
-            const string sectorSql = "SELECT * FROM Reference.StandardSector ORDER BY FullName;";
-
-            var sqlParams = new
-            {
-            };
-
             var dbSectors = _getOpenConnection
-                .Query<StandardSector>(sectorSql, sqlParams);
+                .Query<StandardSector>(GetSectorSql);
 
             //set the standards.
             var standards = GetStandards();
@@ -138,7 +136,7 @@
 
             _logger.Debug("Got all sectors");
 
-            return sectors ;
+            return sectors;
         }
 
         public IList<ReleaseNote> GetReleaseNotes()
@@ -156,18 +154,12 @@
         {
             _logger.Debug("Getting all SSAT1s");
 
-            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation;";
-
-            var sqlParams = new
-            {
-            };
-
-            var dbStandardSubjectAreaTierOnes = _getOpenConnection
-                .Query<ApprenticeshipOccupation>(sectorSql, sqlParams);
+            var apprenticeshipOccupations = _getOpenConnection
+                .Query<ApprenticeshipOccupation>(GetOccupationSql);
 
             var sector = GetSectors();
 
-            var standardSubjectAreaTierOnes = dbStandardSubjectAreaTierOnes.Select(x =>
+            var standardSubjectAreaTierOnes = apprenticeshipOccupations.Select(x =>
             {
                 var appOcc = new StandardSubjectAreaTierOne
                 {
@@ -347,111 +339,61 @@
         {
             _logger.Debug("Getting all apprenticeship occupations");
 
-            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
-
-            var sqlParams = new
-            {
-            };
-
             var dbOccupations = _getOpenConnection
-                .Query<ApprenticeshipOccupation>(sectorSql, sqlParams);
+                .Query<ApprenticeshipOccupation>(GetOccupationSql);
 
             _logger.Debug("Got all apprenticeship occupations");
 
             return dbOccupations;
-        } 
+        }
 
         private IList<ApprenticeshipFramework> GetApprenticeshipFrameworks()
         {
             _logger.Debug("Getting all frameworks");
 
-            const string frameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework ORDER BY FullName;";
-
-            var sqlParams = new
-            {
-            };
-
             var dbFrameworks = _getOpenConnection
-                .Query<ApprenticeshipFramework>(frameworkSql, sqlParams);
+                .Query<ApprenticeshipFramework>(GetFrameworkSql);
 
             return dbFrameworks;
-        } 
+        }
 
         private IList<EducationLevel> GetEducationLevels()
         {
             _logger.Debug("Getting all education levels");
 
-            const string sectorSql = "SELECT * FROM Reference.EducationLevel;";
-
-            var sqlParams = new
-            {
-            };
-
             var levels = _getOpenConnection
-                .Query<EducationLevel>(sectorSql, sqlParams);
-            
+                .Query<EducationLevel>(GetEducationLevelSql);
+
             _logger.Debug("Got all education levels");
 
             return levels;
-        }
-
-        public void UpdateStandard(Standard standard)
-        {
-            _logger.Debug($"Updating standard with id={standard.Id}");
-
-            const string standardSql = "SELECT * FROM Reference.Standard WHERE StandardId = @Id";
-
-            //TODO: Does this need to be here? If not, test and remove.
-            var sqlParams = new
-            {
-                standard.Id
-            };
-
-            var dbStandards = _getOpenConnection.Query<Entities.Standard>(standardSql, sqlParams);
-
-            var dbStandard = dbStandards.Single();
-
-            dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)standard.Status;
-            dbStandard.LarsCode = standard.LarsCode;
-            dbStandard.StandardSectorId = standard.ApprenticeshipSectorId;
-            dbStandard.FullName = standard.Name;
-
-            // get new education level
-            var educationLevels = GetEducationLevels();
-            var level = educationLevels.Single(s => int.Parse(s.CodeName) == (int)standard.ApprenticeshipLevel);
-            dbStandard.EducationLevelId = level.EducationLevelId;
-
-            var result = _getOpenConnection.UpdateSingle(dbStandard);
-
-            if (!result)
-                throw new Exception($"Failed to save standard with id={standard.Id}");
         }
 
         public void UpdateFramework(Category category)
         {
             _logger.Debug($"Updating framework with id={category.Id}");
 
-            const string standardSql = "SELECT * FROM ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @Id";
             const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
 
+            var frameworkId = category.Id;
             //TODO: Does this need to be here? If not, test and remove.
             var sqlParams = new
             {
-                category.Id
+                frameworkId
             };
 
-            var dbStandards = _getOpenConnection.Query<Entities.ApprenticeshipFramework>(standardSql, sqlParams);
+            var dbFrameworks = _getOpenConnection.Query<ApprenticeshipFramework>(GetFrameworkByIdSql, sqlParams);
 
-            var dbStandard = dbStandards.Single();
+            var dbframework = dbFrameworks.Single();
 
             var occupations = _getOpenConnection.Query<ApprenticeshipOccupation>(sectorSql);
             var occupationId = occupations.Single(w => w.CodeName == category.ParentCategoryCodeName).ApprenticeshipOccupationId;
 
-            dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)category.Status;
-            dbStandard.FullName = category.FullName;
-            dbStandard.ApprenticeshipOccupationId = occupationId;
+            dbframework.ApprenticeshipFrameworkStatusTypeId = (int)category.Status;
+            dbframework.FullName = category.FullName;
+            dbframework.ApprenticeshipOccupationId = occupationId;
 
-            var result = _getOpenConnection.UpdateSingle(dbStandard);
+            var result = _getOpenConnection.UpdateSingle(dbframework);
 
             if (!result)
                 throw new Exception($"Failed to save standard with id={category.Id}");
@@ -459,15 +401,9 @@
 
         public Category InsertFramework(Category category)
         {
-            _logger.Debug($"Inserting new framework");
+            _logger.Debug("Inserting new framework");
 
             const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
-
-            //TODO: Does this need to be here? If not, test and remove.
-            var sqlParams = new
-            {
-                category.Id
-            };
 
             var dbStandard = new ApprenticeshipFramework();
 
@@ -487,9 +423,36 @@
             return category;
         }
 
+        public Framework GetFrameworkById(int frameworkId)
+        {
+            _logger.Debug($"Getting Category with id {frameworkId}");
+
+            var sqlParams = new
+            {
+                frameworkId
+            };
+
+            var apprenticeshipFramework =
+                _getOpenConnection.Query<ApprenticeshipFramework>(GetFrameworkByIdSql, sqlParams).FirstOrDefault();
+            var framework = _mapper.Map<ApprenticeshipFramework, Framework>(apprenticeshipFramework);
+            if (apprenticeshipFramework != null)
+            {
+                var occupationId = apprenticeshipFramework.ApprenticeshipOccupationId;
+                var sqlParam1 = new
+                {
+                    occupationId
+                };
+                var apprenticeshipOccupation = _getOpenConnection.Query<ApprenticeshipOccupation>(GetOccupationByIdSql, sqlParam1)
+                    .FirstOrDefault();
+                if (apprenticeshipOccupation != null) framework.ParentCategoryCodeName = apprenticeshipOccupation.CodeName;
+            }
+            _logger.Debug($"Found {apprenticeshipFramework}");
+            return framework;
+        }
+
         public Standard InsertStandard(Standard standard)
         {
-            _logger.Debug($"Inserting new standard");
+            _logger.Debug("Inserting new standard");
 
             // get new education level
             var educationLevels = GetEducationLevels();
@@ -497,7 +460,7 @@
 
             var dbStandard = new Entities.Standard
             {
-                ApprenticeshipFrameworkStatusTypeId = (int) standard.Status,
+                ApprenticeshipFrameworkStatusTypeId = (int)standard.Status,
                 LarsCode = standard.LarsCode,
                 StandardSectorId = standard.ApprenticeshipSectorId,
                 EducationLevelId = level.EducationLevelId,
@@ -509,6 +472,49 @@
             standard.Id = (int)result;
 
             return standard;
+        }
+
+        public Standard GetStandardById(int standardId)
+        {
+            _logger.Debug($"Getting standard with id={standardId}");
+            var sqlParams = new
+            {
+                standardId
+            };
+            var dbStandard = _getOpenConnection.Query<Entities.Standard>(GetStandardByIdSql, sqlParams).FirstOrDefault();
+            var standard = _mapper.Map<Entities.Standard, Standard>(dbStandard);
+            return standard;
+        }
+
+        public void UpdateStandard(Standard standard)
+        {
+            _logger.Debug($"Updating standard with id={standard.Id}");
+            var standardId = standard.Id;
+
+            //TODO: Does this need to be here? If not, test and remove.
+            var sqlParams = new
+            {
+                standardId
+            };
+
+            var dbStandards = _getOpenConnection.Query<Entities.Standard>(GetStandardByIdSql, sqlParams);
+
+            var dbStandard = dbStandards.Single();
+
+            dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)standard.Status;
+            dbStandard.LarsCode = standard.LarsCode;
+            dbStandard.StandardSectorId = standard.ApprenticeshipSectorId;
+            dbStandard.FullName = standard.Name;
+
+            // get new education level
+            var educationLevels = GetEducationLevels();
+            var level = educationLevels.Single(s => int.Parse(s.CodeName) == (int)standard.ApprenticeshipLevel);
+            dbStandard.EducationLevelId = level.EducationLevelId;
+
+            var result = _getOpenConnection.UpdateSingle(dbStandard);
+
+            if (!result)
+                throw new Exception($"Failed to save standard with id={standard.Id}");
         }
 
         public void UpdateSector(Sector sector)
@@ -523,7 +529,7 @@
                 sector.Id
             };
 
-            var dbSectors = _getOpenConnection.Query<Entities.StandardSector>(sectorSql, sqlParams);
+            var dbSectors = _getOpenConnection.Query<StandardSector>(sectorSql, sqlParams);
 
             var dbSector = dbSectors.Single();
 
