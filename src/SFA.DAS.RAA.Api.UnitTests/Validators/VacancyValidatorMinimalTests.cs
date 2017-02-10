@@ -1,8 +1,10 @@
 ﻿namespace SFA.DAS.RAA.Api.UnitTests.Validators
 {
     using System;
+    using System.Collections.Generic;
     using Api.Validators;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using FluentAssertions;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
 
@@ -326,6 +328,28 @@
             };
 
             _vacancyValidator.ShouldHaveValidationErrorFor(v => v.VacancyLocations, vacancy).WithErrorMessage("You must supply at least one vacancy location when the vacancy location type is MultipleLocations.");
+        }
+
+        [Test]
+        public void VacancyLocationPropertiesRequired()
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
+                VacancyLocations = new List<VacancyLocation>
+                {
+                    new VacancyLocation
+                    {
+                        EmployersWebsite = "null"
+                    }
+                }
+            };
+
+            var result = _vacancyValidator.Validate(vacancy);
+
+            result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].Address" && e.ErrorMessage == "Please supply an address for this vacancy location.");
+            result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].NumberOfPositions" && e.ErrorMessage == "There must be at least 1 position for this vacancy location.");
+            result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].EmployersWebsite" && e.ErrorMessage == "Please supply a valid website url for the employer. This is the link that will be used to apply on the employer's website if the vacancy is set as offline.");
         }
     }
 }

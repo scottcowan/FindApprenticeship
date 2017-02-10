@@ -7,6 +7,7 @@
     using Api.Strategies;
     using Apprenticeships.Application.Employer.Strategies;
     using Apprenticeships.Application.Provider.Strategies;
+    using Apprenticeships.Domain.Entities.Raa.Locations;
     using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Interfaces.Repositories;
@@ -160,10 +161,14 @@
                 NumberOfPositions = 2,
                 EmployerWebsiteUrl = "http://different.com",
                 EmployerDescription = "Different",
-                VacancyLocations = new List<VacancyLocation>
+                VacancyLocations = vacancyLocationType == VacancyLocationType.MultipleLocations ? new List<VacancyLocation>
                 {
-                    new VacancyLocation()
-                }
+                    new VacancyLocation
+                    {
+                        Address = new PostalAddress(),
+                        NumberOfPositions = 2
+                    }
+                } : null
             };
 
             const int newVacancyId = 356;
@@ -217,12 +222,6 @@
             createdVacancy.EmployerWebsiteUrl.Should().Be(_vorOwned.EmployerWebsiteUrl);
             createdVacancy.EmployerDescription.Should().Be(_vorOwned.EmployerDescription);
             //TODO: Check created date?
-        }
-
-        [Test]
-        public void MultipleLocationsVacancyLocationsRequired()
-        {
-            
         }
     }
 }

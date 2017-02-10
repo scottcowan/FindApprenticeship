@@ -72,6 +72,9 @@
                 .NotEmpty()
                 .WithMessage(VacancyMessages.VacancyLocations.RequiredErrorText)
                 .When(x => x.VacancyLocationType == VacancyLocationType.MultipleLocations);
+
+            RuleFor(x => x.VacancyLocations)
+                .SetCollectionValidator(new VacancyLocationValidator());
         }
 
         private static bool IsAnonymousEmployer(Vacancy vacancy)
