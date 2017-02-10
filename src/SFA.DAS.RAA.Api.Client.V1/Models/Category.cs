@@ -21,7 +21,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// 'Standard', 'Combined'</param>
         /// <param name="status">Possible values include: 'Active', 'Ceased',
         /// 'PendingClosure'</param>
-        public Category(int? id = default(int?), string fullName = default(string), string codeName = default(string), string parentCategoryCodeName = default(string), string categoryType = default(string), string status = default(string), System.Collections.Generic.IList<Category> subCategories = default(System.Collections.Generic.IList<Category>))
+        public Category(int id, string fullName, string codeName, string categoryType, string status, string parentCategoryCodeName = default(string), System.Collections.Generic.IList<Category> subCategories = default(System.Collections.Generic.IList<Category>))
         {
             Id = id;
             FullName = fullName;
@@ -35,7 +35,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Id")]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// </summary>
@@ -45,7 +45,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CodeName")]
-        public string CodeName { get; private set; }
+        public string CodeName { get; set; }
 
         /// <summary>
         /// </summary>
@@ -53,11 +53,11 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         public string ParentCategoryCodeName { get; set; }
 
         /// <summary>
-        /// Gets possible values include: 'SectorSubjectAreaTier1',
+        /// Gets or sets possible values include: 'SectorSubjectAreaTier1',
         /// 'Framework', 'StandardSector', 'Standard', 'Combined'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CategoryType")]
-        public string CategoryType { get; private set; }
+        public string CategoryType { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Active', 'Ceased',
@@ -69,7 +69,42 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "SubCategories")]
-        public System.Collections.Generic.IList<Category> SubCategories { get; private set; }
+        public System.Collections.Generic.IList<Category> SubCategories { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (FullName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "FullName");
+            }
+            if (CodeName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CodeName");
+            }
+            if (CategoryType == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CategoryType");
+            }
+            if (Status == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Status");
+            }
+            if (this.SubCategories != null)
+            {
+                foreach (var element in this.SubCategories)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }
