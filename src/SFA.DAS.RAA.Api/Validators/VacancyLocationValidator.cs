@@ -21,6 +21,8 @@
                 .Must(Common.IsValidUrl)
                 .WithMessage(VacancyLocationMessages.EmployersWebsite.InvalidUrlText)
                 .When(x => !string.IsNullOrEmpty(x.EmployersWebsite));
+
+            RuleFor(x => x.Address).SetValidator(new PostalAddressValidator());
         }
     }
 }

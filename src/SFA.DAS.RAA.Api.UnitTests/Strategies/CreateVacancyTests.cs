@@ -165,7 +165,12 @@
                 {
                     new VacancyLocation
                     {
-                        Address = new PostalAddress(),
+                        Address = new PostalAddress
+                        {
+                            AddressLine1 = "Address Line 1",
+                            Town = "Town",
+                            Postcode = "CV1 2WT"
+                        },
                         NumberOfPositions = 2
                     }
                 } : null

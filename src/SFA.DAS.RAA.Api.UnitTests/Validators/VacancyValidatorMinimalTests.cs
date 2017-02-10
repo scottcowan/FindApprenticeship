@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Api.Validators;
+    using Apprenticeships.Domain.Entities.Raa.Locations;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using FluentValidation.TestHelper;
@@ -350,6 +351,28 @@
             result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].Address" && e.ErrorMessage == "Please supply an address for this vacancy location.");
             result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].NumberOfPositions" && e.ErrorMessage == "There must be at least 1 position for this vacancy location.");
             result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].EmployersWebsite" && e.ErrorMessage == "Please supply a valid website url for the employer. This is the link that will be used to apply on the employer's website if the vacancy is set as offline.");
+        }
+
+        [Test]
+        public void VacancyLocationAddressPropertiesRequired()
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
+                VacancyLocations = new List<VacancyLocation>
+                {
+                    new VacancyLocation
+                    {
+                        Address = new PostalAddress()
+                    }
+                }
+            };
+
+            var result = _vacancyValidator.Validate(vacancy);
+
+            result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].Address.AddressLine1" && e.ErrorMessage == "Please supply the first line of the address.");
+            result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].Address.Town" && e.ErrorMessage == "Please supply a value for the town property of the address.");
+            result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].Address.Postcode" && e.ErrorMessage == "Please supply a value for the postcode property of the address.");
         }
     }
 }

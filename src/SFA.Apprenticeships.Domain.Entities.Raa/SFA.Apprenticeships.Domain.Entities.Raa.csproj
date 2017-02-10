@@ -111,7 +111,7 @@
     <Compile Include="Locations\GeoPoint.cs" />
     <Compile Include="Locations\GeoPointExtensionMethods.cs" />
     <Compile Include="Locations\PostalAddress.cs" />
-    <Compile Include="Vacancies\Constants\PostalAddressMessages.cs" />
+    <Compile Include="Locations\Constants\PostalAddressMessages.cs" />
     <Compile Include="Vacancies\Constants\VacancyLocationMessages.cs" />
     <Compile Include="Vacancies\VacancyLocation.cs" />
     <Compile Include="Parties\Employer.cs" />
@@ -173,6 +173,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
