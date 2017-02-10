@@ -104,19 +104,22 @@
                         for (int i = 0; i < vacancy.VacancyLocations.Count; i++)
                         {
                             var vacancyLocation = vacancy.VacancyLocations[i];
-                            try
+                            if (vacancyLocation.Address != null)
                             {
-                                vacancyLocation.Address = _postalAddressStrategy.GetPostalAddress(vacancyLocation.Address);
-                            }
-                            catch (CustomException ex)
-                            {
-                                if (ex.Code == Apprenticeships.Infrastructure.Postcode.ErrorCodes.PostalAddressGeocodeFailed)
+                                try
                                 {
-                                    validationResult.Errors.Add(new ValidationFailure($"VacancyLocations[{i}].Address.Postcode", PostalAddressMessages.Postcode.NotFound));
+                                    vacancyLocation.Address = _postalAddressStrategy.GetPostalAddress(vacancyLocation.Address);
                                 }
-                                else
+                                catch (CustomException ex)
                                 {
-                                    throw;
+                                    if (ex.Code == Apprenticeships.Infrastructure.Postcode.ErrorCodes.PostalAddressGeocodeFailed)
+                                    {
+                                        validationResult.Errors.Add(new ValidationFailure($"VacancyLocations[{i}].Address.Postcode", PostalAddressMessages.Postcode.NotFound));
+                                    }
+                                    else
+                                    {
+                                        throw;
+                                    }
                                 }
                             }
                         }
