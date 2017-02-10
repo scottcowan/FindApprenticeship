@@ -202,7 +202,12 @@ Custom Font Awesome
 
 i.fa {
     margin-right:.3em;
+    &.sfa-icon-right {
+        margin-left:.3em;
+        margin-right:0;
+    }
 }
+
 
 /* -------------------------------------------------------------------
 Categories and sub-categories
@@ -276,6 +281,22 @@ Custom Typography
     }
 }
 
+.sfa-data {
+    margin-top:0px !important;
+    text-align:center;
+    a {
+        text-decoration:none;
+        display:block;
+        .bold-xlarge {
+            text-decoration:none;
+        }
+        .bold-xsmall {
+            text-decoration:underline;
+        }
+    }
+}
+
+
 /* -------------------------------------------------------------------
 Custom list
 ------------------------------------------------------------------- */
@@ -290,33 +311,6 @@ dl.sfa-dl{
         font-weight:700;
     }
 }
-
-/* -------------------------------------------------------------------
-Text editor
-------------------------------------------------------------------- */
-
-.cke_editable {
-    font-family: "nta", Arial, sans-serif;
-    font-weight: 400;
-    text-transform: none;
-    font-size: 16px;
-    line-height: 1.25;
-    -webkit-font-smoothing: antialiased; 
-    @include media(tablet) {
-        font-size: 19px;
-        line-height: 1.31579; 
-    }
-
-    p {
-        margin-top: 0.3125em;
-        margin-bottom: 1.25em;
-        @include media(tablet) {
-            margin-top: 0.26316em;
-            margin-bottom: 1.05263em; 
-        }
-    }
-}
-
 
 /* -------------------------------------------------------------------
 Text editor generated content
@@ -460,10 +454,10 @@ Table styles
 }
 
 .sfa-table {
-    font-size: 14px;
+    font-size: 16px;
 
     * {
-        font-size: 14px;
+        font-size: 16px;
     }
 }
 
@@ -493,6 +487,54 @@ Table styles
 
 .sfa-col-1-8 {
     width: 12.5%; 
+}
+
+/* -------------------------------------------------------------------
+Table filter and search
+------------------------------------------------------------------- */
+.sfa-filter-table-header {
+    padding:30px 0;
+}
+
+.sfa-filter-container {
+    padding:30px 0 10px 0;
+}
+
+.sfa-section-border-bottom {
+    border-bottom:1px solid $grey-2;
+    margin-left:0 !important;
+    margin-right:0 !important;
+    .grid-row {
+        margin-left:0 !important;
+        margin-right:0 !important;
+    }
+    .column-half, .column-one-half, .column-quarter, .column-one-quarter, .column-one-third, .column-two-thirds {
+        &:first-child {
+            padding-left:0px;
+        }
+    }
+    .column-half, .column-one-half, .column-quarter, .column-one-quarter, .column-one-third, .column-two-thirds {
+        &:last-child{
+            padding-right:0px;
+        }
+    }
+    .column-full {
+        padding-left:0;
+        padding-right:0;
+    }
+}
+
+/* -------------------------------------------------------------------
+Print
+------------------------------------------------------------------- */
+
+.sfa-print-only {
+    display:none;
+    visibility:hidden;
+    @media print{
+        display:inline;
+        visibility:visible;
+    }
 }
 
 /* -------------------------------------------------------------------
@@ -539,18 +581,6 @@ iframe, object, embed {
 
 .sfa-section-bordered { 
     border-bottom: 1px solid $grey-2;
-}
-
-.data {
-    text-align: center;
-
-    a, a:hover {
-        text-decoration: none !important;
-    }
-
-    p {
-        text-decoration: underline;
-    }
 }
 
 .secondary-text {

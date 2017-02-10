@@ -155,6 +155,9 @@ Custom Font Awesome
 ------------------------------------------------------------------- */
 i.fa {
   margin-right: .3em; }
+  i.fa.sfa-icon-right {
+    margin-left: .3em;
+    margin-right: 0; }
 
 /* -------------------------------------------------------------------
 Categories and sub-categories
@@ -210,6 +213,17 @@ Custom Typography
     padding-top: 6px;
     padding-bottom: 4px; } }
 
+.sfa-data {
+  margin-top: 0px !important;
+  text-align: center; }
+  .sfa-data a {
+    text-decoration: none;
+    display: block; }
+    .sfa-data a .bold-xlarge {
+      text-decoration: none; }
+    .sfa-data a .bold-xsmall {
+      text-decoration: underline; }
+
 /* -------------------------------------------------------------------
 Custom list
 ------------------------------------------------------------------- */
@@ -219,28 +233,6 @@ dl.sfa-dl .sfa-di {
 dl.sfa-dl .dt {
   font-weight: bold;
   font-weight: 700; }
-
-/* -------------------------------------------------------------------
-Text editor
-------------------------------------------------------------------- */
-.cke_editable {
-  font-family: "nta", Arial, sans-serif;
-  font-weight: 400;
-  text-transform: none;
-  font-size: 16px;
-  line-height: 1.25;
-  -webkit-font-smoothing: antialiased; }
-  @media (min-width: 641px) {
-    .cke_editable {
-      font-size: 19px;
-      line-height: 1.31579; } }
-  .cke_editable p {
-    margin-top: 0.3125em;
-    margin-bottom: 1.25em; }
-    @media (min-width: 641px) {
-      .cke_editable p {
-        margin-top: 0.26316em;
-        margin-bottom: 1.05263em; } }
 
 /* -------------------------------------------------------------------
 Text editor generated content
@@ -344,9 +336,9 @@ Table styles
     padding: 0 0.75em 0.75em 0; }
 
 .sfa-table {
-  font-size: 14px; }
+  font-size: 16px; }
   .sfa-table * {
-    font-size: 14px; }
+    font-size: 16px; }
 
 .sfa-col-3-4 {
   width: 75%; }
@@ -365,6 +357,41 @@ Table styles
 
 .sfa-col-1-8 {
   width: 12.5%; }
+
+/* -------------------------------------------------------------------
+Table filter and search
+------------------------------------------------------------------- */
+.sfa-filter-table-header {
+  padding: 30px 0; }
+
+.sfa-filter-container {
+  padding: 30px 0 10px 0; }
+
+.sfa-section-border-bottom {
+  border-bottom: 1px solid #bfc1c3;
+  margin-left: 0 !important;
+  margin-right: 0 !important; }
+  .sfa-section-border-bottom .grid-row {
+    margin-left: 0 !important;
+    margin-right: 0 !important; }
+  .sfa-section-border-bottom .column-half:first-child, .sfa-section-border-bottom .column-one-half:first-child, .sfa-section-border-bottom .column-quarter:first-child, .sfa-section-border-bottom .column-one-quarter:first-child, .sfa-section-border-bottom .column-one-third:first-child, .sfa-section-border-bottom .column-two-thirds:first-child {
+    padding-left: 0px; }
+  .sfa-section-border-bottom .column-half:last-child, .sfa-section-border-bottom .column-one-half:last-child, .sfa-section-border-bottom .column-quarter:last-child, .sfa-section-border-bottom .column-one-quarter:last-child, .sfa-section-border-bottom .column-one-third:last-child, .sfa-section-border-bottom .column-two-thirds:last-child {
+    padding-right: 0px; }
+  .sfa-section-border-bottom .column-full {
+    padding-left: 0;
+    padding-right: 0; }
+
+/* -------------------------------------------------------------------
+Print
+------------------------------------------------------------------- */
+.sfa-print-only {
+  display: none;
+  visibility: hidden; }
+  @media print {
+    .sfa-print-only {
+      display: inline;
+      visibility: visible; } }
 
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
@@ -400,13 +427,6 @@ iframe, object, embed {
 
 .sfa-section-bordered {
   border-bottom: 1px solid #bfc1c3; }
-
-.data {
-  text-align: center; }
-  .data a, .data a:hover {
-    text-decoration: none !important; }
-  .data p {
-    text-decoration: underline; }
 
 .secondary-text {
   color: #6f777b; }
@@ -586,6 +606,9 @@ iframe, object, embed {
       margin-top: -60px;
       margin-bottom: 60px; } }
 
+.sfa-show-all {
+  margin-left: 0.5em; }
+
 .tabbed-nav {
   border-bottom: 1px solid #bfc1c3; }
 
@@ -759,6 +782,9 @@ a[rel="external"]:after {
 
 .page-navigation__btn:active, .page-navigation__btn:focus {
   background-color: #f8f8f8; }
+
+.page-navigation__results {
+  text-align: center; }
 
 .select2-container {
   position: relative !important; }
