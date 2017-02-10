@@ -72,13 +72,10 @@ WriteLiteral(">Next steps</h2>\r\n<div>\r\n    <p>\r\n        If your applicatio
 WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/advice/courses/typesoflearnin" +
 "g/Pages/apprenticeship-application-help.aspx\"");
 
-WriteLiteral("\r\n                    rel=\"external\"");
-
-WriteLiteral(" target=\"_blank\"");
-
-WriteLiteral(">National Careers Service’s application guide</a> if you\'d like more advice.\r\n   " +
-" </p>\r\n    <p>\r\n        To help you write a better application you can take a gu" +
-"ided tour of\r\n        the application form.\r\n    </p>\r\n    <div");
+WriteLiteral("\r\n                     >National Careers Service’s application guide</a> if you\'d" +
+" like more advice.\r\n    </p>\r\n    <p>\r\n        To help you write a better applic" +
+"ation you can take a guided tour of\r\n        the application form.\r\n    </p>\r\n  " +
+"  <div");
 
 WriteLiteral(" class=\"form-group hide-nojs\"");
 
@@ -240,10 +237,6 @@ WriteLiteral(@">
 
 WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/advice/Pages/default.aspx\"");
 
-WriteLiteral("\r\n            rel=\"external\"");
-
-WriteLiteral(" target=\"_blank\"");
-
 WriteLiteral(">National Careers Service</a>.\r\n    </p>\r\n    <div");
 
 WriteLiteral(" class=\"get-started\"");
@@ -255,7 +248,7 @@ WriteLiteral(" class=\"get-started\"");
 WriteLiteral(">");
 
             
-            #line 122 "..\..\Views\Home\NextSteps.cshtml"
+            #line 121 "..\..\Views\Home\NextSteps.cshtml"
                             Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { @id = "find-apprenticeship-button", @class = "button" }));
 
             

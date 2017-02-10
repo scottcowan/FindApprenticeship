@@ -77,8 +77,8 @@
                     </h3>
                     <a itemprop="url" href="@employerWebsiteUri"
                        id="vacancy-employer-website"
-                       target="_blank"
-                       title="@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName Website" rel="external">@Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl</a>
+                       
+                       title="@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName Website" >@Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl</a>
                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                 </div>
             }
