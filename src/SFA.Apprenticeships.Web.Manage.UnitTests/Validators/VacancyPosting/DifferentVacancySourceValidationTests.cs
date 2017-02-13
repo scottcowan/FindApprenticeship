@@ -34,9 +34,9 @@
         [TestCase(VacancySource.Av, null, true)]
         [TestCase(VacancySource.Av, "", true)]
         [TestCase(VacancySource.Av, Samples.ValidFreeText, true)]
-        [TestCase(VacancySource.Api, null, true)]
-        [TestCase(VacancySource.Api, "", true)]
-        [TestCase(VacancySource.Api, Samples.ValidFreeText, true)]
+        [TestCase(VacancySource.LegacyApi, null, true)]
+        [TestCase(VacancySource.LegacyApi, "", true)]
+        [TestCase(VacancySource.LegacyApi, Samples.ValidFreeText, true)]
         public void SkillsRequiredValidation(VacancySource vacancySource, string text, bool expectValid)
         {
             var vacancyViewModel = BuildValidVacancy(vacancySource);
@@ -77,9 +77,9 @@
         [TestCase(VacancySource.Av, null, true)]
         [TestCase(VacancySource.Av, "", true)]
         [TestCase(VacancySource.Av, Samples.ValidFreeText, true)]
-        [TestCase(VacancySource.Api, null, true)]
-        [TestCase(VacancySource.Api, "", true)]
-        [TestCase(VacancySource.Api, Samples.ValidFreeText, true)]
+        [TestCase(VacancySource.LegacyApi, null, true)]
+        [TestCase(VacancySource.LegacyApi, "", true)]
+        [TestCase(VacancySource.LegacyApi, Samples.ValidFreeText, true)]
         public void DesiredQualificationsValidation(VacancySource vacancySource, string text, bool expectValid)
         {
             var vacancyViewModel = BuildValidVacancy(vacancySource);
@@ -120,9 +120,9 @@
         [TestCase(VacancySource.Av, null, true)]
         [TestCase(VacancySource.Av, "", true)]
         [TestCase(VacancySource.Av, Samples.ValidFreeText, true)]
-        [TestCase(VacancySource.Api, null, true)]
-        [TestCase(VacancySource.Api, "", true)]
-        [TestCase(VacancySource.Api, Samples.ValidFreeText, true)]
+        [TestCase(VacancySource.LegacyApi, null, true)]
+        [TestCase(VacancySource.LegacyApi, "", true)]
+        [TestCase(VacancySource.LegacyApi, Samples.ValidFreeText, true)]
         public void PersonalQualitiesValidation(VacancySource vacancySource, string text, bool expectValid)
         {
             var vacancyViewModel = BuildValidVacancy(vacancySource);
@@ -163,9 +163,9 @@
         [TestCase(VacancySource.Av, null, true)]
         [TestCase(VacancySource.Av, "", true)]
         [TestCase(VacancySource.Av, Samples.ValidFreeText, true)]
-        [TestCase(VacancySource.Api, null, true)]
-        [TestCase(VacancySource.Api, "", true)]
-        [TestCase(VacancySource.Api, Samples.ValidFreeText, true)]
+        [TestCase(VacancySource.LegacyApi, null, true)]
+        [TestCase(VacancySource.LegacyApi, "", true)]
+        [TestCase(VacancySource.LegacyApi, Samples.ValidFreeText, true)]
         public void FutureProspectsValidation(VacancySource vacancySource, string text, bool expectValid)
         {
             var vacancyViewModel = BuildValidVacancy(vacancySource);
@@ -210,11 +210,11 @@
         [TestCase(VacancySource.Av, " ", true)]
         [TestCase(VacancySource.Av, "12 - 14 Months", true)]
         [TestCase(VacancySource.Av, "110", true)]
-        [TestCase(VacancySource.Api, null, true)]
-        [TestCase(VacancySource.Api, "", true)]
-        [TestCase(VacancySource.Api, " ", true)]
-        [TestCase(VacancySource.Api, "12 - 14 Months", true)]
-        [TestCase(VacancySource.Api, "110", true)]
+        [TestCase(VacancySource.LegacyApi, null, true)]
+        [TestCase(VacancySource.LegacyApi, "", true)]
+        [TestCase(VacancySource.LegacyApi, " ", true)]
+        [TestCase(VacancySource.LegacyApi, "12 - 14 Months", true)]
+        [TestCase(VacancySource.LegacyApi, "110", true)]
         public void DurationValidation(VacancySource vacancySource, string durationString, bool expectValid)
         {
             int? duration = null;
@@ -261,10 +261,10 @@
         [TestCase(VacancySource.Av, "", true)]
         [TestCase(VacancySource.Av, " ", true)]
         [TestCase(VacancySource.Av, "30", true)]
-        [TestCase(VacancySource.Api, null, true)]
-        [TestCase(VacancySource.Api, "", true)]
-        [TestCase(VacancySource.Api, " ", true)]
-        [TestCase(VacancySource.Api, "30", true)]
+        [TestCase(VacancySource.LegacyApi, null, true)]
+        [TestCase(VacancySource.LegacyApi, "", true)]
+        [TestCase(VacancySource.LegacyApi, " ", true)]
+        [TestCase(VacancySource.LegacyApi, "30", true)]
         public void HoursPerWeekValidation(VacancySource vacancySource, string hoursPerWeekString, bool expectValid)
         {
             decimal? hoursPerWeek = null;
@@ -310,10 +310,10 @@
         [TestCase(VacancySource.Av, "", true)]
         [TestCase(VacancySource.Av, " ", true)]
         [TestCase(VacancySource.Av, Samples.ValidFreeHtmlText, true)]
-        [TestCase(VacancySource.Api, null, true)]
-        [TestCase(VacancySource.Api, "", true)]
-        [TestCase(VacancySource.Api, " ", true)]
-        [TestCase(VacancySource.Api, Samples.ValidFreeHtmlText, true)]
+        [TestCase(VacancySource.LegacyApi, null, true)]
+        [TestCase(VacancySource.LegacyApi, "", true)]
+        [TestCase(VacancySource.LegacyApi, " ", true)]
+        [TestCase(VacancySource.LegacyApi, Samples.ValidFreeHtmlText, true)]
         public void TrainingProvidedRequired(VacancySource vacancySource, string trainingProvided, bool expectValid)
         {
             var vacancyViewModel = BuildValidVacancy(vacancySource);
@@ -352,10 +352,10 @@
         [TestCase(VacancySource.Av, true, "", false)]
         [TestCase(VacancySource.Av, false, "http://www.google.com/", true)]
         [TestCase(VacancySource.Av, false, "", true)]
-        [TestCase(VacancySource.Api, true, "http://www.google.com/", true)]
-        [TestCase(VacancySource.Api, true, "", false)]
-        [TestCase(VacancySource.Api, false, "http://www.google.com/", true)]
-        [TestCase(VacancySource.Api, false, "", true)]
+        [TestCase(VacancySource.LegacyApi, true, "http://www.google.com/", true)]
+        [TestCase(VacancySource.LegacyApi, true, "", false)]
+        [TestCase(VacancySource.LegacyApi, false, "http://www.google.com/", true)]
+        [TestCase(VacancySource.LegacyApi, false, "", true)]
         public void OfflineApplicationUrlRequired(VacancySource vacancySource, bool offlineVacancy, string url, bool expectValid)
         {
             var vacancyViewModel = BuildValidVacancy(vacancySource);
@@ -395,10 +395,10 @@
         [TestCase(VacancySource.Av, true, "", true)]
         [TestCase(VacancySource.Av, false, "some instructions", true)]
         [TestCase(VacancySource.Av, false, "", true)]
-        [TestCase(VacancySource.Api, true, "some instructions", true)]
-        [TestCase(VacancySource.Api, true, "", true)]
-        [TestCase(VacancySource.Api, false, "some instructions", true)]
-        [TestCase(VacancySource.Api, false, "", true)]
+        [TestCase(VacancySource.LegacyApi, true, "some instructions", true)]
+        [TestCase(VacancySource.LegacyApi, true, "", true)]
+        [TestCase(VacancySource.LegacyApi, false, "some instructions", true)]
+        [TestCase(VacancySource.LegacyApi, false, "", true)]
         public void OfflineApplicationInstructionsRequired(VacancySource vacancySource, bool offlineVacancy, string instructions, bool expectValid)
         {
             var vacancyViewModel = BuildValidVacancy(vacancySource);
@@ -438,10 +438,10 @@
         [TestCase(VacancySource.Av, "40", null, true, true)]
         [TestCase(VacancySource.Av, null, null, true, true)]
         [TestCase(VacancySource.Av, null, 120.0, false, true)]
-        [TestCase(VacancySource.Api, "40", 120.0, true, true)]
-        [TestCase(VacancySource.Api, "40", null, true, true)]
-        [TestCase(VacancySource.Api, null, null, true, true)]
-        [TestCase(VacancySource.Api, null, 120.0, false, true)]
+        [TestCase(VacancySource.LegacyApi, "40", 120.0, true, true)]
+        [TestCase(VacancySource.LegacyApi, "40", null, true, true)]
+        [TestCase(VacancySource.LegacyApi, null, null, true, true)]
+        [TestCase(VacancySource.LegacyApi, null, 120.0, false, true)]
         public void DurationAndHoursPerWeekValidation(VacancySource vacancySource, string hoursPerWeekString, double? duration, bool expectHoursPerWeekValid, bool expectDurationValid)
         {
             decimal? hoursPerWeek = null;
@@ -492,7 +492,7 @@
 
         [TestCase(VacancySource.Raa, "40", 12.0, true, false)]
         [TestCase(VacancySource.Av, "40", 12.0, true, false)]
-        [TestCase(VacancySource.Api, "40", 12.0, true, false)]
+        [TestCase(VacancySource.LegacyApi, "40", 12.0, true, false)]
         public void DurationWarningsValidation(VacancySource vacancySource, string hoursPerWeekString, double? duration, bool expectHoursPerWeekValid, bool expectDurationValid)
         {
             decimal? hoursPerWeek = null;
@@ -552,14 +552,14 @@
         [TestCase(VacancySource.Av, Samples.InvalidHtmlTextWithInput, false)]
         [TestCase(VacancySource.Av, Samples.InvalidHtmlTextWithObject, false)]
         [TestCase(VacancySource.Av, Samples.InvalidHtmlTextWithScript, false)]
-        [TestCase(VacancySource.Api, null, true)]
-        [TestCase(VacancySource.Api, "", true)]
-        [TestCase(VacancySource.Api, " ", true)]
-        [TestCase(VacancySource.Api, Samples.ValidFreeText, true)]
-        [TestCase(VacancySource.Api, Samples.ValidFreeHtmlText, false)]
-        [TestCase(VacancySource.Api, Samples.InvalidHtmlTextWithInput, false)]
-        [TestCase(VacancySource.Api, Samples.InvalidHtmlTextWithObject, false)]
-        [TestCase(VacancySource.Api, Samples.InvalidHtmlTextWithScript, false)]
+        [TestCase(VacancySource.LegacyApi, null, true)]
+        [TestCase(VacancySource.LegacyApi, "", true)]
+        [TestCase(VacancySource.LegacyApi, " ", true)]
+        [TestCase(VacancySource.LegacyApi, Samples.ValidFreeText, true)]
+        [TestCase(VacancySource.LegacyApi, Samples.ValidFreeHtmlText, false)]
+        [TestCase(VacancySource.LegacyApi, Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(VacancySource.LegacyApi, Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(VacancySource.LegacyApi, Samples.InvalidHtmlTextWithScript, false)]
         public void ExpectedDurationValidation(VacancySource vacancySource, string expectedDuration, bool expectValid)
         {
             var vacancyViewModel = BuildValidVacancy(vacancySource);
@@ -638,8 +638,8 @@
         [TestCase(VacancySource.Av, "asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", true)]
         [TestCase(VacancySource.Av, "asdf@asdf.com", true)]
         [TestCase(VacancySource.Av, "", true)]
-        [TestCase(VacancySource.Api, "asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", true)]
-        [TestCase(VacancySource.Api, "", true)]
+        [TestCase(VacancySource.LegacyApi, "asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", true)]
+        [TestCase(VacancySource.LegacyApi, "", true)]
         public void ContactDetailsValidation(VacancySource vacancySource, string fullName, bool expectValid)
         {
             // Arrange.

@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.ReferenceData
 {
-    using System.Collections.Generic;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using System.Collections.Generic;
 
     //TODO: remove this in favour of using the service directly. This internal interface has been used throughout the solution
     public interface IReferenceDataProvider
@@ -24,6 +24,8 @@
         IEnumerable<Sector> GetSectors();
 
         IEnumerable<StandardSubjectAreaTierOne> GetStandardSubjectAreaTierOnes();
+
+        Standard GetStandardById(int standardid);
 
         IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication);
 
@@ -46,10 +48,13 @@
         Region GetRegionById(int regionId);
 
         Region GetRegionByCode(string regionCode);
-		
-		void UpdateStandard(Standard standard);
+
+        void UpdateStandard(Standard standard);
         void UpdateFramework(Category entity);
         Category InsertFramework(Category entity);
+
+        Framework GetFrameworkById(int frameworkId);
+
         Standard InsertStandard(Standard standard);
         IEnumerable<Occupation> GetOccupations();
         void UpdateSector(Sector sector);

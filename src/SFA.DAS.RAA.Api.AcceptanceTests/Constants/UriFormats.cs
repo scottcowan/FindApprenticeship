@@ -6,6 +6,8 @@
         public const string VacancyReferenceNumberUriFormat = "/vacancy/reference/{0}";
         public const string VacancyGuidUriFormat = "/vacancy/guid/{0}";
 
+        public const string CreateVacancyUri = "/vacancies";
+
         public const string PublicVacancyIdUriFormat = "/public/vacancy/{0}";
         public const string PublicVacancyReferenceNumberUriFormat = "/public/vacancy/reference/{0}";
         public const string PublicVacancyGuidUriFormat = "/public/vacancy/guid/{0}";
@@ -28,5 +30,10 @@
         public const string GetRegionsUri = "reference/regions";
         public const string RegionIdUriFormat = "reference/region/{0}";
         public const string RegionCodeUriFormat = "reference/region/code/{0}";
+
+        public const string GetFrameworksUri = "frameworks";
+        public const string GetStandardssUri = "standards";
+        public const string GetFrameworksByIdUri = "framework/{0}";
+        public const string GetStandardssByIdUri = "standard/{0}";
     }
 }

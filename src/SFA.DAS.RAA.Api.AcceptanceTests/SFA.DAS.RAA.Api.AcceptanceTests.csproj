@@ -87,6 +87,10 @@
       <HintPath>..\packages\FluentAssertions.4.18.0\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=3.6.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
+      <HintPath>..\packages\CompareNETObjects.3.06.0.0\lib\net452\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -188,6 +192,12 @@
     <Compile Include="DependencyResolution\AcceptanceTestsRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="Extensions\HttpClientExtensions.cs" />
+    <Compile Include="Features\RA577.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RA577.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Features\RA578.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -203,6 +213,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RA607.feature</DependentUpon>
     </Compile>
+    <Compile Include="Steps\CreateVacancySteps.cs" />
     <Compile Include="Steps\GetRegionsSteps.cs" />
     <Compile Include="Steps\GetLocalAuthoritySteps.cs" />
     <Compile Include="Steps\GetCountiesSteps.cs" />
@@ -234,6 +245,7 @@
     <Compile Include="Steps\GetVacancySummarySteps.cs" />
     <Compile Include="Steps\HttpResponseSteps.cs" />
     <Compile Include="Steps\LinkEmployerSteps.cs" />
+    <Compile Include="Steps\GetFrameworksAndStandardsSteps.cs" />
     <Compile Include="Steps\ResponseMessageSteps.cs" />
     <Compile Include="Steps\SetupVacancySteps.cs" />
     <Compile Include="Steps\SwaggerUiSteps.cs" />
@@ -261,6 +273,7 @@
     <None Include="App.Prod.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
+    <None Include="AppReadme\Compare-NET-Objects-Help.chm" />
     <None Include="Features\RA388.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RA388.feature.cs</LastGenOutput>
@@ -268,6 +281,10 @@
     <None Include="Features\RA551.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RA551.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\RA577.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>RA577.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\RA578.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

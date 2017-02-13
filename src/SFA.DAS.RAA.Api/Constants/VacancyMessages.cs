@@ -6,5 +6,7 @@
         public const string InvalidVacancyReference = "The supplied vacancy reference is invalid.";
         public const string VacancyNotFound = "The requested vacancy has not been found.";
         public const string UnauthorizedVacancyAccess = "You are not authorized to view or edit this vacancy.";
+
+        public const string UnauthorizedProviderAccess = "You do not have permission to create a vacancy for specified provider.";
     }
 }

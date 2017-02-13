@@ -46,7 +46,7 @@
 
         Task<VacancyViewModel> SubmitVacancy(int vacancyReferenceNumber);
 
-        List<SelectListItem> GetSectorsAndFrameworks();
+        Task<List<SelectListItem>> GetSectorsAndFrameworks();
 
         List<StandardViewModel> GetStandards();
 
