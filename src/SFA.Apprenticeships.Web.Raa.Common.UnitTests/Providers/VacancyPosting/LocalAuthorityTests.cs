@@ -81,7 +81,7 @@
             };
 
             MockVacancyPostingService.Setup(mock => mock.CreateVacancy(It.IsAny<Vacancy>()))
-                .Returns<Vacancy>(v => v);
+                .Returns<Vacancy>(Task.FromResult);
             MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(ProviderSiteId, EdsUrn, true))
                 .Returns(_vacancyOwnerRelationship);
                 
@@ -170,7 +170,7 @@
             MockMapper.Setup(m => m.Map<VacancyLocationAddressViewModel, VacancyLocation>(locationSearchViewModel.Addresses[1])).Returns(vacancyLocations[1]);
 
             MockVacancyPostingService.Setup(v => v.CreateVacancy(It.IsAny<Vacancy>()))
-                .Returns(new Vacancy());
+                .Returns(Task.FromResult(new Vacancy()));
 
             var vacancy = new Fixture().Create<Vacancy>();
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))

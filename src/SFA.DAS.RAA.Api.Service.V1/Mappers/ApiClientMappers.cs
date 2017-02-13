@@ -38,6 +38,7 @@
     {
         public override void Initialise()
         {
+            //From API entity to domain
             Mapper.CreateMap<ApiGeoPoint, GeoPoint>();
             Mapper.CreateMap<ApiPostalAddress, PostalAddress>();
             Mapper.CreateMap<ApiWage, Wage>();
@@ -146,6 +147,13 @@
             Mapper.CreateMap<ApiStandardSubjectAreaTierOne, StandardSubjectAreaTierOne>();
             Mapper.CreateMap<ApiFramework, Framework>();
             Mapper.CreateMap<ApiStandard, Standard>();
+
+            //From domain to API entity
+            Mapper.CreateMap<GeoPoint, ApiGeoPoint>();
+            Mapper.CreateMap<PostalAddress, ApiPostalAddress>();
+            Mapper.CreateMap<Wage, ApiWage>();
+            Mapper.CreateMap<VacancyLocation, ApiVacancyLocation>();
+            Mapper.CreateMap<Vacancy, ApiVacancy>();
         }
     }
 }

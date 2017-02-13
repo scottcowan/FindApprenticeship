@@ -1051,7 +1051,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             vacancy.VacancyId = 0;
             vacancy.VacancyGuid = Guid.NewGuid();
 
-            _vacancyPostingService.CreateVacancy(vacancy);
+            await _vacancyPostingService.CreateVacancy(vacancy);
 
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, true);
             if (vacancyOwnerRelationship == null)
@@ -1240,7 +1240,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
         }
 
-        private Vacancy CreateChildVacancy(Vacancy vacancy, VacancyLocation address, DateTime approvalTime)
+        private async Task<Vacancy> CreateChildVacancy(Vacancy vacancy, VacancyLocation address, DateTime approvalTime)
         {
             var newVacancy = (Vacancy)vacancy.Clone();
             newVacancy.VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
@@ -1261,7 +1261,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 newVacancy.OfflineApplicationUrl = address.EmployersWebsite;
             }
 
-            return _vacancyPostingService.CreateVacancy(newVacancy);
+            return await _vacancyPostingService.CreateVacancy(newVacancy);
         }
 
         public async Task<QAActionResultCode> ApproveVacancy(int vacancyReferenceNumber)
@@ -1302,7 +1302,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
                         foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
                         {
-                            CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
+                            await CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
                         }
 
                         submittedVacancy.OfflineVacancyType = null;
