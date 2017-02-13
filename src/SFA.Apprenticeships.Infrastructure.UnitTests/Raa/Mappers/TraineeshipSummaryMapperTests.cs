@@ -33,6 +33,7 @@
 
                 var categories = fixture
                     .Build<Domain.Entities.ReferenceData.Category>()
+                    .With(c => c.SubCategories, null)
                     .CreateMany(categoryCount)
                     .ToList();
 
@@ -52,6 +53,7 @@
 
             var categories = fixture
                 .Build<Domain.Entities.ReferenceData.Category>()
+                .With(c => c.SubCategories, null)
                 .CreateMany(categoryCount)
                 .ToList();
 
@@ -80,6 +82,7 @@
 
             var categories = fixture
                 .Build<Domain.Entities.ReferenceData.Category>()
+                .With(c => c.SubCategories, null)
                 .CreateMany(1)
                 .ToList();
 
