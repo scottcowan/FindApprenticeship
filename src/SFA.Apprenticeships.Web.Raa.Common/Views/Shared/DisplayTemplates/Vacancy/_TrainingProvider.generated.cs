@@ -159,8 +159,12 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("                    <span>None specified. This message will not appear on the vac" +
-"ancy when it goes live</span>\r\n");
+WriteLiteral("                    <p");
+
+WriteLiteral(" class=\"secondary-text\"");
+
+WriteLiteral(">None specified. This message will not appear on the vacancy when it goes live</p" +
+">\r\n");
 
             
             #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
@@ -175,29 +179,27 @@ WriteLiteral("                    <div");
 
 WriteLiteral(" id=\"vacancy-training-to-be-provided\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1384), Tuple.Create("\"", 1498)
-, Tuple.Create(Tuple.Create("", 1392), Tuple.Create("sfa-text-editor-generated", 1392), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1401), Tuple.Create("\"", 1515)
+, Tuple.Create(Tuple.Create("", 1409), Tuple.Create("sfa-text-editor-generated", 1409), true)
             
             #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-              , Tuple.Create(Tuple.Create(" ", 1417), Tuple.Create<System.Object, System.Int32>(Model.TrainingDetailsViewModel.TrainingProvided.GetPreserveFormattingCssClass()
+              , Tuple.Create(Tuple.Create(" ", 1434), Tuple.Create<System.Object, System.Int32>(Model.TrainingDetailsViewModel.TrainingProvided.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 1418), false)
+, 1435), false)
 );
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
+WriteLiteral(">\r\n                        <p>");
 
             
             #line 32 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingDetailsViewModel.TrainingProvided));
+                       Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingDetailsViewModel.TrainingProvided));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </div>\r\n");
+WriteLiteral("</p>\r\n                    </div>\r\n");
 
             
             #line 34 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
@@ -217,14 +219,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n            </div>\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1972), Tuple.Create("\"", 1998)
+WriteAttribute("class", Tuple.Create(" class=\"", 1996), Tuple.Create("\"", 2022)
             
             #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-, Tuple.Create(Tuple.Create("", 1980), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 2004), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1980), false)
+, 2004), false)
 );
 
 WriteLiteral(">\r\n");
@@ -386,14 +388,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n            </div>\r\n\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3899), Tuple.Create("\"", 3925)
+WriteAttribute("class", Tuple.Create(" class=\"", 3923), Tuple.Create("\"", 3949)
             
             #line 64 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-, Tuple.Create(Tuple.Create("", 3907), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 3931), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 3907), false)
+, 3931), false)
 );
 
 WriteLiteral(">\r\n                <h3");
@@ -427,8 +429,12 @@ WriteLiteral("\r\n                </h3>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                    <span>None specified. This message will not appear on the vac" +
-"ancy when it goes live</span>\r\n");
+WriteLiteral("                    <p");
+
+WriteLiteral(" class=\"secondary-text\"");
+
+WriteLiteral(">None specified. This message will not appear on the vacancy when it goes live</p" +
+">\r\n");
 
             
             #line 72 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
@@ -439,53 +445,41 @@ WriteLiteral("                    <span>None specified. This message will not ap
             
             #line default
             #line hidden
-WriteLiteral("                    <p");
+WriteLiteral("                    <ul");
 
-WriteLiteral(" class=\"sfa-small-bottom-margin\"");
+WriteLiteral(" class=\"list\"");
 
-WriteLiteral(">");
-
-            
-            #line 75 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-                                                  Write(Model.TrainingDetailsViewModel.ContactName);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n");
-
-WriteLiteral("                    <p");
-
-WriteLiteral(" class=\"sfa-small-bottom-margin\"");
-
-WriteLiteral(">");
+WriteLiteral(">\r\n                        <li>");
 
             
             #line 76 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-                                                  Write(Model.TrainingDetailsViewModel.ContactNumber);
+                       Write(Model.TrainingDetailsViewModel.ContactName);
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n");
-
-WriteLiteral("                    <p");
-
-WriteLiteral(" class=\"sfa-small-bottom-margin\"");
-
-WriteLiteral(">");
+WriteLiteral("</li>\r\n                        <li>");
 
             
             #line 77 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-                                                  Write(Model.TrainingDetailsViewModel.ContactEmail);
+                       Write(Model.TrainingDetailsViewModel.ContactNumber);
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n");
+WriteLiteral("</li>\r\n                        <li>");
 
             
             #line 78 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
+                       Write(Model.TrainingDetailsViewModel.ContactEmail);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</li>\r\n                    </ul>\r\n");
+
+            
+            #line 80 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
                 }
 
             
@@ -494,7 +488,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                ");
 
             
-            #line 79 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
+            #line 81 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
            Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ContactDetailsComment)));
 
             
@@ -509,7 +503,7 @@ WriteLiteral(" class=\"sfa-no-bottom-margin\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
+            #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
 }
             
             #line default

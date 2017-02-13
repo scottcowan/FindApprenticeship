@@ -110,7 +110,10 @@ Custom margins
 }
 
 .sfa-large-bottom-margin {
-    margin-bottom: 15px !important;
+    margin-bottom: 10px !important;
+    @include media(tablet){
+        margin-bottom: 20px !important;
+    }
 }
 
 .sfa-xlarge-bottom-margin {
@@ -131,6 +134,13 @@ Custom margins
     margin-top: 15px !important;
     @include media(tablet){
         margin-top: 30px !important;
+    }
+}
+
+.sfa-large-top-margin {
+    margin-top: 10px !important;
+    @include media(tablet){
+        margin-top: 20px !important;
     }
 }
 
@@ -192,43 +202,12 @@ Custom Font Awesome
 
 i.fa {
     margin-right:.3em;
-}
-
-/* -------------------------------------------------------------------
-Custom form elements
-------------------------------------------------------------------- */
-
-.sfa-input-auto-width {
-    margin-bottom:5px;
-    @include media(tablet){
-        margin-bottom:0px;
-        width:auto !important;
+    &.sfa-icon-right {
+        margin-left:.3em;
+        margin-right:0;
     }
 }
 
-.sfa-form-radio, .sfa-form-checkbox {
-    padding-left:18px;
-    input {
-        margin-left:-18px !important;
-    }
-}
-
-.sfa-form-control-after {
-    font-family: "nta", Arial, sans-serif;
-    font-weight: 400;
-    text-transform: none;
-    font-size: 16px;
-    line-height: 1.25;
-    display: block;
-    color: #6f777b;
-    font-weight: normal;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    @include media(tablet){
-        font-size: 19px;
-        line-height: 1.31579;
-    }
-}
 
 /* -------------------------------------------------------------------
 Categories and sub-categories
@@ -302,6 +281,22 @@ Custom Typography
     }
 }
 
+.sfa-data {
+    margin-top:0px !important;
+    text-align:center;
+    a {
+        text-decoration:none;
+        display:block;
+        .bold-xlarge {
+            text-decoration:none;
+        }
+        .bold-xsmall {
+            text-decoration:underline;
+        }
+    }
+}
+
+
 /* -------------------------------------------------------------------
 Custom list
 ------------------------------------------------------------------- */
@@ -316,33 +311,6 @@ dl.sfa-dl{
         font-weight:700;
     }
 }
-
-/* -------------------------------------------------------------------
-Text editor
-------------------------------------------------------------------- */
-
-.cke_editable {
-    font-family: "nta", Arial, sans-serif;
-    font-weight: 400;
-    text-transform: none;
-    font-size: 16px;
-    line-height: 1.25;
-    -webkit-font-smoothing: antialiased; 
-    @include media(tablet) {
-        font-size: 19px;
-        line-height: 1.31579; 
-    }
-
-    p {
-        margin-top: 0.3125em;
-        margin-bottom: 1.25em;
-        @include media(tablet) {
-            margin-top: 0.26316em;
-            margin-bottom: 1.05263em; 
-        }
-    }
-}
-
 
 /* -------------------------------------------------------------------
 Text editor generated content
@@ -409,6 +377,10 @@ Alignment
     }
 }
 
+.sfa-display-inline {
+    display:inline;
+}
+
 
 /* -------------------------------------------------------------------
 Custom expand content
@@ -458,6 +430,9 @@ Inset boxes
 
 .sfa-inset {
     padding:15px;
+    .form-control {
+        background-color:$page-colour;
+    }
     &-yellow {
         background-color:$yellow-25;
     }
@@ -479,10 +454,10 @@ Table styles
 }
 
 .sfa-table {
-    font-size: 14px;
+    font-size: 16px;
 
     * {
-        font-size: 14px;
+        font-size: 16px;
     }
 }
 
@@ -512,6 +487,54 @@ Table styles
 
 .sfa-col-1-8 {
     width: 12.5%; 
+}
+
+/* -------------------------------------------------------------------
+Table filter and search
+------------------------------------------------------------------- */
+.sfa-filter-table-header {
+    padding:30px 0;
+}
+
+.sfa-filter-container {
+    padding:30px 0 10px 0;
+}
+
+.sfa-section-border-bottom {
+    border-bottom:1px solid $grey-2;
+    margin-left:0 !important;
+    margin-right:0 !important;
+    .grid-row {
+        margin-left:0 !important;
+        margin-right:0 !important;
+    }
+    .column-half, .column-one-half, .column-quarter, .column-one-quarter, .column-one-third, .column-two-thirds {
+        &:first-child {
+            padding-left:0px;
+        }
+    }
+    .column-half, .column-one-half, .column-quarter, .column-one-quarter, .column-one-third, .column-two-thirds {
+        &:last-child{
+            padding-right:0px;
+        }
+    }
+    .column-full {
+        padding-left:0;
+        padding-right:0;
+    }
+}
+
+/* -------------------------------------------------------------------
+Print
+------------------------------------------------------------------- */
+
+.sfa-print-only {
+    display:none;
+    visibility:hidden;
+    @media print{
+        display:inline;
+        visibility:visible;
+    }
 }
 
 /* -------------------------------------------------------------------
@@ -558,18 +581,6 @@ iframe, object, embed {
 
 .sfa-section-bordered { 
     border-bottom: 1px solid $grey-2;
-}
-
-.data {
-    text-align: center;
-
-    a, a:hover {
-        text-decoration: none !important;
-    }
-
-    p {
-        text-decoration: underline;
-    }
 }
 
 .secondary-text {

@@ -13,8 +13,10 @@
     var ernSearchSelected = Model.FilterType == EmployerFilterType.EdsUrn ? selected : null;
     var nameAndLocationSearchSelected = Model.FilterType == EmployerFilterType.NameAndLocation ? selected : null;
     var noResults = Model.NoResults;
-    var searchPerformed = ViewData.ModelState.IsValid && ( !string.IsNullOrWhiteSpace(ernSearchSelected) || !string.IsNullOrWhiteSpace(nameAndLocationSearchSelected));
+    var searchPerformed = ViewData.ModelState.IsValid && (!string.IsNullOrWhiteSpace(ernSearchSelected) || !string.IsNullOrWhiteSpace(nameAndLocationSearchSelected));
 }
+
+@Html.Partial("ValidationSummary", ViewData.ModelState)
 
 <div class="grid-row">
     <div class="column-two-thirds">
@@ -22,167 +24,152 @@
             Link to a new employer
         </h1>
     </div>
+    <div class="column-one-third sfa-xlarge-top-margin">
+        <a  href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteId = Model.ProviderSiteId, comeFromPreview = Model.ComeFromPreview})">Return to your employers</a>
+    </div>
+</div>
 
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
-
-    @if (searchPerformed && noResults)
-    {
-        <div class="no-employers-found">
+<div class="grid-row">
+    <div class="column-two-thirds">
+        @if (searchPerformed && noResults)
+        {
             <p>No employers matched your search:</p>
-            <ul>
+            <ul class="list list-bullet">
                 @if (!string.IsNullOrWhiteSpace(ernSearchSelected))
-                {
+            {
                     <li>check the ERN is correct</li>
                     <li>try searching by employer name or location</li>
                 }
                 @if (!string.IsNullOrWhiteSpace(nameAndLocationSearchSelected))
-                {
+            {
                     <li>check the employer name or location are correct</li>
                     <li>try searching by ERN</li>
                 }
             </ul>
-            <p class="no-employers-optional-action">If you can't find the employer you wish to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx" target="_blank">EDS</a> to request an ERN</p>
-        </div>
-    }
-
-    <div class="blocklabel-single-container">
-        <p>Search for an employer</p>
+            <p>If you can't find the employer you wish to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx">EDS</a> to request an ERN</p>
+        }
         @if (!(searchPerformed && noResults))
         {
-            <div class="panel panel-border-narrow grid column-two-thirds">
-                If you can't find the employer you want to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx" target="_blank">EDS</a> to request an ERN
-            </div>
+            <p>If you can't find the employer you want to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx">EDS</a> to request an ERN</p>
         }
 
-        <div class="form-group inline clearfix blocklabel-single hide-nojs">
-            @* ReSharper disable once Html.IdNotResolved *@
-            <label data-target="name-location-search-panel" for="name-location-search" class="block-label selection-button-radio @nameAndLocationSearchSelected">
-                @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.NameAndLocation, new { id = "name-location-search", aria_controls = "name-location-search-panel" })
-                Name and location
-            </label>
-            @* ReSharper disable once Html.IdNotResolved *@
-            <label data-target="edsUrn-search-panel" for="edsUrn-search" class="block-label selection-button-radio @ernSearchSelected">
-                @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.EdsUrn, new { id = "edsUrn-search", aria_controls = "edsUrn-search-panel" })
-                ERN
-            </label>
-        </div>
+        <div class="hide-nojs">
+            <div class="form-group">
+                <fieldset class="inline">
+                    <legend class="heading-small">How would you like to find the employer?</legend>
+                    @* ReSharper disable once Html.IdNotResolved *@
+                    <label data-target="name-location-search-panel" for="name-location-search" class="block-label selection-button-radio @nameAndLocationSearchSelected">
+                        @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.NameAndLocation, new { id = "name-location-search", aria_controls = "name-location-search-panel" })
+                        Name and location
+                    </label>
+                    @* ReSharper disable once Html.IdNotResolved *@
+                    <label data-target="edsUrn-search-panel" for="edsUrn-search" class="block-label selection-button-radio @ernSearchSelected">
+                        @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.EdsUrn, new { id = "edsUrn-search", aria_controls = "edsUrn-search-panel" })
+                        ERN (Employer reference number)
+                    </label>
+                </fieldset>
 
-        @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer), @id = "edsUrn-search-form" }))
-        {
-            @Html.HiddenFor(m => m.ProviderSiteId)
-            @Html.HiddenFor(m => m.VacancyGuid)
-            @Html.Hidden("FilterType", EmployerFilterType.EdsUrn)
-            @Html.HiddenFor(m => m.ComeFromPreview)
-
-            <div id="edsUrn-search-panel" class="toggle-content blocklabel-content">
-                @Html.FormTextFor(model => model.EdsUrn)
-
-                <button id="edsUrn-search-button" type="submit" class="button">
-                    Find employer
-                </button>
-                <a class="button sfa-button-secondary" href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteId = Model.ProviderSiteId, comeFromPreview = Model.ComeFromPreview})">Return to your linked employers</a>
-            </div>
-        }
-
-        @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer), @id = "name-location-search-form" }))
-        {
-            @Html.HiddenFor(m => m.ProviderSiteId)
-            @Html.HiddenFor(m => m.VacancyGuid)
-            @Html.Hidden("FilterType", EmployerFilterType.NameAndLocation)
-            @Html.HiddenFor(m => m.ComeFromPreview)
-
-            <div id="name-location-search-panel" class="toggle-content blocklabel-content">
-                @Html.FormTextFor(model => model.Name)
-                @Html.FormTextFor(model => model.Location, hintText: "Enter town or postcode")
-
-                <button id="name-location-search-button" type="submit" class="button">
-                    Search
-                </button>
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteId = Model.ProviderSiteId, vacancyGuid = vacancyGuidValue})" class="button sfa-button-secondary">Return to your linked employers</a>
-            </div>
-        }
-    </div>
-
-    @if (Model.Employers.ResultsCount > 0)
-    {
-        <section class="clearfix">
-            @{
-                var resultsMessage = Model.Employers.ResultsCount > 1 ? string.Format("Found {0} Employers", Model.Employers.ResultsCount) : "Found one employer";
-            }
-            <h2 class="heading-small">@resultsMessage</h2>
-            <div class="grid-row grid-3-3">
-                <table>
-                    <colgroup>
-                        <col class="t30">
-                        <col class="t40">
-                        <col class="t15">
-                        <col class="t15">
-                        <col>
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>ERN</th>
-                            <th></th>
-                        </tr>
-                        @foreach (var employerResultsViewModel in @Model.Employers.Page)
-                        {
-                            <tr>
-                                <th>
-                                    <h4 class="bold-small">@employerResultsViewModel.FullName</h4>
-                                </th>
-                                <td>
-                                    @employerResultsViewModel.Address.AddressLine1
-                                    @if (!string.IsNullOrWhiteSpace(@employerResultsViewModel.Address.AddressLine2))
-                                    {
-                                        <br />@employerResultsViewModel.Address.AddressLine2
-                                    }
-                                    <br />@employerResultsViewModel.Address.AddressLine4 @employerResultsViewModel.Address.Postcode
-                                </td>
-                                <td>@employerResultsViewModel.EdsUrn</td>
-                                <td>
-                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmNewEmployerSelection, new {providerSiteId = Model.ProviderSiteId, edsUrn = employerResultsViewModel.EdsUrn, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <div class="page-navigation">
-
-            @{
-                var prevLink = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&Employers.CurrentPage=" + (Model.Employers.CurrentPage - 1);
-                var nextLink = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&Employers.CurrentPage=" + (Model.Employers.CurrentPage + 1);
-            }
-
-            <a href="@prevLink"
-               style="visibility: @(Model.Employers.CurrentPage == 1 ? "hidden" : "visible")"
-               class="page-navigation__btn previous">
-                <i class="arrow-button fa fa-angle-left"></i>
-                <span class="description">Previous <span class="sfa-hide-mobile">page</span></span>
-                <span class="counter">@(Model.Employers.CurrentPage - 1) of @Model.Employers.TotalNumberOfPages</span>
-            </a>
-            <a href="@nextLink"
-               style="visibility: @(Model.Employers.CurrentPage == Model.Employers.TotalNumberOfPages ? "hidden" : "visible")"
-               class="page-navigation__btn next">
-                <i class="arrow-button fa fa-angle-right"></i>
-                <span class="description">Next <span class="sfa-hide-mobile">page</span></span>
-                <span class="counter">@(Model.Employers.CurrentPage + 1) of @Model.Employers.TotalNumberOfPages</span>
-            </a>
-
-        </div>
-        <div class="page-navigation" style="display: none">
-
-            @for (var i = 1; i < Model.Employers.TotalNumberOfPages; i++)
+                @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer), @id = "edsUrn-search-form" }))
             {
-                var pageLink = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&Employers.CurrentPage=" + (i + 1);
+                    @Html.HiddenFor(m => m.ProviderSiteId)
+                    @Html.HiddenFor(m => m.VacancyGuid)
+                    @Html.Hidden("FilterType", EmployerFilterType.EdsUrn)
+                    @Html.HiddenFor(m => m.ComeFromPreview)
 
-                <a href="@pageLink" style="font-weight: @(Model.Employers.CurrentPage == i ? "bold" : "normal")">@i</a>
-                <span>&nbsp;</span>
-            }
+                    <div id="edsUrn-search-panel" class="toggle-content panel panel-border-narrow">
+                        @Html.FormTextFor(model => model.EdsUrn)
 
-        </div>
+                        <button id="edsUrn-search-button" type="submit" class="button">
+                            Find employer
+                        </button>
+                    </div>
                 }
+
+                @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer), @id = "name-location-search-form" }))
+            {
+                    @Html.HiddenFor(m => m.ProviderSiteId)
+                    @Html.HiddenFor(m => m.VacancyGuid)
+                    @Html.Hidden("FilterType", EmployerFilterType.NameAndLocation)
+                    @Html.HiddenFor(m => m.ComeFromPreview)
+
+                    <div id="name-location-search-panel" class="toggle-content panel panel-border-narrow">
+                        @Html.FormTextFor(model => model.Name)
+                        @Html.FormTextFor(model => model.Location, hintText: "Enter town or postcode")
+
+                        <button id="name-location-search-button" type="submit" class="button">
+                            Find employer
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
+
+@if (Model.Employers.ResultsCount > 0)
+{
+    <div class="grid-row">
+        <div class="column-full">
+            @{
+                var resultsMessage = Model.Employers.ResultsCount > 1 ? string.Format("{0} employers found", Model.Employers.ResultsCount) : "One employer found";
+            }
+            <h2 class="heading-large">@resultsMessage</h2>
+            <table>
+                <colgroup>
+                    <col class="t30">
+                    <col class="t40">
+                    <col class="t15">
+                    <col class="t15">
+                    <col>
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>ERN</th>
+                        <th></th>
+                    </tr>
+                    @foreach (var employerResultsViewModel in @Model.Employers.Page)
+                    {
+                        <tr>
+                            <th>
+                                <h4 class="bold-small">@employerResultsViewModel.FullName</h4>
+                            </th>
+                            <td>
+                                @employerResultsViewModel.Address.AddressLine1
+                                @if (!string.IsNullOrWhiteSpace(@employerResultsViewModel.Address.AddressLine2))
+                                {
+                                    <br />@employerResultsViewModel.Address.AddressLine2
+                                }
+                                <br />@employerResultsViewModel.Address.AddressLine4 @employerResultsViewModel.Address.Postcode
+                            </td>
+                            <td>@employerResultsViewModel.EdsUrn</td>
+                            <td>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmNewEmployerSelection, new { providerSiteId = Model.ProviderSiteId, edsUrn = employerResultsViewModel.EdsUrn, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview })">Select employer</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="page-navigation">
+
+                @{
+                    var prevLink = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&Employers.CurrentPage=" + (Model.Employers.CurrentPage - 1);
+                    var nextLink = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&Employers.CurrentPage=" + (Model.Employers.CurrentPage + 1);
+                }
+
+                <a href="@prevLink" style="visibility: @(Model.Employers.CurrentPage == 1 ? "hidden" : "visible")" class="page-navigation__btn previous column-one-third">
+                    <i class="arrow-button fa fa-angle-left"></i>
+                    <span class="description">Previous <span class="sfa-hide-mobile">page</span></span>
+                    <span class="counter">@(Model.Employers.CurrentPage - 1) of @Model.Employers.TotalNumberOfPages</span>
+                </a>
+                <a href="@nextLink" style="visibility: @(Model.Employers.CurrentPage == Model.Employers.TotalNumberOfPages ? "hidden" : "visible")" class="page-navigation__btn next column-one-third">
+                    <i class="arrow-button fa fa-angle-right"></i>
+                    <span class="description">Next <span class="sfa-hide-mobile">page</span></span>
+                    <span class="counter">@(Model.Employers.CurrentPage + 1) of @Model.Employers.TotalNumberOfPages</span>
+                </a>
+            </div>
+        </div>
+    </div>
+}

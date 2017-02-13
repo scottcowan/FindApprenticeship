@@ -3,5 +3,5 @@
 <a name="@Model.AnchorName"></a>
 @if (Model.Status.IsStateReviewable())
 {
-    <a href="@Model.EditUrl" class="edit-comment-link">Edit/comment</a>
+    <a href="@Model.EditUrl" class="sfa-edit-button-@(Model.IsUnderParagraph ? "p" : "heading-xlarge")">Edit/comment</a>
 }

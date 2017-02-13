@@ -3,12 +3,11 @@
 @{
     var state = string.IsNullOrWhiteSpace(Model) ? string.Empty : "open";
 }
-
-<details class="@state" @state>
-    <summary>@ViewData["Label"]</summary>
-    <div class="detail-content qa-comment">
-        <div class="blocklabel-single-container">
-            @Html.TextAreaFor(m => m, new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
+<div class="form-group">
+    <details class="@state" @state>
+        <summary><span class="summary">@ViewData["Label"]</span></summary>
+        <div class="detail-content sfa-inset sfa-inset-yellow">
+            @Html.TextAreaFor(m => m, new { @class = "form-control form-control-4-4", type = "text" })
         </div>
-    </div>
-</details>
+    </details>
+</div>

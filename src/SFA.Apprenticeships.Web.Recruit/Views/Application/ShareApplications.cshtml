@@ -16,135 +16,144 @@
 
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
-    <div>
-        <section class="sfa-section-bordered">
-            <div class="hgroup text">
+        <div class="grid-row">
+            <div class="column-two-thirds">
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
                     Select the applications you would like to share
                 </h1>
             </div>
-        </section>
+        </div>
 
-        <section class="sfa-no-bottom-margin" id="applicationsSection">
-            <section class="sfa-medium-bottom-padding sfa-xlarge-top-padding sfa-section-bordered">
-                <div class="grid-row">
-                    <div class="column-one-quarter">
-                        <div class="data">
-                            <h2 class="bold-xlarge">@Model.NewApplicationsCount</h2>
-                            <p class="font-xsmall">New</p>
-                        </div>
-                    </div>
-                    <div class="column-one-quarter">
-                        <div class="data">
-                            <h2 class="bold-xlarge">@Model.InProgressApplicationsCount</h2>
-                            <p class="font-xsmall">In progress</p>
-                        </div>
-                    </div>
+        <div id="applicationsSection">
 
-                    @if (Model.VacancyType != VacancyType.Traineeship)
-                    {
-                        <div class="column-one-quarter">
-                            <div class="data">
-                                <h2 class="bold-xlarge">@Model.SuccessfulApplicationsCount</h2>
-                                <p class="font-xsmall">Successful</p>
-                            </div>
-                        </div>
-                        <div class="column-one-quarter">
-                            <div class="data">
-                                <h2 class="bold-xlarge">@Model.UnsuccessfulApplicationsCount</h2>
-                                <p class="font-xsmall">Unsuccessful</p>
-                            </div>
-                        </div>
-                    }
+            <div class="grid-row sfa-filter-table-header sfa-section-border-bottom">
+                <div class="column-half">
+                    <h2 class="heading-large sfa-no-margins">Applications</h2>
                 </div>
-            </section>
+            </div>
 
-            <table class="vert-top" id="applicationTable">
-                <colgroup>
-                    <col>
-                    <col>
-                    <col>
-                    <col>
-                    <col>
-                    <col>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>
-                            <span class="font-black">Surname</span>
-                        </th>
-                        <th>
-                            <span class="font-black">First name</span>
-                        </th>
-                        <th>
-                            <span class="font-black">Applicant ID</span>
-                        </th>
-                        <th>
-                            <span class="font-black">Vacancy manager notes</span>
-                        </th>
-                        <th>
-                            <span class="font-black">Submitted</span>
-                        </th>
-                        <th>
-                            <span class="font-black">Status</span>
-                        </th>
-                        <th>
-                            <span class="font-black">Select application</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var applicationSummary in Model.ApplicationSummaries)
-                {
-                        <tr class="applicant">
-                            <td>
-                                <h4 class="applicant-name">@applicationSummary.LastName</h4>
-                            </td>
-                            <td>
-                                <h4 class="applicant-name">@applicationSummary.FirstName</h4>
-                            </td>
-                            <td>
-                                @applicationSummary.ApplicantID
-                            </td>
-                            <td>
-                                @{
-                                    var notes = applicationSummary.Notes;
-                                    if (notes != null && notes.Length > 20)
-                                    {
-                                        notes = notes.Substring(0, 20) + "...";
-                                    }
-                                }
-                                @notes
-                            </td>
-                            <td>@Html.DisplayFor(m => applicationSummary.DateApplied)</td>
-                            <td>
-                                @Html.Partial("_applicationStatus", applicationSummary.Status)
-                            </td>
-                            <td>
-                                @{
-                                    var selected = Model.SelectedApplicationIds.Contains(applicationSummary.ApplicationId) ? "checked" : string.Empty;
-                                }
-                                <input type="checkbox" name="@Html.NameFor(m => m.SelectedApplicationIds)" value="@applicationSummary.ApplicationId" @selected />
-                            </td>
-                        </tr>
-                                    }
-                </tbody>
-            </table>
-        </section>
+                <div class="sfa-medium-bottom-padding sfa-xlarge-top-padding sfa-section-bordered">
+                    <div class="grid-row">
+                        <div class="column-one-quarter">
+                            <div class="data sfa-data">
+                                <h2 class="bold-xlarge">@Model.NewApplicationsCount</h2>
+                                <p class="font-xsmall">New</p>
+                            </div>
+                        </div>
+                        <div class="column-one-quarter">
+                            <div class="data sfa-data">
+                                <h2 class="bold-xlarge">@Model.InProgressApplicationsCount</h2>
+                                <p class="font-xsmall">In progress</p>
+                            </div>
+                        </div>
 
-        <section>
-            <p>Enter an email address for the person/organisation you would like to share this vacancy's application/s with.</p>
-            <p>They'll receive an email containing a link to the application/s. The link will expire in 2 weeks (@DateTime.UtcNow.AddDays(14).ToString("d MMMM yyyy")).</p>
-            @Html.FormTextFor(m => m.RecipientEmailAddress, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-small" })
-            @Html.FormTextAreaFor(m => m.OptionalMessage, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;", data_val_length_max = "350" })
-        </section>
+                        @if (Model.VacancyType != VacancyType.Traineeship)
+                        {
+                            <div class="column-one-quarter">
+                                <div class="data sfa-data">
+                                    <h2 class="bold-xlarge">@Model.SuccessfulApplicationsCount</h2>
+                                    <p class="font-xsmall">Successful</p>
+                                </div>
+                            </div>
+                            <div class="column-one-quarter">
+                                <div class="data sfa-data">
+                                    <h2 class="bold-xlarge">@Model.UnsuccessfulApplicationsCount</h2>
+                                    <p class="font-xsmall">Unsuccessful</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
 
-        <section>
-            <div class="form-group inline">
+                <div class="grid-row">
+                    <div class="column-full">
+                        <table class="sfa-table" id="applicationTable">
+                            <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="font-black">Surname</span>
+                                    </th>
+                                    <th>
+                                        <span class="font-black">First name</span>
+                                    </th>
+                                    <th>
+                                        <span class="font-black">Applicant ID</span>
+                                    </th>
+                                    <th>
+                                        <span class="font-black">Vacancy manager notes</span>
+                                    </th>
+                                    <th>
+                                        <span class="font-black">Submitted</span>
+                                    </th>
+                                    <th>
+                                        <span class="font-black">Status</span>
+                                    </th>
+                                    <th>
+                                        <span class="font-black">Select application</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var applicationSummary in Model.ApplicationSummaries)
+                                {
+                                    <tr class="applicant">
+                                        <td>
+                                            <h4 class="applicant-name">@applicationSummary.LastName</h4>
+                                        </td>
+                                        <td>
+                                            <h4 class="applicant-name">@applicationSummary.FirstName</h4>
+                                        </td>
+                                        <td>
+                                            @applicationSummary.ApplicantID
+                                        </td>
+                                        <td>
+                                            @{
+                                                var notes = applicationSummary.Notes;
+                                                if (notes != null && notes.Length > 20)
+                                                {
+                                                    notes = notes.Substring(0, 20) + "...";
+                                                }
+                                            }
+                                            @notes
+                                        </td>
+                                        <td>@Html.DisplayFor(m => applicationSummary.DateApplied)</td>
+                                        <td>
+                                            @Html.Partial("_applicationStatus", applicationSummary.Status)
+                                        </td>
+                                        <td>
+                                            @{
+                                                var selected = Model.SelectedApplicationIds.Contains(applicationSummary.ApplicationId) ? "checked" : string.Empty;
+                                            }
+                                            <input type="checkbox" name="@Html.NameFor(m => m.SelectedApplicationIds)" value="@applicationSummary.ApplicationId" @selected />
+                                        </td>
+                                    </tr>
+                                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="column-two-thirds">
+                    <h2 class="heading-large">Choose recipient</h2>
+                    <p>Enter an email address for the person/organisation you would like to share this vacancy's application/s with.</p>
+                    <p>They'll receive an email containing a link to the application/s. The link will expire in 2 weeks (@DateTime.UtcNow.AddDays(14).ToString("d MMMM yyyy")).</p>
+                    @Html.FormTextFor(m => m.RecipientEmailAddress, controlHtmlAttributes: new { type = "text", size = 12, @class = "form-control-2-3" })
+                    @Html.FormTextAreaFor(m => m.OptionalMessage, controlHtmlAttributes: new { @class = "form-control-4-4", type = "text", size = 12, style = "height: 200px;", data_val_length_max = "350" })
+                </div>
+            </div>
+
+            <div class="form-group inline sfa-xlarge-top-margin">
                 <button type="submit" class="button">Send</button>
                 @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" })
             </div>
-        </section>
-
-    </div>
-                                    }
+                                                }

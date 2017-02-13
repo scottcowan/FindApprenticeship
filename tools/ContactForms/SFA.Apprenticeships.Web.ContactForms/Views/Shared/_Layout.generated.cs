@@ -56,9 +56,9 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n<!DOCTYPE html>\r\n<!--[if lt IE 7]><html class=\"no-js lt-ie9 lt-ie8 lt-ie7\"><![e" +
-"ndif]-->\r\n<!--[if IE 7]><html class=\"no-js lt-ie9 lt-ie8\"><![endif]-->\r\n<!--[if " +
-"IE 8]><html class=\"no-js lt-ie9\"><![endif]-->\r\n<!--[if gt IE 8]><!-->\r\n<html");
+WriteLiteral("<!DOCTYPE html>\r\n<!--[if lt IE 7]><html class=\"no-js lt-ie9 lt-ie8 lt-ie7\"><![end" +
+"if]-->\r\n<!--[if IE 7]><html class=\"no-js lt-ie9 lt-ie8\"><![endif]-->\r\n<!--[if IE" +
+" 8]><html class=\"no-js lt-ie9\"><![endif]-->\r\n<!--[if gt IE 8]><!-->\r\n<html");
 
 WriteLiteral(" lang=\"en-GB\"");
 
@@ -77,7 +77,7 @@ WriteLiteral(" content=\"IE=edge\"");
 WriteLiteral(">\r\n    <title>");
 
             
-            #line 15 "..\..\Views\Shared\_Layout.cshtml"
+            #line 14 "..\..\Views\Shared\_Layout.cshtml"
       Write(ViewBag.Title);
 
             
@@ -119,7 +119,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 21 "..\..\Views\Shared\_Layout.cshtml"
+            #line 20 "..\..\Views\Shared\_Layout.cshtml"
 Write(RenderSection("metatags", false));
 
             
@@ -128,7 +128,7 @@ Write(RenderSection("metatags", false));
 WriteLiteral("\r\n    <!--[if gt IE 8]><!-->");
 
             
-            #line 22 "..\..\Views\Shared\_Layout.cshtml"
+            #line 21 "..\..\Views\Shared\_Layout.cshtml"
                      Write(Styles.Render(Url.CdnContent("css/main-1.13.2.css", "~/Content/_assets")));
 
             
@@ -137,7 +137,7 @@ WriteLiteral("\r\n    <!--[if gt IE 8]><!-->");
 WriteLiteral("<!--<![endif]-->\r\n    <!--[if lte IE 8]>");
 
             
-            #line 23 "..\..\Views\Shared\_Layout.cshtml"
+            #line 22 "..\..\Views\Shared\_Layout.cshtml"
                  Write(Styles.Render(Url.CdnContent("css/main-ie8-1.13.2.css", "~/Content/_assets")));
 
             
@@ -146,7 +146,7 @@ WriteLiteral("<!--<![endif]-->\r\n    <!--[if lte IE 8]>");
 WriteLiteral("<![endif]-->\r\n    <!--[if lte IE 8]>");
 
             
-            #line 24 "..\..\Views\Shared\_Layout.cshtml"
+            #line 23 "..\..\Views\Shared\_Layout.cshtml"
                  Write(Styles.Render(Url.CdnContent("css/fonts-ie8.css", "~/Content/_assets")));
 
             
@@ -155,7 +155,7 @@ WriteLiteral("<![endif]-->\r\n    <!--[if lte IE 8]>");
 WriteLiteral("<![endif]-->\r\n    <!--[if gte IE 9]><!-->");
 
             
-            #line 25 "..\..\Views\Shared\_Layout.cshtml"
+            #line 24 "..\..\Views\Shared\_Layout.cshtml"
                       Write(Styles.Render(Url.CdnContent("css/fonts.css", "~/Content/_assets")));
 
             
@@ -165,14 +165,14 @@ WriteLiteral("<!--<![endif]-->\r\n    <link");
 
 WriteLiteral(" rel=\"shortcut icon\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1488), Tuple.Create("\"", 1550)
+WriteAttribute("href", Tuple.Create(" href=\"", 1486), Tuple.Create("\"", 1548)
             
-            #line 26 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 1495), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
+            #line 25 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 1493), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
             
             #line default
             #line hidden
-, 1495), false)
+, 1493), false)
 );
 
 WriteLiteral(" type=\"image/x-icon\"");
@@ -182,44 +182,67 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 27 "..\..\Views\Shared\_Layout.cshtml"
+            #line 26 "..\..\Views\Shared\_Layout.cshtml"
 Write(Styles.Render(Url.CdnContent("css/font-awesome/css/font-awesome.min.css", "~/Content/_assets")));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 28 "..\..\Views\Shared\_Layout.cshtml"
-Write(Html.Partial("_Scripts"));
 
             
             #line default
             #line hidden
 WriteLiteral(@"
 
+    <!-- Google Tag Manager -->
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-63979465-1', 'auto');
-      ga('send', 'pageview');
-    </script>
-</head>
-<body>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push(
+            { 'gtm.start': new Date().getTime(), event: 'gtm.js' }
+            ); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-T3CZC2');</script>
+    <!-- End Google Tag Manager -->
 
 ");
 
+WriteLiteral("    ");
+
             
             #line 39 "..\..\Views\Shared\_Layout.cshtml"
+Write(Html.Partial("_Scripts"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"
+    <script>
+        (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-63979465-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe");
+
+WriteLiteral(" src=\"https://www.googletagmanager.com/ns.html?id=GTM-T3CZC2\"");
+
+WriteLiteral("\r\n                height=\"0\"");
+
+WriteLiteral(" width=\"0\"");
+
+WriteLiteral(" style=\"display:none;visibility:hidden\"");
+
+WriteLiteral("></iframe>\r\n    </noscript>\r\n    <!-- End Google Tag Manager (noscript) -->\r\n\r\n");
+
+            
+            #line 55 "..\..\Views\Shared\_Layout.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 39 "..\..\Views\Shared\_Layout.cshtml"
+            #line 55 "..\..\Views\Shared\_Layout.cshtml"
      if (!string.IsNullOrEmpty(ViewBag.PlannedOutageMessage))
     {
 
@@ -245,7 +268,7 @@ WriteLiteral(" class=\"font-xsmall maintenance-content\"");
 WriteLiteral(">\r\n                    <div>");
 
             
-            #line 44 "..\..\Views\Shared\_Layout.cshtml"
+            #line 60 "..\..\Views\Shared\_Layout.cshtml"
                     Write(Html.Raw(ViewBag.PlannedOutageMessage));
 
             
@@ -267,13 +290,13 @@ WriteLiteral("></i>\r\n                    </a>\r\n                </div>\r\n   
 "    </div>\r\n");
 
             
-            #line 51 "..\..\Views\Shared\_Layout.cshtml"
+            #line 67 "..\..\Views\Shared\_Layout.cshtml"
     }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    <div");
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"skiplink-container\"");
 
@@ -307,14 +330,14 @@ WriteLiteral(" class=\"govuk-logo\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3162), Tuple.Create("\"", 3237)
+WriteAttribute("src", Tuple.Create(" src=\"", 4070), Tuple.Create("\"", 4145)
             
-            #line 62 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 3168), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
+            #line 77 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 4076), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 3168), false)
+, 4076), false)
 );
 
 WriteLiteral(" alt=\"Crown\"");
@@ -335,19 +358,19 @@ WriteLiteral(" class=\"gov-border\"");
 WriteLiteral(">\r\n");
 
             
-            #line 70 "..\..\Views\Shared\_Layout.cshtml"
+            #line 85 "..\..\Views\Shared\_Layout.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 70 "..\..\Views\Shared\_Layout.cshtml"
+            #line 85 "..\..\Views\Shared\_Layout.cshtml"
               
                 var controller = ViewContext.Controller as ContactFormsControllerBase;
 
                 if (controller != null && ViewBag.UserMessageLevel != null)
                 {
-                    switch ((UserMessageLevel)ViewBag.UserMessageLevel)
+                    switch ((UserMessageLevel) ViewBag.UserMessageLevel)
                     {
                         case UserMessageLevel.Info:
                             string infoMessage = ViewBag.ConfirmationMessage;
@@ -370,7 +393,7 @@ WriteLiteral(" id=\"InfoMessageText\"");
 WriteLiteral(">");
 
             
-            #line 82 "..\..\Views\Shared\_Layout.cshtml"
+            #line 97 "..\..\Views\Shared\_Layout.cshtml"
                                                        Write(Html.Raw(infoMessage));
 
             
@@ -379,7 +402,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                                </div>\r\n");
 
             
-            #line 84 "..\..\Views\Shared\_Layout.cshtml"
+            #line 99 "..\..\Views\Shared\_Layout.cshtml"
                             }
                             break;
                         case UserMessageLevel.Success:
@@ -407,7 +430,7 @@ WriteLiteral(" class=\"fa fa-check\"");
 WriteLiteral("></i>");
 
             
-            #line 91 "..\..\Views\Shared\_Layout.cshtml"
+            #line 106 "..\..\Views\Shared\_Layout.cshtml"
                                                                                      Write(Html.Raw(successMessage));
 
             
@@ -416,7 +439,7 @@ WriteLiteral("></i>");
 WriteLiteral("</p>\r\n                                </div>\r\n");
 
             
-            #line 93 "..\..\Views\Shared\_Layout.cshtml"
+            #line 108 "..\..\Views\Shared\_Layout.cshtml"
                             }
                             break;
                         case UserMessageLevel.Warning:
@@ -440,7 +463,7 @@ WriteLiteral(" id=\"WarningMessageText\"");
 WriteLiteral(">");
 
             
-            #line 100 "..\..\Views\Shared\_Layout.cshtml"
+            #line 115 "..\..\Views\Shared\_Layout.cshtml"
                                                           Write(Html.Raw(warningMessage));
 
             
@@ -449,7 +472,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                                </div>\r\n");
 
             
-            #line 102 "..\..\Views\Shared\_Layout.cshtml"
+            #line 117 "..\..\Views\Shared\_Layout.cshtml"
                             }
                             break;
                         case UserMessageLevel.Error:
@@ -473,7 +496,7 @@ WriteLiteral(" id=\"ErrorMessageText\"");
 WriteLiteral(">");
 
             
-            #line 109 "..\..\Views\Shared\_Layout.cshtml"
+            #line 124 "..\..\Views\Shared\_Layout.cshtml"
                                                         Write(Html.Raw(errorMessage));
 
             
@@ -482,7 +505,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                                </div>\r\n");
 
             
-            #line 111 "..\..\Views\Shared\_Layout.cshtml"
+            #line 126 "..\..\Views\Shared\_Layout.cshtml"
                             }
                             break;
                     }
@@ -496,13 +519,13 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 116 "..\..\Views\Shared\_Layout.cshtml"
+            #line 131 "..\..\Views\Shared\_Layout.cshtml"
        Write(RenderBody());
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </main>\r\n    </div>\r\n\r\n    <footer");
+WriteLiteral("\r\n        </main>\r\n    </div>\r\n    <footer");
 
 WriteLiteral(" class=\"gov-border\"");
 
@@ -556,14 +579,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 6720), Tuple.Create("\"", 6788)
+WriteAttribute("src", Tuple.Create(" src=\"", 7627), Tuple.Create("\"", 7695)
             
-            #line 128 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 6726), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
+            #line 142 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 7633), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 6726), false)
+, 7633), false)
 );
 
 WriteLiteral(" width=\"125\"");
@@ -573,13 +596,11 @@ WriteLiteral(" height=\"102\"");
 WriteLiteral(" alt=\"Crown copyright logo\"");
 
 WriteLiteral(">\r\n                    <p>&copy; Crown copyright</p>\r\n                </a>\r\n     " +
-"       </div>\r\n        </div>\r\n    </footer>\r\n    <!-- Placed at the end of the " +
-"document so the pages load faster -->\r\n");
-
-WriteLiteral("    ");
+"       </div>\r\n        </div>\r\n    </footer>\r\n<!-- Placed at the end of the docu" +
+"ment so the pages load faster -->\r\n");
 
             
-            #line 135 "..\..\Views\Shared\_Layout.cshtml"
+            #line 149 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/jquery"));
 
             
@@ -587,10 +608,8 @@ Write(Scripts.Render("~/bundles/jquery"));
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
-
             
-            #line 136 "..\..\Views\Shared\_Layout.cshtml"
+            #line 150 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/fastclick"));
 
             
@@ -598,10 +617,8 @@ Write(Scripts.Render("~/bundles/fastclick"));
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
-
             
-            #line 137 "..\..\Views\Shared\_Layout.cshtml"
+            #line 151 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/underscore"));
 
             
@@ -609,10 +626,8 @@ Write(Scripts.Render("~/bundles/underscore"));
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
-
             
-            #line 138 "..\..\Views\Shared\_Layout.cshtml"
+            #line 152 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/nascript"));
 
             
@@ -620,10 +635,8 @@ Write(Scripts.Render("~/bundles/nascript"));
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
-
             
-            #line 139 "..\..\Views\Shared\_Layout.cshtml"
+            #line 153 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/vendor"));
 
             
@@ -631,10 +644,8 @@ Write(Scripts.Render("~/bundles/vendor"));
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
-
             
-            #line 140 "..\..\Views\Shared\_Layout.cshtml"
+            #line 154 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/nas"));
 
             
@@ -642,27 +653,23 @@ Write(Scripts.Render("~/bundles/nas"));
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
-
             
-            #line 141 "..\..\Views\Shared\_Layout.cshtml"
+            #line 155 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/lookupservice"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
-
-WriteLiteral("    ");
+WriteLiteral("\r\n");
 
             
-            #line 143 "..\..\Views\Shared\_Layout.cshtml"
+            #line 156 "..\..\Views\Shared\_Layout.cshtml"
 Write(RenderSection("scripts", required: false));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n</body>\r\n</html>\r\n");
+WriteLiteral("\r\n</body>\r\n</html>\r\n");
 
         }
     }

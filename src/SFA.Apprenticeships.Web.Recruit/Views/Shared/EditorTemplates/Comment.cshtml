@@ -2,10 +2,12 @@
 
 @if (!string.IsNullOrWhiteSpace(Model))
 {
-    <details class="open" open>
-        <summary>@ViewData["Label"]</summary>
-        <div class="detail-content qa-comment">
-            <div class="blocklabel-single-container @Model.GetPreserveFormattingCssClass()">@Model</div>
-        </div>
-    </details>
+    <div class="form-group">
+        <details class="open" open>
+            <summary><span class="summary">@ViewData["Label"]</span></summary>
+            <div class="detail-content sfa-inset sfa-inset-yellow">
+                <div class="@Model.GetPreserveFormattingCssClass()">@Model</div>
+            </div>
+        </details>
+    </div>
 }

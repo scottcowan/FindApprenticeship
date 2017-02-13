@@ -82,7 +82,10 @@ Custom margins
   margin-right: 10px !important; }
 
 .sfa-large-bottom-margin {
-  margin-bottom: 15px !important; }
+  margin-bottom: 10px !important; }
+  @media (min-width: 641px) {
+    .sfa-large-bottom-margin {
+      margin-bottom: 20px !important; } }
 
 .sfa-xlarge-bottom-margin {
   margin-bottom: 15px !important; }
@@ -101,6 +104,12 @@ Custom margins
   @media (min-width: 641px) {
     .sfa-xlarge-top-margin {
       margin-top: 30px !important; } }
+
+.sfa-large-top-margin {
+  margin-top: 10px !important; }
+  @media (min-width: 641px) {
+    .sfa-large-top-margin {
+      margin-top: 20px !important; } }
 
 .sfa-p-margin-bottom {
   margin-bottom: 1.05263em; }
@@ -146,37 +155,9 @@ Custom Font Awesome
 ------------------------------------------------------------------- */
 i.fa {
   margin-right: .3em; }
-
-/* -------------------------------------------------------------------
-Custom form elements
-------------------------------------------------------------------- */
-.sfa-input-auto-width {
-  margin-bottom: 5px; }
-  @media (min-width: 641px) {
-    .sfa-input-auto-width {
-      margin-bottom: 0px;
-      width: auto !important; } }
-
-.sfa-form-radio, .sfa-form-checkbox {
-  padding-left: 18px; }
-  .sfa-form-radio input, .sfa-form-checkbox input {
-    margin-left: -18px !important; }
-
-.sfa-form-control-after {
-  font-family: "nta", Arial, sans-serif;
-  font-weight: 400;
-  text-transform: none;
-  font-size: 16px;
-  line-height: 1.25;
-  display: block;
-  color: #6f777b;
-  font-weight: normal;
-  padding-top: 2px;
-  padding-bottom: 2px; }
-  @media (min-width: 641px) {
-    .sfa-form-control-after {
-      font-size: 19px;
-      line-height: 1.31579; } }
+  i.fa.sfa-icon-right {
+    margin-left: .3em;
+    margin-right: 0; }
 
 /* -------------------------------------------------------------------
 Categories and sub-categories
@@ -232,6 +213,17 @@ Custom Typography
     padding-top: 6px;
     padding-bottom: 4px; } }
 
+.sfa-data {
+  margin-top: 0px !important;
+  text-align: center; }
+  .sfa-data a {
+    text-decoration: none;
+    display: block; }
+    .sfa-data a .bold-xlarge {
+      text-decoration: none; }
+    .sfa-data a .bold-xsmall {
+      text-decoration: underline; }
+
 /* -------------------------------------------------------------------
 Custom list
 ------------------------------------------------------------------- */
@@ -241,28 +233,6 @@ dl.sfa-dl .sfa-di {
 dl.sfa-dl .dt {
   font-weight: bold;
   font-weight: 700; }
-
-/* -------------------------------------------------------------------
-Text editor
-------------------------------------------------------------------- */
-.cke_editable {
-  font-family: "nta", Arial, sans-serif;
-  font-weight: 400;
-  text-transform: none;
-  font-size: 16px;
-  line-height: 1.25;
-  -webkit-font-smoothing: antialiased; }
-  @media (min-width: 641px) {
-    .cke_editable {
-      font-size: 19px;
-      line-height: 1.31579; } }
-  .cke_editable p {
-    margin-top: 0.3125em;
-    margin-bottom: 1.25em; }
-    @media (min-width: 641px) {
-      .cke_editable p {
-        margin-top: 0.26316em;
-        margin-bottom: 1.05263em; } }
 
 /* -------------------------------------------------------------------
 Text editor generated content
@@ -309,6 +279,9 @@ Alignment
     .sfa-pull-right-tablet {
       float: right !important; } }
 
+.sfa-display-inline {
+  display: inline; }
+
 /* -------------------------------------------------------------------
 Custom expand content
 ------------------------------------------------------------------- */
@@ -346,6 +319,8 @@ Inset boxes
 ------------------------------------------------------------------- */
 .sfa-inset {
   padding: 15px; }
+  .sfa-inset .form-control {
+    background-color: #fff; }
   .sfa-inset-yellow {
     background-color: #fff2d3; }
   .sfa-inset-light-grey {
@@ -361,9 +336,9 @@ Table styles
     padding: 0 0.75em 0.75em 0; }
 
 .sfa-table {
-  font-size: 14px; }
+  font-size: 16px; }
   .sfa-table * {
-    font-size: 14px; }
+    font-size: 16px; }
 
 .sfa-col-3-4 {
   width: 75%; }
@@ -382,6 +357,41 @@ Table styles
 
 .sfa-col-1-8 {
   width: 12.5%; }
+
+/* -------------------------------------------------------------------
+Table filter and search
+------------------------------------------------------------------- */
+.sfa-filter-table-header {
+  padding: 30px 0; }
+
+.sfa-filter-container {
+  padding: 30px 0 10px 0; }
+
+.sfa-section-border-bottom {
+  border-bottom: 1px solid #bfc1c3;
+  margin-left: 0 !important;
+  margin-right: 0 !important; }
+  .sfa-section-border-bottom .grid-row {
+    margin-left: 0 !important;
+    margin-right: 0 !important; }
+  .sfa-section-border-bottom .column-half:first-child, .sfa-section-border-bottom .column-one-half:first-child, .sfa-section-border-bottom .column-quarter:first-child, .sfa-section-border-bottom .column-one-quarter:first-child, .sfa-section-border-bottom .column-one-third:first-child, .sfa-section-border-bottom .column-two-thirds:first-child {
+    padding-left: 0px; }
+  .sfa-section-border-bottom .column-half:last-child, .sfa-section-border-bottom .column-one-half:last-child, .sfa-section-border-bottom .column-quarter:last-child, .sfa-section-border-bottom .column-one-quarter:last-child, .sfa-section-border-bottom .column-one-third:last-child, .sfa-section-border-bottom .column-two-thirds:last-child {
+    padding-right: 0px; }
+  .sfa-section-border-bottom .column-full {
+    padding-left: 0;
+    padding-right: 0; }
+
+/* -------------------------------------------------------------------
+Print
+------------------------------------------------------------------- */
+.sfa-print-only {
+  display: none;
+  visibility: hidden; }
+  @media print {
+    .sfa-print-only {
+      display: inline;
+      visibility: visible; } }
 
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
@@ -417,13 +427,6 @@ iframe, object, embed {
 
 .sfa-section-bordered {
   border-bottom: 1px solid #bfc1c3; }
-
-.data {
-  text-align: center; }
-  .data a, .data a:hover {
-    text-decoration: none !important; }
-  .data p {
-    text-decoration: underline; }
 
 .secondary-text {
   color: #6f777b; }
@@ -584,6 +587,27 @@ iframe, object, embed {
     color: #2b8cc4; }
   .sfa-mock-link:focus {
     background: #ffbf47; }
+
+.sfa-edit-button-p {
+  display: table;
+  margin-top: -15px;
+  margin-bottom: 20px; }
+  @media (min-width: 641px) {
+    .sfa-edit-button-p {
+      margin-top: -15px;
+      margin-bottom: 20px; } }
+
+.sfa-edit-button-heading-xlarge {
+  display: table;
+  margin-top: -30px;
+  margin-bottom: 30px; }
+  @media (min-width: 641px) {
+    .sfa-edit-button-heading-xlarge {
+      margin-top: -60px;
+      margin-bottom: 60px; } }
+
+.sfa-show-all {
+  margin-left: 0.5em; }
 
 .tabbed-nav {
   border-bottom: 1px solid #bfc1c3; }
@@ -758,6 +782,9 @@ a[rel="external"]:after {
 
 .page-navigation__btn:active, .page-navigation__btn:focus {
   background-color: #f8f8f8; }
+
+.page-navigation__results {
+  text-align: center; }
 
 .select2-container {
   position: relative !important; }
@@ -3209,9 +3236,39 @@ input[type=number] {
 .form-control-auto {
   width: auto; }
 
-@media (min-width: 641px) {
-  .form-control-4-4 {
-    width: 100%; } }
+.sfa-input-auto-width {
+  margin-bottom: 5px; }
+  @media (min-width: 641px) {
+    .sfa-input-auto-width {
+      margin-bottom: 0px;
+      width: auto !important; } }
+
+.sfa-form-control-auto {
+  width: auto !important; }
+
+.sfa-form-radio, .sfa-form-checkbox {
+  padding-left: 18px; }
+  .sfa-form-radio input, .sfa-form-checkbox input {
+    margin-left: -18px !important; }
+
+.sfa-form-control-after {
+  font-family: "nta", Arial, sans-serif;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 16px;
+  line-height: 1.25;
+  display: block;
+  color: #6f777b;
+  font-weight: normal;
+  padding-top: 2px;
+  padding-bottom: 2px; }
+  @media (min-width: 641px) {
+    .sfa-form-control-after {
+      font-size: 19px;
+      line-height: 1.31579; } }
+
+.sfa-form-control-1-4 {
+  width: 25% !important; }
 
 .js-enabled #global-cookie-message, #global-cookie-message {
   display: block !important; }
@@ -3236,7 +3293,6 @@ input[type=number] {
 
 /*Additions to the cloned styles above */
 .sfa-maintenance-banner .sfa-maintenance-close {
-  font-weight: bold;
   display: block;
   margin: 0 auto;
   max-width: 960px; }
@@ -3297,3 +3353,13 @@ input[type=number] {
     color: #28a197; }
   .success-summary .success-dismiss {
     color: #28a197; }
+
+.sfa-govuk-box-highlight {
+  padding-left: 0.5em;
+  padding-right: 0.5em; }
+
+.sfa-icon-green {
+  color: #28a197; }
+
+.sfa-icon-blue {
+  color: #005ea5; }

@@ -78,7 +78,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {
         <div id="planned-outage-message" class="sfa-maintenance-banner">
             <p>@Html.Raw(ViewBag.PlannedOutageMessage)</p>
-            <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })" class="maintenance-close">
+            <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })" class="sfa-maintenance-close">
                 Dismiss
             </a>
         </div>
@@ -120,7 +120,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="column-half">
                         <p>
                             <strong class="phase-tag">BETA</strong>
-                            <span>This is a new service - your <a href="https://www.surveymonkey.co.uk/r/QLQTJQC" target="_blank">feedback</a> helps improve it.</span>
+                            <span>This is a new service - your <a href="https://www.surveymonkey.co.uk/r/QLQTJQC" >feedback</a> helps improve it.</span>
                         </p>
                     </div>
                     <div class="column-half sfa-navigation">

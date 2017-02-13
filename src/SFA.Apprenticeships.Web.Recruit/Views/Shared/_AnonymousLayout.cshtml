@@ -41,7 +41,7 @@
     {
         <div id="planned-outage-message" class="sfa-maintenance-banner">
             <p>@Html.Raw(ViewBag.PlannedOutageMessage)</p>
-            <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })" class="maintenance-close">
+            <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })" class="sfa-maintenance-close">
                 Dismiss
             </a>
         </div>
@@ -75,7 +75,7 @@
                             <strong class="phase-tag">BETA</strong>
                             @if (Request.IsAuthenticated)
                             {
-                                <span>This is a new service - your <a href="https://www.surveymonkey.co.uk/r/LB5ZJRM" target="_blank">feedback</a> helps improve it.</span>
+                                <span>This is a new service - your <a href="https://www.surveymonkey.co.uk/r/LB5ZJRM" >feedback</a> helps improve it.</span>
                             }
                         </p>
                     </div>
@@ -151,14 +151,14 @@
                     <li class="sfa-small-bottom-margin"><a class="bold-medium" href="@Url.RouteUrl(RecruitmentRouteNames.ContactUs)">Contact us</a></li>
                     <li class="footer__link"><a href="@Url.RouteUrl(RecruitmentRouteNames.Privacy)">Privacy and cookies</a></li>
                     <li class="footer__link"><a href="@Url.RouteUrl(RecruitmentRouteNames.TermsAndConditions)">Terms and conditions</a></li>
-                    <li class="footer__link">Built by <a href="http://gov.uk/sfa" target="_blank">Skills Funding Agency</a></li>
+                    <li class="footer__link">Built by <a href="http://gov.uk/sfa" >Skills Funding Agency</a></li>
                     <li class="footer__ogl hide-print">
                         <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2"
                            class="ir ogl-logo">OGL</a>All content is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">Open Government Licence v2.0</a>,
                         except where otherwise stated
                     </li>
                 </ul>
-                <a class="footer__copyright" href="http://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm" target="_blank">
+                <a class="footer__copyright" href="http://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm" >
                     <img src="@Url.CdnImage("govuk-crest-2x.png")" width="125" height="102" alt="Crown copyright logo">
                     <p>&copy; Crown copyright</p>
                 </a>

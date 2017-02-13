@@ -65,7 +65,7 @@
             {
                 <div class="wage-reason-display">@Model.FurtherVacancyDetailsViewModel.Wage.WageTypeReason</div>
             }
-            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
+            
 
             @{
                 var possibleStartDate = Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date;
@@ -80,5 +80,6 @@
                 @Html.Partial("_NationalMinimumWageExplained", possibleStartDate)
             }
         </div>
+        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
     </li>
 }
