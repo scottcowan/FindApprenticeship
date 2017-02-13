@@ -54,7 +54,7 @@
 
         StandardViewModel GetStandard(int? standardId);
 
-        VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId, VacanciesSummarySearchViewModel vacanciesSummarySearch);
+        Task<VacanciesSummaryViewModel> GetVacanciesSummaryForProvider(int providerId, int providerSiteId, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 
         Task<VacancyOwnerRelationshipViewModel> CloneVacancy(int vacancyReferenceNumber);
 

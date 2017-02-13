@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Infrastructure.Common.Api
         public IApiClient GetApiClient()
         {
             var baseUrl = _configurationService.Get<ApiConfiguration>().ApiBaseUrl;
-            var apiClient = new ApiClient(new Uri(baseUrl), new TokenCredentials("", "bearer"));
+            var apiClient = new ApiClient(new Uri(baseUrl), new TokenCredentials("Public", "bearer"));
             return apiClient;
         }
 

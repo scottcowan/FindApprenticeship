@@ -59,15 +59,12 @@
                 if (vacancy.Status == VacancyStatus.Live)
                 {
                     var vacancySummary = _vacancySummaryService.GetByIds(new List<int> { vacancy.VacancyId }).Single();
-                    var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationships(new List<int> { vacancySummary.VacancyOwnerRelationshipId }, false).Single().Value;
-                    var employer = _employerService.GetEmployers(new List<int> { vacancyOwnerRelationship.EmployerId }).Single();
-                    var providers = _providerService.GetProviders(new List<int> { vacancy.ContractOwnerId }).Single();
                     var categories = _referenceDataProvider.GetCategories().ToList();
 
                     if (vacancy.VacancyType == VacancyType.Apprenticeship)
                     {
                         _logService.Info($"Publishing apprenticeship summary message for vacancy id {vacancy.VacancyId}");
-                        var apprenticeshipSummary = ApprenticeshipSummaryMapper.GetApprenticeshipSummary(vacancySummary, employer, providers, categories, _logService);
+                        var apprenticeshipSummary = ApprenticeshipSummaryMapper.GetApprenticeshipSummary(vacancySummary, categories, _logService);
                         var apprenticeshipSummaryUpdate = _mapper.Map<ApprenticeshipSummary, ApprenticeshipSummaryUpdate>(apprenticeshipSummary);
                         apprenticeshipSummaryUpdate.UseAlias = true;
                         _serviceBus.PublishMessage(apprenticeshipSummaryUpdate);
@@ -77,7 +74,7 @@
                     if (vacancy.VacancyType == VacancyType.Traineeship)
                     {
                         _logService.Info($"Publishing traineeship summary message for vacancy id {vacancy.VacancyId}");
-                        var traineeshipSummary = TraineeshipSummaryMapper.GetTraineeshipSummary(vacancySummary, employer, providers, categories, _logService);
+                        var traineeshipSummary = TraineeshipSummaryMapper.GetTraineeshipSummary(vacancySummary, categories, _logService);
                         var traineeshipSummaryUpdate = _mapper.Map<TraineeshipSummary, TraineeshipSummaryUpdate>(traineeshipSummary);
                         traineeshipSummaryUpdate.UseAlias = true;
                         _serviceBus.PublishMessage(traineeshipSummaryUpdate);

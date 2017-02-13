@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
 
 namespace SFA.DAS.RAA.Api.Controllers
@@ -24,16 +25,27 @@ namespace SFA.DAS.RAA.Api.Controllers
         [Route("vacancies")]
         [ResponseType(typeof(VacancySummariesPage))]
         [HttpGet]
-        public IHttpActionResult GetVacancySummaries(string searchString = null, 
+        public async Task<IHttpActionResult> GetVacancySummaries(string searchString = null, 
             VacancySearchMode searchMode = VacancySearchMode.All, 
             VacancyType vacancyType = VacancyType.Apprenticeship, 
             Order order = Order.Ascending,
             VacancySummaryOrderByColumn orderBy = VacancySummaryOrderByColumn.Title, 
             VacanciesSummaryFilterTypes filterType = VacanciesSummaryFilterTypes.All, 
             int page = 1, 
-            int pageSize = 0)
+            int pageSize = 299)
         {
-            return Ok(_getVacancySummariesStrategy.GetVacancySummaries(User.GetUkprn(), searchString, filterType, searchMode, vacancyType, order, orderBy, page, pageSize));
+            var list = await _getVacancySummariesStrategy.GetVacancySummaries(User.GetUkprn(), searchString, filterType,
+                searchMode, vacancyType, order, orderBy, page, pageSize);
+
+            var vacancyPage = new VacancySummariesPage()
+            {
+                VacancySummaries = list,
+                TotalCount = list.TotalCount,
+                CurrentPage = page,
+                TotalPages = list.TotalCount / pageSize
+            };
+
+            return Ok(vacancyPage);
         }
     }
 }

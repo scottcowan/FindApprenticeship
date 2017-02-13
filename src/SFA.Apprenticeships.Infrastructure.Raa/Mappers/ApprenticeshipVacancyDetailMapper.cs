@@ -2,17 +2,17 @@
 {
     using Domain.Entities.Extensions;
     using Domain.Entities.Locations;
-    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
-    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
-    using Extensions;
     using Presentation;
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
     using System;
     using System.Collections.Generic;
+    using Domain.Entities.Raa.Vacancies;
+    using Extensions;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
+    using PostalAddress = Domain.Entities.Raa.Locations.PostalAddress;
     using VacancyLocationType = Domain.Entities.Vacancies.VacancyLocationType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
@@ -49,11 +49,9 @@
                 //LocalAuthority = vacancy.,
                 NumberOfPositions = vacancy.NumberOfPositions ?? 0,
                 RealityCheck = vacancy.ThingsToConsider,
-                Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
                 EmployerName = employer.FullName,
                 AnonymousEmployerName = vacancy.EmployerAnonymousName,
-                AnonymousAboutTheEmployer = vacancy.AnonymousAboutTheEmployer,
                 IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
                 EmployerDescription = string.IsNullOrWhiteSpace(vacancy.AnonymousAboutTheEmployer) ? vacancy.EmployerDescription : vacancy.AnonymousAboutTheEmployer,
                 EmployerWebsite = vacancy.EmployerWebsiteUrl,
@@ -87,7 +85,6 @@
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                 SubCategory = subcategory.FullName,
                 TrainingType = vacancy.TrainingType.GetTrainingType(),
-                EditedInRaa = vacancy.EditedInRaa,
                 AdditionalLocationInformation = vacancy.AdditionalLocationInformation
             };
 

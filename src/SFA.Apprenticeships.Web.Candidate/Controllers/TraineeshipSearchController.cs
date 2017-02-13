@@ -123,14 +123,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> Details(string id)
         {
-            return await Task.Run(() =>
-            {
-                var candidateId = GetCandidateId();
+            var candidateId = GetCandidateId();
 
-                var response = _traineeshipSearchMediator.Details(id, candidateId);
+            var response = await _traineeshipSearchMediator.Details(id, candidateId);
 
-                return GetDetailsResult(response);
-            });
+            return GetDetailsResult(response);
         }
 
         [HttpGet]
@@ -139,14 +136,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> DetailsByReferenceNumber(string vacancyReferenceNumber)
         {
-            return await Task.Run(() =>
-            {
-                var candidateId = GetCandidateId();
+            var candidateId = GetCandidateId();
 
-                var response = _traineeshipSearchMediator.DetailsByReferenceNumber(vacancyReferenceNumber, candidateId);
+            var response = await _traineeshipSearchMediator.DetailsByReferenceNumber(vacancyReferenceNumber, candidateId);
 
-                return GetDetailsResult(response);
-            });
+            return GetDetailsResult(response);
         }
 
         private ActionResult GetDetailsResult(MediatorResponse<TraineeshipVacancyDetailViewModel> response)

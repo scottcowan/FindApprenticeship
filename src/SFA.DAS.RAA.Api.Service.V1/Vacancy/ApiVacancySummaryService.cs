@@ -12,6 +12,7 @@ using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
 using SFA.Apprenticeships.Domain.Raa.Interfaces.Queries;
 using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories;
 using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models;
+using SFA.DAS.RAA.Api.Client.V1;
 using SFA.DAS.RAA.Api.Service.V1.Mappers;
 
 namespace SFA.DAS.RAA.Api.Service.V1.Vacancy
@@ -30,13 +31,13 @@ namespace SFA.DAS.RAA.Api.Service.V1.Vacancy
             _vacancySummaryService = new VacancySummaryService(vacancySummaryRepository);
         }
 
-        public ListWithTotal<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query, out int totalRecords)
+        public async Task<IServiceResult<ListWithTotalCount<VacancySummary>>> GetSummariesForProvider(VacancySummaryQuery query)
         {
             if (_apiClientProvider.IsEnabled())
             {
                 var apiClient = _apiClientProvider.GetApiClient();
 
-                var apiVacancyResult = Task.Run(() => apiClient.VacancySummaryOperations.GetVacancySummariesWithHttpMessagesAsync(
+                var apiVacancyResult = await apiClient.VacancySummaryOperations.GetVacancySummariesWithHttpMessagesAsync(
                     query.SearchString,
                     query.SearchMode.ToString(),
                     query.VacancyType.ToString(),
@@ -45,17 +46,22 @@ namespace SFA.DAS.RAA.Api.Service.V1.Vacancy
                     query.Filter.ToString(),
                     query.RequestedPage,
                     query.PageSize
-                    )).Result;
+                    );
+
+                var list = ApiClientMappers.Map<IList<Client.V1.Models.VacancySummary>, IEnumerable<VacancySummary>>(
+                    apiVacancyResult.Body.VacancySummaries);
 
                 if (apiVacancyResult.Response.IsSuccessStatusCode)
                 {
-                    return new ServiceResult<WageUpdate>(VacancyManagementServiceCodes.EditWage.Ok, apiVacancyResult);
+                    return new ServiceResult<ListWithTotalCount<VacancySummary>>(VacancyManagementServiceCodes.EditWage.Ok, 
+                        new ListWithTotalCount<VacancySummary>(list, apiVacancyResult.Body.TotalCount));
                 }
 
-                return new ServiceResult<WageUpdate>(VacancyManagementServiceCodes.EditWage.Error, apiVacancyResult);
+                return new ServiceResult<ListWithTotalCount<VacancySummary>>(VacancyManagementServiceCodes.EditWage.Error, 
+                    new ListWithTotalCount<VacancySummary>(list, apiVacancyResult.Body.TotalCount));
             }
 
-            return _vacancySummaryService.GetSummariesForProvider(query, out totalRecords);
+            return await _vacancySummaryService.GetSummariesForProvider(query);
         }
 
         public VacancyCounts GetLotteryCounts(VacancySummaryQuery query)

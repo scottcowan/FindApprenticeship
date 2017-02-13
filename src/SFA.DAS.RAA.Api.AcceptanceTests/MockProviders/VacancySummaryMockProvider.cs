@@ -38,8 +38,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.MockProviders
             vacancySummaries.ForEach(f => f.WageType = 2);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
-                        m => m.Query<DbVacancySummary>(It.Is<string>(s => s.StartsWith(VacancySummaryRepository.CoreQuery)), It.IsAny<object>(), null, null))
-                    .Returns(new List<DbVacancySummary>(vacancySummaries));
+                        m => m.QueryAsync<DbVacancySummary>(It.Is<string>(s => s.StartsWith(VacancySummaryRepository.CoreQuery)), It.IsAny<object>(), null, null))
+                    .Returns(Task.FromResult((IList<DbVacancySummary>)new List<DbVacancySummary>(vacancySummaries)));
         }
 
         public static void MockProviderSites()

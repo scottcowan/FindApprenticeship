@@ -421,27 +421,24 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Delete(int id)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _accountMediator.Delete(UserContext.CandidateId, id);
+
+            switch (response.Code)
             {
-                var response = _accountMediator.Delete(UserContext.CandidateId, id);
+                case AccountMediatorCodes.Delete.SuccessfullyDeleted:
+                    UserData.Push(CandidateDataItemNames.DeletedVacancyId, id.ToString(CultureInfo.InvariantCulture));
+                    UserData.Push(CandidateDataItemNames.DeletedVacancyTitle, response.Message.Text);
+                    break;
+                case AccountMediatorCodes.Delete.AlreadyDeleted:
+                case AccountMediatorCodes.Delete.ErrorDeleting:
+                case AccountMediatorCodes.Delete.SuccessfullyDeletedExpiredOrWithdrawn:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    break;
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
 
-                switch (response.Code)
-                {
-                    case AccountMediatorCodes.Delete.SuccessfullyDeleted:
-                        UserData.Push(CandidateDataItemNames.DeletedVacancyId, id.ToString(CultureInfo.InvariantCulture));
-                        UserData.Push(CandidateDataItemNames.DeletedVacancyTitle, response.Message.Text);
-                        break;
-                    case AccountMediatorCodes.Delete.AlreadyDeleted:
-                    case AccountMediatorCodes.Delete.ErrorDeleting:
-                    case AccountMediatorCodes.Delete.SuccessfullyDeletedExpiredOrWithdrawn:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        break;
-                    default:
-                        throw new InvalidMediatorCodeException(response.Code);
-                }
-
-                return RedirectToRoute(CandidateRouteNames.MyApplications);
-            });
+            return RedirectToRoute(CandidateRouteNames.MyApplications);
         }
 
         [HttpGet]
@@ -579,52 +576,46 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> ApprenticeshipVacancyDetails(int id)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _accountMediator.ApprenticeshipVacancyDetails(UserContext.CandidateId, id);
+
+            switch (response.Code)
             {
-                var response = _accountMediator.ApprenticeshipVacancyDetails(UserContext.CandidateId, id);
+                case AccountMediatorCodes.VacancyDetails.Available:
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
 
-                switch (response.Code)
-                {
-                    case AccountMediatorCodes.VacancyDetails.Available:
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
+                case AccountMediatorCodes.VacancyDetails.Unavailable:
+                case AccountMediatorCodes.VacancyDetails.Error:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    break;
 
-                    case AccountMediatorCodes.VacancyDetails.Unavailable:
-                    case AccountMediatorCodes.VacancyDetails.Error:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        break;
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
 
-                    default:
-                        throw new InvalidMediatorCodeException(response.Code);
-                }
-
-                return RedirectToRoute(CandidateRouteNames.MyApplications);
-            });
+            return RedirectToRoute(CandidateRouteNames.MyApplications);
         }
 
         [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> TraineeshipVacancyDetails(int id)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = await _accountMediator.TraineeshipVacancyDetails(UserContext.CandidateId, id);
+
+            switch (response.Code)
             {
-                var response = _accountMediator.TraineeshipVacancyDetails(UserContext.CandidateId, id);
+                case AccountMediatorCodes.VacancyDetails.Available:
+                    return RedirectToRoute(CandidateRouteNames.TraineeshipDetails, new { id });
 
-                switch (response.Code)
-                {
-                    case AccountMediatorCodes.VacancyDetails.Available:
-                        return RedirectToRoute(CandidateRouteNames.TraineeshipDetails, new { id });
+                case AccountMediatorCodes.VacancyDetails.Unavailable:
+                case AccountMediatorCodes.VacancyDetails.Error:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    break;
 
-                    case AccountMediatorCodes.VacancyDetails.Unavailable:
-                    case AccountMediatorCodes.VacancyDetails.Error:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        break;
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
 
-                    default:
-                        throw new InvalidMediatorCodeException(response.Code);
-                }
-
-                return RedirectToRoute(CandidateRouteNames.MyApplications);
-            });
+            return RedirectToRoute(CandidateRouteNames.MyApplications);
         }
     }
 }

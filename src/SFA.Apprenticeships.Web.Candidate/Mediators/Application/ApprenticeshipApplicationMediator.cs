@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Security;
     using Validators;
     using ViewModels.Applications;
@@ -42,9 +43,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             _apprenticeshipApplicationPreviewViewModelValidator = apprenticeshipApplicationPreviewViewModelValidator;
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> Resume(Guid candidateId, int vacancyId)
+        public async Task<MediatorResponse<ApprenticeshipApplicationViewModel>> Resume(Guid candidateId, int vacancyId)
         {
-            var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            var model = await _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (model.HasError())
             {
@@ -64,7 +65,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Resume.Ok, parameters: new { id = vacancyId });
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString)
+        public async Task<MediatorResponse<ApprenticeshipApplicationViewModel>> Apply(Guid candidateId, string vacancyIdString)
         {
             int vacancyId;
 
@@ -73,11 +74,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound);
             }
 
-            var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            var model = await _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (model == null || model.IsNotFound())
             {
-                model = _apprenticeshipApplicationProvider.CreateApplicationViewModel(candidateId, vacancyId);
+                model = await _apprenticeshipApplicationProvider.CreateApplicationViewModel(candidateId, vacancyId);
             }
 
             if (model.HasError())
@@ -105,11 +106,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Apply.Ok, model);
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> PreviewAndSubmit(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel)
+        public async Task<MediatorResponse<ApprenticeshipApplicationViewModel>> PreviewAndSubmit(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel)
         {
             viewModel = StripApplicationViewModelBeforeValidation(viewModel);
 
-            var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            var savedModel = await _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (savedModel.HasError())
             {
@@ -147,11 +148,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Ok, parameters: new { id = vacancyId });
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> Save(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel)
+        public async Task<MediatorResponse<ApprenticeshipApplicationViewModel>> Save(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel)
         {
             viewModel = StripApplicationViewModelBeforeValidation(viewModel);
 
-            var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            var savedModel = await _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
@@ -186,17 +187,17 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 
             _apprenticeshipApplicationProvider.SaveApplication(candidateId, vacancyId, viewModel);
 
-            viewModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            viewModel = await _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
             viewModel.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Save.Ok, viewModel);
         }
 
-        public MediatorResponse<AutoSaveResultViewModel> AutoSave(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel)
+        public async Task<MediatorResponse<AutoSaveResultViewModel>> AutoSave(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel)
         {
             var autoSaveResult = new AutoSaveResultViewModel();
 
-            var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            var savedModel = await _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
@@ -226,7 +227,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 
             _apprenticeshipApplicationProvider.SaveApplication(candidateId, vacancyId, viewModel);
 
-            viewModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            viewModel = await _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
             viewModel.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
             autoSaveResult.Status = "succeeded";
@@ -275,9 +276,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AddEmptyTrainingCourseRows.Ok, viewModel);
         }
 
-        public MediatorResponse<ApprenticeshipApplicationPreviewViewModel> Preview(Guid candidateId, int vacancyId)
+        public async Task<MediatorResponse<ApprenticeshipApplicationPreviewViewModel>> Preview(Guid candidateId, int vacancyId)
         {
-            var model = _apprenticeshipApplicationProvider.GetApplicationPreviewViewModel(candidateId, vacancyId);
+            var model = await _apprenticeshipApplicationProvider.GetApplicationPreviewViewModel(candidateId, vacancyId);
 
             if (model.HasError())
             {
@@ -302,9 +303,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Preview.Ok, model);
         }
 
-        public MediatorResponse<ApprenticeshipApplicationPreviewViewModel> Submit(Guid candidateId, int vacancyId, ApprenticeshipApplicationPreviewViewModel viewModel)
+        public async Task<MediatorResponse<ApprenticeshipApplicationPreviewViewModel>> Submit(Guid candidateId, int vacancyId, ApprenticeshipApplicationPreviewViewModel viewModel)
         {
-            var savedModel = _apprenticeshipApplicationProvider.GetApplicationPreviewViewModel(candidateId, vacancyId);
+            var savedModel = await _apprenticeshipApplicationProvider.GetApplicationPreviewViewModel(candidateId, vacancyId);
 
             if (savedModel.HasError())
             {
@@ -330,7 +331,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Submit.AcceptSubmitValidationError, savedModel, previewValidationResult);
             }
 
-            var model = _apprenticeshipApplicationProvider.SubmitApplication(candidateId, vacancyId);
+            var model = await _apprenticeshipApplicationProvider.SubmitApplication(candidateId, vacancyId);
 
             if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
             {
@@ -354,7 +355,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             return GetMediatorResponse<ApprenticeshipApplicationPreviewViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.Ok, parameters: parameters);
         }
 
-        public MediatorResponse<WhatHappensNextApprenticeshipViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle, string searchReturnUrl)
+        public async Task<MediatorResponse<WhatHappensNextApprenticeshipViewModel>> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle, string searchReturnUrl)
         {
             int vacancyId;
 
@@ -363,7 +364,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
                 return GetMediatorResponse<WhatHappensNextApprenticeshipViewModel>(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
             }
 
-            var model = _apprenticeshipApplicationProvider.GetWhatHappensNextViewModel(candidateId, vacancyId, searchReturnUrl);
+            var model = await _apprenticeshipApplicationProvider.GetWhatHappensNextViewModel(candidateId, vacancyId, searchReturnUrl);
 
             if (model.HasError())
             {
@@ -378,9 +379,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, model);
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> View(Guid candidateId, int vacancyId)
+        public async Task<MediatorResponse<ApprenticeshipApplicationViewModel>> View(Guid candidateId, int vacancyId)
         {
-            var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            var model = await _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationNotFound)
             {
@@ -395,9 +396,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.Ok, model);
         }
 
-        public MediatorResponse<MyApprenticeshipApplicationViewModel> CandidateApplicationFeedback(Guid candidateId, int vacancyId)
+        public async Task<MediatorResponse<MyApprenticeshipApplicationViewModel>> CandidateApplicationFeedback(Guid candidateId, int vacancyId)
         {
-            ApprenticeshipApplicationViewModel model = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            ApprenticeshipApplicationViewModel model = await _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
             MyApplicationsViewModel myApplicationsViewModel = _apprenticeshipApplicationProvider.GetMyApplications(candidateId);
             MyApprenticeshipApplicationViewModel apprenticeshipApplication = myApplicationsViewModel.AllApprenticeshipApplications.FirstOrDefault(
                 vm => vm.VacancyId == vacancyId);
@@ -417,9 +418,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.CandidateApplicationFeedback.Ok, apprenticeshipApplication);
         }
 
-        public MediatorResponse<SavedVacancyViewModel> SaveVacancy(Guid candidateId, int vacancyId)
+        public async Task<MediatorResponse<SavedVacancyViewModel>> SaveVacancy(Guid candidateId, int vacancyId)
         {
-            var viewModel = _apprenticeshipApplicationProvider.SaveVacancy(candidateId, vacancyId);
+            var viewModel = await _apprenticeshipApplicationProvider.SaveVacancy(candidateId, vacancyId);
             int savedVacancyCount;
 
             int.TryParse(UserDataProvider.Get(UserDataItemNames.SavedAndDraftCount), out savedVacancyCount);

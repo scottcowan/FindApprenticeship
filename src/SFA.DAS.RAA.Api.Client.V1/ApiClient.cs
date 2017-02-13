@@ -68,14 +68,14 @@ namespace SFA.DAS.RAA.Api.Client.V1
         public virtual IVacancyOperations VacancyOperations { get; private set; }
 
         /// <summary>
-        /// Gets the IVacancyManagement.
-        /// </summary>
-        public virtual IVacancyManagement VacancyManagement { get; private set; }
-
-        /// <summary>
         /// Gets the IVacancySummaryOperations.
         /// </summary>
         public virtual IVacancySummaryOperations VacancySummaryOperations { get; private set; }
+
+        /// <summary>
+        /// Gets the IVacancyManagement.
+        /// </summary>
+        public virtual IVacancyManagement VacancyManagement { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ApiClient class.
@@ -283,8 +283,8 @@ namespace SFA.DAS.RAA.Api.Client.V1
             this.PublicVacancySummaryOperations = new PublicVacancySummaryOperations(this);
             this.Reference = new Reference(this);
             this.VacancyOperations = new VacancyOperations(this);
-            this.VacancyManagement = new VacancyManagement(this);
             this.VacancySummaryOperations = new VacancySummaryOperations(this);
+            this.VacancyManagement = new VacancyManagement(this);
             this.BaseUri = new System.Uri("http://local-restapi.findapprenticeship.service.gov.uk");
             SerializationSettings = new Newtonsoft.Json.JsonSerializerSettings
             {

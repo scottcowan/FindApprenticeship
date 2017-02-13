@@ -9,6 +9,7 @@
     using Search;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Vacancies;
 
     /// <summary>
@@ -31,7 +32,7 @@
 
         bool SetCandidateDeletionPending(Candidate candidate);
 
-        ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId); // note: only an int due to legacy - will be a Guid
+        Task<ApprenticeshipApplicationDetail> CreateApplication(Guid candidateId, int vacancyId); // note: only an int due to legacy - will be a Guid
 
         ApprenticeshipApplicationDetail GetApplication(Guid candidateId, int vacancyId);
 
@@ -45,7 +46,7 @@
 
         void SubmitApplication(Guid candidateId, int vacancyId);
 
-        TraineeshipApplicationDetail CreateTraineeshipApplication(Guid candidateId, int vacancyId);
+        Task<TraineeshipApplicationDetail> CreateTraineeshipApplication(Guid candidateId, int vacancyId);
 
         TraineeshipApplicationDetail GetTraineeshipApplication(Guid candidateId, int vacancyId);
 
@@ -59,9 +60,9 @@
 
         void DeleteApplication(Guid candidateId, int vacancyId);
 
-        ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Guid candidateId, int vacancyId);
+        Task<ApprenticeshipVacancyDetail> GetApprenticeshipVacancyDetail(Guid candidateId, int vacancyId);
 
-        TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Guid candidateId, int vacancyId);
+        Task<TraineeshipVacancyDetail> GetTraineeshipVacancyDetail(Guid candidateId, int vacancyId);
 
         void SendMobileVerificationCode(Candidate candidate);
 
@@ -69,7 +70,7 @@
 
         void SubmitContactMessage(ContactMessage contactMessage);
 
-        ApplicationDetail SaveVacancy(Guid candidateId, int vacancyId);
+        Task<ApplicationDetail> SaveVacancy(Guid candidateId, int vacancyId);
 
         ApplicationDetail DeleteSavedVacancy(Guid candidateId, int vacancyId);
 
@@ -91,7 +92,7 @@
 
         bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType);
 
-        SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> GetSuggestedApprenticeshipVacancies(
+        Task<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>> GetSuggestedApprenticeshipVacancies(
             ApprenticeshipSearchParameters searchParameters, Guid candidateId, int vacancyId);
     }
 }

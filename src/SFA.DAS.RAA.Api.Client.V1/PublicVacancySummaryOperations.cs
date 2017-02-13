@@ -48,8 +48,8 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// total number of pages, it will be set to 1 or the last page respectively
         /// </param>
         /// <param name='pageSize'>
-        /// The number of vacancies to return per page up to a maximum of 50. Values
-        /// larger than this will be set to 50
+        /// The number of vacancies to return per page up to a maximum of 250. Values
+        /// larger than this will be set to 250
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

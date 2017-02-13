@@ -1,11 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancies
 {
+    using System.Threading.Tasks;
     using Entities;
 
     public interface IVacancyIndexDataProvider
     {
-        int GetVacancyPageCount();
+        Task<int> GetVacancyPageCount();
 
-        VacancySummaries GetVacancySummaries(int pageNumber);
+        Task<VacancySummaries> GetVacancySummaries(int pageNumber);
     }
 }

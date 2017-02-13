@@ -1,10 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidate.Strategies.CreateApplicationStrategy
 {
     using System;
+    using System.Threading.Tasks;
     using Apprenticeships.Application.Candidate.Strategies.Apprenticeships;
     using Apprenticeships.Application.Vacancy;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
+    using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Vacancy;
@@ -27,7 +29,9 @@
                 applicationReadRepository.Object, applicationWriteRepository.Object,
                 candidateReadRepository.Object, null);
 
-            Assert.Throws<Exception>(() => createApplicationStrategy.CreateApplication(Guid.NewGuid(), 1));
+            Func<Task> action = async () => { await createApplicationStrategy.CreateApplication(Guid.NewGuid(), 1); };
+
+            action.ShouldThrow<Exception>();
         }
     }
 }

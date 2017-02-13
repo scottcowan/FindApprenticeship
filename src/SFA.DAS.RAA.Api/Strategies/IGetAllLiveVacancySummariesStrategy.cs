@@ -1,9 +1,10 @@
 ﻿namespace SFA.DAS.RAA.Api.Strategies
 {
+    using System.Threading.Tasks;
     using Models;
 
     public interface IGetAllLiveVacancySummariesStrategy
     {
-        PublicVacancySummariesPage GetAllLiveVacancySummaries(int page, int pageSize);
+        Task<PublicVacancySummariesPage> GetAllLiveVacancySummaries(int page, int pageSize);
     }
 }

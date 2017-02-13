@@ -2,6 +2,7 @@
 {
     using System;
     using System.Globalization;
+    using System.Threading.Tasks;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Common.UnitTests.Mediators;
@@ -32,20 +33,20 @@
         [TestCase("VAC000547307")]
         [TestCase("[[imgUrl]]")]
         [TestCase("separator.png")]
-        public void GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
+        public async Task GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
         {
-            var response = Mediator.WhatHappensNext(_someCandidateId, vacancyId, VacancyReference, VacancyTitle);
+            var response = await Mediator.WhatHappensNext(_someCandidateId, vacancyId, VacancyReference, VacancyTitle);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound, false);
         }
 
         [Test]
-        public void HasError()
+        public async Task HasError()
         {
             TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(new WhatHappensNextTraineeshipViewModel("Has Error"));
+                .Returns(Task.FromResult(new WhatHappensNextTraineeshipViewModel("Has Error")));
 
-            var response = Mediator.WhatHappensNext(_someCandidateId,
+            var response = await Mediator.WhatHappensNext(_someCandidateId,
                 SomeVacancyId.ToString(CultureInfo.InvariantCulture), VacancyReference, VacancyTitle);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
@@ -55,24 +56,24 @@
         }
 
         [Test]
-        public void Ok()
+        public async Task Ok()
         {
             TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(new WhatHappensNextTraineeshipViewModel());
+                .Returns(Task.FromResult(new WhatHappensNextTraineeshipViewModel()));
 
-            var response = Mediator.WhatHappensNext(_someCandidateId,
+            var response = await Mediator.WhatHappensNext(_someCandidateId,
                 SomeVacancyId.ToString(CultureInfo.InvariantCulture), VacancyReference, VacancyTitle);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
         }
 
         [Test]
-        public void VacancyNotFound()
+        public async Task VacancyNotFound()
         {
             TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(new WhatHappensNextTraineeshipViewModel {Status = ApplicationStatuses.ExpiredOrWithdrawn});
+                .Returns(Task.FromResult(new WhatHappensNextTraineeshipViewModel {Status = ApplicationStatuses.ExpiredOrWithdrawn}));
 
-            var response = Mediator.WhatHappensNext(_someCandidateId,
+            var response = await Mediator.WhatHappensNext(_someCandidateId,
                 SomeVacancyId.ToString(CultureInfo.InvariantCulture), VacancyReference, VacancyTitle);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound, false);

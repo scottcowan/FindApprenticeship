@@ -480,5 +480,116 @@ VALUES (ApprenticeshipFrameworkId, ApprenticeshipOccupationId, CodeName, ShortNa
 WHEN NOT MATCHED BY SOURCE THEN 
 DELETE;
 
+--Set of frameworks to delete. RA-723
+UPDATE ApprenticeshipFramework SET ApprenticeshipFrameworkStatusTypeId = 2 WHERE ApprenticeshipFrameworkId IN (
+20,
+336,
+299,
+318,
+1005,
+229,
+1013,
+1051,
+1012,
+226,
+301,
+1000,
+325,
+166,
+313,
+294,
+1010,
+285,
+295,
+326,
+337,
+165,
+152,
+167,
+1009,
+292,
+302,
+1017,
+248,
+282,
+1020,
+1016,
+1015,
+321,
+185,
+280,
+338,
+1001,
+286,
+317,
+96,
+330,
+323,
+1004,
+178,
+176,
+329,
+238,
+1007,
+1014,
+130,
+307,
+193,
+298,
+283,
+306,
+324,
+270,
+1011,
+204,
+206,
+202,
+223,
+150,
+140,
+319,
+310,
+1018,
+146,
+1026,
+124,
+1002,
+245
+)
+GO
+
+UPDATE ApprenticeshipFramework SET FullName = N'Technical Theatre, Lighting, Sound and Stage' WHERE ApprenticeshipFrameworkId = 228
+GO
+UPDATE ApprenticeshipFramework SET FullName = N'Building Services Engineering Technology and Project Management' WHERE ApprenticeshipFrameworkId = 277
+GO
+UPDATE ApprenticeshipFramework SET FullName = N'Construction Technical and Professional' WHERE ApprenticeshipFrameworkId = 252
+GO
+UPDATE ApprenticeshipFramework SET FullName = N'Professional Development for Work Based Learning Practitioners (deleted)', ApprenticeshipFrameworkStatusTypeId = 2 WHERE ApprenticeshipFrameworkId = 324
+GO
+UPDATE ApprenticeshipFramework SET FullName = N'Professional Development for Work Based Learning Practitioners' WHERE ApprenticeshipFrameworkId = 322
+GO
+UPDATE ApprenticeshipFramework SET FullName = N'Furniture, Furnishing and Interiors Manufacturing' WHERE ApprenticeshipFrameworkId = 284
+GO
+UPDATE ApprenticeshipFramework SET FullName = N'Leisure Operations and Leisure Management' WHERE ApprenticeshipFrameworkId = 220
+GO
+UPDATE ApprenticeshipFramework SET FullName = N'International Trade and Logistics Operations' WHERE ApprenticeshipFrameworkId = 148
+GO
+UPDATE ApprenticeshipFramework SET FullName = N'Life Sciences and Chemical Science Professionals' WHERE ApprenticeshipFrameworkId = 291
+GO
+UPDATE ApprenticeshipFramework SET FullName = N'Manufacturing Engineering' WHERE ApprenticeshipFrameworkId = 282
+GO
+UPDATE ApprenticeshipFramework SET FullName = N'Trade Business Services', ApprenticeshipOccupationId = 13, ApprenticeshipFrameworkStatusTypeId = 1 WHERE CodeName = 616
+GO
+
+INSERT INTO ApprenticeshipFramework (ApprenticeshipFrameworkId, ApprenticeshipOccupationId, CodeName, ShortName, FullName, ApprenticeshipFrameworkStatusTypeId)
+VALUES (340, 17, 618, 618, N'Sustainable Resource Operations and Management', 1)
+GO
+INSERT INTO ApprenticeshipFramework (ApprenticeshipFrameworkId, ApprenticeshipOccupationId, CodeName, ShortName, FullName, ApprenticeshipFrameworkStatusTypeId)
+VALUES (341, 17, 634, 634, N'Vehicle Restoration', 1)
+GO
+INSERT INTO ApprenticeshipFramework (ApprenticeshipFrameworkId, ApprenticeshipOccupationId, CodeName, ShortName, FullName, ApprenticeshipFrameworkStatusTypeId)
+VALUES (342, 20, 617, 617, N'Community Safety', 1)
+GO
+
 SET IDENTITY_INSERT [dbo].[ApprenticeshipFramework] OFF
 GO

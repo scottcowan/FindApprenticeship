@@ -5,21 +5,24 @@
     using System.Web.Http.Description;
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Web.Common.Extensions;
     using Models;
     using Providers;
+    using Strategies;
 
     [Authorize(Roles = Roles.Provider + "," + Roles.Agency)]
-    [RoutePrefix("vacancy")]
     public class VacancyController : ApiController
     {
         private readonly IVacancyProvider _vacancyProvider;
+        private readonly ICreateVacancyStrategy _createVacancyStrategy;
 
-        public VacancyController(IVacancyProvider vacancyProvider)
+        public VacancyController(IVacancyProvider vacancyProvider, ICreateVacancyStrategy createVacancyStrategy)
         {
             _vacancyProvider = vacancyProvider;
+            _createVacancyStrategy = createVacancyStrategy;
         }
 
-        [Route("{id}")]
+        [Route("vacancy/{id}")]
         [ResponseType(typeof(Vacancy))]
         [HttpGet]
         public IHttpActionResult GetById(int id)
@@ -27,7 +30,7 @@
             return Ok(_vacancyProvider.Get(new VacancyIdentifier(id)));
         }
 
-        [Route("reference/{reference}")]
+        [Route("vacancy/reference/{reference}")]
         [ResponseType(typeof(Vacancy))]
         [HttpGet]
         public IHttpActionResult GetByReferenceNumber(string reference)
@@ -35,12 +38,20 @@
             return Ok(_vacancyProvider.Get(new VacancyIdentifier(reference)));
         }
 
-        [Route("guid/{guid}")]
+        [Route("vacancy/guid/{guid}")]
         [ResponseType(typeof(Vacancy))]
         [HttpGet]
         public IHttpActionResult GetByGuid(Guid guid)
         {
             return Ok(_vacancyProvider.Get(new VacancyIdentifier(guid)));
+        }
+
+        [Route("vacancy")]
+        [ResponseType(typeof(Vacancy))]
+        [HttpPost]
+        public IHttpActionResult CreateVacancy(Vacancy vacancy)
+        {
+            return Ok(_createVacancyStrategy.CreateVacancy(vacancy, User.GetUkprn()));
         }
     }
 }

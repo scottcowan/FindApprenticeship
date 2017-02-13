@@ -2,6 +2,7 @@
 {
     using System;
     using System.Globalization;
+    using System.Threading.Tasks;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Common.UnitTests.Mediators;
@@ -22,31 +23,31 @@
         [TestCase("VAC000547307")]
         [TestCase("[[imgUrl]]")]
         [TestCase("separator.png")]
-        public void GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
+        public async Task GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
         {
-            var response = Mediator.Apply(Guid.NewGuid(), vacancyId);
+            var response = await Mediator.Apply(Guid.NewGuid(), vacancyId);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.Apply.VacancyNotFound, false);
         }
 
         [Test]
-        public void HasError()
+        public async Task HasError()
         {
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), InvalidVacancyId))
-                .Returns(new TraineeshipApplicationViewModel("Vacancy not found"));
+                .Returns(Task.FromResult(new TraineeshipApplicationViewModel("Vacancy not found")));
 
-            var response = Mediator.Apply(Guid.NewGuid(), InvalidVacancyId.ToString(CultureInfo.InvariantCulture));
+            var response = await Mediator.Apply(Guid.NewGuid(), InvalidVacancyId.ToString(CultureInfo.InvariantCulture));
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.Apply.HasError, false);
         }
 
         [Test]
-        public void Ok()
+        public async Task Ok()
         {
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
-                .Returns(new TraineeshipApplicationViewModel());
+                .Returns(Task.FromResult(new TraineeshipApplicationViewModel()));
 
-            var response = Mediator.Apply(Guid.NewGuid(), ValidVacancyId.ToString(CultureInfo.InvariantCulture));
+            var response = await Mediator.Apply(Guid.NewGuid(), ValidVacancyId.ToString(CultureInfo.InvariantCulture));
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.Apply.Ok, true);
         }

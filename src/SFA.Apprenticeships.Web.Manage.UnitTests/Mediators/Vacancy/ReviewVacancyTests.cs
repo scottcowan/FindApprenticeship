@@ -102,7 +102,7 @@
         }
 
         [TestCase(VacancySource.Av, VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvms, VacancyViewModelMessages.VacancyAuthoredInAvms)]
-        [TestCase(VacancySource.Api, VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApi, VacancyViewModelMessages.VacancyAuthoredInApi)]
+        [TestCase(VacancySource.LegacyApi, VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApi, VacancyViewModelMessages.VacancyAuthoredInApi)]
         public async Task ShouldReturnTheViewModelAndAMessageIfTheVacancySourceIsNotRaa(VacancySource vacancySource, string code, string message)
         {
             const int vacancyReferenceNumber = 1;
@@ -127,7 +127,7 @@
         }
 
         [TestCase(VacancySource.Av, VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvmsWithValidationErrors, VacancyViewModelMessages.VacancyAuthoredInAvms)]
-        [TestCase(VacancySource.Api, VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors, VacancyViewModelMessages.VacancyAuthoredInApi)]
+        [TestCase(VacancySource.LegacyApi, VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors, VacancyViewModelMessages.VacancyAuthoredInApi)]
         public async Task ShouldReturnTheViewModelAndAMessageIfTheVacancySourceIsNotRaaAndHasValidationErrors(VacancySource vacancySource, string code, string message)
         {
             const int vacancyReferenceNumber = 1;

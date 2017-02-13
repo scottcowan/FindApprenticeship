@@ -911,7 +911,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return standard.Convert(sector);
         }
 
-        public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
+        public async Task<VacanciesSummaryViewModel> GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
             var stopwatch = new Stopwatch();
@@ -947,8 +947,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             _logService.Debug("Calling Vacancy Summary Service: " + stopwatch.Elapsed);
 
-            int totalRecords;
-            var summaries = _vacancySummaryService.GetSummariesForProvider(query, out totalRecords);
+            var result = await _vacancySummaryService.GetSummariesForProvider(query);
+            var summaries = result.Result;
+            var totalRecords = summaries.TotalCount;
 
             _logService.Debug("Mapping vacancy summaries: " + stopwatch.Elapsed);
 

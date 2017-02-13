@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApplicationProvider
 {
     using System;
+    using System.Threading.Tasks;
     using Application.Interfaces.Candidates;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
@@ -19,7 +20,7 @@
         private const int ValidVacancyId = 42;
 
         [Test]
-        public void ShouldGetApplicationPreviewViewModel()
+        public async Task ShouldGetApplicationPreviewViewModel()
         {
             // Arrange.
             var candidateId = Guid.NewGuid();
@@ -34,7 +35,7 @@
 
             apprenticeshipVacancyProvider
                 .Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId))
-                .Returns(vacancy);
+                .Returns(Task.FromResult(vacancy));
 
             var application = new Fixture()
                 .Build<ApprenticeshipApplicationDetail>()
@@ -59,8 +60,8 @@
                 .Build();
 
             // Act.
-            var applicationViewModel = provider.GetApplicationViewModel(candidateId, ValidVacancyId);
-            var applicationPreviewViewModel = provider.GetApplicationPreviewViewModel(candidateId, ValidVacancyId);
+            var applicationViewModel = await provider.GetApplicationViewModel(candidateId, ValidVacancyId);
+            var applicationPreviewViewModel = await provider.GetApplicationPreviewViewModel(candidateId, ValidVacancyId);
 
             // Assert.
             applicationPreviewViewModel.Should().NotBeNull();
@@ -79,7 +80,7 @@
         }
 
         [Test]
-        public void ShouldHaveViewModelErrorMessage()
+        public async Task ShouldHaveViewModelErrorMessage()
         {
             // Arrange.
             var candidateId = Guid.NewGuid();
@@ -94,7 +95,7 @@
 
             apprenticeshipVacancyProvider
                 .Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId))
-                .Returns(vacancy);
+                .Returns(Task.FromResult(vacancy));
 
             var application = new Fixture()
                 .Build<ApprenticeshipApplicationDetail>()
@@ -111,7 +112,7 @@
                 .Build();
 
             // Act.
-            var applicationPreviewViewModel = provider.GetApplicationPreviewViewModel(candidateId, ValidVacancyId);
+            var applicationPreviewViewModel = await provider.GetApplicationPreviewViewModel(candidateId, ValidVacancyId);
 
             // Assert.
             applicationPreviewViewModel.Should().NotBeNull();

@@ -27,17 +27,24 @@ else
         </div>
     </fieldset>
 
-        <ul class="search-results">
-            @if (Model.Vacancies != null)
+    <ul class="search-results">
+        @if (Model.Vacancies != null)
+        {
+            var itemPosition = 1 + (Model.PageSize * Model.PrevPage);
+            foreach (var vacancy in Model.Vacancies)
             {
-                var itemPosition = 1 + (Model.PageSize * Model.PrevPage);
-                foreach (var vacancy in Model.Vacancies)
-                {
-                    var webTrendItemPositionTracker = "Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/results/itemposition/" + vacancy.Id + "', 'WT.dl', '99', 'WT.ti', 'Traineeships Search – Item Position Clicked', 'DCSext.ipos', '" + itemPosition + "'] })";
+                var webTrendItemPositionTracker = "Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/results/itemposition/" + vacancy.Id + "', 'WT.dl', '99', 'WT.ti', 'Traineeships Search – Item Position Clicked', 'DCSext.ipos', '" + itemPosition + "'] })";
+                var escapedVacancyTitle = HtmlExtensions.EscapeHtmlEncoding(Html, vacancy.Title).ToString();
                     <li class="search-result sfa-section-bordered">
-                        <h2 class="heading-medium sfa-no-margins">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude })</h2>
-                        <ul class="list">
-                            <li class="secondary-text">
+                            <h2 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude })</h2>
+                           new
+                           {
+                               data_vacancy_id = vacancy.Id,
+                               onclick = webTrendItemPositionTracker,
+                               data_lat = vacancy.Location.Latitude,
+                               data_lon = vacancy.Location.Longitude
+                           })
+                        </h2>
                                 <span id="posted-date-@vacancy.Id">
                                     (Added @vacancy.PostedDate.ToFriendlyDaysAgo()
                                 </span>
@@ -56,42 +63,42 @@ else
                                 </span>
                             </li>
                         </ul>
-                        <p class="@vacancy.Description.GetPreserveFormattingCssClass()">@vacancy.Description</p>
+                    <p class="@vacancy.Description.GetPreserveFormattingCssClass()">@vacancy.Description</p>
                         <div class="grid-row">
                             <div class="column-two-thirds">
                                 <ul class="list sfa-no-margins vacancy-details-list">
-                                    <li>
+                                <li>
                                         <span class="bold-small">Distance:</span> <span id="distance-value" class="distance-value">@vacancy.DistanceAsString</span> miles
                                         <a href="#" class="summary-style hide-nojs journey-trigger">Journey time</a>
-                                        <div class="detail-content toggle-content hide-nojs">
+                                    <div class="detail-content toggle-content hide-nojs">
                                             <select class="form-control select-mode" name="">
-                                                <option value="DRIVING">Driving</option>
-                                                <option value="TRANSIT">Bus/Train</option>
-                                                <option value="WALKING">Walking</option>
-                                                <option value="BICYCLING">Cycling</option>
-                                            </select>
+                                            <option value="DRIVING">Driving</option>
+                                            <option value="TRANSIT">Bus/Train</option>
+                                            <option value="WALKING">Walking</option>
+                                            <option value="BICYCLING">Cycling</option>
+                                        </select>
 
-                                            <span class="journey-time"></span>
-                                        </div>
-                                    </li>
+                                        <span class="journey-time"></span>
+                                    </div>
+                                </li>
                                     <li><span class="bold-small">Closing date:</span> <span id="closing-date-value" class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
                                     <li><span class="bold-small">Possible start date:</span><span id="start-date-value" class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
                                     <li class="sfa-hide-tablet">
                                         <a href="#1" style="margin-left: 0;" class="summary-style mob-map-trigger map-closed">Show/hide map</a>
                                     </li>
-                                </ul>
-                            </div>
+                            </ul>
+                        </div>
                             <div class="column-one-third map-container hide-nojs sfa-small-bottom-margin toggle-content--mob">
-                                <a href="https://www.google.com/maps/dir/LocationLatLon/'@vacancy.Location.Latitude,@vacancy.Location.Longitude'" target="_blank" rel="external" class="map-links fake-link font-xxsmall view-googlemaps">Open map</a>
+                            <a href="https://www.google.com/maps/dir/LocationLatLon/'@vacancy.Location.Latitude,@vacancy.Location.Longitude'" target="_blank" rel="external" class="map-links fake-link font-xxsmall view-googlemaps">Open map</a>
                                 <div class="map-placeholder"></div>
                                 <img class="static-map" src="@vacancy.GoogleStaticMapsUrl" />
-                            </div>
                         </div>
-                    </li>
-                    itemPosition++;
-                }
+                    </div>
+                </li>
+                itemPosition++;
             }
-        </ul>
+        }
+    </ul>
 
     Html.RenderPartial("_pagination", Model);
 

@@ -5,6 +5,7 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Security.Claims;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Providers;
@@ -261,7 +262,7 @@
             return GetMediatorResponse(ProviderUserMediatorCodes.ResendVerificationCode.Ok, viewModel, message, UserMessageLevel.Success);
         }
 
-        public MediatorResponse<HomeViewModel> GetHomeViewModel(string username, string ukprn, VacanciesSummarySearchViewModel vacanciesSummarySearch)
+        public async Task<MediatorResponse<HomeViewModel>> GetHomeViewModel(string username, string ukprn, VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -286,7 +287,7 @@
                 {
                     providerSiteId = Convert.ToInt32(providerSites.First().Value);
                 }
-                var vacanciesSummary = _vacancyProvider.GetVacanciesSummaryForProvider(provider.ProviderId, providerSiteId, vacanciesSummarySearch);
+                var vacanciesSummary = await _vacancyProvider.GetVacanciesSummaryForProvider(provider.ProviderId, providerSiteId, vacanciesSummarySearch);
                 _logService.Info($"Retrieved vacancy summaries {stopwatch.ElapsedMilliseconds}ms elapsed");
 
                 viewModel.ProviderViewModel = provider;

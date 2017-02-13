@@ -2,10 +2,12 @@
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Threading.Tasks;
     using Application.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
+    using Application.Interfaces.Service;
     using Application.Interfaces.Vacancy;
     using Application.Interfaces.VacancyPosting;
     using Application.Vacancy;
@@ -48,17 +50,23 @@
             
 
             int tmp;
-            vacancySummaryService.Setup(s => s.GetSummariesForProvider(It.IsAny<VacancySummaryQuery>(), out tmp))
+            vacancySummaryService.Setup(s => s.GetSummariesForProvider(It.IsAny<VacancySummaryQuery>()))
                 .Returns(
-                    new List<VacancySummary>()
-                    {
-                        new VacancySummary()
-                        {
-                            VacancyType = VacancyType.Apprenticeship,
-                            Title = "Test",
-                            Address = new PostalAddress() {Town = "Test"}
-                        }
-                    });
+                    Task.FromResult((IServiceResult<ListWithTotalCount<VacancySummary>>)
+                        new ServiceResult<ListWithTotalCount<VacancySummary>>(
+                            VacancySummaryServiceCodes.GetByProvider.Ok,
+                            new ListWithTotalCount<VacancySummary>(new List<VacancySummary>()
+                            {
+                                new VacancySummary()
+                                {
+                                    VacancyType = VacancyType.Apprenticeship,
+                                    Title = "Test",
+                                    Address = new PostalAddress() {Town = "Test"}
+                                }
+                            }, 1)
+                        )
+                    )
+                );
 
             vacancySummaryService.Setup(s => s.GetLotteryCounts(It.IsAny<VacancySummaryQuery>())).Returns(
                 new VacancyCounts()
@@ -73,7 +81,7 @@
 
             provider.GetVacanciesSummaryForProvider(providerId, providerSiteId, search);
 
-            vacancySummaryService.Verify(s => s.GetSummariesForProvider(It.IsAny<VacancySummaryQuery>(), out tmp), Times.Once);
+            vacancySummaryService.Verify(s => s.GetSummariesForProvider(It.IsAny<VacancySummaryQuery>()), Times.Once);
         }
     }
 }

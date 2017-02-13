@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace SFA.DAS.RAA.Api.Strategies
 {
     using System;
@@ -20,7 +22,7 @@ namespace SFA.DAS.RAA.Api.Strategies
             _vacancySummaryRepository = vacancySummaryRepository;
         }
 
-        public VacancySummariesPage GetVacancySummaries(string ukprn, string searchString, VacanciesSummaryFilterTypes filterType, VacancySearchMode searchMode, VacancyType vacancyType, Order order, VacancySummaryOrderByColumn orderBy, int page, int pageSize)
+        public async Task<ListWithTotalCount<VacancySummary>> GetVacancySummaries(string ukprn, string searchString, VacanciesSummaryFilterTypes filterType, VacancySearchMode searchMode, VacancyType vacancyType, Order order, VacancySummaryOrderByColumn orderBy, int page, int pageSize)
         {
             //TODO: Support employer access
 
@@ -49,17 +51,10 @@ namespace SFA.DAS.RAA.Api.Strategies
                 Order = order,
                 VacancyType = vacancyType
             };
-            int totalRecords;
-            var vacancySummaries = _vacancySummaryRepository.GetSummariesForProvider(query, out totalRecords);
+            
+            var vacancySummaries = await _vacancySummaryRepository.GetSummariesForProvider(query);
 
-            var vacancySummariesPage = new VacancySummariesPage
-            {
-                CurrentPage = page,
-                TotalCount = totalRecords,
-                TotalPages = totalRecords == 0 ? 1 : (int)Math.Ceiling((double)totalRecords / (double)pageSize),
-                VacancySummaries = vacancySummaries
-            };
-            return vacancySummariesPage;
+            return vacancySummaries;
         }
     }
 }

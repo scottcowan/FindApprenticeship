@@ -121,7 +121,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
             For<IDecryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
             For<ICandidateSearchService>().Use<CandidateSearchService>();
-            For<IVacancySummaryService>().Use<VacancySummaryService>();
         }
 
         private void RegisterStrategies()

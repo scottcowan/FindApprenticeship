@@ -3,6 +3,7 @@
 namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             await GetVacancySummaries(vacancySummariesUri, page, totalCount, pageSize);
         }
 
-        [Then(@"I see (.*) vacancy summaries on page (.*) from a total of (.*) and (.*) total pages")]
+        [Then(@"I see (.*) public vacancy summaries on page (.*) from a total of (.*) and (.*) total pages")]
         public void ThenISeeVacancySummariesAndTotalPages(int expectedCount, int expectedPage, int expectedTotalCount, int expectedPageCount)
         {
             var vacancySummaries = ScenarioContext.Current.Get<List<DbVacancySummary>>("vacancySummaries");
@@ -66,8 +67,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             ScenarioContext.Current.Add("vacancySummaries", vacancySummaries);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
-                    m => m.Query<DbVacancySummary>(It.Is<string>(s => s.StartsWith(VacancySummaryRepository.CoreQuery)), It.IsAny<object>(), null, null))
-                .Returns(new List<DbVacancySummary>(vacancySummaries));
+                    m => m.QueryAsync<DbVacancySummary>(It.Is<string>(s => s.StartsWith(VacancySummaryRepository.CoreQuery)), It.IsAny<object>(), It.IsAny<int?>(), It.IsAny<CommandType?>()))
+                .Returns(Task.FromResult((IList<DbVacancySummary>)new List<DbVacancySummary>(vacancySummaries)));
 
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
             httpClient.SetAuthorization();
