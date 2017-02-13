@@ -48,6 +48,7 @@
 
     <div class="grid-row">
         <div class="column-two-thirds">
+            <h1 class="heading-xlarge">
                 @Model.Vacancy.Title
                 <span class="heading-secondary">@Model.Vacancy.EmployerName</span>
             </h1>
@@ -95,6 +96,10 @@
         }
         else
         {
+        <div class="sfa-inset sfa-inset-yellow">
+            <h2 class="heading-large sfa-medium-top-margin">Decision log</h2>
+
+            @Html.FormTextAreaFor(m => m.Notes, hintText: "This is for reference and not shown to candidates", controlHtmlAttributes: new { @class = "form-control form-control-4-4", type = "text", rows=7 })
 
             <div class="form-group">
                 <fieldset>
