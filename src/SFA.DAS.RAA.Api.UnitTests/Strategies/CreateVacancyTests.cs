@@ -68,11 +68,13 @@
             _vorOwned = new Fixture().Build<VacancyOwnerRelationship>()
                 .With(vor => vor.VacancyOwnerRelationshipId, VorIdOwned)
                 .With(vor => vor.ProviderSiteId, VorIdOwned)
+                .With(vor => vor.EmployerId, 42)
                 .Create();
 
             var vorNotOwned = new Fixture().Build<VacancyOwnerRelationship>()
                 .With(vor => vor.VacancyOwnerRelationshipId, VorIdNotOwned)
                 .With(vor => vor.ProviderSiteId, VorIdNotOwned)
+                .With(vor => vor.EmployerId, 43)
                 .Create();
 
             _vacancyOwnerRelationshipReadRepository.Setup(
@@ -97,10 +99,19 @@
 
             _employer = new Fixture().Build<Employer>()
                 .With(e => e.EmployerId, _vorOwned.EmployerId)
+                .With(e => e.EdsUrn, "123456")
+                .Create();
+
+            var vorNotOwnedEmployer = new Fixture().Build<Employer>()
+                .With(e => e.EmployerId, vorNotOwned.EmployerId)
+                .With(e => e.EdsUrn, "654321")
                 .Create();
 
             _getEmployerByIdStrategy.Setup(r => r.Get(_vorOwned.EmployerId, true)).Returns(_employer);
             _getEmployerByEdsUrnStrategy.Setup(r => r.Get(_employer.EdsUrn)).Returns(_employer);
+
+            _getEmployerByIdStrategy.Setup(r => r.Get(vorNotOwned.EmployerId, true)).Returns(vorNotOwnedEmployer);
+            _getEmployerByEdsUrnStrategy.Setup(r => r.Get(vorNotOwnedEmployer.EdsUrn)).Returns(vorNotOwnedEmployer);
 
             _postalAddressStrategy.Setup(
                 s => s.GetPostalAddress(It.IsAny<PostalAddress>())).Throws(new CustomException("", Apprenticeships.Infrastructure.Postcode.ErrorCodes.PostalAddressGeocodeFailed));
