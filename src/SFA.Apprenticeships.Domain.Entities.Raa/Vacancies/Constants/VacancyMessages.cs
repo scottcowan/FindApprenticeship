@@ -36,5 +36,34 @@
             public const string WhiteListInvalidCharacterErrorText = "The description for the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText + ". If you do not supply a description the value from the associated vacancy owner relationship will be used.";
             public const string WhiteListInvalidTagErrorText = "The description for the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText + ". If you do not supply a description the value from the associated vacancy owner relationship will be used.";
         }
+
+        public class EmployerAnonymousName
+        {
+            public const string RequiredErrorText = "Please supply an anonymous name for the employer as you have specified that the employer for this vacancy should be anonymous (IsAnonymousEmployer = true)";
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "The anonymous name for the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "The anonymous name for the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
+
+        public class EmployerAnonymousReason
+        {
+            public const string RequiredErrorText = "Please supply a reason for keeping the employer anonymous as you have specified that the employer for this vacancy should be anonymous (IsAnonymousEmployer = true)";
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "The reason for keeping the employer anonymous " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "The reason for keeping the employer anonymous " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
+
+        public class AnonymousAboutTheEmployer
+        {
+            public const string RequiredErrorText = "Please supply anonymous information about the employer as you have specified that the employer for this vacancy should be anonymous (IsAnonymousEmployer = true)";
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "The anonymous information about the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "The anonymous information about the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
+
+        public static class VacancyLocations
+        {
+            public const string RequiredErrorText = "You must supply at least one vacancy location when the vacancy location type is MultipleLocations.";
+        }
     }
 }

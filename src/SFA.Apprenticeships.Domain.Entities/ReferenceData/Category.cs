@@ -70,7 +70,7 @@
         /// Category's Codename
         /// </summary>
         [Required]
-        public string CodeName { get; private set; }
+        public string CodeName { get; set; }
 
         /// <summary>
         /// Parent CategoryCode Name of the category
@@ -81,7 +81,7 @@
         /// The category type
         /// </summary>
         [Required]
-        public CategoryType CategoryType { get; private set; }
+        public CategoryType CategoryType { get; set; }
 
         /// <summary>
         /// Status of the category
@@ -92,7 +92,7 @@
         /// <summary>
         /// Lists a list of frameworks
         /// </summary>
-        public IList<Category> SubCategories { get; private set; }
+        public IList<Category> SubCategories { get; set; }
 
         [JsonIgnore]
         public long Count { get; set; }

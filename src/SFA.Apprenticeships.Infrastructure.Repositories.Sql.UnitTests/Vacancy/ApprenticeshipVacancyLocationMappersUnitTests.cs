@@ -5,7 +5,7 @@
     using Ploeh.AutoFixture;
     using Schemas.Vacancy;
     using DbVacancyLocation = Schemas.Vacancy.Entities.VacancyLocation;
-    using DomainVacancyLocation = Domain.Entities.Raa.Locations.VacancyLocation;
+    using DomainVacancyLocation = Domain.Entities.Raa.Vacancies.VacancyLocation;
 
     [TestFixture]
     [Parallelizable]
@@ -59,8 +59,7 @@
                 .Excluding(vl => vl.Address.County)
                 .Excluding(vl => vl.Address.LocalAuthorityId)
                 .Excluding(vl => vl.Address.LocalAuthorityCodeName)
-                .Excluding(vl => vl.Address.LocalAuthority)
-                .Excluding(vl => vl.LocalAuthorityCode));
+                .Excluding(vl => vl.Address.LocalAuthority));
         }
         
         [Test]

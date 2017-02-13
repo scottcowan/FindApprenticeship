@@ -35,6 +35,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 		                    v.AddressLine5,
 		                    v.Town,
 		                    v.CountyId,
+		                    v.LocalAuthorityId,
 		                    v.PostCode,
 		                    v.ApplyOutsideNAVMS,
 		                    v.ApplicationClosingDate,

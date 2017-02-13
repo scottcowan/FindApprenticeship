@@ -13,7 +13,7 @@
             // Web API configuration and services
             config.EnableSystemDiagnosticsTracing();
             config.Services.Add(typeof(IExceptionLogger), new AiExceptionLogger());
-            config.Filters.Add(new ValidateModelStateFilter());
+            //config.Filters.Add(new ValidateModelStateFilter());
             config.Filters.Add(new ExceptionToErrorResponseFilterAttribute());
 
             // configure FluentValidation model validator provider

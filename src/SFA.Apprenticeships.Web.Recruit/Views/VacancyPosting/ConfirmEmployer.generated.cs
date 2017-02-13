@@ -131,7 +131,7 @@ WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"column-full inline\"");
+WriteLiteral(" class=\"column-full inline sfa-xlarge-top-margin\"");
 
 WriteLiteral(">\r\n            <button");
 

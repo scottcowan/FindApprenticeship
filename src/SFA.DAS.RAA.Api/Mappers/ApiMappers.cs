@@ -104,7 +104,7 @@
                 .ForMember(dest => dest.IsMultiLocation, opt => opt.Ignore())
                 .ForMember(dest => dest.AnonymousAboutTheEmployer, opt => opt.Ignore())
                 .ForMember(dest => dest.EmployerLocation, opt => opt.Ignore())
-                .ForMember(dest => dest.LocalAuthorityCode, opt => opt.Ignore());
+                .ForMember(dest => dest.VacancyLocations, opt => opt.Ignore());
         }
     }
 }

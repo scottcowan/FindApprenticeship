@@ -17,7 +17,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 
         public static class EdsUrn
         {
-            public const string LabelText = "Search using Employer Reference Number (ERN)";
+            public const string LabelText = "ERN";
             public const string RequiredErrorText = "Enter an Employer Reference Number (ERN)";
             public const string WhiteListRegularExpression = @"^\d{6}(\d{3})?$";
             public const string WhiteListErrorText = "Employer Reference Number (ERN) must be a number with between six and nine digits";

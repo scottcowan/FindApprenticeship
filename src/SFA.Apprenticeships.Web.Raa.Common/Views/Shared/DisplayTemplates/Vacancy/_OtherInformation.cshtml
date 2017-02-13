@@ -16,7 +16,7 @@
                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.OtherInformation, Model.VacancyRequirementsProspectsViewModel.OtherInformationComment, Model.RequirementsProspectsLink))
                 </h2>
                 <div id="vacancy-other-information" itemprop="other" class="sfa-text-editor-generated @Model.VacancyRequirementsProspectsViewModel.OtherInformation.GetPreserveFormattingCssClass()">
-                    @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.OtherInformation)
+                    <p>@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.OtherInformation)</p>
                 </div>
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.OtherInformation, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.OtherInformationComment))
             </div>

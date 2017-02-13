@@ -103,6 +103,30 @@
             return AddressLine4 ?? AddressLine3 ?? AddressLine2 ?? AddressLine1 ?? Postcode;
         }
 
+        public PostalAddress Clone()
+        {
+            return new PostalAddress
+            {
+                PostalAddressId = PostalAddressId,
+                AddressLine1 = AddressLine1,
+                AddressLine2 = AddressLine2,
+                AddressLine3 = AddressLine3,
+                AddressLine4 = AddressLine4,
+                AddressLine5 = AddressLine5,
+                Town = Town,
+                Postcode = Postcode,
+                ValidationSourceCode = ValidationSourceCode,
+                ValidationSourceKeyValue = ValidationSourceKeyValue,
+                DateValidated = DateValidated,
+                CountyId = CountyId,
+                County = County,
+                LocalAuthorityId = LocalAuthorityId,
+                LocalAuthorityCodeName = LocalAuthorityCodeName,
+                LocalAuthority = LocalAuthority,
+                GeoPoint = GeoPoint.Clone()
+            };
+        }
+
         protected bool Equals(PostalAddress other)
         {
             return string.Equals(AddressLine1, other.AddressLine1) && string.Equals(AddressLine2, other.AddressLine2) && string.Equals(AddressLine3, other.AddressLine3) && string.Equals(AddressLine4, other.AddressLine4) && string.Equals(AddressLine5, other.AddressLine5) && string.Equals(County, other.County) && CountyId == other.CountyId && DateValidated.Equals(other.DateValidated) && Equals(GeoPoint, other.GeoPoint) && string.Equals(LocalAuthority, other.LocalAuthority) && string.Equals(LocalAuthorityCodeName, other.LocalAuthorityCodeName) && LocalAuthorityId == other.LocalAuthorityId && PostalAddressId == other.PostalAddressId && string.Equals(Postcode, other.Postcode) && string.Equals(Town, other.Town) && string.Equals(ValidationSourceCode, other.ValidationSourceCode) && string.Equals(ValidationSourceKeyValue, other.ValidationSourceKeyValue);

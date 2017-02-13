@@ -88,7 +88,7 @@ Write(Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView)
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"column-one-half inline\"");
+WriteLiteral(" class=\"form-group sfa-xlarge-top-margin inline\"");
 
 WriteLiteral(">\r\n        <button");
 

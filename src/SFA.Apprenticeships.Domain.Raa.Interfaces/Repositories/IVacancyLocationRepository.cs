@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories
 {
     using System.Collections.Generic;
-    using Entities.Raa.Locations;
+    using Entities.Raa.Vacancies;
 
     public interface IVacancyLocationReadRepository
     {

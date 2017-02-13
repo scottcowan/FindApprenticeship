@@ -43,9 +43,6 @@
                 .With(psr => psr.ProviderSiteRelationShipTypeId, 1)
                 .Create();
 
-            var counties = new Fixture().CreateMany<County>(3).ToList();
-
-            ScenarioContext.Current.Add("counties", counties);
             ScenarioContext.Current.Add($"employer_{employerEdsUrn}", employer);
             ScenarioContext.Current.Add($"providerSite_{providerSiteEdsUrn}", providerSite);
             ScenarioContext.Current.Add("providerSiteRelationship", providerSite);
@@ -53,10 +50,6 @@
             RaaMockFactory.GetMockGetOpenConnection().Setup(
                 m => m.Query<Employer>(It.Is<string>(s => s.StartsWith(EmployerRepository.BasicQuery)), It.Is<object>(o => o.GetHashCode() == new { EdsUrn = employerEdsUrn }.GetHashCode()), null, null))
                 .Returns(new[] { employer });
-
-            RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<County>(ReferenceRepository.GetCountiesSql, null, null, null))
-                .Returns(counties);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
                 m => m.Query<ProviderSite>(It.Is<string>(s => s.StartsWith(ProviderSiteRepository.SelectByEdsUrnSql)), It.Is<object>(o => o.GetHashCode() == new { edsUrn = providerSiteEdsUrn.ToString() }.GetHashCode()), null, null))

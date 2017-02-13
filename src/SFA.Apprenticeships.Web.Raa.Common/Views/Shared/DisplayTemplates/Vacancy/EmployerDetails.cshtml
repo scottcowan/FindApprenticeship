@@ -59,7 +59,7 @@
         <div class="form-group">
             <fieldset>
                 <a name="@Html.NameFor(m => m.VacancyLocationType).ToString().ToLower()"></a>
-                <h3 class="form-label-bold sfa-small-bottom-margin">Vacancy location options</h3>
+                <h3 class="heading-small sfa-small-bottom-margin">Vacancy location options</h3>
                 <legend class="visually-hidden">Vacancy location options</legend>
                 @if (Model.IsEmployerAddressValid)
                 {
@@ -71,7 +71,7 @@
                     </label>
 
                         <div id="location-type-main-location-panel" class="panel panel-border-narrow toggle-content">
-                            @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new { type = "number", @class = "form-control-1-8", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" })
+                            @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new { type = "number", @class = "form-control-1-8", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" }) 
                             @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
                         </div>
 
@@ -89,7 +89,7 @@
                             @Html.FormTextFor(model => model.NumberOfPositionsNationwide, controlHtmlAttributes: new { type = "number", @class = "form-control-1-8", @maxlength = "5", size = 12, id = "NumberOfPositionsNWJS", Name = "NumberOfPositionsNWJS" })
                             @Html.EditorFor(m => m.NumberOfPositionsNationwideComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
                         </div>
-                }
+                            }
                 else
                 {
                     <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label selection-button-radio @Model.VacancyLocationType ">
@@ -135,7 +135,7 @@
                     </label>
 
                     <div id="location-type-main-location-panel" class="panel panel-border-narrow">
-                        @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new { type = "text", @class = "form-control-1-8", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" }, labelHtmlAttributes: new { @class = "bold-small" })
+                        @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new { type = "text", @class = "form-control-1-8", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" }, labelHtmlAttributes: new { @class = "bold-small" }) 
                         @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
                     </div>
 
@@ -193,18 +193,22 @@
         <div id="is-non-anonymous-employer-panel" class="toggle-content non-anonymous">
             @Html.FormTextFor(model => model.EmployerWebsiteUrl, controlHtmlAttributes: new { type = "text", @class = "form-control-3-4" })
             @Html.EditorFor(m => m.EmployerWebsiteUrlComment, "Comment", Html.GetLabelFor(m => m.EmployerWebsiteUrlComment))
+
             @Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new { @class = "form-control-4-4", type = "text", size = 12, rows = 7 })
             @Html.EditorFor(m => m.EmployerDescriptionComment, "Comment", Html.GetLabelFor(m => m.EmployerDescriptionComment))
+            
         </div>
 
         <div id="is-anonymous-employer-panel" class="toggle-content anonymous">
             <div class="panel panel-border-wide">
                 <p>A brief description of the employer will be needed to replace their name. For example, car manufacturer or clothing retailer. The employer's address will not be visible to candidates. Only the employer's town or city will be shown.</p>
             </div>
-            @Html.FormTextFor(model => model.AnonymousEmployerDescription, controlHtmlAttributes: new { type = "text", @class = "form-control-4-4", data_val_length_max = "40", rows = 1 })
+            @Html.FormTextFor(model => model.AnonymousEmployerDescription, controlHtmlAttributes: new { type = "text", @class = "form-control-3-4", data_val_length_max = "40", rows = 1 })
             @Html.EditorFor(m => m.AnonymousEmployerDescriptionComment, "Comment", Html.GetLabelFor(m => m.AnonymousEmployerDescriptionComment))
+
             @Html.FormTextAreaFor(m => m.AnonymousEmployerReason, controlHtmlAttributes: new { @class = "form-control-4-4", type = "text", size = 12, data_val_length_max = "240", rows = 5 })
             @Html.EditorFor(m => m.AnonymousEmployerReasonComment, "Comment", Html.GetLabelFor(m => m.AnonymousEmployerReasonComment))
+            
             @Html.FormTextAreaFor(m => m.AnonymousAboutTheEmployer, controlHtmlAttributes: new { @class = "form-control-4-4", type = "text", size = 12, rows = 7 })
             @Html.EditorFor(m => m.AnonymousAboutTheEmployerComment, "Comment", Html.GetLabelFor(m => m.AnonymousAboutTheEmployerComment))
         </div>

@@ -22,7 +22,6 @@
 #pragma warning restore 612
 #pragma warning restore 618
             For<IGeoCodeLookupProvider>().Use<GeoCodeLookupProvider>();
-            For<ILocalAuthorityLookupProvider>().Use<LocalAuthorityLookupProvider>();
             For<IPostalAddressStrategy>().Use<PostalAddressStrategy>();
         }
     }

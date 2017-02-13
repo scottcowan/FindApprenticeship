@@ -3,7 +3,11 @@
     using System;
     using System.Linq;
     using System.Security;
+    using Apprenticeships.Application.Employer.Strategies;
+    using Apprenticeships.Application.Location.Strategies;
     using Apprenticeships.Application.Provider.Strategies;
+    using Apprenticeships.Domain.Entities.Exceptions;
+    using Apprenticeships.Domain.Entities.Raa.Locations.Constants;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies.Constants;
     using Apprenticeships.Domain.Interfaces.Repositories;
@@ -16,21 +20,27 @@
     {
         private readonly VacancyValidator _vacancyValidator = new VacancyValidator();
 
-        private readonly IVacancyReadRepository _vacancyreadRepository;
+        private readonly IVacancyReadRepository _vacancyReadRepository;
         private readonly IVacancyWriteRepository _vacancyWriteRepository;
         private readonly IProviderReadRepository _providerReadRepository;
         private readonly IVacancyOwnerRelationshipReadRepository _vacancyOwnerRelationshipReadRepository;
         private readonly IGetOwnedProviderSitesStrategy _getOwnedProviderSitesStrategy;
         private readonly IReferenceNumberRepository _referenceNumberRepository;
+        private readonly IGetByIdStrategy _getEmployerByIdStrategy;
+        private readonly IGetByEdsUrnStrategy _getEmployerByEdsUrnStrategy;
+        private readonly IPostalAddressStrategy _postalAddressStrategy;
 
-        public CreateVacancyStrategy(IVacancyReadRepository vacancyreadRepository, IVacancyWriteRepository vacancyWriteRepository, IProviderReadRepository providerReadRepository, IVacancyOwnerRelationshipReadRepository vacancyOwnerRelationshipReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy, IReferenceNumberRepository referenceNumberRepository)
+        public CreateVacancyStrategy(IVacancyReadRepository vacancyReadRepository, IVacancyWriteRepository vacancyWriteRepository, IProviderReadRepository providerReadRepository, IVacancyOwnerRelationshipReadRepository vacancyOwnerRelationshipReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy, IReferenceNumberRepository referenceNumberRepository, IGetByIdStrategy getEmployerByIdStrategy, IGetByEdsUrnStrategy getEmployerByEdsUrnStrategy, IPostalAddressStrategy postalAddressStrategy)
         {
-            _vacancyreadRepository = vacancyreadRepository;
+            _vacancyReadRepository = vacancyReadRepository;
             _vacancyWriteRepository = vacancyWriteRepository;
             _providerReadRepository = providerReadRepository;
             _vacancyOwnerRelationshipReadRepository = vacancyOwnerRelationshipReadRepository;
             _getOwnedProviderSitesStrategy = getOwnedProviderSitesStrategy;
             _referenceNumberRepository = referenceNumberRepository;
+            _getEmployerByIdStrategy = getEmployerByIdStrategy;
+            _getEmployerByEdsUrnStrategy = getEmployerByEdsUrnStrategy;
+            _postalAddressStrategy = postalAddressStrategy;
         }
 
         public Vacancy CreateVacancy(Vacancy vacancy, string ukprn)
@@ -48,7 +58,7 @@
 
             if (vacancy.VacancyGuid != Guid.Empty)
             {
-                if (_vacancyreadRepository.GetByVacancyGuid(vacancy.VacancyGuid) != null)
+                if (_vacancyReadRepository.GetByVacancyGuid(vacancy.VacancyGuid) != null)
                 {
                     validationResult.Errors.Add(new ValidationFailure("VacancyGuid", VacancyMessages.VacancyGuid.DuplicateGuid));
                 }
@@ -71,6 +81,64 @@
 
                     vacancy.VacancyManagerId = vacancyOwnerRelationship.ProviderSiteId;
                     vacancy.DeliveryOrganisationId = vacancyOwnerRelationship.ProviderSiteId;
+
+                    //Get the employer initially by id
+                    var employer = _getEmployerByIdStrategy.Get(vacancyOwnerRelationship.EmployerId, true);
+                    //Then by EDSURN as that will update the employer if anything has changed in EDRS. Obviously this requires knowledge of the implementation of this strategy which is wrong
+                    //TODO: Make _getEmployerByIdStrategy.Get update the employer if necessary
+                    employer = _getEmployerByEdsUrnStrategy.Get(employer.EdsUrn);
+
+                    if (vacancy.VacancyLocations != null && vacancy.VacancyLocations.Count > 0)
+                    {
+                        //Verify and geocode all addresses
+                        for (int i = 0; i < vacancy.VacancyLocations.Count; i++)
+                        {
+                            var vacancyLocation = vacancy.VacancyLocations[i];
+                            if (vacancyLocation.Address != null)
+                            {
+                                try
+                                {
+                                    vacancyLocation.Address = _postalAddressStrategy.GetPostalAddress(vacancyLocation.Address);
+                                }
+                                catch (CustomException ex)
+                                {
+                                    if (ex.Code == Apprenticeships.Infrastructure.Postcode.ErrorCodes.PostalAddressGeocodeFailed)
+                                    {
+                                        validationResult.Errors.Add(new ValidationFailure($"VacancyLocations[{i}].Address.Postcode", PostalAddressMessages.Postcode.NotFound));
+                                    }
+                                    else
+                                    {
+                                        throw;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (vacancy.VacancyLocations.Count == 1)
+                        {
+                            vacancy.Address = vacancy.VacancyLocations[0].Address;
+                            vacancy.NumberOfPositions = vacancy.VacancyLocations[0].NumberOfPositions;
+                            vacancy.VacancyLocations = null;
+                        }
+                        else
+                        {
+                            vacancy.Address = employer.Address;
+                        }
+                    }
+                    else
+                    {
+                        vacancy.Address = employer.Address;
+                        vacancy.VacancyLocations = null;
+                    }
+
+                    if (string.IsNullOrEmpty(vacancy.EmployerWebsiteUrl))
+                    {
+                        vacancy.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
+                    }
+                    if (string.IsNullOrEmpty(vacancy.EmployerDescription))
+                    {
+                        vacancy.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
+                    }
                 }
             }
 
@@ -83,7 +151,10 @@
             
             //Ignore any passed in status and set to draft
             vacancy.Status = VacancyStatus.Draft;
-            vacancy.VacancySource = VacancySource.Api;
+            if (vacancy.VacancySource != VacancySource.Raa)
+            {
+                vacancy.VacancySource = VacancySource.Api;
+            }
 
             var createdVacancy = _vacancyWriteRepository.Create(vacancy);
 

@@ -40,6 +40,46 @@
                 .WithMessage(VacancyMessages.EmployerDescription.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyMessages.EmployerDescription.WhiteListInvalidTagErrorText);
+
+            RuleFor(x => x.EmployerAnonymousName)
+                 .NotEmpty()
+                 .WithMessage(VacancyMessages.EmployerAnonymousName.RequiredErrorText)
+                 .Matches(VacancyMessages.EmployerAnonymousName.WhiteListHtmlRegularExpression)
+                 .WithMessage(VacancyMessages.EmployerAnonymousName.WhiteListInvalidCharacterErrorText)
+                 .Must(Common.BeAValidFreeText)
+                 .WithMessage(VacancyMessages.EmployerAnonymousName.WhiteListInvalidTagErrorText)
+                 .When(IsAnonymousEmployer);
+
+            RuleFor(x => x.EmployerAnonymousReason)
+                .NotEmpty()
+                .WithMessage(VacancyMessages.EmployerAnonymousReason.RequiredErrorText)
+                .Matches(VacancyMessages.EmployerAnonymousReason.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyMessages.EmployerAnonymousReason.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyMessages.EmployerAnonymousReason.WhiteListInvalidTagErrorText)
+                .When(IsAnonymousEmployer);
+
+            RuleFor(x => x.AnonymousAboutTheEmployer)
+                .NotEmpty()
+                .WithMessage(VacancyMessages.AnonymousAboutTheEmployer.RequiredErrorText)
+                .Matches(VacancyMessages.AnonymousAboutTheEmployer.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyMessages.AnonymousAboutTheEmployer.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyMessages.AnonymousAboutTheEmployer.WhiteListInvalidTagErrorText)
+                .When(IsAnonymousEmployer);
+
+            RuleFor(x => x.VacancyLocations)
+                .NotEmpty()
+                .WithMessage(VacancyMessages.VacancyLocations.RequiredErrorText)
+                .When(x => x.VacancyLocationType == VacancyLocationType.MultipleLocations);
+
+            RuleFor(x => x.VacancyLocations)
+                .SetCollectionValidator(new VacancyLocationValidator());
+        }
+
+        private static bool IsAnonymousEmployer(Vacancy vacancy)
+        {
+            return vacancy.IsAnonymousEmployer.HasValue && vacancy.IsAnonymousEmployer.Value;
         }
     }
 }

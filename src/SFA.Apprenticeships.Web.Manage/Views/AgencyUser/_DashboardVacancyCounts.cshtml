@@ -15,7 +15,7 @@
     </p>
     <div>
         <div class="column-one-quarter">
-            <div class="data">
+            <div class="data sfa-data">
                 @if (filterType == VacanciesSummaryFilterTypes.SubmittedToday)
                 {
                     <h2 class="bold-xlarge">@Model.SubmittedTodayCount</h2>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="column-one-quarter">
-            <div class="data">
+            <div class="data sfa-data">
                 @if (filterType == VacanciesSummaryFilterTypes.SubmittedYesterday)
                 {
                     <h2 class="bold-xlarge">@Model.SubmittedYesterdayCount</h2>
@@ -49,7 +49,7 @@
         </div>
 
         <div class="column-one-quarter">
-            <div class="data">
+            <div class="data sfa-data">
                 @if (filterType == VacanciesSummaryFilterTypes.SubmittedMoreThan48Hours)
                 {
                     <h2 class="bold-xlarge">@Model.SubmittedMoreThan48HoursCount</h2>
@@ -66,7 +66,7 @@
         </div>
 
         <div class="column-one-quarter">
-            <div class="data">
+            <div class="data sfa-data">
                 @if (filterType == VacanciesSummaryFilterTypes.Resubmitted)
                 {
                     <h2 class="bold-xlarge">@Model.ResubmittedCount</h2>

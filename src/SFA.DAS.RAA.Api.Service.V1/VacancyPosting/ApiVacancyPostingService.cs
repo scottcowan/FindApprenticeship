@@ -7,7 +7,6 @@
     using Apprenticeships.Application.Interfaces.Api;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Apprenticeships.Application.VacancyPosting.Strategies;
-    using Apprenticeships.Domain.Entities.Raa.Locations;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories.Models;
     using Mappers;
@@ -53,8 +52,27 @@
             _logService = logService;
         }
 
-        public Vacancy CreateVacancy(Vacancy vacancy)
+        public async Task<Vacancy> CreateVacancy(Vacancy vacancy)
         {
+            if (_apiClientProvider.IsEnabled())
+            {
+                var apiClient = _apiClientProvider.GetApiClient();
+
+                try
+                {
+                    vacancy.VacancySource = VacancySource.Raa;
+                    var apiVacancy = ApiClientMappers.Map<Vacancy, ApiVacancy>(vacancy);
+                    var apiVacancyResult = await apiClient.VacancyOperations.CreateVacancyWithHttpMessagesAsync(apiVacancy);
+                    var createdApiVacancy = apiVacancyResult.Body;
+                    return ApiClientMappers.Map<ApiVacancy, Vacancy>(createdApiVacancy);
+                }
+                catch (HttpOperationException ex)
+                {
+                    _logService.Info(ex.ToString());
+                    throw;
+                }
+            }
+
             return _createVacancyStrategy.CreateVacancy(vacancy);
         }
 

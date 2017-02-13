@@ -672,8 +672,6 @@ WriteLiteral(">\r\n            <p>\r\n                The following tips are tak
 WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/advice/courses/typesoflearnin" +
 "g/Pages/apprenticeship-application-help.aspx\"");
 
-WriteLiteral("\r\n                                                     target=\"_blank\"");
-
 WriteLiteral(">this page on the NCS website</a>.\r\n            </p>\r\n        </div>\r\n    </li>\r\n" +
 "    <li");
 
@@ -959,7 +957,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 304 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 303 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
 Write(Scripts.Render("~/bundles/knockout"));
 
             
@@ -985,7 +983,7 @@ WriteLiteral(@">
             qualificationData = ");
 
             
-            #line 319 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 318 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                            Write(Html.Raw(Json.Encode(Model.Candidate.Qualifications)));
 
             
@@ -994,7 +992,7 @@ WriteLiteral(@">
 WriteLiteral(";\r\n            workExperienceData = ");
 
             
-            #line 320 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 319 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                             Write(Html.Raw(Json.Encode(Model.Candidate.WorkExperience)));
 
             
@@ -1003,7 +1001,7 @@ WriteLiteral(";\r\n            workExperienceData = ");
 WriteLiteral(";\r\n            trainingCourseData = ");
 
             
-            #line 321 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 320 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                             Write(Html.Raw(Json.Encode(Model.Candidate.TrainingCourses)));
 
             
@@ -1012,7 +1010,7 @@ WriteLiteral(";\r\n            trainingCourseData = ");
 WriteLiteral(";\r\n\r\n            currentYear = ");
 
             
-            #line 323 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 322 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                      Write(Html.Raw(Model.CurrentYear));
 
             
@@ -1021,7 +1019,7 @@ WriteLiteral(";\r\n\r\n            currentYear = ");
 WriteLiteral(";\r\n            whitelistregex = ");
 
             
-            #line 324 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 323 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                         Write(Html.Raw(Json.Encode(Model.WhiteListRegex)));
 
             
@@ -1030,7 +1028,7 @@ WriteLiteral(";\r\n            whitelistregex = ");
 WriteLiteral(";\r\n            yearRegex = ");
 
             
-            #line 325 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 324 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                    Write(Html.Raw(Json.Encode(Model.FourDigitYearRegex)));
 
             
@@ -1039,7 +1037,7 @@ WriteLiteral(";\r\n            yearRegex = ");
 WriteLiteral(";\r\n\r\n            autoSaveTimeout = ");
 
             
-            #line 327 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 326 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                          Write(Html.Raw(Json.Encode(Model.AutoSaveTimeInMinutes)));
 
             
@@ -1051,7 +1049,7 @@ WriteLiteral(" * 60 * 1000;\r\n\r\n            $(window).on(\'load\', function()
 "out: ");
 
             
-            #line 333 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 332 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                         Write(Model.SessionTimeout);
 
             
@@ -1060,7 +1058,7 @@ WriteLiteral(" * 60 * 1000;\r\n\r\n            $(window).on(\'load\', function()
 WriteLiteral(" * 1000,\r\n                    confirmationMessage: \'");
 
             
-            #line 334 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 333 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                      Write(Model.ConfirmationMessage);
 
             
@@ -1071,7 +1069,7 @@ WriteLiteral("\'\r\n                });\r\n            });\r\n\r\n            va
 " false;\r\n            }, ");
 
             
-            #line 342 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 341 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
           Write(Model.SessionTimeout);
 
             
@@ -1089,7 +1087,7 @@ WriteLiteral(@" * 1000);
                         (e || window.event).returnValue = '");
 
             
-            #line 351 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 350 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                                       Write(Model.ConfirmationMessage);
 
             
@@ -1098,7 +1096,7 @@ WriteLiteral(@" * 1000);
 WriteLiteral("\'; //Gecko + IE\r\n                        return \'");
 
             
-            #line 352 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 351 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                            Write(Model.ConfirmationMessage);
 
             
@@ -1129,7 +1127,7 @@ WriteLiteral(@"'; //Webkit, Safari, Chrome etc.
                 Webtrends.multiTrack({ element: this, argsa: [""DCS.dcsuri"", ""/apprenticeship/apply/autosavedraft/");
 
             
-            #line 374 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 373 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                                                                                             Write(Model.VacancyId);
 
             
@@ -1140,7 +1138,7 @@ WriteLiteral("\", \"WT.dl\", \"99\", \"WT.ti\", \"Apprenticeship – Auto Save D
 "       url: \'");
 
             
-            #line 377 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 376 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                      Write(Url.RouteUrl(CandidateRouteNames.ApprenticeshipAutoSave, new { id = Model.VacancyId }));
 
             
@@ -1158,7 +1156,7 @@ WriteLiteral(@"',
                         var savedMessage = 'Last saved at ' + result.DateTimeMessage + ' to ' + '<a href=""");
 
             
-            #line 386 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 385 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                                                                                      Write(Url.RouteUrl(CandidateRouteNames.MyApplications));
 
             
@@ -1188,7 +1186,7 @@ WriteLiteral("\" title=\"My Applications\">my applications</a>\';\r\n           
 WriteLiteral("    ");
 
             
-            #line 448 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 447 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
 Write(Scripts.Render("~/bundles/nas/application"));
 
             
@@ -1199,7 +1197,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 449 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 448 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             

@@ -5,20 +5,24 @@
     ViewBag.Title = "Recruit an Apprentice - Extra questions you'd like to ask candidates (optional)";
 }
 
-<h1 class="heading-xlarge">
-    Extra questions you'd like to ask candidates (optional)
-</h1>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">
+            Extra questions you'd like to ask candidates (optional)
+        </h1>
+    </div>
+</div>
 
 @Html.AntiForgeryToken()
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
 @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
-<section>
-    <div class="form-group">
+<div class="grid-row">
+    <div class="column-two-thirds">
         @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "form-control form-control-4-4 form-textarea-medium", type = "text" })
         @Html.EditorFor(m => m.FirstQuestionComment, "Comment", Html.GetLabelFor(m => m.FirstQuestionComment))
         @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "form-control form-control-4-4 form-textarea-medium", type = "text" })
         @Html.EditorFor(m => m.SecondQuestionComment, "Comment", Html.GetLabelFor(m => m.SecondQuestionComment))
     </div>
-</section>
+</div>

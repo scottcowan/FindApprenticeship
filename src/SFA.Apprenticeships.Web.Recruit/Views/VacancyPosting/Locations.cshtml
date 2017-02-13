@@ -14,7 +14,7 @@
     @Html.DisplayFor(m => m, LocationSearchViewModel.PartialView)
 
         <div class="grid-row">
-            <div class="column-two-thirds sfa-xlarge-top-margin">
+            <div class="column-two-thirds inline sfa-xlarge-top-margin">
         @{        
             var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
         }

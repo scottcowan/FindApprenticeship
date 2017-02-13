@@ -4,6 +4,7 @@
 
 namespace SFA.DAS.RAA.Api.Client.V1
 {
+    using Microsoft.Rest;
     using Models;
 
     /// <summary>
@@ -22,7 +23,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// </exception>
         public FrameworkOperations(ApiClient client)
         {
-            if (client == null)
+            if (client == null) 
             {
                 throw new System.ArgumentNullException("client");
             }
@@ -75,7 +76,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
             // Set Headers
             if (customHeaders != null)
             {
-                foreach (var _header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
                     if (_httpRequest.Headers.Contains(_header.Key))
                     {
@@ -110,12 +111,10 @@ namespace SFA.DAS.RAA.Api.Client.V1
             if ((int)_statusCode != 200)
             {
                 var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null)
-                {
+                if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 }
-                else
-                {
+                else {
                     _responseContent = string.Empty;
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
@@ -207,7 +206,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
             // Set Headers
             if (customHeaders != null)
             {
-                foreach (var _header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
                     if (_httpRequest.Headers.Contains(_header.Key))
                     {
@@ -242,12 +241,10 @@ namespace SFA.DAS.RAA.Api.Client.V1
             if ((int)_statusCode != 200)
             {
                 var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null)
-                {
+                if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 }
-                else
-                {
+                else {
                     _responseContent = string.Empty;
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);

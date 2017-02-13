@@ -6,6 +6,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// StandardSubjectAreaTierOne instance
+    /// </summary>
     public partial class StandardSubjectAreaTierOne
     {
         /// <summary>
@@ -16,7 +19,11 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// Initializes a new instance of the StandardSubjectAreaTierOne class.
         /// </summary>
-        public StandardSubjectAreaTierOne(int? id = default(int?), string name = default(string), System.Collections.Generic.IList<Sector> sectors = default(System.Collections.Generic.IList<Sector>))
+        /// <param name="id">StandardSubjectAreaTierOne's  identifier</param>
+        /// <param name="name">StandardSubjectAreaTierOne's Name</param>
+        /// <param name="sectors">StandardSubjectAreaTierOne's list of
+        /// Sectors.</param>
+        public StandardSubjectAreaTierOne(int id, string name, System.Collections.Generic.IList<Sector> sectors = default(System.Collections.Generic.IList<Sector>))
         {
             Id = id;
             Name = name;
@@ -24,19 +31,45 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
+        /// Gets or sets standardSubjectAreaTierOne's  identifier
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Id")]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
+        /// Gets or sets standardSubjectAreaTierOne's Name
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets standardSubjectAreaTierOne's list of Sectors.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Sectors")]
         public System.Collections.Generic.IList<Sector> Sectors { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
+            }
+            if (this.Sectors != null)
+            {
+                foreach (var element in this.Sectors)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

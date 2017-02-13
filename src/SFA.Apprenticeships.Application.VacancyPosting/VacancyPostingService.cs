@@ -41,9 +41,9 @@
             _vacancyLocationsStrategies = vacancyLocationsStrategies;
         }
 
-        public Vacancy CreateVacancy(Vacancy vacancy)
+        public Task<Vacancy> CreateVacancy(Vacancy vacancy)
         {
-            return _createVacancyStrategy.CreateVacancy(vacancy);
+            return Task.FromResult(_createVacancyStrategy.CreateVacancy(vacancy));
         }
 
         public Vacancy UpdateVacancy(Vacancy vacancy)

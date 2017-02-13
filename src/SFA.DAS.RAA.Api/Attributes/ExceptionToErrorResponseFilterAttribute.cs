@@ -33,6 +33,9 @@
             var validationException = context.Exception as ValidationException;
             if (validationException != null)
             {
+                //Clearing the model state because a validation exception implies that the validation has been taken over exclusively by fluent validation
+                context.ActionContext.ModelState.Clear();
+
                 new ValidationResult(validationException.Errors).AddToModelState(context.ActionContext.ModelState, null);
 
                 context.Response = context.Request.CreateErrorResponse(HttpStatusCode.BadRequest, context.ActionContext.ModelState);

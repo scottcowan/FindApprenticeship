@@ -12,7 +12,7 @@
 
     if (Model.IsWellFormedVacancyUrl)
     {
-        <a id="external-employer-website" rel="external" href="@Model.VacancyUrl" target="_blank" @Html.Raw(string.Format(AnalyticsTag, "/traineeship/apply/offline/", "Traineeship – Apply Offline", ViewData["AnalyticsButtonPosition"]))>Apply now</a>
+        <a id="external-employer-website"  href="@Model.VacancyUrl"  @Html.Raw(string.Format(AnalyticsTag, "/traineeship/apply/offline/", "Traineeship – Apply Offline", ViewData["AnalyticsButtonPosition"]))>Apply now</a>
     }
     else
     {

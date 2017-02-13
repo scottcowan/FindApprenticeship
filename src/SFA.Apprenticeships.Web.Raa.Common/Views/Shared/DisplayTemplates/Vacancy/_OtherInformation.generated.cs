@@ -127,18 +127,16 @@ WriteAttribute("class", Tuple.Create(" class=\"", 907), Tuple.Create("\"", 1034)
 , 941), false)
 );
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
+WriteLiteral(">\r\n                    <p>");
 
             
             #line 19 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OtherInformation.cshtml"
-               Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.OtherInformation));
+                  Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.OtherInformation));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n");
+WriteLiteral("</p>\r\n                </div>\r\n");
 
 WriteLiteral("                ");
 

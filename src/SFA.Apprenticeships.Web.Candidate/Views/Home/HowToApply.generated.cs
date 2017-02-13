@@ -2830,8 +2830,6 @@ WriteLiteral(">\r\n            <p>\r\n                The following tips are tak
 WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/advice/courses/typesoflearnin" +
 "g/Pages/apprenticeship-application-help.aspx\"");
 
-WriteLiteral("\r\n                                                        target=\"_blank\"");
-
 WriteLiteral(">this page on the NCS website</a>.\r\n            </p>\r\n        </div>\r\n    </li>\r\n" +
 "    <li");
 
@@ -3117,7 +3115,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 708 "..\..\Views\Home\HowToApply.cshtml"
+            #line 707 "..\..\Views\Home\HowToApply.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             
