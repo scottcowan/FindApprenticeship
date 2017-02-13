@@ -60,6 +60,7 @@
 
                 try
                 {
+                    vacancy.VacancySource = VacancySource.Raa;
                     var apiVacancy = ApiClientMappers.Map<Vacancy, ApiVacancy>(vacancy);
                     var apiVacancyResult = await apiClient.VacancyOperations.CreateVacancyWithHttpMessagesAsync(apiVacancy);
                     var createdApiVacancy = apiVacancyResult.Body;
