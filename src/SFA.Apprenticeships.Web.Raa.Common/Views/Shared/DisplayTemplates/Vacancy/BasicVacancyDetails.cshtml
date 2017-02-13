@@ -43,11 +43,12 @@
             @Html.ValidationMessageFor(m => m.ShortDescriptionComment)
             @Html.EditorFor(m => m.ShortDescriptionComment, "Comment", Html.GetLabelFor(m => m.ShortDescriptionComment))
             <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyType)))">
-                <a name="@Html.NameFor(m => m.VacancyType).ToString().ToLower()"></a>
-                <h3 class="form-label-bold sfa-small-bottom-margin">Vacancy type</h3>
-                @Html.ValidationMessageWithSeverityFor(m => m.VacancyType, Html.GetValidationType(m => m.VacancyType))
                 <fieldset class="inline">
-                    <legend class="visually-hidden">Vacancy type</legend>
+                    <legend>
+                        <a name="@Html.NameFor(m => m.VacancyType).ToString().ToLower()"></a>
+                        <h3 class="form-label-bold sfa-small-bottom-margin">Vacancy type</h3>
+                        @Html.ValidationMessageWithSeverityFor(m => m.VacancyType, Html.GetValidationType(m => m.VacancyType))
+                    </legend>
                     @* ReSharper disable once Html.IdNotResolved *@
                     <label for="vacancy-type-apprenticeship" class="block-label selection-button-radio">
                         @Html.RadioButtonFor(model => model.VacancyType, VacancyType.Apprenticeship, new {id = "vacancy-type-apprenticeship", aria_labelledby = "vacancy-type-label"})
@@ -61,17 +62,17 @@
                 </fieldset>
             </div>
             <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.OfflineVacancy)))">
-                <label class="form-label-bold sfa-small-bottom-margin">
-                    Manage application method
-                    <span class="form-hint">
-                        How will candidates apply for this vacancy?
-                    </span>
-                </label>
-
-                @Html.ValidationMessageWithSeverityFor(m => m.OfflineVacancy, Html.GetValidationType(m => m.OfflineVacancy))
-
                 <fieldset>
-                    <legend class="visually-hidden">Manage application method</legend>
+                    <legend>
+                        <label class="form-label-bold sfa-small-bottom-margin">
+                            Manage application method
+                            <span class="form-hint">
+                                How will candidates apply for this vacancy?
+                            </span>
+                        </label>
+
+                        @Html.ValidationMessageWithSeverityFor(m => m.OfflineVacancy, Html.GetValidationType(m => m.OfflineVacancy))
+                    </legend>
 
                     @* ReSharper disable once Html.IdNotResolved *@
                     <label for="apprenticeship-online-vacancy" class="block-label selection-button-radio" data-target="online-panel" @isApplicationThroughRAAYes>

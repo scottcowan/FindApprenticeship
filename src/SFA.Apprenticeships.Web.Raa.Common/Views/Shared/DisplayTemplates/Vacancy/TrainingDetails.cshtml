@@ -1,5 +1,6 @@
 ﻿@model TrainingDetailsViewModel
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Common.Validators.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
@@ -62,16 +63,17 @@
                     {
                         <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
                             <fieldset class="inline">
-                                <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
-                                <h3 class="heading-small">Apprenticeship type</h3>
-                                <legend class="visually-hidden">Apprenticeship type</legend>
-
-                                <p id="frameworks-standards-explained">
-                                    <span class="form-hint">Select a framework if you only offer this type of apprenticeship training.</span>
-                                </p>
-                                <p>
-                                    <span class="form-hint">Alternatively, if you also deliver the new <a href="https://www.gov.uk/government/collections/apprenticeship-standards"  >apprenticeship standards</a>, you can choose a standard job role instead.</span>
-</p>
+                                <legend>
+                                    <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
+                                    <h3 class="heading-small">Apprenticeship type</h3>
+                                    <p id="frameworks-standards-explained">
+                                        <span class="form-hint">Select a framework if you only offer this type of apprenticeship training.</span>
+                                    </p>
+                                    <p>
+                                        <span class="form-hint">Alternatively, if you also deliver the new <a href="https://www.gov.uk/government/collections/apprenticeship-standards">apprenticeship standards</a>, you can choose a standard job role instead.</span>
+                                    </p>
+                                    @Html.ValidationMessageWithSeverityFor(m => m.TrainingType, Html.GetValidationType(m => m.TrainingType))
+                                </legend>
 
                                 @* ReSharper disable once Html.IdNotResolved *@
                                 <label data-target="training-type-frameworks-panel" for="training-type-frameworks" class="block-label selection-button-radio @frameworksSelected">
@@ -86,7 +88,8 @@
 
                             </fieldset>
 
-                            @Html.ValidationMessageFor(m => m.TrainingType)
+                            
+
                         </div>
 
                         <noscript>
@@ -129,25 +132,29 @@
                             @Html.EditorFor(m => m.FrameworkCodeNameComment, "Comment", Html.GetLabelFor(m => m.FrameworkCodeNameComment))
 
                             <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ApprenticeshipLevel)))">
-                                <a name="@Html.NameFor(m => m.ApprenticeshipLevel).ToString().ToLower()"></a>
-                                <label class="form-label-bold sfa-small-bottom-margin">Apprenticeship level</label>
-                                @* ReSharper disable once Html.IdNotResolved *@
-                                <label for="apprenticeship-level-intermediate" class="block-label selection-button-radio">
-                                    @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new { id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label" }) Intermediate
-                                </label>
-                                @* ReSharper disable once Html.IdNotResolved *@
-                                <label for="apprenticeship-level-advanced" class="block-label selection-button-radio">
-                                    @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new { id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label" }) Advanced
-                                </label>
-                                @* ReSharper disable once Html.IdNotResolved *@
-                                <label for="apprenticeship-level-higher" class="block-label selection-button-radio">
-                                    @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new { id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label" }) Higher
-                                </label>
-                                @* ReSharper disable once Html.IdNotResolved *@
-                                <label for="apprenticeship-level-degree" class="block-label selection-button-radio">
-                                    @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Degree, new { id = "apprenticeship-level-degree", aria_labelledby = "apprenticeship-level-label" }) Degree
-                                </label>
-                                @Html.ValidationMessageFor(m => m.ApprenticeshipLevel)
+                                <fieldset>
+                                    <legend>
+                                        <a name="@Html.NameFor(m => m.ApprenticeshipLevel).ToString().ToLower()"></a>
+                                        <label class="form-label-bold sfa-small-bottom-margin">Apprenticeship level</label>
+                                        @Html.ValidationMessageWithSeverityFor(m => m.ApprenticeshipLevel, Html.GetValidationType(m => m.ApprenticeshipLevel))
+                                    </legend>
+                                    @* ReSharper disable once Html.IdNotResolved *@
+                                    <label for="apprenticeship-level-intermediate" class="block-label selection-button-radio">
+                                        @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new {id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label"}) Intermediate
+                                    </label>
+                                    @* ReSharper disable once Html.IdNotResolved *@
+                                    <label for="apprenticeship-level-advanced" class="block-label selection-button-radio">
+                                        @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new {id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label"}) Advanced
+                                    </label>
+                                    @* ReSharper disable once Html.IdNotResolved *@
+                                    <label for="apprenticeship-level-higher" class="block-label selection-button-radio">
+                                        @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new {id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label"}) Higher
+                                    </label>
+                                    @* ReSharper disable once Html.IdNotResolved *@
+                                    <label for="apprenticeship-level-degree" class="block-label selection-button-radio">
+                                        @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Degree, new {id = "apprenticeship-level-degree", aria_labelledby = "apprenticeship-level-label"}) Degree
+                                    </label>
+                                </fieldset>
                             </div>
                             @Html.ValidationMessageFor(m => m.ApprenticeshipLevelComment)
                             @Html.EditorFor(m => m.ApprenticeshipLevelComment, "Comment", Html.GetLabelFor(m => m.ApprenticeshipLevelComment))

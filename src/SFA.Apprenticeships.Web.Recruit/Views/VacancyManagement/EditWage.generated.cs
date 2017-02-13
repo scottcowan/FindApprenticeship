@@ -83,7 +83,7 @@ WriteLiteral(">\r\n    Increase vacancy wage\r\n</h1>\r\n\r\n");
 
             
             #line 15 "..\..\Views\VacancyManagement\EditWage.cshtml"
- using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, FormMethod.Post, new { id = "edit-wage-form" }))
+ using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, FormMethod.Post, new { id = "edit-wage-form" }))
 {
     
             
@@ -361,14 +361,14 @@ WriteLiteral(" class=\"blocklabel-single-container\"");
 
 WriteLiteral(">\r\n            <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 2465), Tuple.Create("\"", 2519)
+WriteAttribute("name", Tuple.Create(" name=\"", 2402), Tuple.Create("\"", 2456)
             
             #line 60 "..\..\Views\VacancyManagement\EditWage.cshtml"
-, Tuple.Create(Tuple.Create("", 2472), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Type).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 2409), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Type).ToString().ToLower()
             
             #line default
             #line hidden
-, 2472), false)
+, 2409), false)
 );
 
 WriteLiteral("></a>\r\n");
@@ -404,15 +404,15 @@ WriteLiteral(">Change wage type</label>\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2791), Tuple.Create("\"", 2894)
-, Tuple.Create(Tuple.Create("", 2799), Tuple.Create("form-group", 2799), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 2728), Tuple.Create("\"", 2831)
+, Tuple.Create(Tuple.Create("", 2736), Tuple.Create("form-group", 2736), true)
             
             #line 65 "..\..\Views\VacancyManagement\EditWage.cshtml"
-, Tuple.Create(Tuple.Create(" ", 2809), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Classification))
+, Tuple.Create(Tuple.Create(" ", 2746), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Classification))
             
             #line default
             #line hidden
-, 2810), false)
+, 2747), false)
 );
 
 WriteLiteral(">\r\n");
@@ -574,14 +574,14 @@ WriteLiteral(" id=\"custom-wage-panel\"");
 
 WriteLiteral(" class=\"toggle-content blocklabel-content nested-panel-1 clearfix\"");
 
-WriteAttribute("style", Tuple.Create(" style=\"", 4934), Tuple.Create("\"", 5019)
+WriteAttribute("style", Tuple.Create(" style=\"", 4871), Tuple.Create("\"", 4956)
             
             #line 92 "..\..\Views\VacancyManagement\EditWage.cshtml"
-                                      , Tuple.Create(Tuple.Create("", 4942), Tuple.Create<System.Object, System.Int32>(Model.Classification == WageClassification.Custom ? "display: block;" : ""
+                                      , Tuple.Create(Tuple.Create("", 4879), Tuple.Create<System.Object, System.Int32>(Model.Classification == WageClassification.Custom ? "display: block;" : ""
             
             #line default
             #line hidden
-, 4942), false)
+, 4879), false)
 );
 
 WriteLiteral(">\r\n                    <div");
@@ -1103,24 +1103,24 @@ WriteLiteral(" class=\"toggle-content blocklabel-content\"");
 
 WriteLiteral(">\r\n                            <fieldset");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 12588), Tuple.Create("\"", 12808)
-, Tuple.Create(Tuple.Create("", 12596), Tuple.Create("nested-panel-2", 12596), true)
-, Tuple.Create(Tuple.Create(" ", 12610), Tuple.Create("form-group", 12611), true)
-, Tuple.Create(Tuple.Create(" ", 12621), Tuple.Create("inline-fixed", 12622), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 12525), Tuple.Create("\"", 12745)
+, Tuple.Create(Tuple.Create("", 12533), Tuple.Create("nested-panel-2", 12533), true)
+, Tuple.Create(Tuple.Create(" ", 12547), Tuple.Create("form-group", 12548), true)
+, Tuple.Create(Tuple.Create(" ", 12558), Tuple.Create("inline-fixed", 12559), true)
             
             #line 173 "..\..\Views\VacancyManagement\EditWage.cshtml"
-  , Tuple.Create(Tuple.Create(" ", 12634), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.AmountLowerBound))
+  , Tuple.Create(Tuple.Create(" ", 12571), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.AmountLowerBound))
             
             #line default
             #line hidden
-, 12635), false)
+, 12572), false)
             
             #line 173 "..\..\Views\VacancyManagement\EditWage.cshtml"
-                                                                                         , Tuple.Create(Tuple.Create(" ", 12721), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.AmountUpperBound))
+                                                                                         , Tuple.Create(Tuple.Create(" ", 12658), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.AmountUpperBound))
             
             #line default
             #line hidden
-, 12722), false)
+, 12659), false)
 );
 
 WriteLiteral(">\r\n");
