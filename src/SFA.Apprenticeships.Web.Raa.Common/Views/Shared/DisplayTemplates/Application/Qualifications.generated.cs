@@ -42,24 +42,20 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Appli
         }
         public override void Execute()
         {
-WriteLiteral("<fieldset");
-
-WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
-
-WriteLiteral(">\r\n    <h2");
+WriteLiteral("    <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">\r\n        Qualifications\r\n    </h2>\r\n\r\n");
+WriteLiteral(">Qualifications</h2>\r\n\r\n");
 
             
-            #line 8 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
+            #line 5 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 8 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
+            #line 5 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
      if (!Model.Any())
     {
 
@@ -73,7 +69,7 @@ WriteLiteral(" id=\"no-qualifications\"");
 WriteLiteral(">Applicant doesn\'t have any qualifications</p>\r\n");
 
             
-            #line 11 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
+            #line 8 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
     }
 
             
@@ -82,160 +78,134 @@ WriteLiteral(">Applicant doesn\'t have any qualifications</p>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 13 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
+            #line 10 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
+            #line 10 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
      foreach (var group in Model.GroupBy(item => item.QualificationType))
     {
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
+WriteLiteral("        <h3");
 
-WriteLiteral(" class=\"nobreak-print\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"hgroup-small\"");
-
-WriteLiteral(">\r\n                <h3");
-
-WriteLiteral(" class=\"heading-small\"");
+WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                                     Write(Html.Encode(group.Key));
+            #line 12 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
+                              Write(Html.Encode(group.Key));
 
             
             #line default
             #line hidden
-WriteLiteral("</h3>\r\n            </div>\r\n            <table");
+WriteLiteral("</h3>\r\n");
 
-WriteLiteral(" class=\"grid-3-4\"");
+WriteLiteral("        <table");
 
-WriteLiteral(">\r\n                <colgroup>\r\n                    <col");
+WriteLiteral(" class=\"\"");
+
+WriteLiteral(">\r\n            <colgroup>\r\n                <col");
 
 WriteLiteral(" class=\"t40\"");
 
-WriteLiteral(">\r\n                    <col");
+WriteLiteral(">\r\n                <col");
 
 WriteLiteral(" class=\"t25\"");
 
-WriteLiteral(">\r\n                    <col");
+WriteLiteral(">\r\n                <col");
 
 WriteLiteral(" class=\"t15\"");
 
-WriteLiteral(">\r\n                    <col>\r\n                </colgroup>\r\n                <thead" +
-">\r\n                    <tr>\r\n                        <th>\r\n                     " +
-"       <span");
+WriteLiteral(">\r\n                <col>\r\n            </colgroup>\r\n            <thead>\r\n         " +
+"       <tr>\r\n                    <th>\r\n                        <span");
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">Subject</span>\r\n                        </th>\r\n                        <th>\r\n   " +
-"                         <span");
+WriteLiteral(">Subject</span>\r\n                    </th>\r\n                    <th>\r\n           " +
+"             <span");
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">Grade</span>\r\n                        </th>\r\n                        <th>\r\n     " +
-"                       <span");
+WriteLiteral(">Grade</span>\r\n                    </th>\r\n                    <th>\r\n             " +
+"           <span");
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">Year</span>\r\n                        </th>\r\n                    </tr>\r\n         " +
-"       </thead>\r\n                <tbody>\r\n");
+WriteLiteral(">Year</span>\r\n                    </th>\r\n                </tr>\r\n            </the" +
+"ad>\r\n            <tbody>\r\n");
 
             
-            #line 40 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                    
+            #line 34 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
+                
             
             #line default
             #line hidden
             
-            #line 40 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                     foreach (var item in group)
-                    {
+            #line 34 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
+                 foreach (var item in group)
+                {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <tr>\r\n                            <td>\r\n                 " +
-"               <input");
+WriteLiteral("                    <tr>\r\n                        <td>\r\n");
 
-WriteLiteral(" class=\"form-control qual-input-edit form-prepopped\"");
+WriteLiteral("                            ");
 
-WriteLiteral(" type=\"text\"");
+            
+            #line 38 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
+                       Write(item.Subject);
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1603), Tuple.Create("\"", 1624)
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        </td>\r\n                        <td>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 41 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
+                       Write(QualificationPresenter.GetDisplayGrade(item.Grade, item.IsPredicted));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        </td>\r\n                        <td>\r\n");
+
+WriteLiteral("                            ");
+
             
             #line 44 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                              , Tuple.Create(Tuple.Create("", 1611), Tuple.Create<System.Object, System.Int32>(item.Subject
+                       Write(item.Year);
+
             
             #line default
             #line hidden
-, 1611), false)
-);
+WriteLiteral("\r\n                        </td>\r\n                    </tr>\r\n");
 
-WriteLiteral(" readonly>\r\n                            </td>\r\n                            <td>\r\n" +
-"                                <input");
-
-WriteLiteral(" class=\"form-control qual-input-edit form-prepopped\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteAttribute("value", Tuple.Create(" value=\"", 1808), Tuple.Create("\"", 1885)
             
             #line 47 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                              , Tuple.Create(Tuple.Create("", 1816), Tuple.Create<System.Object, System.Int32>(QualificationPresenter.GetDisplayGrade(item.Grade, item.IsPredicted)
+                }
+
             
             #line default
             #line hidden
-, 1816), false)
-);
+WriteLiteral("            </tbody>\r\n        </table>       \r\n");
 
-WriteLiteral(" readonly>\r\n                            </td>\r\n                            <td>\r\n" +
-"                                <input");
-
-WriteLiteral(" class=\"form-control qual-input-edit form-prepopped\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteAttribute("value", Tuple.Create(" value=\"", 2069), Tuple.Create("\"", 2087)
             
             #line 50 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                              , Tuple.Create(Tuple.Create("", 2077), Tuple.Create<System.Object, System.Int32>(item.Year
-            
-            #line default
-            #line hidden
-, 2077), false)
-);
-
-WriteLiteral(" readonly>\r\n                            </td>\r\n                        </tr>\r\n");
-
-            
-            #line 53 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                    }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                </tbody>\r\n            </table>\r\n        </div>\r\n");
-
-            
-            #line 57 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-        
     }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</fieldset>");
+WriteLiteral("<hr /> ");
 
         }
     }

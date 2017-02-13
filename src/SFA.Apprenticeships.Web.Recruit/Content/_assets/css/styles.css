@@ -273,6 +273,9 @@ Alignment
 .sfa-align-center {
   text-align: center; }
 
+.sfa-align-top {
+  vertical-align: top; }
+
 .sfa-pull-right {
   float: right !important; }
   @media (min-width: 641px) {
@@ -318,9 +321,14 @@ Custom expand content
 Inset boxes
 ------------------------------------------------------------------- */
 .sfa-inset {
-  padding: 15px; }
-  .sfa-inset .form-control {
-    background-color: #fff; }
+  padding: 15px;
+  overflow: hidden; }
+  .sfa-inset.grid-row {
+    padding-left: 0px;
+    padding-right: 0px;
+    margin: 0; }
+  .sfa-inset .form-control, .sfa-inset .block-label.selection-button-radio::before, .sfa-inset .block-label.selection-button-checkbox::before {
+    background-color: #fff !important; }
   .sfa-inset-yellow {
     background-color: #fff2d3; }
   .sfa-inset-light-grey {

@@ -2,20 +2,14 @@
 
 @if (Model != null && (!string.IsNullOrWhiteSpace(Model.Vacancy.FirstQuestion) || !string.IsNullOrWhiteSpace(Model.Vacancy.SecondQuestion)))
 {
-    <div>
-        @if (!string.IsNullOrWhiteSpace(Model.Vacancy.FirstQuestion))
-        {
-            <div class="form-group">
-                <p class="form-label-bold text @Model.Vacancy.FirstQuestion.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.Vacancy.FirstQuestion))</p>
-                <span class="form-prepopped prewrap">@Html.Raw(Model.VacancyQuestionAnswers.FirstQuestionAnswer ?? "-")</span>
-            </div>
-        }
-        @if (!string.IsNullOrWhiteSpace(Model.Vacancy.SecondQuestion))
-        {
-            <div class="form-group">
-                <p class="form-label-bold text @Model.Vacancy.SecondQuestion.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.Vacancy.SecondQuestion))</p>
-                <span class="form-prepopped prewrap">@Html.Raw(Model.VacancyQuestionAnswers.SecondQuestionAnswer ?? "-")</span>
-            </div>
-        }
-    </div>
+    @if (!string.IsNullOrWhiteSpace(Model.Vacancy.FirstQuestion))
+    {
+        <h3 class="heading-small @Model.Vacancy.FirstQuestion.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.Vacancy.FirstQuestion))</h3>
+        <p>@Html.Raw(Model.VacancyQuestionAnswers.FirstQuestionAnswer ?? "-")</p>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.Vacancy.SecondQuestion))
+    {
+        <h3 class="heading-small @Model.Vacancy.SecondQuestion.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.Vacancy.SecondQuestion))</h3>
+        <p>@Html.Raw(Model.VacancyQuestionAnswers.SecondQuestionAnswer ?? "-")</p>
+    }
 }

@@ -5,42 +5,43 @@
     ViewBag.Title = "Archive";
 }
 
+
+
 @if (Model.HasOutstandingActions)
 {
-    <h1 id="heading" class="heading-xlarge">Are you ready to archive this vacancy?</h1>
-    <p>
-        You can only archive this vacancy once all positions have been filled and responses sent to all candidates.</p>
-        <div class="inline">
-            <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber}})" class="button">Respond to remaining candidates</a>
-            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button sfa-button-secondary">Return to applications</a>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <h1 id="heading" class="heading-xlarge">Are you ready to archive this vacancy?</h1>
+            <p>
+                You can only archive this vacancy once all positions have been filled and responses sent to all candidates.
+            </p>
         </div>
+    </div>
+    <div class="form-group inline sfa-xlarge-top-margin">
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber}})" class="button">Respond to remaining candidates</a>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button sfa-button-secondary">Return to applications</a>
+    </div>
 }
 else
 {
-    <section>
-        <div class="grid-row">
-            <div class="column-two-thirds">
-                <h1 id="heading" class="heading-xlarge">
-                    <span>Archive vacancy</span>
-                </h1>
-            </div>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <h1 id="heading" class="heading-xlarge">
+                <span>Archive vacancy</span>
+            </h1>
+
+            <p>This vacancy will now be stored in your archive</p>
+
         </div>
-    </section>
-
-        <p>This vacancy will now be stored in your archive</p>
-
+    </div>
     using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmArchiveVacancy, FormMethod.Post, new { id = "confirm-archive-vacancy-form" }))
     {
         @Html.HiddenFor(m => m.VacancyId)
         @Html.HiddenFor(m => m.HasOutstandingActions)
         @Html.HiddenFor(m => m.VacancyReferenceNumber)
-
-        <section>
-            <div class="form-group inline">
-                <button type="submit" class="button">Confirm</button>
-                <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button sfa-button-secondary">Cancel</a>
-            </div>
-        </section>
+    <div class="form-group inline sfa-xlarge-top-margin">
+        <button type="submit" class="button">Confirm</button>
+        <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button sfa-button-secondary">Cancel</a>
+    </div>
     }
 }
-

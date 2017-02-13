@@ -48,24 +48,20 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Appli
         }
         public override void Execute()
         {
-WriteLiteral("<section");
-
-WriteLiteral(" class=\"sfa-section-bordered\"");
-
-WriteLiteral(">\r\n    <h2");
+WriteLiteral("    <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">\r\n        Work experience\r\n    </h2>\r\n\r\n");
+WriteLiteral(">Work experience</h2>\r\n\r\n");
 
             
-            #line 9 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+            #line 6 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 9 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+            #line 6 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
      if (!Model.Any())
     {
 
@@ -79,7 +75,7 @@ WriteLiteral(" id=\"no-work-experience\"");
 WriteLiteral(">Applicant doesn\'t have any work experience</p>\r\n");
 
             
-            #line 12 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+            #line 9 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
     }
 
             
@@ -88,191 +84,123 @@ WriteLiteral(">Applicant doesn\'t have any work experience</p>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 14 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+            #line 11 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+            #line 11 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
      foreach (WorkExperienceViewModel experience in Model)
     {
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
+WriteLiteral("    <div");
 
-WriteLiteral(" class=\"grid-3-4 nobreak-print\"");
+WriteLiteral(" class=\"work-history-item\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n        <table>\r\n            <colgroup>\r\n                <col/>\r\n             " +
+"   <col/>\r\n                <col");
 
-WriteLiteral(" class=\"grid-row work-history-item\"");
+WriteLiteral(" class=\"sfa-align-top\"");
 
-WriteLiteral(">\r\n\r\n                <div");
+WriteLiteral("/>\r\n            </colgroup>\r\n            <thead>\r\n                <tr>\r\n         " +
+"           <th>\r\n                        <h3");
 
-WriteLiteral(" class=\"column-one-half\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">\r\n                    <table");
+WriteLiteral(">Work experience</h3>\r\n                    </th>\r\n                    <th>\r\n     " +
+"                   <h3");
 
-WriteLiteral(" class=\"table-no-btm-border table-compound\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(@">
-                        <colgroup>
-                            <col>
-                            <col>
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>
-                                    <span");
+WriteLiteral(">From</h3>\r\n                    </th>\r\n                    <th>\r\n                " +
+"        <h3");
 
-WriteLiteral(" class=\"heading-span\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(@">Work experience</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span");
+WriteLiteral(">To</h3>\r\n                    </th>\r\n                </tr>\r\n            </thead>\r" +
+"\n            <tbody>\r\n                <tr>\r\n                    <td>\r\n          " +
+"              <span");
 
-WriteLiteral(" class=\"form-prepopped cell-span\"");
+WriteLiteral(" class=\"bold-small\"");
 
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
-                                                                      Write(experience.Employer);
+            #line 36 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+                                            Write(experience.Employer);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                                    <span");
+WriteLiteral("</span>\r\n                        <br/>\r\n                        <span");
 
-WriteLiteral(" class=\"form-prepopped cell-span work-hyphen\"");
-
-WriteLiteral(">-</span>\r\n                                    <span");
-
-WriteLiteral(" class=\"form-prepopped cell-span\"");
+WriteLiteral(" class=\"secondary-text\"");
 
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
-                                                                      Write(experience.JobTitle);
+            #line 38 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+                                                Write(experience.JobTitle);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                                    <div></div>\r\n                       " +
-"             <span");
+WriteLiteral("</span>\r\n                        <br/>\r\n");
 
-WriteLiteral(" class=\"form-prepopped cell-span prewrap\"");
-
-WriteLiteral(">");
+WriteLiteral("                        ");
 
             
-            #line 39 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
-                                                                              Write(experience.Description);
+            #line 40 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+                   Write(experience.Description);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                                </td>\r\n                            </tr>" +
-"\r\n                        </tbody>\r\n                    </table>\r\n              " +
-"  </div>\r\n                <div");
+WriteLiteral("\r\n                    </td>\r\n                    <td");
 
-WriteLiteral(" class=\"column-one-half\"");
+WriteLiteral(" class=\"sfa-align-top\"");
 
-WriteLiteral(">\r\n                    <table");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" class=\"table-no-btm-border table-compound\"");
-
-WriteLiteral(">\r\n                        <colgroup>\r\n                            <col");
-
-WriteLiteral(" class=\"t30\"");
-
-WriteLiteral(">\r\n                            <col");
-
-WriteLiteral(" class=\"t30\"");
-
-WriteLiteral(">\r\n                            <col");
-
-WriteLiteral(" class=\"t25\"");
-
-WriteLiteral(">\r\n                            <col");
-
-WriteLiteral(" class=\"t15\"");
-
-WriteLiteral(">\r\n                            <col>\r\n                        </colgroup>\r\n      " +
-"                  <thead>\r\n                            <tr>\r\n                   " +
-"             <th>\r\n                                    <span");
-
-WriteLiteral(" class=\"heading-span\"");
-
-WriteLiteral(">From</span>\r\n                                </th>\r\n                            " +
-"    <th>\r\n                                    <span");
-
-WriteLiteral(" class=\"heading-span\"");
-
-WriteLiteral(@">To</span>
-                                </th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span");
-
-WriteLiteral(" class=\"form-prepopped cell-span\"");
-
-WriteLiteral(">");
+WriteLiteral("                        ");
 
             
-            #line 69 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
-                                                                      Write(experience.FromDate.GetMonthYearLabel());
+            #line 43 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+                   Write(experience.FromDate.GetMonthYearLabel());
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                                </td>\r\n                                <" +
-"td>\r\n                                    <span");
+WriteLiteral("\r\n                    </td>\r\n                    <td");
 
-WriteLiteral(" class=\"form-prepopped cell-span\"");
+WriteLiteral(" class=\"sfa-align-top\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n");
+
+WriteLiteral("                        ");
 
             
-            #line 72 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
-                                                                      Write(experience.ToDate.GetMonthYearLabel());
+            #line 46 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+                   Write(experience.ToDate.GetMonthYearLabel());
 
             
             #line default
             #line hidden
-WriteLiteral(@"</span>
-                                </td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-");
+WriteLiteral("\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n       " +
+" </table>\r\n    </div>\r\n");
 
             
-            #line 82 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+            #line 52 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
     }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</section>");
+WriteLiteral("<hr/>");
 
         }
     }

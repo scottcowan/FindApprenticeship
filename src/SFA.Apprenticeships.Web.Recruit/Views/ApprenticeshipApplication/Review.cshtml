@@ -45,107 +45,92 @@
             </div>
         </div>
     }
-    <div class="grid-row hgroup">
-        <div class="column-two-thirds grid">
-            <h1 class="heading-xlarge sfa-medium-bottom-margin">@Model.Vacancy.Title</h1>
-            <p class="heading-secondary ">@Model.Vacancy.EmployerName</p>
+
+    <div class="grid-row">
+        <div class="column-two-thirds">
+                @Model.Vacancy.Title
+                <span class="heading-secondary">@Model.Vacancy.EmployerName</span>
+            </h1>
         </div>
-        <div class="column-one-third">
+
+        <div class="column-one-third sfa-xlarge-top-margin sfa-align-right">
             <div class="hide-nojs">
-                <p>
-                    <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
-                </p>
+                <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
             </div>
         </div>
-        <div class="grid-row">
-            <div class="column-two-thirds">
-                @Html.DisplayFor(m => m.ApplicantDetails, ApplicantDetailsViewModel.PartialView)
-            </div>
-            <div class="column-one-third">
-            </div>
-        </div>
+    </div>
+
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            @Html.DisplayFor(m => m.ApplicantDetails, ApplicantDetailsViewModel.PartialView)
+
         @Html.DisplayFor(m => m.AboutYou, AboutYouViewModel.PartialView)
         @Html.DisplayFor(m => m.Education, EducationViewModel.PartialView)
         @Html.DisplayFor(m => m.Qualifications, QualificationViewModel.PartialView)
         @Html.DisplayFor(m => m.WorkExperience, WorkExperienceViewModel.PartialView)
         @Html.DisplayFor(m => m.TrainingCourses, TrainingCourseViewModel.PartialView)
 
-        <section class="sfa-section-bordered">
-            <h2 class="heading-large">
-                Answers to employer questions
-            </h2>
-            @Html.DisplayFor(m => m, "Application/EmployerQuestionAnswers")
-            @Html.DisplayFor(m => m, "Application/MonitoringInformation")
-        </section>
+        <h2 class="heading-large">Answers to employer questions</h2>
+        @Html.DisplayFor(m => m, "Application/EmployerQuestionAnswers")
+        @Html.DisplayFor(m => m, "Application/MonitoringInformation")
+        <hr/>
 
         @if (Model.Status == ApplicationStatuses.Successful || Model.Status == ApplicationStatuses.Unsuccessful)
         {
-            var notes = string.IsNullOrWhiteSpace(Model.Notes) ?
-                "There are no notes for this candidate's application" :
-                Model.Notes;
+        var notes = string.IsNullOrWhiteSpace(Model.Notes) ?
+        "There are no notes for this candidate's application" :
+        Model.Notes;
 
-            <section class="sfa-section-bordered">
-                <h2 class="heading-large">
-                    Vacancy manager notes
-                </h2>
-                <p>@notes</p>
-
-                @if (User.IsInRole(SFA.Apprenticeships.Domain.Entities.Raa.Roles.Admin))
-                {
-                    <div class="form-group">
-                            <button type="submit" class="button sfa-button-secondary sfa-medium-bottom-margin" name="Review" value="ReviewRevertToInProgress">
-                                Revert this candidate's application back to In progress
-                            </button>
-                    </div>
-                }
-            </section>
+        <h2 class="heading-large">Vacancy manager notes</h2>
+        <p>@notes</p>
+        <hr />
+            if (User.IsInRole(SFA.Apprenticeships.Domain.Entities.Raa.Roles.Admin))
+            {
+                <div class="form-group sfa-xlarge-top-margin">
+                    <button type="submit" class="button" name="Review" value="ReviewRevertToInProgress">
+                        Revert this candidate's application back to In progress
+                    </button>
+                </div>
+            }
         }
         else
         {
-            <section>
-                <div class="form-group">
-                    <div class="detail-content sfa-inset sfa-inset-yellow">
-                        <h2 class="heading-large">Decision log</h2>
-                        <p class="heading-medium">Notes (optional)</p>
-                        <div class="blocklabel-single-container">
-                            @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
-                        </div>
-                        <p class="heading-medium">How would you like to assign this candidate's application?</p>
-                        <p>
-                            <label for="application-status-submitted" class="block-label selection-button-radio">
-                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Submitted, new { id = "application-status-submitted" })
-                                New @if (Model.Status == ApplicationStatuses.Submitted)
-                                {
-                                    @Html.Raw(currentStatus)
-                                }
-                            </label>
-                            <br />
-                            <label for="application-status-inprogress" class="block-label selection-button-radio">
-                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.InProgress, new { id = "application-status-inprogress" })
-                                In progress @if (Model.Status == ApplicationStatuses.InProgress)
-                                {
-                                    @Html.Raw(currentStatus)
-                                }
-                            </label>
-                            <br />
-                            <label for="application-status-unsuccessful" class="block-label selection-button-radio">
-                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Unsuccessful, new { id = "application-status-unsuccessful" })
-                                Unsuccessful
-                            </label>
-                            <br />
-                            <label for="application-status-successful" class="block-label selection-button-radio">
-                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Successful, new { id = "application-status-successful" })
-                                Successful
-                            </label>
-                        </p>
-                        <div class="form-group inline">
-                            <button type="submit" class="button" name="Review" value="ReviewSaveAndContinue">Save and Continue</button>
-                            @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" })
-                        </div>
-                    </div>
-                </div>
-            </section>
+
+            <div class="form-group">
+                <fieldset>
+                    <legend class="heading-medium">How would you like to assign this candidate's application?</legend>
+
+                    <label for="application-status-submitted" class="block-label selection-button-radio">
+                        @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Submitted, new { id = "application-status-submitted" })
+                        New @if (Model.Status == ApplicationStatuses.Submitted)
+                        {
+                            @Html.Raw(currentStatus)
+                        }
+                    </label>
+                    <label for="application-status-inprogress" class="block-label selection-button-radio">
+                        @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.InProgress, new { id = "application-status-inprogress" })
+                        In progress @if (Model.Status == ApplicationStatuses.InProgress)
+                        {
+                            @Html.Raw(currentStatus)
+                        }
+                    </label>
+                    <label for="application-status-unsuccessful" class="block-label selection-button-radio">
+                        @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Unsuccessful, new { id = "application-status-unsuccessful" })
+                        Unsuccessful
+                    </label>
+                    <label for="application-status-successful" class="block-label selection-button-radio">
+                        @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Successful, new { id = "application-status-successful" })
+                        Successful
+                    </label>
+                </fieldset>
+            </div>
+            <div class="form-group inline">
+                <button type="submit" class="button" name="Review" value="ReviewSaveAndContinue">Save and Continue</button>
+                @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" })
+            </div>
+        </div>
         }
+        </div>
     </div>
 }
 

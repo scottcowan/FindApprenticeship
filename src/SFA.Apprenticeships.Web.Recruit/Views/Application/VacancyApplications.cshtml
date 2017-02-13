@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-    }
+                        }
     <div class="grid-row">
         <div class="column-two-thirds">
             <h1 class="heading-xlarge" id="vacancy-title">
@@ -88,7 +88,7 @@
             <div itemprop="description">
                 <p id="vacancy-description" class="@Model.ShortDescription.GetPreserveFormattingCssClass()">@Model.ShortDescription</p>
                 <p>
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyApplicationsSearch.VacancyReferenceNumber})" class="disp-block">View @(Model.VacancyType == VacancyType.Traineeship ? "traineeship" : "apprenticeship")</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyApplicationsSearch.VacancyReferenceNumber })" class="disp-block">View @(Model.VacancyType == VacancyType.Traineeship ? "traineeship" : "apprenticeship")</a>
                 </p>
             </div>
         </div>
@@ -112,19 +112,19 @@
                 <h2 class="heading-large  sfa-no-margins">
                     Applications
                     @if (filterType != VacancyApplicationsFilterTypes.All || Model.VacancyApplicationsSearch.IsCandidateSearch())
-                {
+                    {
                 <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.All, true).RouteValues)" class="font-small vacancy-filter sfa-show-all">Show all</a>
-                }
+                    }
                 </h2>
             </div>
             <div class="column-one-third">
                 @{
-                var open = Model.VacancyApplicationsSearch.IsCandidateSearch() ? "open" : "";
+                    var open = Model.VacancyApplicationsSearch.IsCandidateSearch() ? "open" : "";
                 }
                 <details class="@open" @open>
                     <summary><span class="summary">Search candidates</span></summary>
                     <div class="detail-content panel panel-border-narrow">
-                        @Html.FormTextFor(m => m.VacancyApplicationsSearch.FirstName,containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { @class="form-control-4-4", type = "text", autofocus = "autofocus", spellcheck = "false" })
+                        @Html.FormTextFor(m => m.VacancyApplicationsSearch.FirstName, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { @class = "form-control-4-4", type = "text", autofocus = "autofocus", spellcheck = "false" })
                         @Html.FormTextFor(m => m.VacancyApplicationsSearch.LastName, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { @class = "form-control-4-4", type = "text", spellcheck = "false" })
                         @Html.FormTextFor(m => m.VacancyApplicationsSearch.Postcode, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { @class = "form-control-4-4", type = "text", spellcheck = "false" })
                         @Html.FormTextFor(m => m.VacancyApplicationsSearch.ApplicantId, controlHtmlAttributes: new { @class = "form-control-4-4", type = "text", spellcheck = "false" })
@@ -132,9 +132,9 @@
                         <div class="form-group">
                             <button id="search-candidates-button" type="submit" class="button">Search</button>
                             @if (Model.VacancyApplicationsSearch.IsCandidateSearch())
-                        {
+                            {
                         @Html.RouteLink("Reset search", RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, true).RouteValues, new { @class = "vacancy-filter button sfa-button-secondary" })
-                        }
+                            }
                         </div>
                     </div>
                 </details>
@@ -143,7 +143,10 @@
 
         <div class="sfa-medium-bottom-padding sfa-xlarge-top-padding sfa-section-bordered">
             <div class="grid-row">
-                <div class="column-one-quarter">
+                @{
+                    var ColumnSize = Model.VacancyType != VacancyType.Traineeship ? "column-quarter" : "column-half";
+                }
+                <div class="@ColumnSize">
                     @if (filterType == VacancyApplicationsFilterTypes.New)
                     {
                         <div class="data sfa-data">
@@ -161,7 +164,7 @@
                         </div>
                     }
                 </div>
-                <div class="column-one-quarter">
+                <div class="@ColumnSize">
                     @if (filterType == VacancyApplicationsFilterTypes.InProgress)
                     {
                         <div class="data sfa-data">
