@@ -8,6 +8,7 @@
     using Apprenticeships.Application.Provider.Strategies;
     using Apprenticeships.Domain.Entities.Exceptions;
     using Apprenticeships.Domain.Entities.Raa.Locations.Constants;
+    using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies.Constants;
     using Apprenticeships.Domain.Interfaces.Repositories;
@@ -46,6 +47,17 @@
         public Vacancy CreateVacancy(Vacancy vacancy, string ukprn)
         {
             var provider = _providerReadRepository.GetByUkprn(ukprn, false);
+            return CreateVacancy(vacancy, provider);
+        }
+
+        public Vacancy CreateVacancy(Vacancy vacancy)
+        {
+            var provider = _providerReadRepository.GetById(vacancy.ContractOwnerId);
+            return CreateVacancy(vacancy, provider);
+        }
+
+        private Vacancy CreateVacancy(Vacancy vacancy, Provider provider)
+        {
             if (provider == null)
             {
                 throw new SecurityException(Constants.VacancyMessages.UnauthorizedProviderAccess);

@@ -147,7 +147,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 VacancyGuid = Guid.NewGuid(),
                 VacancyLocationType = vacancyLocationType,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
-                NumberOfPositions = positions
+                NumberOfPositions = positions,
+                ContractOwnerId = RaaApiUserFactory.SkillsFundingAgencyProviderId
             };
             return vacancy;
         }
