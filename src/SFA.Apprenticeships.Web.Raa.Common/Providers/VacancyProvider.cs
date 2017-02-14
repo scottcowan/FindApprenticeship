@@ -1251,6 +1251,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.VacancyLocationType = VacancyLocationType.SpecificLocation;
+            newVacancy.VacancyLocations = null;
             if (!string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName))
             {
                 newVacancy.EmployerAnonymousReason = vacancy.EmployerAnonymousReason;

@@ -68,7 +68,12 @@
                 }
                 catch (HttpOperationException ex)
                 {
-                    _logService.Info(ex.ToString());
+                    _logService.Warn(ex);
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    _logService.Error(ex);
                     throw;
                 }
             }
@@ -105,8 +110,13 @@
                 }
                 catch (HttpOperationException ex)
                 {
-                    _logService.Info(ex.ToString());
+                    _logService.Warn(ex);
                     return null;
+                }
+                catch (Exception ex)
+                {
+                    _logService.Error(ex);
+                    throw;
                 }
             }
 
@@ -127,8 +137,13 @@
                 }
                 catch (HttpOperationException ex)
                 {
-                    _logService.Info(ex.ToString());
+                    _logService.Warn(ex);
                     return null;
+                }
+                catch (Exception ex)
+                {
+                    _logService.Error(ex);
+                    throw;
                 }
             }
 
@@ -149,8 +164,13 @@
                 }
                 catch (HttpOperationException ex)
                 {
-                    _logService.Info(ex.ToString());
+                    _logService.Warn(ex);
                     return null;
+                }
+                catch (Exception ex)
+                {
+                    _logService.Error(ex);
+                    throw;
                 }
             }
 
