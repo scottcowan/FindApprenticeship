@@ -6,70 +6,248 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
     using System.Linq;
     using Reference;
 
+    /// <summary>
+    /// The full information of a vacancy summary
+    /// </summary>
     public class Vacancy : VacancySummary, ICreatableEntity, IUpdatableEntity, ICloneable
     {
+        /// <summary>
+        /// (optional) If the vacancy has multiple locations, this property may contain additional information about those locations
+        /// </summary>
         public string AdditionalLocationInformation { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for AdditionalLocationInformation
+        /// </summary>
         public string AdditionalLocationInformationComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for ApprenticeshipLevel
+        /// </summary>
         public string ApprenticeshipLevelComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for ClosingDate
+        /// </summary>
         public string ClosingDateComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied values for ContactEmail, ContactName and ContactNumber
+        /// </summary>
         public string ContactDetailsComment { get; set; }
+        /// <summary>
+        /// A contact email for candidates to request more information about the vacancy
+        /// </summary>
         public string ContactEmail { get; set; }
+        /// <summary>
+        /// A contact name for candidates to request more information about the vacancy
+        /// </summary>
         public string ContactName { get; set; }
+        /// <summary>
+        /// A contact number for candidates to request more information about the vacancy
+        /// </summary>
         public string ContactNumber { get; set; }
+        /// <summary>
+        /// The username of the user account or API account used to create this vacancy
+        /// </summary>
         public string CreatedByProviderUsername { get; set; }
+        /// <summary>
+        /// The qualifications the employer is looking for in prospective candidates. Not present for traineeships
+        /// </summary>
         public string DesiredQualifications { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for DesiredQualifications
+        /// </summary>
         public string DesiredQualificationsComment { get; set; }
+        /// <summary>
+        /// The skill set the employer is looking for prospective candidates to demonstrate
+        /// </summary>
         public string DesiredSkills { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for DesiredSkills
+        /// </summary>
         public string DesiredSkillsComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for Duration
+        /// </summary>
         public string DurationComment { get; set; }
+        /// <summary>
+        /// For internal use only. Used to determine if this is a legacy vacancy or not
+        /// </summary>
         public bool EditedInRaa { get; set; }
+        /// <summary>
+        /// The description of the employer
+        /// </summary>
         public string EmployerDescription { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for EmployerDescription
+        /// </summary>
         public string EmployerDescriptionComment { get; set; }
+        /// <summary>
+        /// A link to the employer's website
+        /// </summary>
         public string EmployerWebsiteUrl { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for EmployerWebsiteUrl
+        /// </summary>
         public string EmployerWebsiteUrlComment { get; set; }
+        /// <summary>
+        /// The first screening question for candidates
+        /// </summary>
         public string FirstQuestion { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for FirstQuestion
+        /// </summary>
         public string FirstQuestionComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for FrameworkCodeName
+        /// </summary>
         public string FrameworkCodeNameComment { get; set; }
+        /// <summary>
+        /// The likely career progression, skills or qualifications a candidate will gain in this vacancy
+        /// </summary>
         public string FutureProspects { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for FutureProspects
+        /// </summary>
         public string FutureProspectsComment { get; set; }
+        /// <summary>
+        /// The primary identifier of the user account who last edited this vacancy 
+        /// </summary>
         public int LastEditedById { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied values for VacancyLocations
+        /// </summary>
         public string LocationAddressesComment { get; set; }
+        /// <summary>
+        /// The full, detailed description of the vacancy
+        /// </summary>
         public string LongDescription { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for LongDescription
+        /// </summary>
         public string LongDescriptionComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for NumberOfPositions
+        /// </summary>
         public string NumberOfPositionsComment { get; set; }
+        /// <summary>
+        /// If applications for this vacancy are made via an external web site, this property must contain instructions on how to apply
+        /// </summary>
         public string OfflineApplicationInstructions { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for OfflineApplicationInstructions
+        /// </summary>
         public string OfflineApplicationInstructionsComment { get; set; }
+        /// <summary>
+        /// If applications for this vacancy are made via an external web site, this property must contain the web site URL
+        /// </summary>
         public string OfflineApplicationUrl { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for OfflineApplicationUrl
+        /// </summary>
         public string OfflineApplicationUrlComment { get; set; }
+        /// <summary>
+        /// Defines the type of offline vacancy. Unknown means that this is not an offline vacancy and Single and Multiple are for SpecificLocation and MultipleLocations location types
+        /// </summary>
         public OfflineVacancyType? OfflineVacancyType { get; set; }
+        /// <summary>
+        /// Only present if the vacancy was created in the legacy system or via the legacy API. Contains any additional information the employer deems pertinent to the vacancy. Will be ignored if passed to the API
+        /// </summary>
         public string OtherInformation { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for OtherInformation
+        /// </summary>
         public string OtherInformationComment { get; set; }
+        /// <summary>
+        /// The soft skills and personal qualities the employer is looking for in prospective candidates
+        /// </summary>
         public string PersonalQualities { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for PersonalQualities
+        /// </summary>
         public string PersonalQualitiesComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for PossibleStartDate
+        /// </summary>
         public string PossibleStartDateComment { get; set; }
+        /// <summary>
+        /// The second screening question for candidates
+        /// </summary>
         public string SecondQuestion { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for SecondQuestion
+        /// </summary>
         public string SecondQuestionComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for SectorCodeName
+        /// </summary>
         public string SectorCodeNameComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for ShortDescription
+        /// </summary>
         public string ShortDescriptionComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for StandardId
+        /// </summary>
         public string StandardIdComment { get; set; }
+        /// <summary>
+        /// Any information that the employer feels a candidate should be mindful of when applying for this vacancy
+        /// </summary>
         public string ThingsToConsider { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for ThingsToConsider
+        /// </summary>
         public string ThingsToConsiderComment { get; set; }
-
+        /// <summary>
+        /// QA comments regarding the supplied value for the Title
+        /// </summary>
         public string TitleComment { get; set; }
+        /// <summary>
+        /// The training that will be provided by the training provider associated with this vacancy
+        /// </summary>
         public string TrainingProvided { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for TrainingProvided
+        /// </summary>
         public string TrainingProvidedComment { get; set; }
+        /// <summary>
+        /// For internal use only. Specifies the source of the vacancy. Always set to API when created via the API
+        /// </summary>
         public VacancySource VacancySource { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for Wage
+        /// </summary>
         public string WageComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for WorkingWeek
+        /// </summary>
         public string WorkingWeekComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for AnonymousEmployerDescription
+        /// </summary>
         public string AnonymousEmployerDescriptionComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for AnonymousEmployerReason
+        /// </summary>
         public string AnonymousEmployerReasonComment { get; set; }
+        /// <summary>
+        /// QA comments regarding the supplied value for AnonymousAboutTheEmployer
+        /// </summary>
         public string AnonymousAboutTheEmployerComment { get; set; }
-
+        /// <summary>
+        /// The status of the specified framework
+        /// </summary>
         public FrameworkStatusType FrameworkStatus { get; set; }
+        /// <summary>
+        /// The status of the specified standard
+        /// </summary>
         public FrameworkStatusType StandardStatus { get; set; }
-
+        /// <summary>
+        /// The date this vacancy was created. Will be ignored if passed to the API
+        /// </summary>
         public DateTime CreatedDateTime { get; set; }
+        /// <summary>
+        /// List of locations for this vacancy. Only supply if creating a MultipleLocations location vacancy
+        /// </summary>
         public List<VacancyLocation> VacancyLocations { get; set; }
+
         public object Clone()
         {
             List<VacancyLocation> vacancyLocations = null;

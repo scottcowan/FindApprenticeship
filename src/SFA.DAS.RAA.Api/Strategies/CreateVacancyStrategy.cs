@@ -78,6 +78,19 @@
                 vacancy.VacancySource = VacancySource.Api;
             }
 
+            //Null any legacy or invalid fields
+            vacancy.ExpectedDuration = null;
+            vacancy.NoOfOfflineApplicants = 0;
+            vacancy.DateSubmitted = null;
+            vacancy.DateFirstSubmitted = null;
+            vacancy.DateStartedToQA = null;
+            vacancy.QAUserName = null;
+            vacancy.DateQAApproved = null;
+            vacancy.SubmissionCount = 0;
+            vacancy.ParentVacancyId = null;
+            vacancy.UpdatedDateTime = null;
+            vacancy.OtherInformation = null;
+
             vacancy.ContractOwnerId = provider.ProviderId;
             vacancy.OriginalContractOwnerId = provider.ProviderId;
 
