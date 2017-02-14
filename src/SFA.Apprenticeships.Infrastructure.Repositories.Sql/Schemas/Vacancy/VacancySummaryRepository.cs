@@ -296,11 +296,11 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             var vacancies = await _getOpenConnection.QueryAsync<DbVacancySummary>(sql, sqlParams);
 
             // return the total record count as well
-            var totalRecords = vacancies.Any() ? vacancies.First().TotalResultCount : 0;
+            var totalRecords = await _getOpenConnection.QueryAsync<int>("SELECT Count(VacancyId) FROM Vacancy WHERE VacancyStatusId = 2");
 
             var mapped = Mapper.Map<IList<DbVacancySummary>, IList<VacancySummary>>(vacancies);
 
-            return new ListWithTotalCount<VacancySummary> {List = mapped, TotalCount = totalRecords};
+            return new ListWithTotalCount<VacancySummary> {List = mapped, TotalCount = totalRecords.Single()};
         }
 
         private static object GetByStatusSqlParams(VacancySummaryByStatusQuery query)
