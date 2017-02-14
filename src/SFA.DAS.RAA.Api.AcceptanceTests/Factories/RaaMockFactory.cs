@@ -84,6 +84,10 @@
                 m => m.Query<Provider>(ProviderRepository.SelectByUkprnSql, It.Is<object>(o => o.GetHashCode() == new { ukprn = validProviderApiUser.ReferencedEntitySurrogateId.ToString(), providerStatusTypeID = ProviderStatuses.Activated }.GetHashCode()), null, null))
                 .Returns(new[] { ProviderFactory.GetSkillsFundingAgencyProvider() });
 
+            MockGetOpenConnection.Setup(
+                m => m.Query<Provider>(ProviderRepository.SelectByIdSql, It.Is<object>(o => o.GetHashCode() == new { providerId = RaaApiUserFactory.SkillsFundingAgencyProviderId }.GetHashCode()), null, null))
+                .Returns(new[] { ProviderFactory.GetSkillsFundingAgencyProvider() });
+
             //Setup mock for unknown provider sites
             MockGetOpenConnection.Setup(m => m.Query<ProviderSite>(It.IsAny<string>(), It.IsAny<object>(), null, null)).Returns(new List<ProviderSite>());
 

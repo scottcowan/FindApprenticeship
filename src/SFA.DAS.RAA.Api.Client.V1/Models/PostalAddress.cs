@@ -23,15 +23,6 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// house number or name</param>
         /// <param name="town">The town or city the address belongs to</param>
         /// <param name="postcode">The postcode</param>
-        /// <param name="countyId">The primary identifier for the county of
-        /// the address</param>
-        /// <param name="county">The name of the county</param>
-        /// <param name="localAuthorityId">The primary identifier for the
-        /// local authority the address is part of</param>
-        /// <param name="localAuthorityCodeName">The secondary code identifier
-        /// for the local authority the address is part of</param>
-        /// <param name="localAuthority">The local authority's name</param>
-        /// <param name="geoPoint">The global geopoint for the address</param>
         /// <param name="postalAddressId">The primary id of this address if
         /// specified by the validating entity</param>
         /// <param name="addressLine2">The second line of the address. Usually
@@ -51,7 +42,16 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// PostCode anywhere uses PAF data, so this is the UDPRN.</param>
         /// <param name="dateValidated">The date the address was
         /// validated</param>
-        public PostalAddress(string addressLine1, string town, string postcode, int countyId, string county, int localAuthorityId, string localAuthorityCodeName, string localAuthority, GeoPoint geoPoint, int? postalAddressId = default(int?), string addressLine2 = default(string), string addressLine3 = default(string), string addressLine4 = default(string), string addressLine5 = default(string), string validationSourceCode = default(string), string validationSourceKeyValue = default(string), System.DateTime? dateValidated = default(System.DateTime?))
+        /// <param name="countyId">The primary identifier for the county of
+        /// the address</param>
+        /// <param name="county">The name of the county</param>
+        /// <param name="localAuthorityId">The primary identifier for the
+        /// local authority the address is part of</param>
+        /// <param name="localAuthorityCodeName">The secondary code identifier
+        /// for the local authority the address is part of</param>
+        /// <param name="localAuthority">The local authority's name</param>
+        /// <param name="geoPoint">The global geopoint for the address</param>
+        public PostalAddress(string addressLine1, string town, string postcode, int? postalAddressId = default(int?), string addressLine2 = default(string), string addressLine3 = default(string), string addressLine4 = default(string), string addressLine5 = default(string), string validationSourceCode = default(string), string validationSourceKeyValue = default(string), System.DateTime? dateValidated = default(System.DateTime?), int? countyId = default(int?), string county = default(string), int? localAuthorityId = default(int?), string localAuthorityCodeName = default(string), string localAuthority = default(string), GeoPoint geoPoint = default(GeoPoint))
         {
             PostalAddressId = postalAddressId;
             AddressLine1 = addressLine1;
@@ -152,7 +152,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// Gets or sets the primary identifier for the county of the address
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CountyId")]
-        public int CountyId { get; set; }
+        public int? CountyId { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the county
@@ -165,7 +165,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// address is part of
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "LocalAuthorityId")]
-        public int LocalAuthorityId { get; set; }
+        public int? LocalAuthorityId { get; set; }
 
         /// <summary>
         /// Gets or sets the secondary code identifier for the local authority
@@ -205,22 +205,6 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             if (Postcode == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Postcode");
-            }
-            if (County == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "County");
-            }
-            if (LocalAuthorityCodeName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "LocalAuthorityCodeName");
-            }
-            if (LocalAuthority == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "LocalAuthority");
-            }
-            if (GeoPoint == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "GeoPoint");
             }
             if (this.GeoPoint != null)
             {

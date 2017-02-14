@@ -71,7 +71,7 @@
             RuleFor(x => x.VacancyLocations)
                 .NotEmpty()
                 .WithMessage(VacancyMessages.VacancyLocations.RequiredErrorText)
-                .When(x => x.VacancyLocationType == VacancyLocationType.MultipleLocations);
+                .When(x => x.VacancyLocationType == VacancyLocationType.MultipleLocations && x.VacancySource != VacancySource.Raa);
 
             RuleFor(x => x.VacancyLocations)
                 .SetCollectionValidator(new VacancyLocationValidator());

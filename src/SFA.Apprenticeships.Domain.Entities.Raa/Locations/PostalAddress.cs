@@ -70,32 +70,26 @@
         /// <summary>
         /// The primary identifier for the county of the address
         /// </summary>
-        [Required]
         public int CountyId { get; set; }
         /// <summary>
         /// The name of the county
         /// </summary>
-        [Required]
         public string County { get; set; }
         /// <summary>
         /// The primary identifier for the local authority the address is part of
         /// </summary>
-        [Required]
         public int LocalAuthorityId { get; set; }
         /// <summary>
         /// The secondary code identifier for the local authority the address is part of
         /// </summary>
-        [Required]
         public string LocalAuthorityCodeName { get; set; }
         /// <summary>
         /// The local authority's name
         /// </summary>
-        [Required]
         public string LocalAuthority { get; set; }
         /// <summary>
         /// The global geopoint for the address
         /// </summary>
-        [Required]
         public GeoPoint GeoPoint { get; set; }
 
         public override string ToString()
@@ -123,7 +117,7 @@
                 LocalAuthorityId = LocalAuthorityId,
                 LocalAuthorityCodeName = LocalAuthorityCodeName,
                 LocalAuthority = LocalAuthority,
-                GeoPoint = GeoPoint.Clone()
+                GeoPoint = GeoPoint?.Clone()
             };
         }
 

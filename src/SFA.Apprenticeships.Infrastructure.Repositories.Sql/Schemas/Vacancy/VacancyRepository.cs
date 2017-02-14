@@ -367,6 +367,10 @@ WHERE VacancyId = @vacancyId and NoOfOfflineApplicants is null
 
         private void PopulateLocalAuthorityId(DomainVacancy entity, Vacancy dbVacancy)
         {
+            dbVacancy.LocalAuthorityId = null;
+
+            if (entity.Address == null) return;
+
             if (entity.Address.LocalAuthorityId != 0)
             {
                 dbVacancy.LocalAuthorityId = entity.Address.LocalAuthorityId;
@@ -381,10 +385,6 @@ WHERE  CodeName LIKE '%' + @LocalAuthorityCode",
                     {
                         entity.Address.LocalAuthorityCodeName
                     }).Single();
-            }
-            else
-            {
-                dbVacancy.LocalAuthorityId = null;
             }
         }
 

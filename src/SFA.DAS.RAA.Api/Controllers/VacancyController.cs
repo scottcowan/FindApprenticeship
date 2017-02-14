@@ -51,7 +51,15 @@
         [HttpPost]
         public IHttpActionResult CreateVacancy(Vacancy vacancy)
         {
-            return Ok(_createVacancyStrategy.CreateVacancy(vacancy, User.GetUkprn()));
+            if (User.IsInRole(Roles.Provider))
+            {
+                return Ok(_createVacancyStrategy.CreateVacancy(vacancy, User.GetUkprn()));
+            }
+            if (User.IsInRole(Roles.Agency))
+            {
+                return Ok(_createVacancyStrategy.CreateVacancy(vacancy));
+            }
+            return Unauthorized();
         }
     }
 }

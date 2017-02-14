@@ -428,13 +428,38 @@
 
             var createdVacancy = _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
 
-            createdVacancy.VacancyLocations.Should().BeNullOrEmpty();
+            createdVacancy.VacancyLocations.Should().BeNull();
             createdVacancy.Address.AddressLine1.Should().Be(_coventry.AddressLine1);
             createdVacancy.Address.Town.Should().Be(_coventry.Town);
             createdVacancy.Address.Postcode.Should().Be(_coventry.Postcode);
             createdVacancy.Address.GeoPoint.Longitude.Should().Be(_coventry.GeoPoint.Longitude);
             createdVacancy.Address.GeoPoint.Latitude.Should().Be(_coventry.GeoPoint.Latitude);
             createdVacancy.NumberOfPositions.Should().Be(3);
+        }
+
+        [Test]
+        public void MultipleLocationsNoAddressesNullAddress()
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyGuid = Guid.NewGuid(),
+                VacancyOwnerRelationshipId = VorIdOwned,
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
+                EmployerWebsiteUrl = "http://different.com",
+                EmployerDescription = "Different",
+                VacancySource = VacancySource.Raa
+            };
+
+            const int newVacancyId = 356;
+            const int newVacancyReferenceNumber = 34534;
+
+            _referenceNumberRepository.Setup(r => r.GetNextVacancyReferenceNumber()).Returns(newVacancyReferenceNumber);
+            _vacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns<Vacancy>(v => { v.VacancyId = newVacancyId; return v; });
+
+            var createdVacancy = _createVacancyStrategy.CreateVacancy(vacancy, RaaApiUserFactory.SkillsFundingAgencyUkprn.ToString());
+
+            createdVacancy.VacancyLocations.Should().BeNull();
+            createdVacancy.Address.Should().BeNull();
         }
     }
 }

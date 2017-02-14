@@ -328,7 +328,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return resultViewModel;
         }
 
-        public void CreateVacancy(VacancyMinimumData vacancyMinimumData)
+        public async Task CreateVacancy(VacancyMinimumData vacancyMinimumData)
         {
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancyMinimumData.VacancyOwnerRelationshipId, true);
@@ -340,7 +340,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
             }
 
-            _vacancyPostingService.CreateVacancy(new Vacancy
+            await _vacancyPostingService.CreateVacancy(new Vacancy
             {
                 VacancyGuid = vacancyMinimumData.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
@@ -1251,6 +1251,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.VacancyLocationType = VacancyLocationType.SpecificLocation;
+            newVacancy.VacancyLocations = null;
             if (!string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName))
             {
                 newVacancy.EmployerAnonymousReason = vacancy.EmployerAnonymousReason;

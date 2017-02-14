@@ -147,7 +147,9 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 VacancyGuid = Guid.NewGuid(),
                 VacancyLocationType = vacancyLocationType,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
-                NumberOfPositions = positions
+                NumberOfPositions = positions,
+                ContractOwnerId = RaaApiUserFactory.SkillsFundingAgencyProviderId,
+                Status = VacancyStatus.Live
             };
             return vacancy;
         }
@@ -161,7 +163,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             responseVacancy.VacancyReferenceNumber.Should().NotBe(0);
             responseVacancy.VacancySource.Should().Be(VacancySource.Api);
             var expectedVacancy = GetVacancy(vacancyLocationType, vacancyOwnerRelationshipId, positions);
-            expectedVacancy.Status = VacancyStatus.Draft;
+            expectedVacancy.Status = responseVacancy.Status;
             expectedVacancy.VacancyId = responseVacancy.VacancyId;
             expectedVacancy.VacancyReferenceNumber = responseVacancy.VacancyReferenceNumber;
             expectedVacancy.VacancyGuid = responseVacancy.VacancyGuid;

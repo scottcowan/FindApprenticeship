@@ -8,6 +8,7 @@
     using Apprenticeships.Application.Provider.Strategies;
     using Apprenticeships.Domain.Entities.Exceptions;
     using Apprenticeships.Domain.Entities.Raa.Locations.Constants;
+    using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies.Constants;
     using Apprenticeships.Domain.Interfaces.Repositories;
@@ -46,9 +47,35 @@
         public Vacancy CreateVacancy(Vacancy vacancy, string ukprn)
         {
             var provider = _providerReadRepository.GetByUkprn(ukprn, false);
+            return CreateVacancy(vacancy, provider, false);
+        }
+
+        public Vacancy CreateVacancy(Vacancy vacancy)
+        {
+            var provider = _providerReadRepository.GetById(vacancy.ContractOwnerId);
+            return CreateVacancy(vacancy, provider, true);
+        }
+
+        private Vacancy CreateVacancy(Vacancy vacancy, Provider provider, bool acceptLiveStatus)
+        {
             if (provider == null)
             {
                 throw new SecurityException(Constants.VacancyMessages.UnauthorizedProviderAccess);
+            }
+
+            if (vacancy.Status == VacancyStatus.Live && acceptLiveStatus)
+            {
+                //Check for agency vacancy create. When a multi location vacancy is created its child vacancies are immediately made live
+            }
+            else
+            {
+                //Ignore any passed in status and set to draft
+                vacancy.Status = VacancyStatus.Draft;
+            }
+
+            if (vacancy.VacancySource != VacancySource.Raa)
+            {
+                vacancy.VacancySource = VacancySource.Api;
             }
 
             vacancy.ContractOwnerId = provider.ProviderId;
@@ -88,41 +115,48 @@
                     //TODO: Make _getEmployerByIdStrategy.Get update the employer if necessary
                     employer = _getEmployerByEdsUrnStrategy.Get(employer.EdsUrn);
 
-                    if (vacancy.VacancyLocations != null && vacancy.VacancyLocations.Count > 0)
+                    if(vacancy.VacancyLocationType == VacancyLocationType.MultipleLocations)
                     {
-                        //Verify and geocode all addresses
-                        for (int i = 0; i < vacancy.VacancyLocations.Count; i++)
+                        if (vacancy.VacancyLocations != null && vacancy.VacancyLocations.Count > 0)
                         {
-                            var vacancyLocation = vacancy.VacancyLocations[i];
-                            if (vacancyLocation.Address != null)
+                            //Verify and geocode all addresses
+                            for (int i = 0; i < vacancy.VacancyLocations.Count; i++)
                             {
-                                try
+                                var vacancyLocation = vacancy.VacancyLocations[i];
+                                if (vacancyLocation.Address != null)
                                 {
-                                    vacancyLocation.Address = _postalAddressStrategy.GetPostalAddress(vacancyLocation.Address);
-                                }
-                                catch (CustomException ex)
-                                {
-                                    if (ex.Code == Apprenticeships.Infrastructure.Postcode.ErrorCodes.PostalAddressGeocodeFailed)
+                                    try
                                     {
-                                        validationResult.Errors.Add(new ValidationFailure($"VacancyLocations[{i}].Address.Postcode", PostalAddressMessages.Postcode.NotFound));
+                                        vacancyLocation.Address = _postalAddressStrategy.GetPostalAddress(vacancyLocation.Address);
                                     }
-                                    else
+                                    catch (CustomException ex)
                                     {
-                                        throw;
+                                        if (ex.Code == Apprenticeships.Infrastructure.Postcode.ErrorCodes.PostalAddressGeocodeFailed)
+                                        {
+                                            validationResult.Errors.Add(new ValidationFailure($"VacancyLocations[{i}].Address.Postcode", PostalAddressMessages.Postcode.NotFound));
+                                        }
+                                        else
+                                        {
+                                            throw;
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        if (vacancy.VacancyLocations.Count == 1)
-                        {
-                            vacancy.Address = vacancy.VacancyLocations[0].Address;
-                            vacancy.NumberOfPositions = vacancy.VacancyLocations[0].NumberOfPositions;
-                            vacancy.VacancyLocations = null;
+                            if (vacancy.VacancyLocations.Count == 1)
+                            {
+                                vacancy.Address = vacancy.VacancyLocations[0].Address;
+                                vacancy.NumberOfPositions = vacancy.VacancyLocations[0].NumberOfPositions;
+                                vacancy.VacancyLocations = null;
+                            }
+                            else
+                            {
+                                vacancy.Address = employer.Address;
+                            }
                         }
                         else
                         {
-                            vacancy.Address = employer.Address;
+                            vacancy.Address = null;
                         }
                     }
                     else
@@ -149,13 +183,6 @@
 
             vacancy.VacancyReferenceNumber = _referenceNumberRepository.GetNextVacancyReferenceNumber();
             
-            //Ignore any passed in status and set to draft
-            vacancy.Status = VacancyStatus.Draft;
-            if (vacancy.VacancySource != VacancySource.Raa)
-            {
-                vacancy.VacancySource = VacancySource.Api;
-            }
-
             var createdVacancy = _vacancyWriteRepository.Create(vacancy);
 
             return createdVacancy;
