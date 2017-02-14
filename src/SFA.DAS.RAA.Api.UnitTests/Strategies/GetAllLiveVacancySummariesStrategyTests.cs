@@ -19,7 +19,7 @@
             const int pageSize = 7;
 
             var vacancySummaryRepository = new Mock<IVacancySummaryRepository>();
-            vacancySummaryRepository.Setup(r => r.GetByStatusAsync(It.IsAny<VacancySummaryByStatusQuery>())).Returns(Task.FromResult(new ListWithTotalCount<VacancySummary>()));
+            vacancySummaryRepository.Setup(r => r.GetLiveAsync(It.IsAny<VacancySummaryByStatusQuery>())).Returns(Task.FromResult(new ListWithTotalCount<VacancySummary>()));
 
             var strategy = new GetAllLiveVacancySummariesStrategy(vacancySummaryRepository.Object);
 
@@ -27,7 +27,7 @@
 
             vacancySummaryRepository.Verify(
                 s =>
-                    s.GetByStatusAsync(
+                    s.GetLiveAsync(
                         It.Is<VacancySummaryByStatusQuery>(
                             q =>
                                 q.DesiredStatuses.Length == 1 && q.DesiredStatuses[0] == VacancyStatus.Live &&
@@ -43,13 +43,13 @@
             var vacancySummaryRepository = new Mock<IVacancySummaryRepository>();
 
             var strategy = new GetAllLiveVacancySummariesStrategy(vacancySummaryRepository.Object);
-            vacancySummaryRepository.Setup(r => r.GetByStatusAsync(It.IsAny<VacancySummaryByStatusQuery>())).Returns(Task.FromResult(new ListWithTotalCount<VacancySummary>()));
+            vacancySummaryRepository.Setup(r => r.GetLiveAsync(It.IsAny<VacancySummaryByStatusQuery>())).Returns(Task.FromResult(new ListWithTotalCount<VacancySummary>()));
 
             await strategy.GetAllLiveVacancySummaries(page, pageSize);
 
             vacancySummaryRepository.Verify(
                 s =>
-                    s.GetByStatusAsync(
+                    s.GetLiveAsync(
                         It.Is<VacancySummaryByStatusQuery>(
                             q =>
                                 q.DesiredStatuses.Length == 1 && q.DesiredStatuses[0] == VacancyStatus.Live &&

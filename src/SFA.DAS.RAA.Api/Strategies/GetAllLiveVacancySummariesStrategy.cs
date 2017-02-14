@@ -42,8 +42,8 @@
                 RequestedPage = page,
                 DesiredStatuses = new[] { VacancyStatus.Live }
             };
-            var liveVacancySummaries = await _vacancySummaryRepository.GetByStatusAsync(query);
-            int totalRecords = liveVacancySummaries.TotalCount;
+            var liveVacancySummaries = await _vacancySummaryRepository.GetLiveAsync(query);
+            var totalRecords = liveVacancySummaries.TotalCount;
             var vacancySummariesPage = new PublicVacancySummariesPage
             {
                 CurrentPage = page,
