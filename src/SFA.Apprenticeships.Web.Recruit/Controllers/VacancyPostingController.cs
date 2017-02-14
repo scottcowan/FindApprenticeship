@@ -1169,9 +1169,9 @@
         }
 
         [HttpGet]
-        public ActionResult CloseVacancy(int vacancyReferenceNumber)
+        public async Task<ActionResult> CloseVacancy(int vacancyReferenceNumber)
         {
-            var viewModel = _vacancyPostingMediator.GetCloseVacancyViewModel(vacancyReferenceNumber);
+            var viewModel = await _vacancyPostingMediator.GetCloseVacancyViewModel(vacancyReferenceNumber);
             return View(viewModel);
         }
 
