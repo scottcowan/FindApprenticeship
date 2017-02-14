@@ -149,12 +149,12 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                        <br/>\r\n");
+WriteLiteral("</span>\r\n                        <br/>\r\n                        <br/>\r\n");
 
 WriteLiteral("                        ");
 
             
-            #line 40 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+            #line 41 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
                    Write(experience.Description);
 
             
@@ -169,7 +169,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 43 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+            #line 44 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
                    Write(experience.FromDate.GetMonthYearLabel());
 
             
@@ -184,7 +184,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 46 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+            #line 47 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
                    Write(experience.ToDate.GetMonthYearLabel());
 
             
@@ -194,7 +194,7 @@ WriteLiteral("\r\n                    </td>\r\n                </tr>\r\n        
 " </table>\r\n    </div>\r\n");
 
             
-            #line 52 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
+            #line 53 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
     }
 
             

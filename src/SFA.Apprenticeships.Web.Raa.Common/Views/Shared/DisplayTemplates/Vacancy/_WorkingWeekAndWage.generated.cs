@@ -367,7 +367,7 @@ WriteLiteral("\r\n                </span>\r\n");
             #line hidden
 WriteLiteral("        </h3>\r\n        <div");
 
-WriteLiteral(" class=\"sfa-p-margin-bottom\"");
+WriteLiteral(" class=\"sfa-p-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p");
 
