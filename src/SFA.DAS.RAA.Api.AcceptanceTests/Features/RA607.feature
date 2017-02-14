@@ -51,5 +51,5 @@ Scenario: QA Create a vacancy at the employer's location
 	When I authorize my request with an Agency API key
 	And I request to create a SpecificLocation vacancy for vacancy owner relationship with id: 42 and 3 positions
 	Then The response status is: OK
-	And I see that the vacancy's status is Draft
+	And I see that the vacancy's status is Live
 	And I see the SpecificLocation vacancy for vacancy owner relationship with id: 42 and 3 positions

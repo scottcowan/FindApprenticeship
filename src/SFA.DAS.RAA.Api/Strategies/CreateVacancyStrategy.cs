@@ -47,24 +47,32 @@
         public Vacancy CreateVacancy(Vacancy vacancy, string ukprn)
         {
             var provider = _providerReadRepository.GetByUkprn(ukprn, false);
-            return CreateVacancy(vacancy, provider);
+            return CreateVacancy(vacancy, provider, false);
         }
 
         public Vacancy CreateVacancy(Vacancy vacancy)
         {
             var provider = _providerReadRepository.GetById(vacancy.ContractOwnerId);
-            return CreateVacancy(vacancy, provider);
+            return CreateVacancy(vacancy, provider, true);
         }
 
-        private Vacancy CreateVacancy(Vacancy vacancy, Provider provider)
+        private Vacancy CreateVacancy(Vacancy vacancy, Provider provider, bool acceptLiveStatus)
         {
             if (provider == null)
             {
                 throw new SecurityException(Constants.VacancyMessages.UnauthorizedProviderAccess);
             }
 
-            //Ignore any passed in status and set to draft
-            vacancy.Status = VacancyStatus.Draft;
+            if (vacancy.Status == VacancyStatus.Live && acceptLiveStatus)
+            {
+                //Check for agency vacancy create. When a multi location vacancy is created its child vacancies are immediately made live
+            }
+            else
+            {
+                //Ignore any passed in status and set to draft
+                vacancy.Status = VacancyStatus.Draft;
+            }
+
             if (vacancy.VacancySource != VacancySource.Raa)
             {
                 vacancy.VacancySource = VacancySource.Api;

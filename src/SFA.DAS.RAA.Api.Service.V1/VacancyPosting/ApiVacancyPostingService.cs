@@ -18,6 +18,7 @@
         private static readonly IMapper ApiClientMappers = new ApiClientMappers();
 
         private readonly ICreateVacancyStrategy _createVacancyStrategy;
+        private readonly IPublishVacancySummaryUpdateStrategy _publishVacancySummaryUpdateStrategy;
         private readonly IUpdateVacancyStrategy _updateVacancyStrategy;
         private readonly IArchiveVacancyStrategy _archiveVacancyStrategy;
         private readonly IGetNextVacancyReferenceNumberStrategy _getNextVacancyReferenceNumberStrategy;
@@ -30,6 +31,7 @@
 
         public ApiVacancyPostingService(
             ICreateVacancyStrategy createVacancyStrategy,
+            IPublishVacancySummaryUpdateStrategy publishVacancySummaryUpdateStrategy,
             IUpdateVacancyStrategy updateVacancyStrategy,
             IArchiveVacancyStrategy archiveVacancyStrategy,
             IGetNextVacancyReferenceNumberStrategy getNextVacancyReferenceNumberStrategy,
@@ -41,6 +43,7 @@
             ILogService logService)
         {
             _createVacancyStrategy = createVacancyStrategy;
+            _publishVacancySummaryUpdateStrategy = publishVacancySummaryUpdateStrategy;
             _updateVacancyStrategy = updateVacancyStrategy;
             _archiveVacancyStrategy = archiveVacancyStrategy;
             _getNextVacancyReferenceNumberStrategy = getNextVacancyReferenceNumberStrategy;
@@ -64,7 +67,9 @@
                     var apiVacancy = ApiClientMappers.Map<Vacancy, ApiVacancy>(vacancy);
                     var apiVacancyResult = await apiClient.VacancyOperations.CreateVacancyWithHttpMessagesAsync(apiVacancy);
                     var createdApiVacancy = apiVacancyResult.Body;
-                    return ApiClientMappers.Map<ApiVacancy, Vacancy>(createdApiVacancy);
+                    var createdVacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(createdApiVacancy);
+                    _publishVacancySummaryUpdateStrategy.PublishVacancySummaryUpdate(createdVacancy);
+                    return createdVacancy;
                 }
                 catch (HttpOperationException ex)
                 {
