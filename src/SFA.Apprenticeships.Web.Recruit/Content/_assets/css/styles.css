@@ -216,13 +216,15 @@ Custom Typography
 .sfa-data {
   margin-top: 0px !important;
   text-align: center; }
-  .sfa-data a {
+  .sfa-data a, .sfa-data .sfa-button-as-link {
     text-decoration: none;
     display: block; }
-    .sfa-data a .bold-xlarge {
+    .sfa-data a .bold-xlarge, .sfa-data .sfa-button-as-link .bold-xlarge {
       text-decoration: none; }
-    .sfa-data a .bold-xsmall {
+    .sfa-data a .bold-xsmall, .sfa-data .sfa-button-as-link .bold-xsmall {
       text-decoration: underline; }
+  .sfa-data .sfa-button-as-link {
+    width: 100%; }
 
 /* -------------------------------------------------------------------
 Custom list
@@ -575,7 +577,7 @@ iframe, object, embed {
   overflow: visible !important;
   padding: 0 !important; }
 
-.sfa-mock-link {
+.sfa-button-as-link {
   margin: 0;
   padding: 0;
   line-height: 1.3;
@@ -591,9 +593,9 @@ iframe, object, embed {
   display: inline-block;
   vertical-align: top;
   -webkit-font-smoothing: antialiased; }
-  .sfa-mock-link:hover {
+  .sfa-button-as-link:hover {
     color: #2b8cc4; }
-  .sfa-mock-link:focus {
+  .sfa-button-as-link:focus {
     background: #ffbf47; }
 
 .sfa-edit-button-p {

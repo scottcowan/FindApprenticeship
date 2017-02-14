@@ -284,7 +284,7 @@ Custom Typography
 .sfa-data {
     margin-top:0px !important;
     text-align:center;
-    a {
+    a, .sfa-button-as-link {
         text-decoration:none;
         display:block;
         .bold-xlarge {
@@ -293,6 +293,9 @@ Custom Typography
         .bold-xsmall {
             text-decoration:underline;
         }
+    }
+    .sfa-button-as-link {
+        width:100%;
     }
 }
 
