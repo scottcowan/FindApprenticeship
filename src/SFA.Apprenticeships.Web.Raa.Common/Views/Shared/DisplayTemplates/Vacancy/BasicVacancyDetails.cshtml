@@ -1,5 +1,6 @@
 ﻿@model NewVacancyViewModel
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Common.Validators.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
@@ -43,45 +44,47 @@
             @Html.EditorFor(m => m.ShortDescriptionComment, "Comment", Html.GetLabelFor(m => m.ShortDescriptionComment))
             <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyType)))">
                 <fieldset class="inline">
-                    <a name="@Html.NameFor(m => m.VacancyType).ToString().ToLower()"></a>
-                    <h3 class="form-label-bold sfa-small-bottom-margin">Vacancy type</h3>
-                    <legend class="visually-hidden">Vacancy type</legend>
-                    @Html.ValidationMessageFor(m => m.VacancyType)
+                    <legend>
+                        <a name="@Html.NameFor(m => m.VacancyType).ToString().ToLower()"></a>
+                        <h3 class="form-label-bold sfa-small-bottom-margin">Vacancy type</h3>
+                        @Html.ValidationMessageWithSeverityFor(m => m.VacancyType, Html.GetValidationType(m => m.VacancyType))
+                    </legend>
                     @* ReSharper disable once Html.IdNotResolved *@
                     <label for="vacancy-type-apprenticeship" class="block-label selection-button-radio">
-                        @Html.RadioButtonFor(model => model.VacancyType, VacancyType.Apprenticeship, new { id = "vacancy-type-apprenticeship", aria_labelledby = "vacancy-type-label" }) 
+                        @Html.RadioButtonFor(model => model.VacancyType, VacancyType.Apprenticeship, new {id = "vacancy-type-apprenticeship", aria_labelledby = "vacancy-type-label"})
                         Apprenticeship
                     </label>
                     @* ReSharper disable once Html.IdNotResolved *@
                     <label for="vacancy-type-traineeship" class="block-label selection-button-radio">
-                        @Html.RadioButtonFor(model => model.VacancyType, VacancyType.Traineeship, new { id = "vacancy-type-traineeship", aria_labelledby = "vacancy-type-label" }) 
+                        @Html.RadioButtonFor(model => model.VacancyType, VacancyType.Traineeship, new {id = "vacancy-type-traineeship", aria_labelledby = "vacancy-type-label"})
                         Traineeship
                     </label>
                 </fieldset>
             </div>
-            <div class="form-group">
+            <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.OfflineVacancy)))">
                 <fieldset>
-                    <label class="form-label-bold sfa-small-bottom-margin">
-                        Manage application method
-                        <span class="form-hint">
-                            How will candidates apply for this vacancy?
-                        </span>
-                    </label>
+                    <legend>
+                        <label class="form-label-bold sfa-small-bottom-margin">
+                            Manage application method
+                            <span class="form-hint">
+                                How will candidates apply for this vacancy?
+                            </span>
+                        </label>
 
-                    <legend class="visually-hidden">Manage application method</legend>
+                        @Html.ValidationMessageWithSeverityFor(m => m.OfflineVacancy, Html.GetValidationType(m => m.OfflineVacancy))
+                    </legend>
 
                     @* ReSharper disable once Html.IdNotResolved *@
                     <label for="apprenticeship-online-vacancy" class="block-label selection-button-radio" data-target="online-panel" @isApplicationThroughRAAYes>
-                        @Html.RadioButtonFor(model => model.OfflineVacancy, false, new { id = "apprenticeship-online-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label" }) 
+                        @Html.RadioButtonFor(model => model.OfflineVacancy, false, new {id = "apprenticeship-online-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label"})
                         Candidates will apply on this website
                     </label>
 
                     @* ReSharper disable once Html.IdNotResolved *@
                     <label for="apprenticeship-offline-vacancy" class="block-label selection-button-radio" data-target="offline-panel" @isApplicationThroughRAANo>
-                        @Html.RadioButtonFor(model => model.OfflineVacancy, true, new { id = "apprenticeship-offline-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label", aria_controls = "offline-panel" }) 
+                        @Html.RadioButtonFor(model => model.OfflineVacancy, true, new {id = "apprenticeship-offline-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label", aria_controls = "offline-panel"})
                         Candidates will apply through an external website
                     </label>
-                    @Html.ValidationMessageFor(m => m.OfflineVacancy)
                 </fieldset>
             </div>
                     

@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Common.Mediators;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IVacancyMediator
     {
@@ -59,9 +59,9 @@
 
         MediatorResponse<LocationSearchViewModel> RemoveLocation(LocationSearchViewModel viewModel, int locationIndex);
 
-        MediatorResponse<TrainingDetailsViewModel> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel);
+        Task<MediatorResponse<TrainingDetailsViewModel>> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel);
 
-        MediatorResponse<TrainingDetailsViewModel> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel);
+        Task<MediatorResponse<TrainingDetailsViewModel>> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel);
 
         Task<MediatorResponse<VacancyViewModel>> GetVacancyViewModel(int vacancyReferenceNumber);
 

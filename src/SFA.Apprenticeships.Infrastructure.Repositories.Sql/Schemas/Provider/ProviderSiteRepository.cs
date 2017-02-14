@@ -14,12 +14,20 @@
     public class ProviderSiteRepository : IProviderSiteReadRepository, IProviderSiteWriteRepository
     {
         public const string SelectByIdSql = "SELECT * FROM dbo.ProviderSite WHERE ProviderSiteId = @providerSiteId";
+        public const string SelectByEdsUrnSql = "SELECT * FROM dbo.ProviderSite WHERE EDSURN = @edsUrn";
         public const string SelectByProviderIdSql = @"
                 SELECT ps.* FROM dbo.ProviderSite ps
                 INNER JOIN dbo.ProviderSiteRelationship psr
                 ON psr.ProviderSiteID = ps.ProviderSiteID
                 WHERE psr.ProviderID = @providerId 
                 AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
+        public const string SelectProviderSiteRelationshipsByProviderSiteIdsSql = @"
+                SELECT psr.*, p.UKPRN As ProviderUkprn, p.FullName as ProviderFullName, p.TradingName as ProviderTradingName, ps.FullName as ProviderSiteFullName, ps.TradingName as ProviderSiteTradingName
+                FROM dbo.ProviderSiteRelationship AS psr 
+                JOIN Provider p ON psr.ProviderID = p.ProviderId 
+                JOIN ProviderSite ps ON psr.ProviderSiteID = ps.ProviderSiteId 
+                WHERE psr.ProviderSiteId IN @providerSiteIds
+                ORDER BY psr.ProviderSiteRelationshipTypeID";
 
         private const int ActivatedEmployerTrainingProviderStatusId = 1;
         private const int OwnerRelationship = 1;
@@ -67,14 +75,12 @@
         {
             _logger.Debug("Getting provider site with EDSURN={0}", edsUrn);
 
-            const string sql = "SELECT * FROM dbo.ProviderSite WHERE EDSURN = @edsUrn";
-
             var sqlParams = new
             {
                 edsUrn
             };
 
-            var dbProviderSite = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams).SingleOrDefault();
+            var dbProviderSite = _getOpenConnection.Query<Entities.ProviderSite>(SelectByEdsUrnSql, sqlParams).SingleOrDefault();
 
             _logger.Debug(dbProviderSite == null
                 ? "Did not find provider site with EDSURN={0}"

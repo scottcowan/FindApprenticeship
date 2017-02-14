@@ -56,25 +56,25 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n<!DOCTYPE html>\r\n<!--[if lt IE 7]><html class=\"no-js lt-ie9 lt-ie8 lt-ie7\"><![e" +
-"ndif]-->\r\n<!--[if IE 7]><html class=\"no-js lt-ie9 lt-ie8\"><![endif]-->\r\n<!--[if " +
-"IE 8]><html class=\"no-js lt-ie9\"><![endif]-->\r\n<!--[if gt IE 8]><!-->\r\n<html");
+WriteLiteral("\n<!DOCTYPE html>\n<!--[if lt IE 7]><html class=\"no-js lt-ie9 lt-ie8 lt-ie7\"><![end" +
+"if]-->\n<!--[if IE 7]><html class=\"no-js lt-ie9 lt-ie8\"><![endif]-->\n<!--[if IE 8" +
+"]><html class=\"no-js lt-ie9\"><![endif]-->\n<!--[if gt IE 8]><!-->\n<html");
 
 WriteLiteral(" lang=\"en-GB\"");
 
 WriteLiteral(" class=\"no-js not-ie8\"");
 
-WriteLiteral(">\r\n<!--<![endif]-->\r\n<head>\r\n    <meta");
+WriteLiteral(">\n<!--<![endif]-->\n<head>\n    <meta");
 
 WriteLiteral(" charset=\"utf-8\"");
 
-WriteLiteral(">\r\n    <meta");
+WriteLiteral(">\n    <meta");
 
 WriteLiteral(" http-equiv=\"X-UA-Compatible\"");
 
 WriteLiteral(" content=\"IE=edge\"");
 
-WriteLiteral(">\r\n    <title>");
+WriteLiteral(">\n    <title>");
 
             
             #line 15 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
@@ -83,38 +83,38 @@ WriteLiteral(">\r\n    <title>");
             
             #line default
             #line hidden
-WriteLiteral("</title>\r\n    <meta");
+WriteLiteral("</title>\n    <meta");
 
 WriteLiteral(" name=\"description\"");
 
 WriteLiteral(" content=\"We’ve introduced a new way to submitting your queries regarding apprent" +
 "iceships in England.\"");
 
-WriteLiteral(">\r\n    <meta");
+WriteLiteral(">\n    <meta");
 
 WriteLiteral(" name=\"viewport\"");
 
 WriteLiteral(" content=\"width=device-width, initial-scale=1\"");
 
-WriteLiteral(">\r\n    <meta");
+WriteLiteral(">\n    <meta");
 
 WriteLiteral(" name=\"format-detection\"");
 
 WriteLiteral(" content=\"telephone=no\"");
 
-WriteLiteral(">\r\n    <meta");
+WriteLiteral(">\n    <meta");
 
 WriteLiteral(" name=\"format-detection\"");
 
 WriteLiteral(" content=\"date=no\"");
 
-WriteLiteral(">\r\n    <meta");
+WriteLiteral(">\n    <meta");
 
 WriteLiteral(" name=\"format-detection\"");
 
 WriteLiteral(" content=\"address=no\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("    ");
 
@@ -125,7 +125,7 @@ Write(RenderSection("metatags", false));
             
             #line default
             #line hidden
-WriteLiteral("\r\n    <!--[if gt IE 8]><!-->");
+WriteLiteral("\n    <!--[if gt IE 8]><!-->");
 
             
             #line 22 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
@@ -134,7 +134,7 @@ WriteLiteral("\r\n    <!--[if gt IE 8]><!-->");
             
             #line default
             #line hidden
-WriteLiteral("<!--<![endif]-->\r\n    <!--[if lte IE 8]>");
+WriteLiteral("<!--<![endif]-->\n    <!--[if lte IE 8]>");
 
             
             #line 23 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
@@ -143,7 +143,7 @@ WriteLiteral("<!--<![endif]-->\r\n    <!--[if lte IE 8]>");
             
             #line default
             #line hidden
-WriteLiteral("<![endif]-->\r\n    <!--[if lte IE 8]>");
+WriteLiteral("<![endif]-->\n    <!--[if lte IE 8]>");
 
             
             #line 24 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
@@ -152,7 +152,7 @@ WriteLiteral("<![endif]-->\r\n    <!--[if lte IE 8]>");
             
             #line default
             #line hidden
-WriteLiteral("<![endif]-->\r\n    <!--[if gte IE 9]><!-->");
+WriteLiteral("<![endif]-->\n    <!--[if gte IE 9]><!-->");
 
             
             #line 25 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
@@ -161,23 +161,23 @@ WriteLiteral("<![endif]-->\r\n    <!--[if gte IE 9]><!-->");
             
             #line default
             #line hidden
-WriteLiteral("<!--<![endif]-->\r\n    <link");
+WriteLiteral("<!--<![endif]-->\n    <link");
 
 WriteLiteral(" rel=\"shortcut icon\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1488), Tuple.Create("\"", 1550)
+WriteAttribute("href", Tuple.Create(" href=\"", 1463), Tuple.Create("\"", 1525)
             
             #line 26 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
-, Tuple.Create(Tuple.Create("", 1495), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 1470), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
             
             #line default
             #line hidden
-, 1495), false)
+, 1470), false)
 );
 
 WriteLiteral(" type=\"image/x-icon\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("    ");
 
@@ -188,12 +188,25 @@ Write(Styles.Render(Url.CdnContent("css/font-awesome/css/font-awesome.min.css", 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral(@"
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push(
+            { 'gtm.start': new Date().getTime(), event: 'gtm.js' }
+            ); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-T3CZC2');</script>
+    <!-- End Google Tag Manager -->
+
+");
 
 WriteLiteral("    ");
 
             
-            #line 28 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 40 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
 Write(Html.Partial("_Scripts"));
 
             
@@ -209,12 +222,24 @@ WriteLiteral(@"
     </script>
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe");
 
-    <div");
+WriteLiteral(" src=\"https://www.googletagmanager.com/ns.html?id=GTM-T3CZC2\"");
+
+WriteLiteral("\r\n                height=\"0\"");
+
+WriteLiteral(" width=\"0\"");
+
+WriteLiteral(" style=\"display:none;visibility:hidden\"");
+
+WriteLiteral("></iframe>\r\n    </noscript>\r\n    <!-- End Google Tag Manager (noscript) -->\n    <" +
+"div");
 
 WriteLiteral(" class=\"content-container\"");
 
-WriteLiteral(">\r\n        <main");
+WriteLiteral(">\n        <main");
 
 WriteLiteral(" role=\"main\"");
 
@@ -222,16 +247,16 @@ WriteLiteral(" id=\"main\"");
 
 WriteLiteral(" class=\"gov-border\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
             
-            #line 41 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 58 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 41 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 58 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
               
                 var controller = ViewContext.Controller as ContactFormsControllerBase;
 
@@ -253,23 +278,23 @@ WriteLiteral(" role=\"alert\"");
 
 WriteLiteral(" class=\"panel-info\"");
 
-WriteLiteral(">\r\n                                    <p");
+WriteLiteral(">\n                                    <p");
 
 WriteLiteral(" id=\"InfoMessageText\"");
 
 WriteLiteral(">");
 
             
-            #line 53 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 70 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
                                                        Write(Html.Raw(infoMessage));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n                                </div>\r\n");
+WriteLiteral("</p>\n                                </div>\n");
 
             
-            #line 55 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 72 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
                             }
                             break;
                         case UserMessageLevel.Success:
@@ -286,7 +311,7 @@ WriteLiteral(" role=\"alert\"");
 
 WriteLiteral(" class=\"panel-success\"");
 
-WriteLiteral(">\r\n                                    <p");
+WriteLiteral(">\n                                    <p");
 
 WriteLiteral(" id=\"SuccessMessageText\"");
 
@@ -297,16 +322,16 @@ WriteLiteral(" class=\"fa fa-check\"");
 WriteLiteral("></i>");
 
             
-            #line 62 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 79 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
                                                                                      Write(Html.Raw(successMessage));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n                                </div>\r\n");
+WriteLiteral("</p>\n                                </div>\n");
 
             
-            #line 64 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 81 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
                             }
                             break;
                         case UserMessageLevel.Warning:
@@ -323,23 +348,23 @@ WriteLiteral(" role=\"alert\"");
 
 WriteLiteral(" class=\"panel-warning\"");
 
-WriteLiteral(">\r\n                                    <p");
+WriteLiteral(">\n                                    <p");
 
 WriteLiteral(" id=\"WarningMessageText\"");
 
 WriteLiteral(">");
 
             
-            #line 71 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 88 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
                                                           Write(Html.Raw(warningMessage));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n                                </div>\r\n");
+WriteLiteral("</p>\n                                </div>\n");
 
             
-            #line 73 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 90 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
                             }
                             break;
                         case UserMessageLevel.Error:
@@ -356,23 +381,23 @@ WriteLiteral(" role=\"alert\"");
 
 WriteLiteral(" class=\"panel-danger\"");
 
-WriteLiteral(">\r\n                                    <p");
+WriteLiteral(">\n                                    <p");
 
 WriteLiteral(" id=\"ErrorMessageText\"");
 
 WriteLiteral(">");
 
             
-            #line 80 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 97 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
                                                         Write(Html.Raw(errorMessage));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n                                </div>\r\n");
+WriteLiteral("</p>\n                                </div>\n");
 
             
-            #line 82 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 99 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
                             }
                             break;
                     }
@@ -381,107 +406,107 @@ WriteLiteral("</p>\r\n                                </div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("            ");
 
             
-            #line 87 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 104 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
        Write(RenderBody());
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </main>\r\n    </div>\r\n    <!-- Placed at the end of the document so the " +
-"pages load faster -->\r\n");
+WriteLiteral("\n        </main>\n    </div>\n    <!-- Placed at the end of the document so the pag" +
+"es load faster -->\n");
 
 WriteLiteral("    ");
 
             
-            #line 91 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 108 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
 Write(Scripts.Render("~/bundles/jquery"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("    ");
 
             
-            #line 92 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 109 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
 Write(Scripts.Render("~/bundles/fastclick"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("    ");
 
             
-            #line 93 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 110 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
 Write(Scripts.Render("~/bundles/underscore"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("    ");
 
             
-            #line 94 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 111 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
 Write(Scripts.Render("~/bundles/nascript"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("    ");
 
             
-            #line 95 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 112 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
 Write(Scripts.Render("~/bundles/vendor"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("    ");
 
             
-            #line 96 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 113 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
 Write(Scripts.Render("~/bundles/nas"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("    ");
 
             
-            #line 97 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 114 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
 Write(Scripts.Render("~/bundles/lookupservice"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\n\n");
 
 WriteLiteral("    ");
 
             
-            #line 99 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
+            #line 116 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
 Write(RenderSection("scripts", required: false));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n</body>\r\n</html>\r\n");
+WriteLiteral("\n\n</body>\n</html>\n");
 
         }
     }

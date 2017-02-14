@@ -12,7 +12,7 @@
     Increase vacancy wage
 </h1>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, FormMethod.Post, new { id = "edit-wage-form" }))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, FormMethod.Post, new { id = "edit-wage-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

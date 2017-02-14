@@ -78,5 +78,34 @@
                     return WageUnit.Weekly;
             }
         }
+
+        protected bool Equals(Wage other)
+        {
+            return Type == other.Type && string.Equals(ReasonForType, other.ReasonForType) && Amount == other.Amount && AmountLowerBound == other.AmountLowerBound && AmountUpperBound == other.AmountUpperBound && string.Equals(Text, other.Text) && Unit == other.Unit && HoursPerWeek == other.HoursPerWeek;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Wage) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (int) Type;
+                hashCode = (hashCode * 397) ^ (ReasonForType != null ? ReasonForType.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Amount.GetHashCode();
+                hashCode = (hashCode * 397) ^ AmountLowerBound.GetHashCode();
+                hashCode = (hashCode * 397) ^ AmountUpperBound.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Text != null ? Text.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (int) Unit;
+                hashCode = (hashCode * 397) ^ HoursPerWeek.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 }

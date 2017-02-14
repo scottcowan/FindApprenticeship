@@ -72,11 +72,13 @@
         }
         else
         {
-            <div class="form-group">
+            <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.Classification)))">
                 <fieldset>
-                    <a name="@Html.NameFor(m => m.Wage.Classification).ToString().ToLower()"></a>
-                    <h3 class="heading-small sfa-no-top-margin">Wage</h3>
-                    <legend class="visually-hidden">Wage</legend>
+                    <legend>
+                        <a name="@Html.NameFor(m => m.Wage.Classification).ToString().ToLower()"></a>
+                        <h3 class="heading-small sfa-no-top-margin">Wage</h3>
+                        @Html.ValidationMessageWithSeverityFor(m => m.Wage.Classification, Html.GetValidationType(m => m.Wage.Classification))
+                    </legend>
 
                     <div class="@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.Type)))" data-editable-x="">
                         @* ReSharper disable once Html.IdNotResolved *@
@@ -95,12 +97,13 @@
                             Custom wage
                         </label>
 
-                        <div id="custom-wage-panel" class="toggle-content panel panel-border-narrow">
+                        <div id="custom-wage-panel" class="toggle-content panel panel-border-narrow @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.CustomType)))">
                             <fieldset class="inline">
                                 @* ReSharper disable once Html.IdNotResolved *@
-                                <h3 class="heading-small">Select type</h3>
-                                <legend class="visually-hidden">Select type</legend>
-                                @Html.ValidationMessageFor(m => m.Wage.CustomType)
+                                <legend>
+                                    <h3 class="heading-small">Select type</h3>
+                                    @Html.ValidationMessageWithSeverityFor(m => m.Wage.CustomType, Html.GetValidationType(m => m.Wage.CustomType))
+                                </legend>
 
                                 <label for="custom-wage-fixed" class="block-label selection-button-radio" data-target="custom-wage-fixed-panel">
                                     @Html.RadioButtonFor(model => model.Wage.CustomType, CustomWageType.Fixed, new { id = "custom-wage-fixed", aria_controls = "custom-wage-panel" })
@@ -157,7 +160,7 @@
                             @Html.RadioButtonFor(model => model.Wage.Classification, WageClassification.PresetText, new { id = "preset-text", aria_controls = "wage-type-panel" })
                             Choose a text description of the wage
                         </label>
-                        @Html.ValidationMessageFor(m => m.Wage.Classification)
+                        
                         <div id="preset-text-panel" class="toggle-content blocklabel-content panel panel-border-narrow clearfix">
                             <fieldset class="form-group">
                                 @Html.DropDownListFor(m => m.Wage.PresetText, Model.WageTextPresets, new { @class = "form-control" })

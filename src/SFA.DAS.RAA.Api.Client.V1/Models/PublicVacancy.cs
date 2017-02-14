@@ -72,7 +72,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// Related to the TrainingType and the education level the
         /// apprentice will gain or requires. Possible values include:
         /// 'Unknown', 'Intermediate', 'Advanced', 'Higher',
-        /// 'FoundationDegree', 'Degree', 'Masters'</param>
+        /// 'FoundationDegree', 'Degree', 'Masters', 'Traineeship'</param>
         /// <param name="status">The status of the vacancy. Always Live for
         /// public vacancies. Possible values include: 'Unknown', 'Draft',
         /// 'Live', 'Referred', 'Deleted', 'Submitted', 'Closed',
@@ -435,7 +435,8 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// Gets or sets the level of the apprenticeship. Related to the
         /// TrainingType and the education level the apprentice will gain or
         /// requires. Possible values include: 'Unknown', 'Intermediate',
-        /// 'Advanced', 'Higher', 'FoundationDegree', 'Degree', 'Masters'
+        /// 'Advanced', 'Higher', 'FoundationDegree', 'Degree', 'Masters',
+        /// 'Traineeship'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ApprenticeshipLevel")]
         public string ApprenticeshipLevel { get; set; }

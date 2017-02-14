@@ -10,5 +10,11 @@
 
         public const string MissingRegionIdentifier = "Please specify either a regionId or a regionCode.";
         public const string RegionNotFound = "The requested region has not been found.";
+
+        public const string MissingFrameworkIdentifier = "Please specify a categoryId.";
+        public const string FrameworkNotFound = "The requested framework has not been found.";
+
+        public const string MissingStandardIdentifier = "Please specify a standardId.";
+        public const string StandardNotFound = "The requested standard has not been found.";
     }
 }
