@@ -383,7 +383,7 @@ FROM   dbo.LocalAuthority
 WHERE  CodeName LIKE '%' + @LocalAuthorityCode",
                     new
                     {
-                        entity.Address.LocalAuthorityCodeName
+                        LocalAuthorityCode = entity.Address.LocalAuthorityCodeName
                     }).Single();
             }
         }

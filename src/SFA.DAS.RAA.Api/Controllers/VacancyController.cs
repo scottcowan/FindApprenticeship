@@ -46,6 +46,14 @@
             return Ok(_vacancyProvider.Get(new VacancyIdentifier(guid)));
         }
 
+        /// <summary>
+        /// CURRENTLY INCOMPLETE! DO NOT USE YET!
+        /// Endpoint for creating a vacancy. Implements the full rule set for creating a valid vacancy but also allows you to create a partial vacancy that can be completed via the UI or API.
+        /// Consult the model documentation for the list of required fields and rules.
+        /// Please note that all vacancies created through this endpoint will have a Draft status. They need to be submitted separately.
+        /// </summary>
+        /// <param name="vacancy">The vacancy or partial vacancy to create</param>
+        /// <returns>Either the created vacancy or a set of model errors explaining why the vacancy couldn't be created.</returns>
         [Route("vacancies")]
         [ResponseType(typeof(Vacancy))]
         [HttpPost]
