@@ -46,13 +46,11 @@
             @{
                 var filterType = Model.VacancyApplicationsSearch.FilterType;
             }
-            <h2 class="heading-large sfa-no-margins">
-                Candidates
-                @if (filterType != VacancyApplicationsFilterTypes.All)
+            <h2 class="heading-large sfa-no-margins sfa-display-inline">Candidates</h2>
+            @if (filterType != VacancyApplicationsFilterTypes.All)
                 {
-                    <button class="vacancy-filter sfa-show-all sfa-button-as-link" name="BulkSearchApplicationsAction" value="BulkFilterApplicationsAll">Show all</button>
-                }
-            </h2>
+                <button class="vacancy-filter sfa-show-all sfa-button-as-link" name="BulkSearchApplicationsAction" value="BulkFilterApplicationsAll">Show all</button>
+            }
         </div>
     </div>
 
@@ -68,7 +66,7 @@
                     }
                     else
                     {
-                            <button href="#1" class="vacancy-filter sfa-button-as-link" name="BulkSearchApplicationsAction" value="BulkFilterApplicationsNew">
+                            <button class="vacancy-filter sfa-button-as-link" name="BulkSearchApplicationsAction" value="BulkFilterApplicationsNew">
                                 <span class="data-item bold-xlarge">@Model.NewApplicationsCount</span>
                                 <span class="data-item bold-xsmall">New</span>
                             </button>
@@ -84,7 +82,7 @@
                     }
                     else
                     {
-                        <button href="#1" class="vacancy-filter sfa-button-as-link" name="BulkSearchApplicationsAction" value="BulkFilterApplicationsInProgress">
+                        <button class="vacancy-filter sfa-button-as-link" name="BulkSearchApplicationsAction" value="BulkFilterApplicationsInProgress">
                             <span class="data-item bold-xlarge">@Model.InProgressApplicationsCount</span>
                             <span class="data-item bold-xsmall">In progress</span>
                         </button>
@@ -112,10 +110,8 @@
                             @{
                                 var surnameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldLastName ?
                                             Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-
-                                var surnameSortOrder = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldLastName ? Order.Descending : Order.Ascending;
                             }
-                            <button href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldLastName, surnameSortOrder).RouteValues)" class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsLastName">
+                            <button class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsLastName">
                                 Surname<i class="fa sfa-icon-right @surnameSortClass" aria-hidden="true"></i>
                             </button>
                         </th>
@@ -124,10 +120,8 @@
                             @{
                                 var firstNameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldFirstName ?
                                     Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-
-                                var firstNameSortOrder = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldFirstName ? Order.Descending : Order.Ascending;
                             }
-                            <button href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldFirstName, firstNameSortOrder).RouteValues)" class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsFirstName">
+                            <button class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsFirstName">
                                 First name<i class="fa sfa-icon-right @firstNameSortClass" aria-hidden="true"></i>
                             </button>
                         </th>
@@ -138,10 +132,8 @@
                             @{
                                 var managerNotesSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes ?
                                     Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-
-                                var managerNotesSortOrder = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes ? Order.Descending : Order.Ascending;
                             }
-                            <button href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes, managerNotesSortOrder).RouteValues)" class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsManagerNotes">
+                            <button class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsManagerNotes">
                                 Vacancy manager notes<i class="fa sfa-icon-right @managerNotesSortClass" aria-hidden="true"></i>
                             </button>
                         </th>
@@ -150,10 +142,8 @@
                             @{
                                 var submittedSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldSubmitted ?
                                     Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-
-                                var submittedSortOrder = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldSubmitted ? Order.Descending : Order.Ascending;
                             }
-                            <button href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldSubmitted, submittedSortOrder).RouteValues)" class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsSubmitted">
+                            <button class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsSubmitted">
                                 Submitted<i class="fa sfa-icon-right @submittedSortClass" aria-hidden="true"></i>
                             </button>
                         </th>
@@ -161,10 +151,8 @@
                             @{
                                 var statusSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldStatus ?
                                     Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-
-                                var statusSortOrder = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldStatus ? Order.Descending : Order.Ascending;
                             }
-                            <button href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldStatus, statusSortOrder).RouteValues)" class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsStatus">
+                            <button class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsStatus">
                                 Status<i class="fa sfa-icon-right @statusSortClass" aria-hidden="true"></i>
                             </button>
                         </th>

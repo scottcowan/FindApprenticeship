@@ -617,7 +617,18 @@ iframe, object, embed {
       margin-bottom: 60px; } }
 
 .sfa-show-all {
-  margin-left: 0.5em; }
+  margin-left: 0.5em;
+  font-family: "nta", Arial, sans-serif;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 16px;
+  line-height: 1.25;
+  display: inline;
+  vertical-align: baseline; }
+  @media (min-width: 641px) {
+    .sfa-show-all {
+      font-size: 19px;
+      line-height: 1.31579; } }
 
 .tabbed-nav {
   border-bottom: 1px solid #bfc1c3; }

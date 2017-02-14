@@ -109,13 +109,11 @@
                 var filterType = Model.VacancyApplicationsSearch.FilterType;
             }
             <div class="column-two-thirds">
-                <h2 class="heading-large  sfa-no-margins">
-                    Applications
-                    @if (filterType != VacancyApplicationsFilterTypes.All || Model.VacancyApplicationsSearch.IsCandidateSearch())
-                    {
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.All, true).RouteValues)" class="font-small vacancy-filter sfa-show-all">Show all</a>
-                    }
-                </h2>
+                <h2 class="heading-large sfa-no-margins sfa-display-inline">Applications</h2>
+                @if (filterType != VacancyApplicationsFilterTypes.All || Model.VacancyApplicationsSearch.IsCandidateSearch())
+                {
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.All, true).RouteValues)" class="font-small vacancy-filter sfa-show-all">Show all</a>
+                }
             </div>
             <div class="column-one-third">
                 @{

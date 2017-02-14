@@ -114,13 +114,11 @@
 
         <div class="grid-row sfa-filter-table-header sfa-section-border-bottom">
             <div class="column-half">
-                <h2 class="heading-large sfa-no-margins">
-                    Your @vacanciesLabel
-                    @if (filterType != VacanciesSummaryFilterTypes.All || !string.IsNullOrEmpty(searchString))
+                <h2 class="heading-large sfa-no-margins sfa-display-inline">Your @vacanciesLabel</h2>
+                @if (filterType != VacanciesSummaryFilterTypes.All || !string.IsNullOrEmpty(searchString))
                     {
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All, null).RouteValues)" class="font-small vacancy-filter sfa-show-all">Show all</a>
-                    }
-                </h2>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All, null).RouteValues)" class="font-small vacancy-filter sfa-show-all">Show all</a>
+                }
             </div>
             <div class="column-half">
                 <div class="search-bar">
