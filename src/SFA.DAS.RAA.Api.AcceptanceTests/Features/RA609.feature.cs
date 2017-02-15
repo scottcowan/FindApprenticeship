@@ -93,10 +93,9 @@ this.ScenarioSetup(scenarioInfo);
 #line 14
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 15
- testRunner.And("I see that the vacancy\'s status is Live", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I see that the vacancy\'s status is Draft", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
- testRunner.And("I see the SpecificLocation vacancy for vacancy owner relationship with id: 42 and" +
-                    " 3 positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I see created vacancy matches the posted vacancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

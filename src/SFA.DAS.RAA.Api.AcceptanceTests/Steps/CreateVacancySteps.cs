@@ -21,6 +21,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Factories;
     using FluentAssertions;
     using KellermanSoftware.CompareNetObjects;
+    using MockProviders;
     using Models;
     using Moq;
     using Newtonsoft.Json;
@@ -66,128 +67,33 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         #endregion
 
         [When(@"I POST the vacancy to the API")]
-        public void WhenIPostTheVacancyToTheApi()
+        public async Task WhenIPostTheVacancyToTheApi()
         {
-            ScenarioContext.Current.Pending();
+            VacancyMockProvider.MockVacancyOwnerRelationships();
+            VacancyMockProvider.MockEmployer();
+            VacancyMockProvider.MockProviderSite();
+            VacancyMockProvider.MockVacancyCreation();
+
+            await CreateVacancy(_vacancyBuilder.Build());
         }
 
-        [When(@"I request to create a (.*) vacancy for vacancy owner relationship with id: (.*) and (.*) positions")]
-        public async Task WhenIRequestToCreateASpecificLocationVacancyForVacancyOwnerRelationshipWithIdAndPositions(VacancyLocationType vacancyLocationType, int vacancyOwnerRelationshipId, int positions)
+        [Then(@"I see that the vacancy's status is (.*)")]
+        public void ThenISeeThatTheVacancySStatusIs(string vacancyStatusString)
         {
-            const int vorOwnedId = 42;
-            
-            var vorOwned = new Fixture().Build<VacancyOwnerRelationship>()
-                .With(vor => vor.VacancyOwnerRelationshipId, vorOwnedId)
-                .With(vor => vor.ProviderSiteID, 24)
-                .Create();
-
-            var employer = new Fixture().Build<Employer>()
-                .With(e => e.EmployerId, vorOwned.EmployerId)
-                .Create();
-
-            var providerSite = new Fixture().Build<ProviderSite>()
-                .With(ps => ps.ProviderSiteId, ProviderSiteId)
-                .Create();
-
-            var providerSiteRelationship = new Fixture().Build<ProviderSiteRelationship>()
-                .With(psr => psr.ProviderId, RaaApiUserFactory.SkillsFundingAgencyProviderId)
-                .With(psr => psr.ProviderSiteId, providerSite.ProviderSiteId)
-                .With(psr => psr.ProviderSiteRelationShipTypeId, 1)
-                .Create();
-
-            RaaMockFactory.GetMockGetOpenConnection()
-                .Setup(
-                    m =>
-                        m.Query<VacancyOwnerRelationship>(
-                            It.Is<string>(s => s.StartsWith(VacancyOwnerRelationshipRepository.SelectByIdsSql)),
-                            It.Is<object>(o => o.GetPropertyValue<int[]>("VacancyOwnerRelationshipIds")[0] == vorOwnedId),
-                            null, null))
-                .Returns(new[] {vorOwned});
-
-            RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<ProviderSite>(It.Is<string>(s => s.StartsWith(ProviderSiteRepository.SelectByProviderIdSql)), It.Is<object>(o => o.GetPropertyValue<int>("providerId") == RaaApiUserFactory.SkillsFundingAgencyProviderId), null, null))
-                .Returns(new[] { providerSite });
-
-            RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<ProviderSiteRelationship>(It.Is<string>(s => s.StartsWith(ProviderSiteRepository.SelectProviderSiteRelationshipsByProviderSiteIdsSql)), It.Is<object>(o => o.GetPropertyValue<IEnumerable<int>>("providerSiteIds").Contains(ProviderSiteId)), null, null))
-                .Returns(new[] { providerSiteRelationship });
-
-            RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<int>(ReferenceNumberRepository.GetNextVacancyReferenceNumberSql, null, null, null))
-                .Returns(new [] {450987});
-
-            RaaMockFactory.GetMockGetOpenConnection().Setup(m => m.Insert(It.IsAny<DbVacancy>(), null)).Returns(3453).Callback<DbVacancy, int?>(
-                (v, ct) =>
-                {
-                    RaaMockFactory.GetMockGetOpenConnection()
-                        .Setup(
-                            m =>
-                                m.Query<DbVacancy>(VacancyRepository.SelectByIdSql,
-                                    It.Is<object>(o => o.GetHashCode() == new {vacancyId = 3453}.GetHashCode()), null,
-                                    null))
-                        .Returns(new[] {v});
-                });
-
-            RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<Employer>(It.Is<string>(s => s.StartsWith(EmployerRepository.BasicQuery)), It.Is<object>(o => o.GetHashCode() == new {vorOwned.EmployerId }.GetHashCode()), null, null))
-                .Returns(new[] { employer });
-
-            RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<Employer>(It.Is<string>(s => s.StartsWith(EmployerRepository.BasicQuery)), It.Is<object>(o => o.GetHashCode() == new {employer.EdsUrn }.GetHashCode()), null, null))
-                .Returns(new[] { employer });
-
-            var vacancy = GetVacancy(vacancyLocationType, vacancyOwnerRelationshipId, positions);
-
-            const string createVacancyUri = UriFormats.CreateVacancyUri;
-
-            var httpClient = FeatureContext.Current.TestServer().HttpClient;
-            httpClient.SetAuthorization();
-
-            using (var response = await httpClient.PostAsync(createVacancyUri, new StringContent(JsonConvert.SerializeObject(vacancy), Encoding.UTF8, "application/json")))
-            {
-                ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseStatusCode, response.StatusCode);
-                using (var httpContent = response.Content)
-                {
-                    var content = await httpContent.ReadAsStringAsync();
-                    if (response.StatusCode != HttpStatusCode.OK)
-                    {
-                        var responseMessage = JsonConvert.DeserializeObject<ResponseMessage>(content);
-                        ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
-                    }
-
-                    var responseVacancy = JsonConvert.DeserializeObject<Vacancy>(content);
-                    if (Equals(responseVacancy, new Vacancy()))
-                    {
-                        responseVacancy = null;
-                    }
-                    ScenarioContext.Current.Add("responseVacancy", responseVacancy);
-                }
-            }
+            var vacancyStatus = (VacancyStatus)Enum.Parse(typeof(VacancyStatus), vacancyStatusString);
+            var responseVacancy = ScenarioContext.Current.Get<Vacancy>("responseVacancy");
+            responseVacancy.Status.Should().Be(vacancyStatus);
         }
 
-        private static Vacancy GetVacancy(VacancyLocationType vacancyLocationType, int vacancyOwnerRelationshipId, int positions)
-        {
-            var vacancy = new Vacancy
-            {
-                VacancyGuid = Guid.NewGuid(),
-                VacancyLocationType = vacancyLocationType,
-                VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
-                NumberOfPositions = positions,
-                ContractOwnerId = RaaApiUserFactory.SkillsFundingAgencyProviderId,
-                Status = VacancyStatus.Live
-            };
-            return vacancy;
-        }
-
-        [Then(@"I see the (.*) vacancy for vacancy owner relationship with id: (.*) and (.*) positions")]
-        public void ThenISeeTheSpecificLocationVacancyForVacancyOwnerRelationshipWithIdAndPositions(VacancyLocationType vacancyLocationType, int vacancyOwnerRelationshipId, int positions)
+        [Then(@"I see created vacancy matches the posted vacancy")]
+        public void ThenISeeCreatedVacancyMatchesThePostedVacancy()
         {
             var responseVacancy = ScenarioContext.Current.Get<Vacancy>("responseVacancy");
             responseVacancy.Should().NotBeNull();
             responseVacancy.VacancyId.Should().NotBe(0);
             responseVacancy.VacancyReferenceNumber.Should().NotBe(0);
             responseVacancy.VacancySource.Should().Be(VacancySource.Api);
-            var expectedVacancy = GetVacancy(vacancyLocationType, vacancyOwnerRelationshipId, positions);
+            var expectedVacancy = ScenarioContext.Current.Get<Vacancy>("requestVacancy");
             expectedVacancy.Status = responseVacancy.Status;
             expectedVacancy.VacancyId = responseVacancy.VacancyId;
             expectedVacancy.VacancyReferenceNumber = responseVacancy.VacancyReferenceNumber;
@@ -211,21 +117,44 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             Equals(responseVacancy, expectedVacancy).Should().BeTrue();
         }
 
-        [Then(@"I do not see the (.*) vacancy for vacancy owner relationship with id: (.*) and (.*) positions")]
-        public void ThenIDoNotSeeTheSpecificLocationVacancyForVacancyOwnerRelationshipWithIdAndPositions(VacancyLocationType vacancyLocationType, int vacancyOwnerRelationshipId, int positions)
+        [Then(@"I do not see created vacancy")]
+        public void ThenIDoNotSeeCreatedVacancy()
         {
             var responseVacancy = ScenarioContext.Current.Get<Vacancy>("responseVacancy");
             responseVacancy.Should().BeNull();
-            var expectedVacancy = GetVacancy(vacancyLocationType, vacancyOwnerRelationshipId, positions);
+            var expectedVacancy = ScenarioContext.Current.Get<Vacancy>("requestVacancy");
             Equals(responseVacancy, expectedVacancy).Should().BeFalse();
         }
 
-        [Then(@"I see that the vacancy's status is (.*)")]
-        public void ThenISeeThatTheVacancySStatusIs(string vacancyStatusString)
+        private static async Task CreateVacancy(Vacancy vacancy)
         {
-            var vacancyStatus = (VacancyStatus) Enum.Parse(typeof(VacancyStatus), vacancyStatusString);
-            var responseVacancy = ScenarioContext.Current.Get<Vacancy>("responseVacancy");
-            responseVacancy.Status.Should().Be(vacancyStatus);
+            const string createVacancyUri = UriFormats.CreateVacancyUri;
+
+            var httpClient = FeatureContext.Current.TestServer().HttpClient;
+            httpClient.SetAuthorization();
+
+            ScenarioContext.Current.Add("requestVacancy", vacancy);
+
+            using (var response = await httpClient.PostAsync(createVacancyUri, new StringContent(JsonConvert.SerializeObject(vacancy), Encoding.UTF8, "application/json")))
+            {
+                ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseStatusCode, response.StatusCode);
+                using (var httpContent = response.Content)
+                {
+                    var content = await httpContent.ReadAsStringAsync();
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        var responseMessage = JsonConvert.DeserializeObject<ResponseMessage>(content);
+                        ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
+                    }
+
+                    var responseVacancy = JsonConvert.DeserializeObject<Vacancy>(content);
+                    if (Equals(responseVacancy, new Vacancy()))
+                    {
+                        responseVacancy = null;
+                    }
+                    ScenarioContext.Current.Add("responseVacancy", responseVacancy);
+                }
+            }
         }
     }
 }

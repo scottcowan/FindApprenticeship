@@ -30,26 +30,38 @@ Scenario: Link an employer to a provider site
 
 @RA607
 Scenario: Provider Create a vacancy at the employer's location
+	Given I am creating a vacancy
 	When I authorize my request with a Provider API key
-	And I request to create a SpecificLocation vacancy for vacancy owner relationship with id: 42 and 3 positions
+	And I specify a location type of SpecificLocation
+	And I specify vacancy owner relationship with id: 42
+	And I specify the vacancy has 3 positions
+	And I POST the vacancy to the API
 	Then The response status is: OK
 	And I see that the vacancy's status is Draft
-	And I see the SpecificLocation vacancy for vacancy owner relationship with id: 42 and 3 positions
+	And I see created vacancy matches the posted vacancy
 
 @RA607
 Scenario: Create a vacancy with none of the mandatory fields
+	Given I am creating a vacancy
 	When I authorize my request with a Provider API key
-	And I request to create a Unknown vacancy for vacancy owner relationship with id: 0 and 0 positions
+	And I specify a location type of Unknown
+	And I specify vacancy owner relationship with id: 0
+	And I specify the vacancy has 0 positions
+	And I POST the vacancy to the API
 	Then The response status is: BadRequest
 	And The validation errors contain:
 		| Property                   | Error                                                                                                                                   |
 		| VacancyOwnerRelationshipId | Please supply a valid vacancy owner relationship id. This must exist and be associated with a provider site your API key has access to. |
-	And I do not see the Unknown vacancy for vacancy owner relationship with id: 0 and 0 positions
+	And I do not see created vacancy
 
 @RA607
 Scenario: QA Create a vacancy at the employer's location
+	Given I am creating a vacancy
 	When I authorize my request with an Agency API key
-	And I request to create a SpecificLocation vacancy for vacancy owner relationship with id: 42 and 3 positions
+	And I specify a location type of SpecificLocation
+	And I specify vacancy owner relationship with id: 42
+	And I specify the vacancy has 3 positions
+	And I POST the vacancy to the API
 	Then The response status is: OK
 	And I see that the vacancy's status is Live
-	And I see the SpecificLocation vacancy for vacancy owner relationship with id: 42 and 3 positions
+	And I see created vacancy matches the posted vacancy

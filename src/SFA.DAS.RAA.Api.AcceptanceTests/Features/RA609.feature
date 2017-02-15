@@ -12,5 +12,5 @@ Scenario: Basic vacancy details text
 	And I specify the vacancy has 3 positions
 	And I POST the vacancy to the API
 	Then The response status is: OK
-	And I see that the vacancy's status is Live
-	And I see the SpecificLocation vacancy for vacancy owner relationship with id: 42 and 3 positions
+	And I see that the vacancy's status is Draft
+	And I see created vacancy matches the posted vacancy

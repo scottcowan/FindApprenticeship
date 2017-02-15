@@ -21,7 +21,7 @@
         private const int ProviderSiteId = 24;
         private const int EmployerId = 77;
         
-        public void MockVacancyOwnerRelationships()
+        public static void MockVacancyOwnerRelationships()
         {
             var vorOwned = new Fixture().Build<VacancyOwnerRelationship>()
                 .With(vor => vor.VacancyOwnerRelationshipId, VorOwnedId)
@@ -39,7 +39,7 @@
                 .Returns(new[] { vorOwned });
         }
 
-        public void MockEmployer()
+        public static void MockEmployer()
         {
             var employer = new Fixture().Build<Employer>()
                 .With(e => e.EmployerId, EmployerId)
@@ -54,7 +54,7 @@
                 .Returns(new[] { employer });
         }
 
-        public void MockProviderSite(int providerSiteId)
+        public static void MockProviderSite()
         {
             var providerSite = new Fixture().Build<ProviderSite>()
                 .With(ps => ps.ProviderSiteId, ProviderSiteId)
@@ -75,7 +75,7 @@
                 .Returns(new[] { providerSiteRelationship });
         }
 
-        public void MockVacancyCreation()
+        public static void MockVacancyCreation()
         {
             RaaMockFactory.GetMockGetOpenConnection().Setup(
                 m => m.Query<int>(ReferenceNumberRepository.GetNextVacancyReferenceNumberSql, null, null, null))
