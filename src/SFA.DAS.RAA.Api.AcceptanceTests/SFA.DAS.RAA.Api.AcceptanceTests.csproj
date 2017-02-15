@@ -213,6 +213,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RA607.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\RA609.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RA609.feature</DependentUpon>
+    </Compile>
     <Compile Include="Steps\CreateVacancySteps.cs" />
     <Compile Include="Steps\GetRegionsSteps.cs" />
     <Compile Include="Steps\GetLocalAuthoritySteps.cs" />
@@ -297,6 +302,10 @@
     <None Include="Features\RA607.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RA607.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\RA609.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>RA609.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
