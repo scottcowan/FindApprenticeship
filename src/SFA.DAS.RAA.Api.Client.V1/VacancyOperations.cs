@@ -417,7 +417,17 @@ namespace SFA.DAS.RAA.Api.Client.V1
             return _result;
         }
 
+        /// <summary>
+        /// CURRENTLY INCOMPLETE! DO NOT USE YET!
+        /// Endpoint for creating a vacancy. Implements the full rule set for creating
+        /// a valid vacancy but also allows you to create a partial vacancy that can
+        /// be completed via the UI or API.
+        /// Consult the model documentation for the list of required fields and rules.
+        /// Please note that all vacancies created through this endpoint will have a
+        /// Draft status. They need to be submitted separately.
+        /// </summary>
         /// <param name='vacancy'>
+        /// The vacancy or partial vacancy to create
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -460,7 +470,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "vacancies").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "vacancy").ToString();
             // Create HTTP transport objects
             System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
             System.Net.Http.HttpResponseMessage _httpResponse = null;

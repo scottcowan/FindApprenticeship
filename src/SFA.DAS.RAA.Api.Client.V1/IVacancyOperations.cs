@@ -59,7 +59,18 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// Thrown when unable to deserialize the response
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<Vacancy>> GetByGuidWithHttpMessagesAsync(System.Guid guid, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// CURRENTLY INCOMPLETE! DO NOT USE YET!
+        /// Endpoint for creating a vacancy. Implements the full rule set for
+        /// creating a valid vacancy but also allows you to create a partial
+        /// vacancy that can be completed via the UI or API.
+        /// Consult the model documentation for the list of required fields
+        /// and rules.
+        /// Please note that all vacancies created through this endpoint will
+        /// have a Draft status. They need to be submitted separately.
+        /// </summary>
         /// <param name='vacancy'>
+        /// The vacancy or partial vacancy to create
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

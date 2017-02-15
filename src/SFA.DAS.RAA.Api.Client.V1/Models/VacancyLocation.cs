@@ -6,6 +6,11 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// Properties for a location of a vacancy. Used when creating a vacancy
+    /// with multiple locations or where the location is different to the
+    /// employer's location
+    /// </summary>
     public partial class VacancyLocation
     {
         /// <summary>
@@ -16,6 +21,17 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// Initializes a new instance of the VacancyLocation class.
         /// </summary>
+        /// <param name="vacancyLocationId">The primary identifier of this
+        /// vacancy location. Automatically generated when vacancy is
+        /// created</param>
+        /// <param name="vacancyId">The primary identifier of the vacancy this
+        /// location is for</param>
+        /// <param name="address">The address of this location</param>
+        /// <param name="numberOfPositions">The number of positions available
+        /// at this location</param>
+        /// <param name="employersWebsite">Only used for offline vacancies. If
+        /// set, this is the URL of the website a candidate can apply for
+        /// this vacancy on</param>
         public VacancyLocation(int? vacancyLocationId = default(int?), int? vacancyId = default(int?), PostalAddress address = default(PostalAddress), int? numberOfPositions = default(int?), string employersWebsite = default(string))
         {
             VacancyLocationId = vacancyLocationId;
@@ -26,26 +42,34 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
+        /// Gets or sets the primary identifier of this vacancy location.
+        /// Automatically generated when vacancy is created
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyLocationId")]
         public int? VacancyLocationId { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary identifier of the vacancy this location
+        /// is for
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyId")]
         public int? VacancyId { get; set; }
 
         /// <summary>
+        /// Gets or sets the address of this location
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Address")]
         public PostalAddress Address { get; set; }
 
         /// <summary>
+        /// Gets or sets the number of positions available at this location
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "NumberOfPositions")]
         public int? NumberOfPositions { get; set; }
 
         /// <summary>
+        /// Gets or sets only used for offline vacancies. If set, this is the
+        /// URL of the website a candidate can apply for this vacancy on
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "EmployersWebsite")]
         public string EmployersWebsite { get; set; }

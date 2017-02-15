@@ -6,6 +6,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// The full information of a vacancy summary
+    /// </summary>
     public partial class Vacancy
     {
         /// <summary>
@@ -16,32 +19,292 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// Initializes a new instance of the Vacancy class.
         /// </summary>
-        /// <param name="offlineVacancyType">Possible values include:
+        /// <param name="additionalLocationInformation">(optional) If the
+        /// vacancy has multiple locations, this property may contain
+        /// additional information about those locations</param>
+        /// <param name="additionalLocationInformationComment">QA comments
+        /// regarding the supplied value for
+        /// AdditionalLocationInformation</param>
+        /// <param name="apprenticeshipLevelComment">QA comments regarding the
+        /// supplied value for ApprenticeshipLevel</param>
+        /// <param name="closingDateComment">QA comments regarding the
+        /// supplied value for ClosingDate</param>
+        /// <param name="contactDetailsComment">QA comments regarding the
+        /// supplied values for ContactEmail, ContactName and
+        /// ContactNumber</param>
+        /// <param name="contactEmail">A contact email for candidates to
+        /// request more information about the vacancy</param>
+        /// <param name="contactName">A contact name for candidates to request
+        /// more information about the vacancy</param>
+        /// <param name="contactNumber">A contact number for candidates to
+        /// request more information about the vacancy</param>
+        /// <param name="createdByProviderUsername">The username of the user
+        /// account or API account used to create this vacancy</param>
+        /// <param name="desiredQualifications">The qualifications the
+        /// employer is looking for in prospective candidates. Not present
+        /// for traineeships</param>
+        /// <param name="desiredQualificationsComment">QA comments regarding
+        /// the supplied value for DesiredQualifications</param>
+        /// <param name="desiredSkills">The skill set the employer is looking
+        /// for prospective candidates to demonstrate</param>
+        /// <param name="desiredSkillsComment">QA comments regarding the
+        /// supplied value for DesiredSkills</param>
+        /// <param name="durationComment">QA comments regarding the supplied
+        /// value for Duration</param>
+        /// <param name="editedInRaa">For internal use only. Used to determine
+        /// if this is a legacy vacancy or not</param>
+        /// <param name="employerDescription">The description of the
+        /// employer</param>
+        /// <param name="employerDescriptionComment">QA comments regarding the
+        /// supplied value for EmployerDescription</param>
+        /// <param name="employerWebsiteUrl">A link to the employer's
+        /// website</param>
+        /// <param name="employerWebsiteUrlComment">QA comments regarding the
+        /// supplied value for EmployerWebsiteUrl</param>
+        /// <param name="firstQuestion">The first screening question for
+        /// candidates</param>
+        /// <param name="firstQuestionComment">QA comments regarding the
+        /// supplied value for FirstQuestion</param>
+        /// <param name="frameworkCodeNameComment">QA comments regarding the
+        /// supplied value for FrameworkCodeName</param>
+        /// <param name="futureProspects">The likely career progression,
+        /// skills or qualifications a candidate will gain in this
+        /// vacancy</param>
+        /// <param name="futureProspectsComment">QA comments regarding the
+        /// supplied value for FutureProspects</param>
+        /// <param name="lastEditedById">The primary identifier of the user
+        /// account who last edited this vacancy</param>
+        /// <param name="locationAddressesComment">QA comments regarding the
+        /// supplied values for VacancyLocations</param>
+        /// <param name="longDescription">The full, detailed description of
+        /// the vacancy</param>
+        /// <param name="longDescriptionComment">QA comments regarding the
+        /// supplied value for LongDescription</param>
+        /// <param name="numberOfPositionsComment">QA comments regarding the
+        /// supplied value for NumberOfPositions</param>
+        /// <param name="offlineApplicationInstructions">If applications for
+        /// this vacancy are made via an external web site, this property
+        /// must contain instructions on how to apply</param>
+        /// <param name="offlineApplicationInstructionsComment">QA comments
+        /// regarding the supplied value for
+        /// OfflineApplicationInstructions</param>
+        /// <param name="offlineApplicationUrl">If applications for this
+        /// vacancy are made via an external web site, this property must
+        /// contain the web site URL</param>
+        /// <param name="offlineApplicationUrlComment">QA comments regarding
+        /// the supplied value for OfflineApplicationUrl</param>
+        /// <param name="offlineVacancyType">Defines the type of offline
+        /// vacancy. Unknown means that this is not an offline vacancy and
+        /// Single and Multiple are for SpecificLocation and
+        /// MultipleLocations location types. Possible values include:
         /// 'Unknown', 'SingleUrl', 'MultiUrl'</param>
-        /// <param name="vacancySource">Possible values include: 'Unknown',
-        /// 'Av', 'LegacyApi', 'Raa', 'Api'</param>
-        /// <param name="frameworkStatus">Possible values include: 'Active',
-        /// 'Ceased', 'PendingClosure'</param>
-        /// <param name="standardStatus">Possible values include: 'Active',
-        /// 'Ceased', 'PendingClosure'</param>
-        /// <param name="durationType">Possible values include: 'Unknown',
-        /// 'Weeks', 'Months', 'Years'</param>
-        /// <param name="trainingType">Possible values include: 'Unknown',
-        /// 'Frameworks', 'Standards', 'Sectors'</param>
-        /// <param name="apprenticeshipLevel">Possible values include:
+        /// <param name="otherInformation">Only present if the vacancy was
+        /// created in the legacy system or via the legacy API. Contains any
+        /// additional information the employer deems pertinent to the
+        /// vacancy. Will be ignored if passed to the API</param>
+        /// <param name="otherInformationComment">QA comments regarding the
+        /// supplied value for OtherInformation</param>
+        /// <param name="personalQualities">The soft skills and personal
+        /// qualities the employer is looking for in prospective
+        /// candidates</param>
+        /// <param name="personalQualitiesComment">QA comments regarding the
+        /// supplied value for PersonalQualities</param>
+        /// <param name="possibleStartDateComment">QA comments regarding the
+        /// supplied value for PossibleStartDate</param>
+        /// <param name="secondQuestion">The second screening question for
+        /// candidates</param>
+        /// <param name="secondQuestionComment">QA comments regarding the
+        /// supplied value for SecondQuestion</param>
+        /// <param name="sectorCodeNameComment">QA comments regarding the
+        /// supplied value for SectorCodeName</param>
+        /// <param name="shortDescriptionComment">QA comments regarding the
+        /// supplied value for ShortDescription</param>
+        /// <param name="standardIdComment">QA comments regarding the supplied
+        /// value for StandardId</param>
+        /// <param name="thingsToConsider">Any information that the employer
+        /// feels a candidate should be mindful of when applying for this
+        /// vacancy</param>
+        /// <param name="thingsToConsiderComment">QA comments regarding the
+        /// supplied value for ThingsToConsider</param>
+        /// <param name="titleComment">QA comments regarding the supplied
+        /// value for the Title</param>
+        /// <param name="trainingProvided">The training that will be provided
+        /// by the training provider associated with this vacancy</param>
+        /// <param name="trainingProvidedComment">QA comments regarding the
+        /// supplied value for TrainingProvided</param>
+        /// <param name="vacancySource">For internal use only. Specifies the
+        /// source of the vacancy. Always set to API when created via the
+        /// API. Possible values include: 'Unknown', 'Av', 'LegacyApi',
+        /// 'Raa', 'Api'</param>
+        /// <param name="wageComment">QA comments regarding the supplied value
+        /// for Wage</param>
+        /// <param name="workingWeekComment">QA comments regarding the
+        /// supplied value for WorkingWeek</param>
+        /// <param name="anonymousEmployerDescriptionComment">QA comments
+        /// regarding the supplied value for
+        /// AnonymousEmployerDescription</param>
+        /// <param name="anonymousEmployerReasonComment">QA comments regarding
+        /// the supplied value for AnonymousEmployerReason</param>
+        /// <param name="anonymousAboutTheEmployerComment">QA comments
+        /// regarding the supplied value for AnonymousAboutTheEmployer</param>
+        /// <param name="frameworkStatus">The status of the specified
+        /// framework. Possible values include: 'Active', 'Ceased',
+        /// 'PendingClosure'</param>
+        /// <param name="standardStatus">The status of the specified standard.
+        /// Possible values include: 'Active', 'Ceased',
+        /// 'PendingClosure'</param>
+        /// <param name="createdDateTime">The date this vacancy was created.
+        /// Will be ignored if passed to the API</param>
+        /// <param name="vacancyLocations">List of locations for this vacancy.
+        /// Only supply if creating a MultipleLocations location
+        /// vacancy</param>
+        /// <param name="vacancyId">The primary identifier for the vacancy.
+        /// Automatically generated when vacancy is created</param>
+        /// <param name="vacancyOwnerRelationshipId">The primary identifier of
+        /// the linking object between a provider site and an employer. This
+        /// must exist and be linked to a provider site owned by the provider
+        /// identified by your API key</param>
+        /// <param name="vacancyReferenceNumber">The secondary reference
+        /// number for the vacancy. The numerical part of the vacancy
+        /// reference e.g. 123456 for VAC000123456. Automatically generated
+        /// when vacancy is created</param>
+        /// <param name="vacancyGuid">The secondary GUID identifier for the
+        /// vacancy. Must be supplied when creating the vacancy and must be
+        /// unique per vacancy</param>
+        /// <param name="title">The main heading for the vacancy e.g. Retail
+        /// Apprentice</param>
+        /// <param name="shortDescription">A short paragraph of text giving a
+        /// brief overview of the role</param>
+        /// <param name="workingWeek">A description of the working week e.g.
+        /// 9-5 Monday to Friday with occasional weekend work</param>
+        /// <param name="expectedDuration">The text based expected duration of
+        /// a vacancy. Only set if the vacancy originated in the legacy
+        /// system or the legacy API and will be ignored if passed to the
+        /// REST API</param>
+        /// <param name="durationType">Clarification of the Duration property
+        /// specifying weeks, months or years. Possible values include:
+        /// 'Unknown', 'Weeks', 'Months', 'Years'</param>
+        /// <param name="duration">The estimated duration of the
+        /// vacancy</param>
+        /// <param name="closingDate">The closing date for applications. Must
+        /// be in the future</param>
+        /// <param name="possibleStartDate">The likely start date for the
+        /// vacancy. Must be in the future and after the closing date</param>
+        /// <param name="offlineVacancy">If true, applications for this
+        /// vacancy will be made on an external recruitment system rather
+        /// than on Find an Apprenticeship/Traineeship. OfflineApplicationUrl
+        /// must also be supplied if this field is set to true</param>
+        /// <param name="noOfOfflineApplicants">Provides the click count
+        /// logged by candidates clicking on the offline application link.
+        /// Will be ignored if passed to the API</param>
+        /// <param name="dateSubmitted">The date this vacancy was last
+        /// submitted to the QA process. Will be ignored if passed to the
+        /// API</param>
+        /// <param name="dateFirstSubmitted">The date this vacancy was first
+        /// submitted to the QA process. Will be ignored if passed to the
+        /// API</param>
+        /// <param name="dateStartedToQA">The date this vacancy was last
+        /// reviewed by a member of the QA team. Will be ignored if passed to
+        /// the API</param>
+        /// <param name="qAUserName">The username of the member of the QA team
+        /// who last reviewed this vacancy. Will be ignored if passed to the
+        /// API</param>
+        /// <param name="dateQAApproved">The date this vacancy went live. Will
+        /// be ignored if passed to the API</param>
+        /// <param name="submissionCount">The number of times this vacancy has
+        /// been submitted to QA for review</param>
+        /// <param name="vacancyManagerId">The primary identifier of the
+        /// provider site that manages the vacancy. This includes managing
+        /// applications for this vacancy. Always set to the id of the
+        /// provider site specified in the supplied vacancy owner
+        /// relationship</param>
+        /// <param name="deliveryOrganisationId">The primary identifier of the
+        /// provider site that delivers the candidate training for the
+        /// vacancy. This includes managing applications for this vacancy.
+        /// Always set to the id of the provider site specified in the
+        /// supplied vacancy owner relationship</param>
+        /// <param name="parentVacancyId">Set when a multi location vacancy is
+        /// approved. The primary identifier of the original parent vacancy
+        /// the child location vacancies was cloned from. Will be ignored if
+        /// passed to the API</param>
+        /// <param name="trainingType">Specifies the classification system of
+        /// the training the apprentice will receive from the
+        /// apprenticeship/traineeship.
+        /// Either via a framework or standard if the vacancy is an
+        /// apprenticeship or a sector for traineeships. Possible values
+        /// include: 'Unknown', 'Frameworks', 'Standards', 'Sectors'</param>
+        /// <param name="apprenticeshipLevel">The level of the apprenticeship.
+        /// Related to the TrainingType and the education level the
+        /// apprentice will gain or requires. Can only be specified for
+        /// Frameworks and for Apprenticeships. Possible values include:
         /// 'Unknown', 'Intermediate', 'Advanced', 'Higher',
         /// 'FoundationDegree', 'Degree', 'Masters', 'Traineeship'</param>
-        /// <param name="status">Possible values include: 'Unknown', 'Draft',
-        /// 'Live', 'Referred', 'Deleted', 'Submitted', 'Closed',
-        /// 'Withdrawn', 'Completed', 'PostedInError', 'ReservedForQA'</param>
-        /// <param name="vacancyType">Possible values include: 'Unknown',
-        /// 'Apprenticeship', 'Traineeship'</param>
-        /// <param name="regionalTeam">Possible values include: 'Other',
-        /// 'North', 'NorthWest', 'YorkshireAndHumberside', 'EastMidlands',
-        /// 'WestMidlands', 'EastAnglia', 'SouthEast', 'SouthWest'</param>
-        /// <param name="vacancyLocationType">Possible values include:
-        /// 'Unknown', 'SpecificLocation', 'MultipleLocations',
-        /// 'Nationwide'</param>
+        /// <param name="frameworkCodeName">The code name of the framework the
+        /// apprenticeship is operating under</param>
+        /// <param name="standardId">The primary id of the standard the
+        /// apprenticeship is operating under</param>
+        /// <param name="sectorCodeName">The code name of the sector the
+        /// apprenticeship is operating under</param>
+        /// <param name="status">The status of the vacancy. Will always be set
+        /// to Draft when creating a vacancy. Possible values include:
+        /// 'Unknown', 'Draft', 'Live', 'Referred', 'Deleted', 'Submitted',
+        /// 'Closed', 'Withdrawn', 'Completed', 'PostedInError',
+        /// 'ReservedForQA'</param>
+        /// <param name="employerAnonymousName">The displayed name the
+        /// employer would prefer to be displayed on the vacancy</param>
+        /// <param name="employerAnonymousReason">The reason the employer has
+        /// requested a different name to be displayed on the vacancy</param>
+        /// <param name="isAnonymousEmployer">Set to true if the employer has
+        /// requested a different name displayed on the vacancy other than
+        /// their own</param>
+        /// <param name="anonymousAboutTheEmployer">The description the
+        /// employer would prefer to be displayed on the vacancy</param>
+        /// <param name="numberOfPositions">The number of positions available
+        /// for this vacancy</param>
+        /// <param name="vacancyType">The type of a vacancy. Possible values
+        /// include: 'Unknown', 'Apprenticeship', 'Traineeship'</param>
+        /// <param name="updatedDateTime">The last time this vacancy was
+        /// updated. Will be ignored if passed to the API</param>
+        /// <param name="address">The address of the vacancy. If the
+        /// VacancyLocationType is SpecificLocation or Nationwide this will
+        /// be set to the employer's address. Will be ignored if passed to
+        /// the API</param>
+        /// <param name="contractOwnerId">The primary identifier of the
+        /// provider who has the funding contract with the SFA</param>
+        /// <param name="originalContractOwnerId">The primary identifier of
+        /// the original provider who has the funding contract with the
+        /// SFA</param>
+        /// <param name="regionalTeam">For QA usage. Specifies which regional
+        /// QA team will review this vacancy. Will be ignored if passed to
+        /// the API. Possible values include: 'Other', 'North', 'NorthWest',
+        /// 'YorkshireAndHumberside', 'EastMidlands', 'WestMidlands',
+        /// 'EastAnglia', 'SouthEast', 'SouthWest'</param>
+        /// <param name="vacancyLocationType">(Required) The type of address
+        /// of the vacancy. Indicates whether it's the employer's address or
+        /// somewhere different. Possible values include: 'Unknown',
+        /// 'SpecificLocation', 'MultipleLocations', 'Nationwide'</param>
+        /// <param name="employerId">The primary identifier of the vacancy's
+        /// employer. Will be ignored if passed to the API</param>
+        /// <param name="employerName">The employer's trading name. Will be
+        /// ignored if passed to the API</param>
+        /// <param name="employerLocation">The employer's location (town or
+        /// postcode). Will be ignored if passed to the API</param>
+        /// <param name="newApplicationCount">The count of new applications
+        /// submitted by candidates. A new application is one that hasn't
+        /// been reviewed in Recruit an Apprentice</param>
+        /// <param name="applicantCount">The total account of all applications
+        /// submitted by candidates</param>
+        /// <param name="providerTradingName">The training provider's trading
+        /// name. Will be ignored if passed to the API</param>
+        /// <param name="createdDate">The date this vacancy was created. Will
+        /// be ignored if passed to the API</param>
+        /// <param name="wage">Object detailing the wage information for the
+        /// vacancy</param>
+        /// <param name="isMultiLocation">Set to true if there is more than
+        /// one vacancy location associated with this vacancy</param>
+        /// <param name="isEmployerPositiveAboutDisability">If true, the
+        /// employer actively encourages candidates with a disability to
+        /// apply. Will be ignored if passed to the API</param>
         public Vacancy(string additionalLocationInformation = default(string), string additionalLocationInformationComment = default(string), string apprenticeshipLevelComment = default(string), string closingDateComment = default(string), string contactDetailsComment = default(string), string contactEmail = default(string), string contactName = default(string), string contactNumber = default(string), string createdByProviderUsername = default(string), string desiredQualifications = default(string), string desiredQualificationsComment = default(string), string desiredSkills = default(string), string desiredSkillsComment = default(string), string durationComment = default(string), bool? editedInRaa = default(bool?), string employerDescription = default(string), string employerDescriptionComment = default(string), string employerWebsiteUrl = default(string), string employerWebsiteUrlComment = default(string), string firstQuestion = default(string), string firstQuestionComment = default(string), string frameworkCodeNameComment = default(string), string futureProspects = default(string), string futureProspectsComment = default(string), int? lastEditedById = default(int?), string locationAddressesComment = default(string), string longDescription = default(string), string longDescriptionComment = default(string), string numberOfPositionsComment = default(string), string offlineApplicationInstructions = default(string), string offlineApplicationInstructionsComment = default(string), string offlineApplicationUrl = default(string), string offlineApplicationUrlComment = default(string), string offlineVacancyType = default(string), string otherInformation = default(string), string otherInformationComment = default(string), string personalQualities = default(string), string personalQualitiesComment = default(string), string possibleStartDateComment = default(string), string secondQuestion = default(string), string secondQuestionComment = default(string), string sectorCodeNameComment = default(string), string shortDescriptionComment = default(string), string standardIdComment = default(string), string thingsToConsider = default(string), string thingsToConsiderComment = default(string), string titleComment = default(string), string trainingProvided = default(string), string trainingProvidedComment = default(string), string vacancySource = default(string), string wageComment = default(string), string workingWeekComment = default(string), string anonymousEmployerDescriptionComment = default(string), string anonymousEmployerReasonComment = default(string), string anonymousAboutTheEmployerComment = default(string), string frameworkStatus = default(string), string standardStatus = default(string), System.DateTime? createdDateTime = default(System.DateTime?), System.Collections.Generic.IList<VacancyLocation> vacancyLocations = default(System.Collections.Generic.IList<VacancyLocation>), int? vacancyId = default(int?), int? vacancyOwnerRelationshipId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), string title = default(string), string shortDescription = default(string), string workingWeek = default(string), string expectedDuration = default(string), string durationType = default(string), int? duration = default(int?), System.DateTime? closingDate = default(System.DateTime?), System.DateTime? possibleStartDate = default(System.DateTime?), bool? offlineVacancy = default(bool?), int? noOfOfflineApplicants = default(int?), System.DateTime? dateSubmitted = default(System.DateTime?), System.DateTime? dateFirstSubmitted = default(System.DateTime?), System.DateTime? dateStartedToQA = default(System.DateTime?), string qAUserName = default(string), System.DateTime? dateQAApproved = default(System.DateTime?), int? submissionCount = default(int?), int? vacancyManagerId = default(int?), int? deliveryOrganisationId = default(int?), int? parentVacancyId = default(int?), string trainingType = default(string), string apprenticeshipLevel = default(string), string frameworkCodeName = default(string), int? standardId = default(int?), string sectorCodeName = default(string), string status = default(string), string employerAnonymousName = default(string), string employerAnonymousReason = default(string), bool? isAnonymousEmployer = default(bool?), string anonymousAboutTheEmployer = default(string), int? numberOfPositions = default(int?), string vacancyType = default(string), System.DateTime? updatedDateTime = default(System.DateTime?), PostalAddress address = default(PostalAddress), int? contractOwnerId = default(int?), int? originalContractOwnerId = default(int?), string regionalTeam = default(string), string vacancyLocationType = default(string), int? employerId = default(int?), string employerName = default(string), string employerLocation = default(string), int? newApplicationCount = default(int?), int? applicantCount = default(int?), string providerTradingName = default(string), System.DateTime? createdDate = default(System.DateTime?), Wage wage = default(Wage), bool? isMultiLocation = default(bool?), bool? isEmployerPositiveAboutDisability = default(bool?))
         {
             AdditionalLocationInformation = additionalLocationInformation;
@@ -157,576 +420,800 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
+        /// Gets or sets (optional) If the vacancy has multiple locations,
+        /// this property may contain additional information about those
+        /// locations
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AdditionalLocationInformation")]
         public string AdditionalLocationInformation { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// AdditionalLocationInformation
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AdditionalLocationInformationComment")]
         public string AdditionalLocationInformationComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// ApprenticeshipLevel
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ApprenticeshipLevelComment")]
         public string ApprenticeshipLevelComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// ClosingDate
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ClosingDateComment")]
         public string ClosingDateComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied values for
+        /// ContactEmail, ContactName and ContactNumber
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ContactDetailsComment")]
         public string ContactDetailsComment { get; set; }
 
         /// <summary>
+        /// Gets or sets a contact email for candidates to request more
+        /// information about the vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ContactEmail")]
         public string ContactEmail { get; set; }
 
         /// <summary>
+        /// Gets or sets a contact name for candidates to request more
+        /// information about the vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ContactName")]
         public string ContactName { get; set; }
 
         /// <summary>
+        /// Gets or sets a contact number for candidates to request more
+        /// information about the vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ContactNumber")]
         public string ContactNumber { get; set; }
 
         /// <summary>
+        /// Gets or sets the username of the user account or API account used
+        /// to create this vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CreatedByProviderUsername")]
         public string CreatedByProviderUsername { get; set; }
 
         /// <summary>
+        /// Gets or sets the qualifications the employer is looking for in
+        /// prospective candidates. Not present for traineeships
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "DesiredQualifications")]
         public string DesiredQualifications { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// DesiredQualifications
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "DesiredQualificationsComment")]
         public string DesiredQualificationsComment { get; set; }
 
         /// <summary>
+        /// Gets or sets the skill set the employer is looking for prospective
+        /// candidates to demonstrate
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "DesiredSkills")]
         public string DesiredSkills { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// DesiredSkills
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "DesiredSkillsComment")]
         public string DesiredSkillsComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for Duration
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "DurationComment")]
         public string DurationComment { get; set; }
 
         /// <summary>
+        /// Gets or sets for internal use only. Used to determine if this is a
+        /// legacy vacancy or not
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "EditedInRaa")]
         public bool? EditedInRaa { get; set; }
 
         /// <summary>
+        /// Gets or sets the description of the employer
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "EmployerDescription")]
         public string EmployerDescription { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// EmployerDescription
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "EmployerDescriptionComment")]
         public string EmployerDescriptionComment { get; set; }
 
         /// <summary>
+        /// Gets or sets a link to the employer's website
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "EmployerWebsiteUrl")]
         public string EmployerWebsiteUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// EmployerWebsiteUrl
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "EmployerWebsiteUrlComment")]
         public string EmployerWebsiteUrlComment { get; set; }
 
         /// <summary>
+        /// Gets or sets the first screening question for candidates
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "FirstQuestion")]
         public string FirstQuestion { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// FirstQuestion
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "FirstQuestionComment")]
         public string FirstQuestionComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// FrameworkCodeName
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "FrameworkCodeNameComment")]
         public string FrameworkCodeNameComment { get; set; }
 
         /// <summary>
+        /// Gets or sets the likely career progression, skills or
+        /// qualifications a candidate will gain in this vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "FutureProspects")]
         public string FutureProspects { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// FutureProspects
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "FutureProspectsComment")]
         public string FutureProspectsComment { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary identifier of the user account who last
+        /// edited this vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "LastEditedById")]
         public int? LastEditedById { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied values for
+        /// VacancyLocations
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "LocationAddressesComment")]
         public string LocationAddressesComment { get; set; }
 
         /// <summary>
+        /// Gets or sets the full, detailed description of the vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "LongDescription")]
         public string LongDescription { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// LongDescription
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "LongDescriptionComment")]
         public string LongDescriptionComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// NumberOfPositions
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "NumberOfPositionsComment")]
         public string NumberOfPositionsComment { get; set; }
 
         /// <summary>
+        /// Gets or sets if applications for this vacancy are made via an
+        /// external web site, this property must contain instructions on how
+        /// to apply
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "OfflineApplicationInstructions")]
         public string OfflineApplicationInstructions { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// OfflineApplicationInstructions
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "OfflineApplicationInstructionsComment")]
         public string OfflineApplicationInstructionsComment { get; set; }
 
         /// <summary>
+        /// Gets or sets if applications for this vacancy are made via an
+        /// external web site, this property must contain the web site URL
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "OfflineApplicationUrl")]
         public string OfflineApplicationUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// OfflineApplicationUrl
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "OfflineApplicationUrlComment")]
         public string OfflineApplicationUrlComment { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Unknown', 'SingleUrl',
-        /// 'MultiUrl'
+        /// Gets or sets defines the type of offline vacancy. Unknown means
+        /// that this is not an offline vacancy and Single and Multiple are
+        /// for SpecificLocation and MultipleLocations location types.
+        /// Possible values include: 'Unknown', 'SingleUrl', 'MultiUrl'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "OfflineVacancyType")]
         public string OfflineVacancyType { get; set; }
 
         /// <summary>
+        /// Gets or sets only present if the vacancy was created in the legacy
+        /// system or via the legacy API. Contains any additional information
+        /// the employer deems pertinent to the vacancy. Will be ignored if
+        /// passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "OtherInformation")]
         public string OtherInformation { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// OtherInformation
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "OtherInformationComment")]
         public string OtherInformationComment { get; set; }
 
         /// <summary>
+        /// Gets or sets the soft skills and personal qualities the employer
+        /// is looking for in prospective candidates
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "PersonalQualities")]
         public string PersonalQualities { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// PersonalQualities
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "PersonalQualitiesComment")]
         public string PersonalQualitiesComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// PossibleStartDate
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "PossibleStartDateComment")]
         public string PossibleStartDateComment { get; set; }
 
         /// <summary>
+        /// Gets or sets the second screening question for candidates
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "SecondQuestion")]
         public string SecondQuestion { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// SecondQuestion
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "SecondQuestionComment")]
         public string SecondQuestionComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// SectorCodeName
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "SectorCodeNameComment")]
         public string SectorCodeNameComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// ShortDescription
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ShortDescriptionComment")]
         public string ShortDescriptionComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// StandardId
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "StandardIdComment")]
         public string StandardIdComment { get; set; }
 
         /// <summary>
+        /// Gets or sets any information that the employer feels a candidate
+        /// should be mindful of when applying for this vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ThingsToConsider")]
         public string ThingsToConsider { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// ThingsToConsider
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ThingsToConsiderComment")]
         public string ThingsToConsiderComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for the Title
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "TitleComment")]
         public string TitleComment { get; set; }
 
         /// <summary>
+        /// Gets or sets the training that will be provided by the training
+        /// provider associated with this vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "TrainingProvided")]
         public string TrainingProvided { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// TrainingProvided
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "TrainingProvidedComment")]
         public string TrainingProvidedComment { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Unknown', 'Av',
-        /// 'LegacyApi', 'Raa', 'Api'
+        /// Gets or sets for internal use only. Specifies the source of the
+        /// vacancy. Always set to API when created via the API. Possible
+        /// values include: 'Unknown', 'Av', 'LegacyApi', 'Raa', 'Api'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancySource")]
         public string VacancySource { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for Wage
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "WageComment")]
         public string WageComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// WorkingWeek
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "WorkingWeekComment")]
         public string WorkingWeekComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// AnonymousEmployerDescription
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AnonymousEmployerDescriptionComment")]
         public string AnonymousEmployerDescriptionComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// AnonymousEmployerReason
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AnonymousEmployerReasonComment")]
         public string AnonymousEmployerReasonComment { get; set; }
 
         /// <summary>
+        /// Gets or sets QA comments regarding the supplied value for
+        /// AnonymousAboutTheEmployer
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AnonymousAboutTheEmployerComment")]
         public string AnonymousAboutTheEmployerComment { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Active', 'Ceased',
-        /// 'PendingClosure'
+        /// Gets or sets the status of the specified framework. Possible
+        /// values include: 'Active', 'Ceased', 'PendingClosure'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "FrameworkStatus")]
         public string FrameworkStatus { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Active', 'Ceased',
-        /// 'PendingClosure'
+        /// Gets or sets the status of the specified standard. Possible values
+        /// include: 'Active', 'Ceased', 'PendingClosure'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "StandardStatus")]
         public string StandardStatus { get; set; }
 
         /// <summary>
+        /// Gets or sets the date this vacancy was created. Will be ignored if
+        /// passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CreatedDateTime")]
         public System.DateTime? CreatedDateTime { get; set; }
 
         /// <summary>
+        /// Gets or sets list of locations for this vacancy. Only supply if
+        /// creating a MultipleLocations location vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyLocations")]
         public System.Collections.Generic.IList<VacancyLocation> VacancyLocations { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary identifier for the vacancy. Automatically
+        /// generated when vacancy is created
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyId")]
         public int? VacancyId { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary identifier of the linking object between
+        /// a provider site and an employer. This must exist and be linked to
+        /// a provider site owned by the provider identified by your API key
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyOwnerRelationshipId")]
         public int? VacancyOwnerRelationshipId { get; set; }
 
         /// <summary>
+        /// Gets or sets the secondary reference number for the vacancy. The
+        /// numerical part of the vacancy reference e.g. 123456 for
+        /// VAC000123456. Automatically generated when vacancy is created
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyReferenceNumber")]
         public int? VacancyReferenceNumber { get; set; }
 
         /// <summary>
+        /// Gets or sets the secondary GUID identifier for the vacancy. Must
+        /// be supplied when creating the vacancy and must be unique per
+        /// vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyGuid")]
         public System.Guid? VacancyGuid { get; set; }
 
         /// <summary>
+        /// Gets or sets the main heading for the vacancy e.g. Retail
+        /// Apprentice
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Title")]
         public string Title { get; set; }
 
         /// <summary>
+        /// Gets or sets a short paragraph of text giving a brief overview of
+        /// the role
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ShortDescription")]
         public string ShortDescription { get; set; }
 
         /// <summary>
+        /// Gets or sets a description of the working week e.g. 9-5 Monday to
+        /// Friday with occasional weekend work
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "WorkingWeek")]
         public string WorkingWeek { get; set; }
 
         /// <summary>
+        /// Gets or sets the text based expected duration of a vacancy. Only
+        /// set if the vacancy originated in the legacy system or the legacy
+        /// API and will be ignored if passed to the REST API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ExpectedDuration")]
         public string ExpectedDuration { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Unknown', 'Weeks',
-        /// 'Months', 'Years'
+        /// Gets or sets clarification of the Duration property specifying
+        /// weeks, months or years. Possible values include: 'Unknown',
+        /// 'Weeks', 'Months', 'Years'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "DurationType")]
         public string DurationType { get; set; }
 
         /// <summary>
+        /// Gets or sets the estimated duration of the vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Duration")]
         public int? Duration { get; set; }
 
         /// <summary>
+        /// Gets or sets the closing date for applications. Must be in the
+        /// future
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ClosingDate")]
         public System.DateTime? ClosingDate { get; set; }
 
         /// <summary>
+        /// Gets or sets the likely start date for the vacancy. Must be in the
+        /// future and after the closing date
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "PossibleStartDate")]
         public System.DateTime? PossibleStartDate { get; set; }
 
         /// <summary>
+        /// Gets or sets if true, applications for this vacancy will be made
+        /// on an external recruitment system rather than on Find an
+        /// Apprenticeship/Traineeship. OfflineApplicationUrl must also be
+        /// supplied if this field is set to true
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "OfflineVacancy")]
         public bool? OfflineVacancy { get; set; }
 
         /// <summary>
+        /// Gets or sets provides the click count logged by candidates
+        /// clicking on the offline application link. Will be ignored if
+        /// passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "NoOfOfflineApplicants")]
         public int? NoOfOfflineApplicants { get; set; }
 
         /// <summary>
+        /// Gets or sets the date this vacancy was last submitted to the QA
+        /// process. Will be ignored if passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "DateSubmitted")]
         public System.DateTime? DateSubmitted { get; set; }
 
         /// <summary>
+        /// Gets or sets the date this vacancy was first submitted to the QA
+        /// process. Will be ignored if passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "DateFirstSubmitted")]
         public System.DateTime? DateFirstSubmitted { get; set; }
 
         /// <summary>
+        /// Gets or sets the date this vacancy was last reviewed by a member
+        /// of the QA team. Will be ignored if passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "DateStartedToQA")]
         public System.DateTime? DateStartedToQA { get; set; }
 
         /// <summary>
+        /// Gets or sets the username of the member of the QA team who last
+        /// reviewed this vacancy. Will be ignored if passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "QAUserName")]
         public string QAUserName { get; set; }
 
         /// <summary>
+        /// Gets or sets the date this vacancy went live. Will be ignored if
+        /// passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "DateQAApproved")]
         public System.DateTime? DateQAApproved { get; set; }
 
         /// <summary>
+        /// Gets or sets the number of times this vacancy has been submitted
+        /// to QA for review
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "SubmissionCount")]
         public int? SubmissionCount { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary identifier of the provider site that
+        /// manages the vacancy. This includes managing applications for this
+        /// vacancy. Always set to the id of the provider site specified in
+        /// the supplied vacancy owner relationship
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyManagerId")]
         public int? VacancyManagerId { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary identifier of the provider site that
+        /// delivers the candidate training for the vacancy. This includes
+        /// managing applications for this vacancy. Always set to the id of
+        /// the provider site specified in the supplied vacancy owner
+        /// relationship
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "DeliveryOrganisationId")]
         public int? DeliveryOrganisationId { get; set; }
 
         /// <summary>
+        /// Gets or sets set when a multi location vacancy is approved. The
+        /// primary identifier of the original parent vacancy the child
+        /// location vacancies was cloned from. Will be ignored if passed to
+        /// the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ParentVacancyId")]
         public int? ParentVacancyId { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Unknown', 'Frameworks',
-        /// 'Standards', 'Sectors'
+        /// Gets or sets specifies the classification system of the training
+        /// the apprentice will receive from the apprenticeship/traineeship.
+        /// Either via a framework or standard if the vacancy is an
+        /// apprenticeship or a sector for traineeships. Possible values
+        /// include: 'Unknown', 'Frameworks', 'Standards', 'Sectors'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "TrainingType")]
         public string TrainingType { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Unknown', 'Intermediate',
-        /// 'Advanced', 'Higher', 'FoundationDegree', 'Degree', 'Masters',
-        /// 'Traineeship'
+        /// Gets or sets the level of the apprenticeship. Related to the
+        /// TrainingType and the education level the apprentice will gain or
+        /// requires. Can only be specified for Frameworks and for
+        /// Apprenticeships. Possible values include: 'Unknown',
+        /// 'Intermediate', 'Advanced', 'Higher', 'FoundationDegree',
+        /// 'Degree', 'Masters', 'Traineeship'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ApprenticeshipLevel")]
         public string ApprenticeshipLevel { get; set; }
 
         /// <summary>
+        /// Gets or sets the code name of the framework the apprenticeship is
+        /// operating under
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "FrameworkCodeName")]
         public string FrameworkCodeName { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary id of the standard the apprenticeship is
+        /// operating under
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "StandardId")]
         public int? StandardId { get; set; }
 
         /// <summary>
+        /// Gets or sets the code name of the sector the apprenticeship is
+        /// operating under
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "SectorCodeName")]
         public string SectorCodeName { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Unknown', 'Draft', 'Live',
-        /// 'Referred', 'Deleted', 'Submitted', 'Closed', 'Withdrawn',
-        /// 'Completed', 'PostedInError', 'ReservedForQA'
+        /// Gets or sets the status of the vacancy. Will always be set to
+        /// Draft when creating a vacancy. Possible values include:
+        /// 'Unknown', 'Draft', 'Live', 'Referred', 'Deleted', 'Submitted',
+        /// 'Closed', 'Withdrawn', 'Completed', 'PostedInError',
+        /// 'ReservedForQA'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Status")]
         public string Status { get; set; }
 
         /// <summary>
+        /// Gets or sets the displayed name the employer would prefer to be
+        /// displayed on the vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "EmployerAnonymousName")]
         public string EmployerAnonymousName { get; set; }
 
         /// <summary>
+        /// Gets or sets the reason the employer has requested a different
+        /// name to be displayed on the vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "EmployerAnonymousReason")]
         public string EmployerAnonymousReason { get; set; }
 
         /// <summary>
+        /// Gets or sets set to true if the employer has requested a different
+        /// name displayed on the vacancy other than their own
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "IsAnonymousEmployer")]
         public bool? IsAnonymousEmployer { get; set; }
 
         /// <summary>
+        /// Gets or sets the description the employer would prefer to be
+        /// displayed on the vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AnonymousAboutTheEmployer")]
         public string AnonymousAboutTheEmployer { get; set; }
 
         /// <summary>
+        /// Gets or sets the number of positions available for this vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "NumberOfPositions")]
         public int? NumberOfPositions { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Unknown', 'Apprenticeship',
-        /// 'Traineeship'
+        /// Gets or sets the type of a vacancy. Possible values include:
+        /// 'Unknown', 'Apprenticeship', 'Traineeship'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyType")]
         public string VacancyType { get; set; }
 
         /// <summary>
+        /// Gets or sets the last time this vacancy was updated. Will be
+        /// ignored if passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "UpdatedDateTime")]
         public System.DateTime? UpdatedDateTime { get; set; }
 
         /// <summary>
+        /// Gets or sets the address of the vacancy. If the
+        /// VacancyLocationType is SpecificLocation or Nationwide this will
+        /// be set to the employer's address. Will be ignored if passed to
+        /// the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Address")]
         public PostalAddress Address { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary identifier of the provider who has the
+        /// funding contract with the SFA
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ContractOwnerId")]
         public int? ContractOwnerId { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary identifier of the original provider who
+        /// has the funding contract with the SFA
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "OriginalContractOwnerId")]
         public int? OriginalContractOwnerId { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Other', 'North',
-        /// 'NorthWest', 'YorkshireAndHumberside', 'EastMidlands',
-        /// 'WestMidlands', 'EastAnglia', 'SouthEast', 'SouthWest'
+        /// Gets or sets for QA usage. Specifies which regional QA team will
+        /// review this vacancy. Will be ignored if passed to the API.
+        /// Possible values include: 'Other', 'North', 'NorthWest',
+        /// 'YorkshireAndHumberside', 'EastMidlands', 'WestMidlands',
+        /// 'EastAnglia', 'SouthEast', 'SouthWest'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "RegionalTeam")]
         public string RegionalTeam { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Unknown',
+        /// Gets or sets (Required) The type of address of the vacancy.
+        /// Indicates whether it's the employer's address or somewhere
+        /// different. Possible values include: 'Unknown',
         /// 'SpecificLocation', 'MultipleLocations', 'Nationwide'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "VacancyLocationType")]
         public string VacancyLocationType { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary identifier of the vacancy's employer.
+        /// Will be ignored if passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "EmployerId")]
         public int? EmployerId { get; set; }
 
         /// <summary>
+        /// Gets or sets the employer's trading name. Will be ignored if
+        /// passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "EmployerName")]
         public string EmployerName { get; set; }
 
         /// <summary>
+        /// Gets or sets the employer's location (town or postcode). Will be
+        /// ignored if passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "EmployerLocation")]
         public string EmployerLocation { get; set; }
 
         /// <summary>
+        /// Gets or sets the count of new applications submitted by
+        /// candidates. A new application is one that hasn't been reviewed in
+        /// Recruit an Apprentice
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "NewApplicationCount")]
         public int? NewApplicationCount { get; set; }
 
         /// <summary>
+        /// Gets or sets the total account of all applications submitted by
+        /// candidates
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ApplicantCount")]
         public int? ApplicantCount { get; set; }
 
         /// <summary>
+        /// Gets or sets the training provider's trading name. Will be ignored
+        /// if passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ProviderTradingName")]
         public string ProviderTradingName { get; set; }
 
         /// <summary>
+        /// Gets or sets the date this vacancy was created. Will be ignored if
+        /// passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CreatedDate")]
         public System.DateTime? CreatedDate { get; set; }
 
         /// <summary>
+        /// Gets or sets object detailing the wage information for the vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Wage")]
         public Wage Wage { get; set; }
 
         /// <summary>
+        /// Gets or sets set to true if there is more than one vacancy
+        /// location associated with this vacancy
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "IsMultiLocation")]
         public bool? IsMultiLocation { get; set; }
 
         /// <summary>
+        /// Gets or sets if true, the employer actively encourages candidates
+        /// with a disability to apply. Will be ignored if passed to the API
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "IsEmployerPositiveAboutDisability")]
         public bool? IsEmployerPositiveAboutDisability { get; set; }
