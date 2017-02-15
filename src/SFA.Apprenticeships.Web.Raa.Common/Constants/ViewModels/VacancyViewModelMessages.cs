@@ -213,7 +213,7 @@
         public static class PersonalQualities
         {
             public const string LabelText = "Desired personal qualities";
-            public const string RequiredErrorText = "Enter the personal qualities required";
+            public const string RequiredErrorText = "Enter the personal qualities";
             public const string TooLongErrorText = "Personal qualities must not be more than 4000 characters";
             public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
             public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
