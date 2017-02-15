@@ -44,24 +44,24 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Appli
         {
 WriteLiteral("\r\n");
 
-WriteLiteral("<section>\r\n    <div");
+WriteLiteral("<div");
 
 WriteLiteral(" class=\"panel panel-border-narrow\"");
 
-WriteLiteral(">\r\n        <ul");
+WriteLiteral(">\r\n    <ul");
 
 WriteLiteral(" class=\"list-text\"");
 
-WriteLiteral(">\r\n            <li><span >Applicant ID:</span></li>\r\n            <li>");
+WriteLiteral(">\r\n        <li><span >Applicant ID:</span></li>\r\n        <li>");
 
             
-            #line 8 "..\..\Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.cshtml"
-           Write(Model.ApplicantId);
+            #line 7 "..\..\Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.cshtml"
+       Write(Model.ApplicantId);
 
             
             #line default
             #line hidden
-WriteLiteral("</li>\r\n        </ul>\r\n    </div>\r\n</section>");
+WriteLiteral("</li>\r\n    </ul>\r\n</div>\r\n");
 
         }
     }

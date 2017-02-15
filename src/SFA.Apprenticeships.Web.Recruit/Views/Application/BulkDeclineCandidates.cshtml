@@ -46,13 +46,11 @@
             @{
                 var filterType = Model.VacancyApplicationsSearch.FilterType;
             }
-            <h2 class="heading-large sfa-no-margins">
-                Candidates
-                @if (filterType != VacancyApplicationsFilterTypes.All)
+            <h2 class="heading-large sfa-no-margins sfa-display-inline">Candidates</h2>
+            @if (filterType != VacancyApplicationsFilterTypes.All)
                 {
-                    <button class="vacancy-filter sfa-show-all" name="BulkSearchApplicationsAction" value="BulkFilterApplicationsAll">Show all</button>
-                }
-            </h2>
+                <button class="vacancy-filter sfa-show-all sfa-button-as-link" name="BulkSearchApplicationsAction" value="BulkFilterApplicationsAll">Show all</button>
+            }
         </div>
     </div>
 
@@ -68,10 +66,10 @@
                     }
                     else
                     {
-                            <a href="#1" class="vacancy-filter" name="BulkSearchApplicationsAction" value="BulkFilterApplicationsNew">
+                            <button class="vacancy-filter sfa-button-as-link" name="BulkSearchApplicationsAction" value="BulkFilterApplicationsNew">
                                 <span class="data-item bold-xlarge">@Model.NewApplicationsCount</span>
                                 <span class="data-item bold-xsmall">New</span>
-                            </a>
+                            </button>
                             }
                 </div>
             </div>
@@ -84,10 +82,10 @@
                     }
                     else
                     {
-                        <a href="#1" class="vacancy-filter" name="BulkSearchApplicationsAction" value="BulkFilterApplicationsInProgress">
+                        <button class="vacancy-filter sfa-button-as-link" name="BulkSearchApplicationsAction" value="BulkFilterApplicationsInProgress">
                             <span class="data-item bold-xlarge">@Model.InProgressApplicationsCount</span>
                             <span class="data-item bold-xsmall">In progress</span>
-                        </a>
+                        </button>
                     }
                 </div>
             </div>
@@ -113,9 +111,9 @@
                                 var surnameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldLastName ?
                                             Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                             }
-                            <a href="#1" class="vacancy-order" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsLastName">
+                            <button class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsLastName">
                                 Surname<i class="fa sfa-icon-right @surnameSortClass" aria-hidden="true"></i>
-                            </a>
+                            </button>
                         </th>
 
                         <th>
@@ -123,9 +121,9 @@
                                 var firstNameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldFirstName ?
                                     Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                             }
-                            <a href="#1" class="vacancy-order" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsFirstName">
+                            <button class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsFirstName">
                                 First name<i class="fa sfa-icon-right @firstNameSortClass" aria-hidden="true"></i>
-                            </a>
+                            </button>
                         </th>
                         <th>
                             Applicant ID
@@ -135,9 +133,9 @@
                                 var managerNotesSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes ?
                                     Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                             }
-                            <a href="#1" class="vacancy-order" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsManagerNotes">
+                            <button class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsManagerNotes">
                                 Vacancy manager notes<i class="fa sfa-icon-right @managerNotesSortClass" aria-hidden="true"></i>
-                            </a>
+                            </button>
                         </th>
 
                         <th>
@@ -145,18 +143,18 @@
                                 var submittedSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldSubmitted ?
                                     Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                             }
-                            <a href="#1" class="vacancy-order" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsSubmitted">
+                            <button class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsSubmitted">
                                 Submitted<i class="fa sfa-icon-right @submittedSortClass" aria-hidden="true"></i>
-                            </a>
+                            </button>
                         </th>
                         <th>
                             @{
                                 var statusSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldStatus ?
                                     Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                             }
-                            <a href="#1" class="vacancy-order" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsStatus">
+                            <button class="vacancy-order sfa-button-as-link" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsStatus">
                                 Status<i class="fa sfa-icon-right @statusSortClass" aria-hidden="true"></i>
-                            </a>
+                            </button>
                         </th>
                         <th>
 

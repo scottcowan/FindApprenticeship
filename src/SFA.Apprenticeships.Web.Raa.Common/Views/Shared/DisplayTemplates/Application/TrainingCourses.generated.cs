@@ -42,24 +42,20 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Appli
         }
         public override void Execute()
         {
-WriteLiteral("<section");
-
-WriteLiteral(" class=\"sfa-section-bordered\"");
-
-WriteLiteral(">\r\n    <h2");
+WriteLiteral("    <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">\r\n        Training courses\r\n    </h2>\r\n\r\n");
+WriteLiteral(">Training courses</h2>\r\n\r\n");
 
             
-            #line 8 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
+            #line 5 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 8 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
+            #line 5 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
      if (!Model.Any())
     {
 
@@ -73,7 +69,7 @@ WriteLiteral(" id=\"no-training-history\"");
 WriteLiteral(">Applicant hasn\'t been on any training courses</p>\r\n");
 
             
-            #line 11 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
+            #line 8 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
     }
 
             
@@ -82,177 +78,116 @@ WriteLiteral(">Applicant hasn\'t been on any training courses</p>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 13 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
+            #line 10 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
+            #line 10 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
      foreach (var each in Model)
     {
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
+WriteLiteral("            <div");
 
-WriteLiteral(" class=\"grid-3-4 nobreak-print\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"grid-row training-history-item\"");
-
-WriteLiteral(">\r\n\r\n                <div");
-
-WriteLiteral(" class=\"column-one-half\"");
-
-WriteLiteral(">\r\n                    <table");
-
-WriteLiteral(" class=\"table-no-btm-border table-compound\"");
+WriteLiteral(" class=\"training-history-item\"");
 
 WriteLiteral(@">
-                        <colgroup>
-                            <col>
-                            <col>
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>
-                                    <span");
+                <table>
+                    <colgroup>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                <h3");
 
-WriteLiteral(" class=\"heading-span\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(@">Training course</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span");
+WriteLiteral(">Training course</h3>\r\n                            </th>\r\n                       " +
+"     <th>\r\n                                <h3");
 
-WriteLiteral(" class=\"form-prepopped cell-span\"");
+WriteLiteral(" class=\"heading-small\"");
+
+WriteLiteral(">From</h3>\r\n                            </th>\r\n                            <th>\r\n" +
+"                                <h3");
+
+WriteLiteral(" class=\"heading-small\"");
+
+WriteLiteral(">To</h3>\r\n                            </th>\r\n                        </tr>\r\n     " +
+"               </thead>\r\n                    <tbody>\r\n                        <t" +
+"r>\r\n                            <td>\r\n                                <span");
+
+WriteLiteral(" class=\"bold-small\"");
 
 WriteLiteral(">");
 
             
             #line 34 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
-                                                                      Write(each.Provider);
+                                                    Write(each.Provider);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                                    <span");
+WriteLiteral("</span>\r\n                                <br/>\r\n                                <" +
+"span");
 
-WriteLiteral(" class=\"form-prepopped cell-span training-hyphen\"");
-
-WriteLiteral(">-</span>\r\n                                    <span");
-
-WriteLiteral(" class=\"form-prepopped cell-span\"");
+WriteLiteral(" class=\"secondary-text\"");
 
 WriteLiteral(">");
 
             
             #line 36 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
-                                                                      Write(each.Title);
+                                                        Write(each.Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                                </td>\r\n                            </tr>" +
-"\r\n                        </tbody>\r\n                    </table>\r\n              " +
-"  </div>\r\n                <div");
+WriteLiteral("</span>\r\n                            </td>\r\n                            <td");
 
-WriteLiteral(" class=\"column-one-half\"");
+WriteLiteral(" class=\"sfa-align-top\"");
 
-WriteLiteral(">\r\n                    <table");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" class=\"table-no-btm-border table-compound\"");
-
-WriteLiteral(">\r\n                        <colgroup>\r\n                            <col");
-
-WriteLiteral(" class=\"t30\"");
-
-WriteLiteral(">\r\n                            <col");
-
-WriteLiteral(" class=\"t30\"");
-
-WriteLiteral(">\r\n                            <col");
-
-WriteLiteral(" class=\"t25\"");
-
-WriteLiteral(">\r\n                            <col");
-
-WriteLiteral(" class=\"t15\"");
-
-WriteLiteral(">\r\n                            <col>\r\n                        </colgroup>\r\n      " +
-"                  <thead>\r\n                            <tr>\r\n                   " +
-"             <th>\r\n                                    <span");
-
-WriteLiteral(" class=\"heading-span\"");
-
-WriteLiteral(">From</span>\r\n                                </th>\r\n                            " +
-"    <th>\r\n                                    <span");
-
-WriteLiteral(" class=\"heading-span\"");
-
-WriteLiteral(@">To</span>
-                                </th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span");
-
-WriteLiteral(" class=\"form-prepopped cell-span\"");
-
-WriteLiteral(">");
+WriteLiteral("                                ");
 
             
-            #line 66 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
-                                                                      Write(each.FromDate.GetMonthYearLabel());
+            #line 39 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
+                           Write(each.FromDate.GetMonthYearLabel());
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                                </td>\r\n                                <" +
-"td>\r\n                                    <span");
+WriteLiteral("\r\n                            </td>\r\n                            <td");
 
-WriteLiteral(" class=\"form-prepopped cell-span\"");
+WriteLiteral(" class=\"sfa-align-top\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                ");
 
             
-            #line 69 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
-                                                                      Write(each.ToDate.GetMonthYearLabel());
+            #line 42 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
+                           Write(each.ToDate.GetMonthYearLabel());
 
             
             #line default
             #line hidden
-WriteLiteral(@"</span>
-                                </td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-");
+WriteLiteral("\r\n                            </td>\r\n                        </tr>\r\n             " +
+"       </tbody>\r\n                </table>\r\n            </div>\r\n");
 
             
-            #line 79 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
+            #line 48 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
     }
 
             
             #line default
             #line hidden
-WriteLiteral("</section>");
+WriteLiteral("    <hr/>");
 
         }
     }

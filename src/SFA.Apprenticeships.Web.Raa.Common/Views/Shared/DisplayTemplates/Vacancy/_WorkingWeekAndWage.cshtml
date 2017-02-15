@@ -58,7 +58,7 @@
                 </span>
             }
         </h3>
-        <div class="sfa-p-margin-bottom">
+        <div class="sfa-p-bottom-margin">
             <p id="vacancy-wage" class="sfa-no-bottom-margin">@WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, Model.FurtherVacancyDetailsViewModel.Wage.AmountUpperBound, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date)</p>
             @if (Model.FurtherVacancyDetailsViewModel.Wage.Classification == WageClassification.PresetText
                         && Model.IsManageReviewerView)

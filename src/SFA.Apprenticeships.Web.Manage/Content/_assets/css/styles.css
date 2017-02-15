@@ -111,7 +111,7 @@ Custom margins
     .sfa-large-top-margin {
       margin-top: 20px !important; } }
 
-.sfa-p-margin-bottom {
+.sfa-p-bottom-margin {
   margin-bottom: 1.05263em; }
 
 /* -------------------------------------------------------------------
@@ -216,13 +216,15 @@ Custom Typography
 .sfa-data {
   margin-top: 0px !important;
   text-align: center; }
-  .sfa-data a {
+  .sfa-data a, .sfa-data .sfa-button-as-link {
     text-decoration: none;
     display: block; }
-    .sfa-data a .bold-xlarge {
+    .sfa-data a .bold-xlarge, .sfa-data .sfa-button-as-link .bold-xlarge {
       text-decoration: none; }
-    .sfa-data a .bold-xsmall {
+    .sfa-data a .bold-xsmall, .sfa-data .sfa-button-as-link .bold-xsmall {
       text-decoration: underline; }
+  .sfa-data .sfa-button-as-link {
+    width: 100%; }
 
 /* -------------------------------------------------------------------
 Custom list
@@ -273,6 +275,9 @@ Alignment
 .sfa-align-center {
   text-align: center; }
 
+.sfa-align-top {
+  vertical-align: top; }
+
 .sfa-pull-right {
   float: right !important; }
   @media (min-width: 641px) {
@@ -318,9 +323,14 @@ Custom expand content
 Inset boxes
 ------------------------------------------------------------------- */
 .sfa-inset {
-  padding: 15px; }
-  .sfa-inset .form-control {
-    background-color: #fff; }
+  padding: 15px;
+  overflow: hidden; }
+  .sfa-inset.grid-row {
+    padding-left: 0px;
+    padding-right: 0px;
+    margin: 0; }
+  .sfa-inset .form-control, .sfa-inset .block-label.selection-button-radio::before, .sfa-inset .block-label.selection-button-checkbox::before {
+    background-color: #fff !important; }
   .sfa-inset-yellow {
     background-color: #fff2d3; }
   .sfa-inset-light-grey {
@@ -567,7 +577,7 @@ iframe, object, embed {
   overflow: visible !important;
   padding: 0 !important; }
 
-.sfa-mock-link {
+.sfa-button-as-link {
   margin: 0;
   padding: 0;
   line-height: 1.3;
@@ -583,9 +593,9 @@ iframe, object, embed {
   display: inline-block;
   vertical-align: top;
   -webkit-font-smoothing: antialiased; }
-  .sfa-mock-link:hover {
+  .sfa-button-as-link:hover {
     color: #2b8cc4; }
-  .sfa-mock-link:focus {
+  .sfa-button-as-link:focus {
     background: #ffbf47; }
 
 .sfa-edit-button-p {
@@ -607,7 +617,18 @@ iframe, object, embed {
       margin-bottom: 60px; } }
 
 .sfa-show-all {
-  margin-left: 0.5em; }
+  margin-left: 0.5em;
+  font-family: "nta", Arial, sans-serif;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 16px;
+  line-height: 1.25;
+  display: inline;
+  vertical-align: baseline; }
+  @media (min-width: 641px) {
+    .sfa-show-all {
+      font-size: 19px;
+      line-height: 1.31579; } }
 
 .tabbed-nav {
   border-bottom: 1px solid #bfc1c3; }

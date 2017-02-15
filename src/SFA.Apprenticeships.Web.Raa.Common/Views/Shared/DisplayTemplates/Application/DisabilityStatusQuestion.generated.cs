@@ -56,40 +56,32 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Appli
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("        <h3");
 
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n        <p");
-
-WriteLiteral(" class=\"form-label-bold\"");
+WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral(" id=\"disability-label\"");
 
-WriteLiteral(">Do you have a learning difficulty, disability or health problem?</p>\r\n");
+WriteLiteral(">Do you have a learning difficulty, disability or health problem?</h3>\r\n");
 
             
-            #line 8 "..\..\Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml"
+            #line 7 "..\..\Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 8 "..\..\Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml"
+            #line 7 "..\..\Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml"
          if (Model.Value == DisabilityStatus.PreferNotToSay)
         {
 
             
             #line default
             #line hidden
-WriteLiteral("            <span");
-
-WriteLiteral(" class=\"form-prepopped\"");
-
-WriteLiteral(">Prefer not to say</span>\r\n");
+WriteLiteral("            <p>Prefer not to say</p>\r\n");
 
             
-            #line 11 "..\..\Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml"
+            #line 10 "..\..\Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml"
         }
         else
         {
@@ -97,32 +89,26 @@ WriteLiteral(">Prefer not to say</span>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            <span");
+WriteLiteral("            <p>");
 
-WriteLiteral(" class=\"form-prepopped\"");
+            
+            #line 13 "..\..\Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml"
+          Write(Model.Value);
 
-WriteLiteral(">");
+            
+            #line default
+            #line hidden
+WriteLiteral("</p>\r\n");
 
             
             #line 14 "..\..\Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml"
-                                    Write(Model.Value);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</span>\r\n");
-
-            
-            #line 15 "..\..\Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml"
         }
-
             
             #line default
             #line hidden
-WriteLiteral("    </div>\r\n");
-
             
-            #line 17 "..\..\Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml"
+            #line 14 "..\..\Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml"
+         
 }
             
             #line default
