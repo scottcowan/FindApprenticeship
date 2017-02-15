@@ -144,7 +144,7 @@ Custom margins
     }
 }
 
-.sfa-p-margin-bottom {
+.sfa-p-bottom-margin {
     margin-bottom: 1.05263em;
 }
 
@@ -284,7 +284,7 @@ Custom Typography
 .sfa-data {
     margin-top:0px !important;
     text-align:center;
-    a {
+    a, .sfa-button-as-link {
         text-decoration:none;
         display:block;
         .bold-xlarge {
@@ -293,6 +293,9 @@ Custom Typography
         .bold-xsmall {
             text-decoration:underline;
         }
+    }
+    .sfa-button-as-link {
+        width:100%;
     }
 }
 
@@ -368,6 +371,10 @@ Alignment
     text-align:center;
 }
 
+.sfa-align-top {
+    vertical-align:top;
+}
+
 .sfa-pull-right {
     float: right !important;
     &-tablet {
@@ -430,8 +437,14 @@ Inset boxes
 
 .sfa-inset {
     padding:15px;
-    .form-control {
-        background-color:$page-colour;
+    overflow:hidden;
+    &.grid-row {
+        padding-left:0px;
+        padding-right:0px;
+        margin:0;
+    }
+    .form-control, .block-label.selection-button-radio::before, .block-label.selection-button-checkbox::before {
+        background-color:$page-colour !important;
     }
     &-yellow {
         background-color:$yellow-25;

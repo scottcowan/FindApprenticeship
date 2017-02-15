@@ -1,19 +1,14 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.AboutYouViewModel
 
-<fieldset class="sfa-xlarge-bottom-margin sfa-section-bordered">
-    <legend class="heading-large">
-        About you
-    </legend>
-    <div class="form-group">
-        <label for="strengths" class="form-label-bold">What are your main strengths?</label>
-        <span class="form-prepopped" id="strengths">@(Model.Strengths ?? "-")</span>
-    </div>
-    <div class="form-group">
-        <label for="improvements" class="form-label-bold">What skills would you like to improve during this apprenticeship?</label>
-        <span class="form-prepopped" id="improvements">@(Model.Improvements ?? "-")</span>
-    </div>
-    <div class="form-group">
-        <label for="hobbies-and-interests" class="form-label-bold">What are your hobbies and interests?</label>
-        <span class="form-prepopped" id="hobbies-and-interests">@(Model.HobbiesAndInterests ?? "-")</span>
-    </div>
-</fieldset>
+
+<h2 class="heading-large">About you</h2>
+<h3 class="heading-small">What are your main strengths?</h3>
+<p>@(Model.Strengths ?? "-")</p>
+
+<h3 class="heading-small">What skills would you like to improve during this apprenticeship?</h3>
+<p>@(Model.Improvements ?? "-")</p>
+
+<h3 class="heading-small">What are your hobbies and interests?</h3>
+<p>@(Model.HobbiesAndInterests ?? "-")</p>
+
+<hr/>

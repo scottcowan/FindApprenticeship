@@ -42,91 +42,50 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Appli
         }
         public override void Execute()
         {
-WriteLiteral("<fieldset");
-
-WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
-
-WriteLiteral(">\r\n    <legend");
+WriteLiteral("\r\n<h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">\r\n        About you\r\n    </legend>\r\n    <div");
+WriteLiteral(">About you</h2>\r\n<h3");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">What are your main strengths?</h3>\r\n<p>");
 
-WriteLiteral(" for=\"strengths\"");
+            
+            #line 6 "..\..\Views\Shared\DisplayTemplates\Application\AboutYou.cshtml"
+Write(Model.Strengths ?? "-");
 
-WriteLiteral(" class=\"form-label-bold\"");
+            
+            #line default
+            #line hidden
+WriteLiteral("</p>\r\n\r\n<h3");
 
-WriteLiteral(">What are your main strengths?</label>\r\n        <span");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(" class=\"form-prepopped\"");
-
-WriteLiteral(" id=\"strengths\"");
-
-WriteLiteral(">");
+WriteLiteral(">What skills would you like to improve during this apprenticeship?</h3>\r\n<p>");
 
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Application\AboutYou.cshtml"
-                                                Write(Model.Strengths ?? "-");
+Write(Model.Improvements ?? "-");
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n    </div>\r\n    <div");
+WriteLiteral("</p>\r\n\r\n<h3");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">\r\n        <label");
-
-WriteLiteral(" for=\"improvements\"");
-
-WriteLiteral(" class=\"form-label-bold\"");
-
-WriteLiteral(">What skills would you like to improve during this apprenticeship?</label>\r\n     " +
-"   <span");
-
-WriteLiteral(" class=\"form-prepopped\"");
-
-WriteLiteral(" id=\"improvements\"");
-
-WriteLiteral(">");
+WriteLiteral(">What are your hobbies and interests?</h3>\r\n<p>");
 
             
-            #line 13 "..\..\Views\Shared\DisplayTemplates\Application\AboutYou.cshtml"
-                                                   Write(Model.Improvements ?? "-");
+            #line 12 "..\..\Views\Shared\DisplayTemplates\Application\AboutYou.cshtml"
+Write(Model.HobbiesAndInterests ?? "-");
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n    </div>\r\n    <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n        <label");
-
-WriteLiteral(" for=\"hobbies-and-interests\"");
-
-WriteLiteral(" class=\"form-label-bold\"");
-
-WriteLiteral(">What are your hobbies and interests?</label>\r\n        <span");
-
-WriteLiteral(" class=\"form-prepopped\"");
-
-WriteLiteral(" id=\"hobbies-and-interests\"");
-
-WriteLiteral(">");
-
-            
-            #line 17 "..\..\Views\Shared\DisplayTemplates\Application\AboutYou.cshtml"
-                                                            Write(Model.HobbiesAndInterests ?? "-");
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</span>\r\n    </div>\r\n</fieldset>");
+WriteLiteral("</p>\r\n\r\n<hr/>");
 
         }
     }

@@ -49,89 +49,73 @@ Write(Html.DisplayFor(m => m.ApplicantDetails.DisabilityStatus, "Application/Dis
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n    <p");
+WriteLiteral("\r\n\r\n\r\n<h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">Is there anything we can do to support your interview?</p>\r\n");
+WriteLiteral(">Is there anything we can do to support your interview?</h3>\r\n");
 
             
             #line 7 "..\..\Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml"
-    
-            
-            #line default
-            #line hidden
-            
-            #line 7 "..\..\Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml"
-     if (Model.VacancyQuestionAnswers.HasAnythingWeCanDoToSupportYourInterviewAnswer)
-    {
+ if (Model.VacancyQuestionAnswers.HasAnythingWeCanDoToSupportYourInterviewAnswer)
+{
 
             
             #line default
             #line hidden
-WriteLiteral("        <span");
+WriteLiteral("    <p");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 413), Tuple.Create("\"", 504)
+WriteAttribute("id", Tuple.Create(" id=\"", 372), Tuple.Create("\"", 463)
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml"
-, Tuple.Create(Tuple.Create("", 418), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer)
+, Tuple.Create(Tuple.Create("", 377), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer)
             
             #line default
             #line hidden
-, 418), false)
+, 377), false)
 );
-
-WriteLiteral(" class=\"form-prepopped prewrap\"");
 
 WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml"
-                                                                                                                                    Write(Html.DisplayFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer));
+                                                                                              Write(Html.DisplayFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer));
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n");
+WriteLiteral("</p>\r\n");
 
             
             #line 10 "..\..\Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml"
-    }
-    else
-    {
+}
+else
+{
 
             
             #line default
             #line hidden
-WriteLiteral("        <span");
+WriteLiteral("    <p");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 674), Tuple.Create("\"", 765)
+WriteAttribute("id", Tuple.Create(" id=\"", 580), Tuple.Create("\"", 671)
             
             #line 13 "..\..\Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml"
-, Tuple.Create(Tuple.Create("", 679), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer)
+, Tuple.Create(Tuple.Create("", 585), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer)
             
             #line default
             #line hidden
-, 679), false)
+, 585), false)
 );
 
-WriteLiteral(" class=\"form-prepopped prewrap\"");
-
-WriteLiteral(">I don\'t have any interview support requirements</span>\r\n");
+WriteLiteral(">I don\'t have any interview support requirements</p>\r\n");
 
             
             #line 14 "..\..\Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml"
-    }
+}
 
             
             #line default
             #line hidden
-WriteLiteral("</div>");
-
         }
     }
 }

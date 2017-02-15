@@ -42,98 +42,54 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Appli
         }
         public override void Execute()
         {
-WriteLiteral("<fieldset");
-
-WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
-
-WriteLiteral(">\r\n    <legend");
+WriteLiteral("<h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">\r\n        Education\r\n    </legend>\r\n    <div");
+WriteLiteral(">Education</h2>\r\n\r\n<h3");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">\r\n        <label");
-
-WriteLiteral(" for=\"school-name\"");
-
-WriteLiteral(" class=\"form-label-bold\"");
-
-WriteLiteral(">Name of most recent school/college</label>\r\n        <span");
-
-WriteLiteral(" class=\"form-prepopped\"");
-
-WriteLiteral(" id=\"school-name\"");
-
-WriteLiteral(">");
+WriteLiteral(">Name of most recent school/college</h3>\r\n<p>");
 
             
-            #line 9 "..\..\Views\Shared\DisplayTemplates\Application\Education.cshtml"
-                                                  Write(Model == null ? "-" : Model.Institution ?? "-");
+            #line 6 "..\..\Views\Shared\DisplayTemplates\Application\Education.cshtml"
+Write(Model == null ? "-" : Model.Institution ?? "-");
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n    </div>\r\n    <div");
+WriteLiteral("</p>\r\n\r\n<h3");
 
-WriteLiteral(" class=\"inline-fixed\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">\r\n        <p");
+WriteLiteral(">Years attended</h3>\r\n<h4");
 
-WriteLiteral(" class=\"form-label-bold\"");
+WriteLiteral(" class=\"secondary-text\"");
 
-WriteLiteral(">Years attended</p>\r\n        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n            <label");
-
-WriteLiteral(" for=\"school-from\"");
-
-WriteLiteral(" class=\"form-hint\"");
-
-WriteLiteral(">Started</label>\r\n            <span");
-
-WriteLiteral(" class=\"form-prepopped\"");
-
-WriteLiteral(" id=\"school-from\"");
-
-WriteLiteral(">");
+WriteLiteral(">Started</h4>\r\n<p>");
 
             
-            #line 15 "..\..\Views\Shared\DisplayTemplates\Application\Education.cshtml"
-                                                      Write(Model == null ? "-" : Model.FromYear == 0 ? "-" : Model.FromYear.ToString());
+            #line 10 "..\..\Views\Shared\DisplayTemplates\Application\Education.cshtml"
+Write(Model == null ? "-" : Model.FromYear == 0 ? "-" : Model.FromYear.ToString());
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n        </div>\r\n        <div");
+WriteLiteral("</p>\r\n\r\n<h4");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"secondary-text\"");
 
-WriteLiteral(">\r\n            <label");
-
-WriteLiteral(" for=\"school-to\"");
-
-WriteLiteral(" class=\"form-hint\"");
-
-WriteLiteral(">Finished</label>\r\n            <span");
-
-WriteLiteral(" class=\"form-prepopped\"");
-
-WriteLiteral(" id=\"school-to\"");
-
-WriteLiteral(">");
+WriteLiteral(">Finished</h4>\r\n<p>");
 
             
-            #line 19 "..\..\Views\Shared\DisplayTemplates\Application\Education.cshtml"
-                                                    Write(Model == null ? "-" : Model.ToYear == 0 ? "-" : Model.ToYear.ToString());
+            #line 13 "..\..\Views\Shared\DisplayTemplates\Application\Education.cshtml"
+Write(Model == null ? "-" : Model.ToYear == 0 ? "-" : Model.ToYear.ToString());
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n        </div>\r\n    </div>\r\n</fieldset>");
+WriteLiteral("</p>\r\n\r\n<hr/>\r\n");
 
         }
     }
