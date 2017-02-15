@@ -8,10 +8,7 @@
     using Mongo.Candidates.IoC;
     using Mongo.Communication.IoC;
     using Mongo.Users.IoC;
-    using Mongo.Vacancies.IoC;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using StructureMap;
 
     [SetUpFixture]
@@ -31,7 +28,6 @@
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
-                x.AddRegistry<VacancyReferenceNumberRegistry>();
             });
 
             var configurationManager = Container.GetInstance<IConfigurationService>();

@@ -375,7 +375,6 @@
                         .Create());
             MockProviderService.Setup(s => s.GetProvider(ukprn, true))
                 .Returns(new Fixture().Build<Provider>().With(p => p.ProviderId, providerId).Create());
-            MockLocalAuthorityService.Setup(s => s.GetLocalAuthorityCode(employersPostcode)).Returns(localAuthorityCode);
 
 
             // Act.
@@ -396,7 +395,6 @@
             MockProviderService.Verify(s => s.GetVacancyOwnerRelationship(vacancyOwnerRelationshipId, true));
             MockEmployerService.Verify(s => s.GetEmployer(employerId, It.IsAny<bool>()));
             MockProviderService.Verify(s => s.GetProvider(ukprn, true));
-            MockLocalAuthorityService.Verify(s => s.GetLocalAuthorityCode(employersPostcode));
             MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v =>
                 v.VacancyGuid == vacancyGuid
                 && v.VacancyReferenceNumber == vacancyReferenceNumber
@@ -412,7 +410,6 @@
                 && v.VacancyType == VacancyType.Unknown
                 && v.Address == address
                 && v.ContractOwnerId == providerId
-                && v.LocalAuthorityCode == localAuthorityCode
                 && v.EmployerWebsiteUrl == employerWebsiteUrl
                 && v.EmployerDescription == employerDescription
             )));
@@ -449,7 +446,6 @@
                         .Create());
             MockProviderService.Setup(s => s.GetProvider(ukprn, true))
                 .Returns(new Fixture().Build<Provider>().With(p => p.ProviderId, providerId).Create());
-            MockLocalAuthorityService.Setup(s => s.GetLocalAuthorityCode(employersPostcode)).Returns(localAuthorityCode);
 
 
             // Act.
@@ -504,7 +500,6 @@
                         .Create());
             MockProviderService.Setup(s => s.GetProvider(ukprn, true))
                 .Returns(new Fixture().Build<Provider>().With(p => p.ProviderId, providerId).Create());
-            MockLocalAuthorityService.Setup(s => s.GetLocalAuthorityCode(employersPostcode)).Returns(localAuthorityCode);
 
 
             // Act.

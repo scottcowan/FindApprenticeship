@@ -11,6 +11,7 @@
     using System.Linq;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Vacancy = Entities.Vacancy;
+    using VacancyLocation = Domain.Entities.Raa.Vacancies.VacancyLocation;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
@@ -98,7 +99,18 @@
 
             var mapped = _mapper.Map<Vacancy, DomainVacancy>(vacancy);
 
-            PatchTrainingType(mapped);
+            if (mapped != null)
+            {
+                var vacancyLocations =
+                    _getOpenConnection.Query<Entities.VacancyLocation>(
+                        "SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId ORDER BY VacancyLocationId DESC",
+                        new {VacancyId = vacancyId});
+
+                mapped.VacancyLocations = _mapper.Map<IList<Entities.VacancyLocation>, List<VacancyLocation>>(vacancyLocations);
+                mapped.IsMultiLocation = mapped.VacancyLocations != null && mapped.VacancyLocations.Count > 1;
+
+                PatchTrainingType(mapped);
+            }
 
             return mapped;
         }
@@ -203,15 +215,38 @@
 
             dbVacancy.VacancyId = (int)_getOpenConnection.Insert(dbVacancy);
 
+            UpsertVacancyLocations(entity.VacancyLocations, dbVacancy.VacancyId);
+
             SaveTextFieldsFor(dbVacancy.VacancyId, entity);
             SaveAdditionalQuestionsFor(dbVacancy.VacancyId, entity);
 
             CreateVacancyHistoryRow(dbVacancy.VacancyId, _currentUserService.CurrentUserName, VacancyHistoryEventType.StatusChange,
                 (int)entity.Status, StatusChangeText);
 
-            _logger.Debug("Saved apprenticeship vacancy to database with id={0}", entity.VacancyId);
+            _logger.Debug("Saved apprenticeship vacancy to database with id={0}", dbVacancy.VacancyId);
 
-            return _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
+            return GetByMapped(dbVacancy.VacancyId);
+        }
+
+        private void UpsertVacancyLocations(IEnumerable<VacancyLocation> vacancyLocations, int vacancyId)
+        {
+            _getOpenConnection.MutatingQuery<object>("DELETE FROM VacancyLocation WHERE VacancyId = @vacancyId", new { vacancyId });
+
+            if (vacancyLocations == null) return;
+
+            foreach (var vacancyLocationAddress in vacancyLocations)
+            {
+                var vacancyLocation = _mapper.Map<VacancyLocation, Entities.VacancyLocation>(vacancyLocationAddress);
+                vacancyLocation.VacancyId = vacancyId;
+                if (vacancyLocation.VacancyLocationId == 0)
+                {
+                    _getOpenConnection.Insert(vacancyLocation);
+                }
+                else
+                {
+                    _getOpenConnection.UpdateSingle(vacancyLocation);
+                }
+            }
         }
 
         public DomainVacancy Update(DomainVacancy entity)
@@ -332,7 +367,15 @@ WHERE VacancyId = @vacancyId and NoOfOfflineApplicants is null
 
         private void PopulateLocalAuthorityId(DomainVacancy entity, Vacancy dbVacancy)
         {
-            if (!string.IsNullOrWhiteSpace(entity.LocalAuthorityCode))
+            dbVacancy.LocalAuthorityId = null;
+
+            if (entity.Address == null) return;
+
+            if (entity.Address.LocalAuthorityId != 0)
+            {
+                dbVacancy.LocalAuthorityId = entity.Address.LocalAuthorityId;
+            }
+            else if (!string.IsNullOrWhiteSpace(entity.Address.LocalAuthorityCodeName))
             {
                 dbVacancy.LocalAuthorityId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT LocalAuthorityId
@@ -340,12 +383,8 @@ FROM   dbo.LocalAuthority
 WHERE  CodeName LIKE '%' + @LocalAuthorityCode",
                     new
                     {
-                        entity.LocalAuthorityCode
+                        LocalAuthorityCode = entity.Address.LocalAuthorityCodeName
                     }).Single();
-            }
-            else
-            {
-                dbVacancy.LocalAuthorityId = null;
             }
         }
 

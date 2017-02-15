@@ -198,7 +198,7 @@
                 @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes, new { @class = "form-control sfa-form-control-auto" })
             </div>
 
-            @if (Model.VacancySource != VacancySource.Raa)
+            @if (Model.VacancySource.IsLegacy())
             {
                 @Html.FormTextAreaFor(model => model.ExpectedDuration, controlHtmlAttributes: new { type = "text", rows="1", @class = "form-control-1-2" })
             }

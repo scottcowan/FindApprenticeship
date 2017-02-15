@@ -4,6 +4,11 @@
 
 namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
+    using System.Linq;
+
+    /// <summary>
+    /// Framework instance
+    /// </summary>
     public partial class Framework
     {
         /// <summary>
@@ -14,14 +19,15 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// Initializes a new instance of the Framework class.
         /// </summary>
-        /// <param name="parentCategoryCodeName"></param>
-        /// <param name="status">Possible values include: 'Active', 'Ceased',
-        /// 'PendingClosure'</param>
-        /// <param name="id"></param>
-        /// <param name="codeName"></param>
-        /// <param name="shortName"></param>
-        /// <param name="fullName"></param>
-        public Framework(int? id = default(int?), string codeName = default(string), string shortName = default(string), string fullName = default(string), string parentCategoryCodeName = default(string), string status = default(string))
+        /// <param name="id">Framework's identifier</param>
+        /// <param name="codeName">Framework's codename</param>
+        /// <param name="shortName">Framework's shortname</param>
+        /// <param name="fullName">Framework's fullname</param>
+        /// <param name="status">Framework's status. Possible values include:
+        /// 'Active', 'Ceased', 'PendingClosure'</param>
+        /// <param name="parentCategoryCodeName">Framework's ParentCategory
+        /// Code name</param>
+        public Framework(int id, string codeName, string shortName, string fullName, string status, string parentCategoryCodeName = default(string))
         {
             Id = id;
             CodeName = codeName;
@@ -32,36 +38,66 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
+        /// Gets or sets framework's identifier
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Id")]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
+        /// Gets or sets framework's codename
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "CodeName")]
         public string CodeName { get; set; }
 
         /// <summary>
+        /// Gets or sets framework's shortname
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ShortName")]
         public string ShortName { get; set; }
 
         /// <summary>
+        /// Gets or sets framework's fullname
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "FullName")]
         public string FullName { get; set; }
 
         /// <summary>
+        /// Gets or sets framework's ParentCategory Code name
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ParentCategoryCodeName")]
         public string ParentCategoryCodeName { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Active', 'Ceased',
-        /// 'PendingClosure'
+        /// Gets or sets framework's status. Possible values include:
+        /// 'Active', 'Ceased', 'PendingClosure'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Status")]
         public string Status { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (CodeName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CodeName");
+            }
+            if (ShortName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ShortName");
+            }
+            if (FullName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "FullName");
+            }
+            if (Status == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Status");
+            }
+        }
     }
 }

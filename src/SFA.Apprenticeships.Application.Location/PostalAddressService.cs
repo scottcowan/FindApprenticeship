@@ -13,9 +13,14 @@
             _postalAddressStrategy = postalAddressStrategy;
         }
 
-        public PostalAddress GetPostalAddresses(string companyName, string primaryAddressableObject, string secondaryAddressableObject, string street, string town, string postcode)
+        public PostalAddress GetPostalAddress(string companyName, string primaryAddressableObject, string secondaryAddressableObject, string street, string town, string postcode)
         {
-            return _postalAddressStrategy.GetPostalAddresses(companyName, primaryAddressableObject, secondaryAddressableObject, street, town, postcode);
+            return _postalAddressStrategy.GetPostalAddress(companyName, primaryAddressableObject, secondaryAddressableObject, street, town, postcode);
+        }
+
+        public PostalAddress GetPostalAddress(PostalAddress postalAddress)
+        {
+            return _postalAddressStrategy.GetPostalAddress(postalAddress);
         }
     }
 }

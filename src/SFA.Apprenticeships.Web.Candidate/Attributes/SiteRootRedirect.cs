@@ -1,10 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Attributes
 {
-    using System.Web.Mvc;
+    using Application.Interfaces;
     using Common.Configuration;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using System.Web.Mvc;
 
     public class SiteRootRedirect : ActionFilterAttribute
     {

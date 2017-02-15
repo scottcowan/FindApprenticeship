@@ -2,8 +2,7 @@
 {
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
 
     public class GetByIdStrategy : IGetByIdStrategy
     {

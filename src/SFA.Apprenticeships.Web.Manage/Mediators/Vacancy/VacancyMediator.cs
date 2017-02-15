@@ -149,6 +149,7 @@
                         return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors,
                             vacancyViewModel, validationResult, VacancyViewModelMessages.VacancyAuthoredInApi, UserMessageLevel.Info);
                     case VacancySource.Raa:
+                    case VacancySource.Api:
                         return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.FailedValidation,
                             vacancyViewModel, validationResult);
                     default:
@@ -166,6 +167,7 @@
                     return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApi, vacancyViewModel,
                         VacancyViewModelMessages.VacancyAuthoredInApi, UserMessageLevel.Info);
                 case VacancySource.Raa:
+                case VacancySource.Api:
                     return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.Ok, vacancyViewModel);
                 default:
                     throw new ArgumentOutOfRangeException();

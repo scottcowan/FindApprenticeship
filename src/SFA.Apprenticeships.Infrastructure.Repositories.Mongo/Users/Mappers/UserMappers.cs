@@ -2,7 +2,7 @@
 {
     using Domain.Entities.Users;
     using Infrastructure.Common.Mappers;
-    using Mongo.Users.Entities;
+    using Entities;
 
     public class UserMappers : MapperEngine
     {

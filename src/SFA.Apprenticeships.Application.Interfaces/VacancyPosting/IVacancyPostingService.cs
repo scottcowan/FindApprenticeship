@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
 {
-    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using System;
     using System.Collections.Generic;
@@ -9,7 +8,7 @@
 
     public interface IVacancyPostingService
     {
-        Vacancy CreateVacancy(Vacancy vacancy);
+        Task<Vacancy> CreateVacancy(Vacancy vacancy);
 
         int GetNextVacancyReferenceNumber();
 

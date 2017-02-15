@@ -243,7 +243,7 @@
             {
                 try
                 {
-                    CreateNewVacancy(viewModel, ukprn);
+                    await CreateNewVacancy(viewModel, ukprn);
                 }
                 catch (CustomException ce) when (ce.Code == ErrorCodes.GeoCodeLookupProviderFailed)
                 {
@@ -298,7 +298,7 @@
             newViewModel.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
         }
 
-        private void CreateNewVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn)
+        private async Task CreateNewVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn)
         {
             var vacancyMinimumData = new VacancyMinimumData
             {
@@ -321,7 +321,7 @@
             vacancyMinimumData.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
             vacancyMinimumData.EmployerDescription = viewModel.EmployerDescription;
 
-            _vacancyPostingProvider.CreateVacancy(vacancyMinimumData);
+            await _vacancyPostingProvider.CreateVacancy(vacancyMinimumData);
         }
 
         private void UpdateVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn, VacancyViewModel existingVacancy)

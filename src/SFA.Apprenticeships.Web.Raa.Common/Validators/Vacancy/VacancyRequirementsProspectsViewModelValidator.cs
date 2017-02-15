@@ -3,6 +3,7 @@
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation;
+    using Infrastructure.Presentation;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
     using Common = Validators.Common;
@@ -70,23 +71,23 @@
         {
             validator.RuleFor(x => x.DesiredSkills)
                 .NotEmpty()
-                .When(x => x.VacancySource == VacancySource.Raa)
+                .When(x => x.VacancySource.IsRaa())
                 .WithMessage(VacancyViewModelMessages.DesiredSkills.RequiredErrorText);
 
             validator.RuleFor(x => x.FutureProspects)
                 .NotEmpty()
-                .When(x => x.VacancySource == VacancySource.Raa)
+                .When(x => x.VacancySource.IsRaa())
                 .WithMessage(VacancyViewModelMessages.FutureProspects.RequiredErrorText);
 
             validator.RuleFor(x => x.PersonalQualities)
                 .NotEmpty()
-                .When(x => x.VacancySource == VacancySource.Raa)
+                .When(x => x.VacancySource.IsRaa())
                 .WithMessage(VacancyViewModelMessages.PersonalQualities.RequiredErrorText);
 
             validator.RuleFor(x => x.DesiredQualifications)
                 .NotEmpty()
                 .When(x => x.VacancyType != VacancyType.Traineeship)
-                .When(x => x.VacancySource == VacancySource.Raa)
+                .When(x => x.VacancySource.IsRaa())
                 .WithMessage(VacancyViewModelMessages.DesiredQualifications.RequiredErrorText);
         }
     }

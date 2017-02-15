@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Linq;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Domain.Entities.Raa.RaaApi;
+    using Apprenticeships.Domain.Entities.Raa.Reference;
     using Apprenticeships.Domain.Entities.Users;
     using Apprenticeships.Domain.Interfaces.Messaging;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
@@ -16,11 +18,13 @@
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.RaaApi;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities;
     using Apprenticeships.Infrastructure.WebServices.Wcf;
     using Constants;
     using Infrastructure.Interfaces;
     using Moq;
+    using Ploeh.AutoFixture;
     using UnitTests.Factories;
 
     public class RaaMockFactory
@@ -80,6 +84,10 @@
                 m => m.Query<Provider>(ProviderRepository.SelectByUkprnSql, It.Is<object>(o => o.GetHashCode() == new { ukprn = validProviderApiUser.ReferencedEntitySurrogateId.ToString(), providerStatusTypeID = ProviderStatuses.Activated }.GetHashCode()), null, null))
                 .Returns(new[] { ProviderFactory.GetSkillsFundingAgencyProvider() });
 
+            MockGetOpenConnection.Setup(
+                m => m.Query<Provider>(ProviderRepository.SelectByIdSql, It.Is<object>(o => o.GetHashCode() == new { providerId = RaaApiUserFactory.SkillsFundingAgencyProviderId }.GetHashCode()), null, null))
+                .Returns(new[] { ProviderFactory.GetSkillsFundingAgencyProvider() });
+
             //Setup mock for unknown provider sites
             MockGetOpenConnection.Setup(m => m.Query<ProviderSite>(It.IsAny<string>(), It.IsAny<object>(), null, null)).Returns(new List<ProviderSite>());
 
@@ -88,6 +96,9 @@
 
             //Setup mock for unknown vacancies
             MockGetOpenConnection.Setup(m => m.Query<Vacancy>(It.IsAny<string>(), It.IsAny<object>(), null, null)).Returns(new List<Vacancy>());
+
+            //Setup mock for unknown vacancy locations
+            MockGetOpenConnection.Setup(m => m.Query<VacancyLocation>(It.IsAny<string>(), It.IsAny<object>(), null, null)).Returns(new List<VacancyLocation>());
 
             //Setup mock for unknown vacancy owner relationships
             MockGetOpenConnection.Setup(m => m.Query<VacancyOwnerRelationship>(It.IsAny<string>(), It.IsAny<object>(), null, null)).Returns(new List<VacancyOwnerRelationship>());
@@ -100,6 +111,13 @@
             MockGetOpenConnection.Setup(
                 m => m.QueryCached<int>(It.IsAny<TimeSpan>(), It.IsAny<string>(), It.IsAny<object>(), null, null))
                 .Returns(new int[] { 0 });
+
+            //Set up mock got counties
+            var counties = new Fixture().CreateMany<County>(3).ToList();
+
+            GetMockGetOpenConnection().Setup(
+                m => m.Query<County>(ReferenceRepository.GetCountiesSql, null, null, null))
+                .Returns(counties);
         }
 
         public static Mock<IConfigurationService> GetMockConfigurationService() { return MockConfigurationService; }

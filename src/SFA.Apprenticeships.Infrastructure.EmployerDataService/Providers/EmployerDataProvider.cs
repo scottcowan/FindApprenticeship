@@ -167,7 +167,7 @@
             var town = address.PostTown;
             var postcode = address.PostCode;
 
-            return _postalAddressService.GetPostalAddresses(companyName, primaryAddressableObject, secondaryAddressableObject, street, town, postcode);
+            return _postalAddressService.GetPostalAddress(companyName, primaryAddressableObject, secondaryAddressableObject, street, town, postcode);
         }
 
         #region Helpers

@@ -61,7 +61,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
         private readonly IGeoCodeLookupService _geoCodingService;
-        private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
         private readonly IVacancySummaryService _vacancySummaryService;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
@@ -70,8 +69,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService,
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
             ICurrentUserService currentUserService, IUserProfileService userProfileService,
-            IGeoCodeLookupService geocodingService, ILocalAuthorityLookupService localAuthLookupService,
-            IVacancySummaryService vacancySummaryService)
+            IGeoCodeLookupService geocodingService, IVacancySummaryService vacancySummaryService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -87,7 +85,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _currentUserService = currentUserService;
             _userProfileService = userProfileService;
             _geoCodingService = geocodingService;
-            _localAuthorityLookupService = localAuthLookupService;
             _vacancySummaryService = vacancySummaryService;
         }
 
@@ -307,7 +304,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                                 || vacancy.VacancyLocationType == VacancyLocationType.Nationwide
                                 ? employer.Address
                                 : null;
-            vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
             vacancy.EmployerDescription = vacancyMinimumData.EmployerDescription;
             vacancy.EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl;
 
@@ -332,7 +328,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return resultViewModel;
         }
 
-        public void CreateVacancy(VacancyMinimumData vacancyMinimumData)
+        public async Task CreateVacancy(VacancyMinimumData vacancyMinimumData)
         {
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancyMinimumData.VacancyOwnerRelationshipId, true);
@@ -344,7 +340,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
             }
 
-            _vacancyPostingService.CreateVacancy(new Vacancy
+            await _vacancyPostingService.CreateVacancy(new Vacancy
             {
                 VacancyGuid = vacancyMinimumData.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
@@ -357,7 +353,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 ? employer.Address : null,
                 ContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 OriginalContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
-                LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode),
                 EmployerDescription = vacancyMinimumData.EmployerDescription,
                 EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl,
                 EmployerAnonymousName = vacancyMinimumData.AnonymousEmployerDescription,
@@ -1056,7 +1051,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             vacancy.VacancyId = 0;
             vacancy.VacancyGuid = Guid.NewGuid();
 
-            _vacancyPostingService.CreateVacancy(vacancy);
+            await _vacancyPostingService.CreateVacancy(vacancy);
 
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, true);
             if (vacancyOwnerRelationship == null)
@@ -1245,7 +1240,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
         }
 
-        private Vacancy CreateChildVacancy(Vacancy vacancy, VacancyLocation address, DateTime approvalTime)
+        private async Task<Vacancy> CreateChildVacancy(Vacancy vacancy, VacancyLocation address, DateTime approvalTime)
         {
             var newVacancy = (Vacancy)vacancy.Clone();
             newVacancy.VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
@@ -1256,6 +1251,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.VacancyLocationType = VacancyLocationType.SpecificLocation;
+            newVacancy.VacancyLocations = null;
             if (!string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName))
             {
                 newVacancy.EmployerAnonymousReason = vacancy.EmployerAnonymousReason;
@@ -1266,7 +1262,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 newVacancy.OfflineApplicationUrl = address.EmployersWebsite;
             }
 
-            return _vacancyPostingService.CreateVacancy(newVacancy);
+            return await _vacancyPostingService.CreateVacancy(newVacancy);
         }
 
         public async Task<QAActionResultCode> ApproveVacancy(int vacancyReferenceNumber)
@@ -1307,7 +1303,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
                         foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
                         {
-                            CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
+                            await CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
                         }
 
                         submittedVacancy.OfflineVacancyType = null;
@@ -1691,8 +1687,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 //Set address
                 vacancy.Address = vacancyLocations.Single().Address;
                 vacancy.NumberOfPositions = vacancyLocations.Single().NumberOfPositions;
-                vacancy.LocalAuthorityCode =
-                    _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
                 _vacancyPostingService.UpdateVacancy(vacancy);
 
@@ -1703,8 +1697,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 foreach (var vacancyLocation in vacancyLocations)
                 {
                     vacancyLocation.VacancyId = vacancy.VacancyId;
-                    vacancyLocation.LocalAuthorityCode =
-                    _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
                 }
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
                 _vacancyPostingService.CreateVacancyLocations(vacancyLocations);

@@ -90,5 +90,31 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 }
             }
 
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vacancy'>
+            /// </param>
+            public static Vacancy CreateVacancy(this IVacancyOperations operations, Vacancy vacancy)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVacancyOperations)s).CreateVacancyAsync(vacancy), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vacancy'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<Vacancy> CreateVacancyAsync(this IVacancyOperations operations, Vacancy vacancy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.CreateVacancyWithHttpMessagesAsync(vacancy, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }
