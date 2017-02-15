@@ -226,6 +226,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VacancySummaryFeatures.feature</DependentUpon>
     </Compile>
+    <Compile Include="MockProviders\VacancyMockProvider.cs" />
     <Compile Include="MockProviders\VacancySummaryMockProvider.cs" />
     <Compile Include="Steps\CreateVacancySteps.cs" />
     <Compile Include="Steps\GetRegionsSteps.cs" />

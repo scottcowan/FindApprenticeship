@@ -18,8 +18,6 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.MockProviders
 {
     public static class VacancySummaryMockProvider
     {
-        public static object MockLock = new object();
-
         public static void MockAssortedVacancySummaries(int totalCount, int pageSize)
         {
             var blockSize = pageSize / 4;
