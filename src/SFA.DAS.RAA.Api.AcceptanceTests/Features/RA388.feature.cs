@@ -69,30 +69,6 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details with no identifier")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancy")]
-        public virtual void GetVacancyDetailsWithNoIdentifier()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details with no identifier", new string[] {
-                        "RA388",
-                        "GetVacancy"});
-#line 7
-this.ScenarioSetup(scenarioInfo);
-#line 8
- testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 9
- testRunner.And("I request the vacancy details for the vacancy with no identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 10
- testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 11
- testRunner.And("I do not see the vacancy details for the vacancy with no identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by id without authorization")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
@@ -102,11 +78,11 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id without authorization", new string[] {
                         "RA388",
                         "GetVacancyById"});
-#line 14
+#line 7
 this.ScenarioSetup(scenarioInfo);
-#line 15
+#line 8
  testRunner.When("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 16
+#line 9
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -122,13 +98,13 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id with an invalid api key", new string[] {
                         "RA388",
                         "GetVacancyById"});
-#line 19
+#line 12
 this.ScenarioSetup(scenarioInfo);
-#line 20
+#line 13
  testRunner.When("I authorize my request with an invalid API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 21
+#line 14
  testRunner.And("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 22
+#line 15
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -144,13 +120,13 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id with an unknown api key", new string[] {
                         "RA388",
                         "GetVacancyById"});
-#line 25
+#line 18
 this.ScenarioSetup(scenarioInfo);
-#line 26
+#line 19
  testRunner.When("I authorize my request with an unknown API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 27
+#line 20
  testRunner.And("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 28
+#line 21
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -166,15 +142,15 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id", new string[] {
                         "RA388",
                         "GetVacancyById"});
-#line 31
+#line 24
 this.ScenarioSetup(scenarioInfo);
-#line 32
+#line 25
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 33
+#line 26
  testRunner.And("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 34
+#line 27
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 35
+#line 28
  testRunner.And("I see the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -190,16 +166,16 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id for different provider", new string[] {
                         "RA388",
                         "GetVacancyById"});
-#line 38
+#line 31
 this.ScenarioSetup(scenarioInfo);
-#line 39
+#line 32
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 40
+#line 33
  testRunner.And("I request the vacancy details for the vacancy with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 41
+#line 34
  testRunner.Then("The response status is: Unauthorized with response message: You are not authorize" +
                     "d to view or edit this vacancy.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 42
+#line 35
  testRunner.And("I do not see the vacancy details for the vacancy with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -215,16 +191,16 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy by id that doesn\'t exist", new string[] {
                         "RA388",
                         "GetVacancyById"});
-#line 45
+#line 38
 this.ScenarioSetup(scenarioInfo);
-#line 46
+#line 39
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 47
+#line 40
  testRunner.And("I request the vacancy details for the vacancy with id: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 48
+#line 41
  testRunner.Then("The response status is: NotFound with response message: The requested vacancy has" +
                     " not been found.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 49
+#line 42
  testRunner.And("I do not see the vacancy details for the vacancy with id: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -240,11 +216,11 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number without authorization", new string[] {
                         "RA388",
                         "GetVacancyByReferenceNumber"});
-#line 52
+#line 45
 this.ScenarioSetup(scenarioInfo);
-#line 53
+#line 46
  testRunner.When("I request the vacancy details for the vacancy with reference number: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 54
+#line 47
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -260,13 +236,13 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number with an invalid api key", new string[] {
                         "RA388",
                         "GetVacancyByReferenceNumber"});
-#line 57
+#line 50
 this.ScenarioSetup(scenarioInfo);
-#line 58
+#line 51
  testRunner.When("I authorize my request with an invalid API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 59
+#line 52
  testRunner.And("I request the vacancy details for the vacancy with reference number: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 60
+#line 53
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -282,13 +258,13 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number with an unknown api key", new string[] {
                         "RA388",
                         "GetVacancyByReferenceNumber"});
-#line 63
+#line 56
 this.ScenarioSetup(scenarioInfo);
-#line 64
+#line 57
  testRunner.When("I authorize my request with an unknown API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 65
+#line 58
  testRunner.And("I request the vacancy details for the vacancy with reference number: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 66
+#line 59
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -304,15 +280,15 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number", new string[] {
                         "RA388",
                         "GetVacancyByReferenceNumber"});
-#line 69
+#line 62
 this.ScenarioSetup(scenarioInfo);
-#line 70
+#line 63
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 71
+#line 64
  testRunner.And("I request the vacancy details for the vacancy with reference number: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 72
+#line 65
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 73
+#line 66
  testRunner.And("I see the vacancy details for the vacancy with reference number: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -328,15 +304,15 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number for different provider", new string[] {
                         "RA388",
                         "GetVacancyByReferenceNumber"});
-#line 76
+#line 69
 this.ScenarioSetup(scenarioInfo);
-#line 77
+#line 70
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 78
+#line 71
  testRunner.And("I request the vacancy details for the vacancy with reference number: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 79
+#line 72
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 80
+#line 73
  testRunner.And("I do not see the vacancy details for the vacancy with reference number: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -352,15 +328,15 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy by reference number that doesn\'t exist", new string[] {
                         "RA388",
                         "GetVacancyByReferenceNumber"});
-#line 83
+#line 76
 this.ScenarioSetup(scenarioInfo);
-#line 84
+#line 77
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 85
+#line 78
  testRunner.And("I request the vacancy details for the vacancy with reference number: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 86
+#line 79
  testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 87
+#line 80
  testRunner.And("I do not see the vacancy details for the vacancy with reference number: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -376,11 +352,11 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid without authorization", new string[] {
                         "RA388",
                         "GetVacancyByGuid"});
-#line 90
+#line 83
 this.ScenarioSetup(scenarioInfo);
-#line 91
+#line 84
  testRunner.When("I request the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 92
+#line 85
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -396,13 +372,13 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid with an invalid api key", new string[] {
                         "RA388",
                         "GetVacancyByGuid"});
-#line 95
+#line 88
 this.ScenarioSetup(scenarioInfo);
-#line 96
+#line 89
  testRunner.When("I authorize my request with an invalid API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 97
+#line 90
  testRunner.And("I request the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 98
+#line 91
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -418,13 +394,13 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid with an unknown api key", new string[] {
                         "RA388",
                         "GetVacancyByGuid"});
-#line 101
+#line 94
 this.ScenarioSetup(scenarioInfo);
-#line 102
+#line 95
  testRunner.When("I authorize my request with an unknown API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 103
+#line 96
  testRunner.And("I request the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 104
+#line 97
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -440,15 +416,15 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid", new string[] {
                         "RA388",
                         "GetVacancyByGuid"});
-#line 107
+#line 100
 this.ScenarioSetup(scenarioInfo);
-#line 108
+#line 101
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 109
+#line 102
  testRunner.And("I request the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 110
+#line 103
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 111
+#line 104
  testRunner.And("I see the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -464,15 +440,15 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid for different provider", new string[] {
                         "RA388",
                         "GetVacancyByGuid"});
-#line 114
+#line 107
 this.ScenarioSetup(scenarioInfo);
-#line 115
+#line 108
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 116
+#line 109
  testRunner.And("I request the vacancy details for the vacancy with guid: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 117
+#line 110
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 118
+#line 111
  testRunner.And("I do not see the vacancy details for the vacancy with guid: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -488,15 +464,15 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy by guid that doesn\'t exist", new string[] {
                         "RA388",
                         "GetVacancyByGuid"});
-#line 121
+#line 114
 this.ScenarioSetup(scenarioInfo);
-#line 122
+#line 115
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 123
+#line 116
  testRunner.And("I request the vacancy details for the vacancy with guid: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 124
+#line 117
  testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 125
+#line 118
  testRunner.And("I do not see the vacancy details for the vacancy with guid: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -514,15 +490,15 @@ this.ScenarioSetup(scenarioInfo);
                         "RA388",
                         "GetVacancyByReferenceNumber",
                         "AgencyUser"});
-#line 128
+#line 121
 this.ScenarioSetup(scenarioInfo);
-#line 129
+#line 122
  testRunner.When("I authorize my request with an Agency API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 130
+#line 123
  testRunner.And("I request the vacancy details for the vacancy with reference number: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 131
+#line 124
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 132
+#line 125
  testRunner.And("I see the vacancy details for the vacancy with reference number: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -538,16 +514,16 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week without authorization", new string[] {
                         "RA388",
                         "EditWage"});
-#line 135
+#line 128
 this.ScenarioSetup(scenarioInfo);
-#line 136
+#line 129
  testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 137
+#line 130
  testRunner.When("I request to change the wage for the vacancy with id: 42 to Custom £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 138
+#line 131
  testRunner.Then("The response status is: Unauthorized with response message: Authorization has bee" +
                     "n denied for this request.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 139
+#line 132
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -563,18 +539,18 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week on a traineeship vacancy", new string[] {
                         "RA388",
                         "EditWage"});
-#line 142
+#line 135
 this.ScenarioSetup(scenarioInfo);
-#line 143
+#line 136
  testRunner.Given("I have a Live Traineeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 144
+#line 137
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 145
+#line 138
  testRunner.And("I request to change the wage for the vacancy with id: 42 to Custom £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 146
+#line 139
  testRunner.Then("The response status is: BadRequest with response message: You can only edit the w" +
                     "age of an Apprenticeship vacancy.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 147
+#line 140
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -590,18 +566,18 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week on a submitted vacancy", new string[] {
                         "RA388",
                         "EditWage"});
-#line 150
+#line 143
 this.ScenarioSetup(scenarioInfo);
-#line 151
+#line 144
  testRunner.Given("I have a Submitted Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekl" +
                     "y", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 152
+#line 145
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 153
+#line 146
  testRunner.And("I request to change the wage for the vacancy with id: 42 to Custom £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 154
+#line 147
  testRunner.Then("The response status is: BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 155
+#line 148
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -617,19 +593,19 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week on a archived vacancy", new string[] {
                         "RA388",
                         "EditWage"});
-#line 158
+#line 151
 this.ScenarioSetup(scenarioInfo);
-#line 159
+#line 152
  testRunner.Given("I have a Completed Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekl" +
                     "y", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 160
+#line 153
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 161
+#line 154
  testRunner.And("I request to change the wage for the vacancy with id: 42 to Custom £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 162
+#line 155
  testRunner.Then("The response status is: BadRequest with response message: You can only edit the w" +
                     "age of a vacancy that is live or closed.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 163
+#line 156
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -645,17 +621,17 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week", new string[] {
                         "RA388",
                         "EditWage"});
-#line 166
+#line 159
 this.ScenarioSetup(scenarioInfo);
-#line 167
+#line 160
  testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 168
+#line 161
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 169
+#line 162
  testRunner.And("I request to change the wage for the vacancy with id: 42 to Custom £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 170
+#line 163
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 171
+#line 164
  testRunner.And("I see that the wage details for the vacancy with id: 42 have been updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -671,18 +647,18 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Change fixed wage to wage range and increase by £20 per week", new string[] {
                         "RA388",
                         "EditWage"});
-#line 174
+#line 167
 this.ScenarioSetup(scenarioInfo);
-#line 175
+#line 168
  testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 176
+#line 169
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 177
+#line 170
  testRunner.And("I request to change the wage for the vacancy with id: 42 to CustomRange £220 - £2" +
                     "40 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 178
+#line 171
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 179
+#line 172
  testRunner.And("I see that the wage details for the vacancy with id: 42 have been updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -698,15 +674,15 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Decrease fixed wage by £20 per week", new string[] {
                         "RA388",
                         "EditWage"});
-#line 182
+#line 175
 this.ScenarioSetup(scenarioInfo);
-#line 183
+#line 176
  testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 184
+#line 177
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 185
+#line 178
  testRunner.And("I request to change the wage for the vacancy with id: 42 to Custom £180 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 186
+#line 179
  testRunner.Then("The response status is: BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -715,9 +691,9 @@ this.ScenarioSetup(scenarioInfo);
             table1.AddRow(new string[] {
                         "Amount",
                         "The new fixed wage must be higher than the original figure."});
-#line 187
+#line 180
  testRunner.And("The validation errors contain:", ((string)(null)), table1, "And ");
-#line 190
+#line 183
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -733,15 +709,15 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Change fixed wage to national minumum wage", new string[] {
                         "RA388",
                         "EditWage"});
-#line 193
+#line 186
 this.ScenarioSetup(scenarioInfo);
-#line 194
+#line 187
  testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 195
+#line 188
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 196
+#line 189
  testRunner.And("I request to change the wage for the vacancy with id: 42 to NationalMinimum", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 197
+#line 190
  testRunner.Then("The response status is: BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -751,9 +727,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Type",
                         "You can only change the type of a Custom (fixed) wage to CustomRange (wage range)" +
                             "."});
-#line 198
+#line 191
  testRunner.And("The validation errors contain:", ((string)(null)), table2, "And ");
-#line 201
+#line 194
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

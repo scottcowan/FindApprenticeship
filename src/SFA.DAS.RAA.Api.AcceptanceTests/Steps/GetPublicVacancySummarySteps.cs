@@ -70,6 +70,10 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                     m => m.QueryAsync<DbVacancySummary>(It.Is<string>(s => s.StartsWith(VacancySummaryRepository.CoreQuery)), It.IsAny<object>(), It.IsAny<int?>(), It.IsAny<CommandType?>()))
                 .Returns(Task.FromResult((IList<DbVacancySummary>)new List<DbVacancySummary>(vacancySummaries)));
 
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                    m => m.QueryAsync<int>("SELECT Count(VacancyId) FROM Vacancy WHERE VacancyStatusId = 2", It.IsAny<object>(), It.IsAny<int?>(), It.IsAny<CommandType?>()))
+                .Returns(Task.FromResult((IList<int>)new List<int> { totalCount }));
+
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
             httpClient.SetAuthorization();
 

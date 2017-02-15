@@ -21,7 +21,7 @@ namespace SFA.DAS.RAA.Api.UnitTests.Strategies
             const int pageSize = 7;
 
             var vacancySummaryRepository = new Mock<IVacancySummaryRepository>();
-            vacancySummaryRepository.Setup(r => r.GetLiveAsync(It.IsAny<VacancySummaryByStatusQuery>())).Returns(Task.FromResult(new ListWithTotalCount<VacancySummary>()));
+            vacancySummaryRepository.Setup(r => r.GetLiveAsync(It.IsAny<VacancySummaryByStatusQuery>())).Returns(Task.FromResult(new ListWithTotalCount<VacancySummary>(new List<VacancySummary>(), 0)));
 
             var strategy = new GetAllLiveVacancySummariesStrategy(vacancySummaryRepository.Object);
 
@@ -45,7 +45,7 @@ namespace SFA.DAS.RAA.Api.UnitTests.Strategies
             var vacancySummaryRepository = new Mock<IVacancySummaryRepository>();
 
             var strategy = new GetAllLiveVacancySummariesStrategy(vacancySummaryRepository.Object);
-            vacancySummaryRepository.Setup(r => r.GetLiveAsync(It.IsAny<VacancySummaryByStatusQuery>())).Returns(Task.FromResult(new ListWithTotalCount<VacancySummary>()));
+            vacancySummaryRepository.Setup(r => r.GetLiveAsync(It.IsAny<VacancySummaryByStatusQuery>())).Returns(Task.FromResult(new ListWithTotalCount<VacancySummary>(new List<VacancySummary>(), 0)));
 
             await strategy.GetAllLiveVacancySummaries(page, pageSize);
 

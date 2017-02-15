@@ -83,10 +83,6 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             VacancySummaryMockProvider.MockAssortedVacancySummaries(builder.TotalCount ?? 50, builder.PageSize ?? 50);
             VacancySummaryMockProvider.MockProviderSites();
 
-            RaaMockFactory.GetMockGetOpenConnection().Setup(
-                    m => m.QueryAsync<int>("SELECT Count(VacancyId) FROM Vacancy WHERE VacancyStatusId = 2", It.IsAny<object>(), It.IsAny<int?>(), It.IsAny<CommandType?>()))
-                .Returns(Task.FromResult((IList<int>)new List<int> { totalCount }));
-
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
             httpClient.SetAuthorization();
 

@@ -300,7 +300,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
             var mapped = Mapper.Map<IList<DbVacancySummary>, IList<VacancySummary>>(vacancies);
 
-            return new ListWithTotalCount<VacancySummary> {List = mapped, TotalCount = totalRecords.Single()};
+            return new ListWithTotalCount<VacancySummary> (mapped, totalRecords.Single());
         }
 
         private static object GetByStatusSqlParams(VacancySummaryByStatusQuery query)
