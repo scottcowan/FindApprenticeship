@@ -90,20 +90,40 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 }
             }
 
+            /// <summary>
+            /// CURRENTLY INCOMPLETE! DO NOT USE YET!
+            /// Endpoint for creating a vacancy. Implements the full rule set for creating
+            /// a valid vacancy but also allows you to create a partial vacancy that can
+            /// be completed via the UI or API.
+            /// Consult the model documentation for the list of required fields and rules.
+            /// Please note that all vacancies created through this endpoint will have a
+            /// Draft status. They need to be submitted separately.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='vacancy'>
+            /// The vacancy or partial vacancy to create
             /// </param>
             public static Vacancy CreateVacancy(this IVacancyOperations operations, Vacancy vacancy)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVacancyOperations)s).CreateVacancyAsync(vacancy), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// CURRENTLY INCOMPLETE! DO NOT USE YET!
+            /// Endpoint for creating a vacancy. Implements the full rule set for creating
+            /// a valid vacancy but also allows you to create a partial vacancy that can
+            /// be completed via the UI or API.
+            /// Consult the model documentation for the list of required fields and rules.
+            /// Please note that all vacancies created through this endpoint will have a
+            /// Draft status. They need to be submitted separately.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='vacancy'>
+            /// The vacancy or partial vacancy to create
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
