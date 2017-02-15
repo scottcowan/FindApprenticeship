@@ -7,29 +7,43 @@
     using ApiPostalAddress = Client.V1.Models.PostalAddress;
     using ApiWage = Client.V1.Models.Wage;
     using ApiVacancySummary = Client.V1.Models.VacancySummary;
+    using ApiVacancyLocation = Client.V1.Models.VacancyLocation;
     using ApiVacancy = Client.V1.Models.Vacancy;
     using ApiWageUpdate = Client.V1.Models.WageUpdate;
     using ApiCounty = Client.V1.Models.County;
     using ApiLocalAuthority = Client.V1.Models.LocalAuthority;
     using ApiRegion = Client.V1.Models.Region;
+    using ApiCategory = Client.V1.Models.Category;
+    using ApiFramework = Client.V1.Models.Framework;
+    using ApiSector = Client.V1.Models.Sector;
+    using ApiStandard = Client.V1.Models.Standard;
+    using ApiStandardSubjectAreaTierOne = Client.V1.Models.StandardSubjectAreaTierOne;
     using GeoPoint = Apprenticeships.Domain.Entities.Raa.Locations.GeoPoint;
     using PostalAddress = Apprenticeships.Domain.Entities.Raa.Locations.PostalAddress;
     using VacancySummary = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancySummary;
+    using VacancyLocation = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyLocation;
     using Vacancy = Apprenticeships.Domain.Entities.Raa.Vacancies.Vacancy;
     using Wage = Apprenticeships.Domain.Entities.Vacancies.Wage;
     using WageUpdate = Apprenticeships.Domain.Entities.Raa.Vacancies.WageUpdate;
     using County = Apprenticeships.Domain.Entities.Raa.Reference.County;
     using LocalAuthority = Apprenticeships.Domain.Entities.Raa.Reference.LocalAuthority;
     using Region = Apprenticeships.Domain.Entities.Raa.Reference.Region;
+    using Category = Apprenticeships.Domain.Entities.ReferenceData.Category;
+    using Framework = Apprenticeships.Domain.Entities.Raa.Reference.Framework;
+    using Sector = Apprenticeships.Domain.Entities.Raa.Vacancies.Sector;
+    using Standard = Apprenticeships.Domain.Entities.Raa.Vacancies.Standard;
+    using StandardSubjectAreaTierOne = Apprenticeships.Domain.Entities.Raa.Vacancies.StandardSubjectAreaTierOne;
 
     public class ApiClientMappers : MapperEngine
     {
         public override void Initialise()
         {
+            //From API entity to domain
             Mapper.CreateMap<ApiGeoPoint, GeoPoint>();
             Mapper.CreateMap<ApiPostalAddress, PostalAddress>();
             Mapper.CreateMap<ApiWage, Wage>();
             Mapper.CreateMap<ApiVacancySummary, VacancySummary>();
+            Mapper.CreateMap<ApiVacancyLocation, VacancyLocation>();
             Mapper.CreateMap<ApiVacancy, Vacancy>();
             Mapper.CreateMap<WageUpdate, ApiWageUpdate>();
 
@@ -71,7 +85,6 @@
                 .ForMember(dest => dest.FrameworkCodeNameComment, opt => opt.Ignore())
                 .ForMember(dest => dest.FutureProspectsComment, opt => opt.Ignore())
                 .ForMember(dest => dest.LastEditedById, opt => opt.Ignore())
-                .ForMember(dest => dest.LocalAuthorityCode, opt => opt.Ignore())
                 .ForMember(dest => dest.LocationAddressesComment, opt => opt.Ignore())
                 .ForMember(dest => dest.LongDescriptionComment, opt => opt.Ignore())
                 .ForMember(dest => dest.NumberOfPositionsComment, opt => opt.Ignore())
@@ -114,7 +127,8 @@
                 .ForMember(dest => dest.ApplicantCount, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
                 .ForMember(dest => dest.IsMultiLocation, opt => opt.Ignore())
-                .ForMember(dest => dest.OfflineVacancyType, opt => opt.Ignore());
+                .ForMember(dest => dest.OfflineVacancyType, opt => opt.Ignore())
+                .ForMember(dest => dest.VacancyLocations, opt => opt.Ignore());
 
             Mapper.CreateMap<ApiCounty, County>();
             Mapper.CreateMap<ApiLocalAuthority, LocalAuthority>();
@@ -124,6 +138,22 @@
                 .ForMember(dest => dest.VacancyOwnerRelationshipId, opt => opt.MapFrom(src => src.EmployerProviderSiteLinkId))
                 .ForMember(dest => dest.VacancyOwnerRelationshipGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.StatusType, opt => opt.UseValue(VacancyOwnerRelationshipStatusTypes.Live));
+
+            Mapper.CreateMap<ApiCategory, Category>()
+                .ForMember(dest => dest.Count, opt => opt.Ignore());
+
+            Mapper.CreateMap<ApiSector, Sector>();
+
+            Mapper.CreateMap<ApiStandardSubjectAreaTierOne, StandardSubjectAreaTierOne>();
+            Mapper.CreateMap<ApiFramework, Framework>();
+            Mapper.CreateMap<ApiStandard, Standard>();
+
+            //From domain to API entity
+            Mapper.CreateMap<GeoPoint, ApiGeoPoint>();
+            Mapper.CreateMap<PostalAddress, ApiPostalAddress>();
+            Mapper.CreateMap<Wage, ApiWage>();
+            Mapper.CreateMap<VacancyLocation, ApiVacancyLocation>();
+            Mapper.CreateMap<Vacancy, ApiVacancy>();
         }
     }
 }

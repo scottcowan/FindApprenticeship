@@ -232,7 +232,7 @@
             }
 
             var existingVacancy = await _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
-            var newViewModel =  await _providerProvider.ConfirmVacancyOwnerRelationship(viewModel);
+            var newViewModel = await _providerProvider.ConfirmVacancyOwnerRelationship(viewModel);
             viewModel.VacancyOwnerRelationshipId = newViewModel.VacancyOwnerRelationshipId;
 
             if (existingVacancy != null)
@@ -243,7 +243,7 @@
             {
                 try
                 {
-                    CreateNewVacancy(viewModel, ukprn);
+                    await CreateNewVacancy(viewModel, ukprn);
                 }
                 catch (CustomException ce) when (ce.Code == ErrorCodes.GeoCodeLookupProviderFailed)
                 {
@@ -298,12 +298,12 @@
             newViewModel.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
         }
 
-        private void CreateNewVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn)
+        private async Task CreateNewVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn)
         {
             var vacancyMinimumData = new VacancyMinimumData
             {
                 VacancyLocationType =
-                    viewModel.VacancyLocationType,
+                    viewModel.VacancyLocationType ?? VacancyLocationType.Unknown,
                 NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
                 viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions,
                 Ukprn = ukprn,
@@ -321,7 +321,7 @@
             vacancyMinimumData.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
             vacancyMinimumData.EmployerDescription = viewModel.EmployerDescription;
 
-            _vacancyPostingProvider.CreateVacancy(vacancyMinimumData);
+            await _vacancyPostingProvider.CreateVacancy(vacancyMinimumData);
         }
 
         private void UpdateVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn, VacancyViewModel existingVacancy)
@@ -334,7 +334,7 @@
                 var vacancyData = new VacancyMinimumData
                 {
                     VacancyLocationType =
-                        viewModel.VacancyLocationType,
+                        viewModel.VacancyLocationType ?? VacancyLocationType.Unknown,
                     NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
                     viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions,
                     Ukprn = ukprn,
@@ -474,27 +474,27 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<TrainingDetailsViewModel> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel)
+        public async Task<MediatorResponse<TrainingDetailsViewModel>> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel)
         {
             viewModel.TrainingType = TrainingType.Frameworks;
             viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
             viewModel.FrameworkCodeName = null;
             viewModel.SectorCodeName = null;
             viewModel.Standards = _vacancyPostingProvider.GetStandards();
-            viewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+            viewModel.SectorsAndFrameworks = await _vacancyPostingProvider.GetSectorsAndFrameworks();
             viewModel.Sectors = _vacancyPostingProvider.GetSectors();
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<TrainingDetailsViewModel> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel)
+        public async Task<MediatorResponse<TrainingDetailsViewModel>> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel)
         {
             viewModel.TrainingType = TrainingType.Standards;
             viewModel.StandardId = null;
             viewModel.SectorCodeName = null;
             viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
             viewModel.Standards = _vacancyPostingProvider.GetStandards();
-            viewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+            viewModel.SectorsAndFrameworks = await _vacancyPostingProvider.GetSectorsAndFrameworks();
             viewModel.Sectors = _vacancyPostingProvider.GetSectors();
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok, viewModel);
@@ -630,7 +630,7 @@
 
             if (!validationResult.IsValid)
             {
-                UpdateReferenceDataFor(viewModel);
+                await UpdateReferenceDataFor(viewModel);
                 return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
@@ -645,7 +645,7 @@
 
             if (!validationResult.IsValid)
             {
-                UpdateReferenceDataFor(viewModel);
+                await UpdateReferenceDataFor(viewModel);
                 return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
@@ -654,9 +654,9 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
-        private void UpdateReferenceDataFor(TrainingDetailsViewModel trainingDetailsViewModel)
+        private async Task UpdateReferenceDataFor(TrainingDetailsViewModel trainingDetailsViewModel)
         {
-            trainingDetailsViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+            trainingDetailsViewModel.SectorsAndFrameworks = await _vacancyPostingProvider.GetSectorsAndFrameworks();
             trainingDetailsViewModel.Standards = _vacancyPostingProvider.GetStandards();
             trainingDetailsViewModel.Sectors = _vacancyPostingProvider.GetSectors();
             if (trainingDetailsViewModel.TrainingType == TrainingType.Standards && trainingDetailsViewModel.StandardId.HasValue)

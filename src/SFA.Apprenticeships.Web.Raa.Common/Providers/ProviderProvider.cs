@@ -152,7 +152,7 @@
                 vacancy.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
                 vacancy.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
                 vacancy.VacancyLocationType =
-                        viewModel.VacancyLocationType;
+                        viewModel.VacancyLocationType.Value;
                 vacancy.NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide
                     ? viewModel.NumberOfPositionsNationwide
                     : viewModel.NumberOfPositions;

@@ -35,6 +35,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 		                    v.AddressLine5,
 		                    v.Town,
 		                    v.CountyId,
+		                    v.LocalAuthorityId,
 		                    v.PostCode,
 		                    v.ApplyOutsideNAVMS,
 		                    v.ApplicationClosingDate,
@@ -281,16 +282,25 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             return mapped;
         }
 
-        public async Task<ListWithTotalCount<VacancySummary>> GetByStatusAsync(VacancySummaryByStatusQuery query)
+        public async Task<ListWithTotalCount<VacancySummary>> GetLiveAsync(VacancySummaryByStatusQuery query)
         {
-            var vacancies = await _getOpenConnection.QueryAsync<DbVacancySummary>(GetByStatusSql(query), GetByStatusSqlParams(query));
+            var sql = $@"{CoreQuery}
+                    WHERE v.VacancyId IN (SELECT VacancyId FROM Vacancy WHERE VacancyStatusId = 2 ORDER BY VacancyReferenceNumber ASC OFFSET (@skip) ROWS FETCH NEXT (@take) ROWS ONLY)";
+
+            var sqlParams = new
+            {
+                Skip = query.PageSize * (query.RequestedPage - 1),
+                Take = query.PageSize
+            };
+
+            var vacancies = await _getOpenConnection.QueryAsync<DbVacancySummary>(sql, sqlParams);
 
             // return the total record count as well
-            var totalRecords = vacancies.Any() ? vacancies.First().TotalResultCount : 0;
+            var totalRecords = await _getOpenConnection.QueryAsync<int>("SELECT Count(VacancyId) FROM Vacancy WHERE VacancyStatusId = 2");
 
             var mapped = Mapper.Map<IList<DbVacancySummary>, IList<VacancySummary>>(vacancies);
 
-            return new ListWithTotalCount<VacancySummary>(mapped, totalRecords);
+            return new ListWithTotalCount<VacancySummary> {List = mapped, TotalCount = totalRecords.Single()};
         }
 
         private static object GetByStatusSqlParams(VacancySummaryByStatusQuery query)

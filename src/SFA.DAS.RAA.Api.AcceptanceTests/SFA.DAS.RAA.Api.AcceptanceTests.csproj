@@ -194,6 +194,11 @@
     <Compile Include="DependencyResolution\AcceptanceTestsRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="Extensions\HttpClientExtensions.cs" />
+    <Compile Include="Features\RA577.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RA577.feature</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Features\RA578.feature.cs">
       <AutoGen>True</AutoGen>
@@ -249,6 +254,7 @@
     <Compile Include="Steps\GetVacancySummarySteps.cs" />
     <Compile Include="Steps\HttpResponseSteps.cs" />
     <Compile Include="Steps\LinkEmployerSteps.cs" />
+    <Compile Include="Steps\GetFrameworksAndStandardsSteps.cs" />
     <Compile Include="Steps\ResponseMessageSteps.cs" />
     <Compile Include="Steps\SetupVacancySteps.cs" />
     <Compile Include="Steps\SwaggerUiSteps.cs" />
@@ -284,6 +290,10 @@
     <None Include="Features\RA551.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RA551.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\RA577.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>RA577.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\RA578.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

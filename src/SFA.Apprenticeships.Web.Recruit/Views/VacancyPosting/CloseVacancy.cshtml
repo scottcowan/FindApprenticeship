@@ -8,19 +8,22 @@
     ViewBag.Title = "Recruit an Apprentice - Close Vacancy";
 }
 
-@if (Model.VacancyType == VacancyType.Traineeship)
-{
-    <h1 class="heading-xlarge">
-        Close this opportunity
-    </h1>
-}
-else
-{
-    <h1 class="heading-xlarge">
-        Close this vacancy
-    </h1>
-}
-
+<div class="grid-row">
+    <div class="column-two-thirds">
+        @if (Model.VacancyType == VacancyType.Traineeship)
+        {
+            <h1 class="heading-xlarge">
+                Close this opportunity
+            </h1>
+        }
+        else
+        {
+            <h1 class="heading-xlarge">
+                Close this vacancy
+            </h1>
+        }
+    </div>
+</div>
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.CloseVacancy, FormMethod.Post, new { id = "close-vacancy-form" }))
 {
@@ -42,23 +45,21 @@ else
     @Html.HiddenFor(m => m.VacancyDatesViewModel.VacancyStatus)
     @Html.HiddenFor(m => m.VacancyType)
 
-    if (Model.VacancyType == VacancyType.Traineeship)
-    {
-        <div>
-            Your opportunity will be closed immediately and will no longer be listed on Find<br />
-            an traineeship
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <div class="panel panel-border-wide">
+                @if (Model.VacancyType == VacancyType.Traineeship)
+                {
+                    <p>Your opportunity will be closed immediately and will no longer be listed on Find an traineeship</p>
+                }
+                else
+                {
+                    <p>Your vacancy will be closed immediately and will no longer be listed on Find an apprenticeship</p>
+                }
+            </div>
         </div>
-    }
-    else
-    {
-        <div>
-            Your vacancy will be closed immediately and will no longer be listed on Find<br />
-            an apprenticeship
-        </div>
-    }
-
-    <br/>
-    <div class="grid grid-1-2 inline">
+    </div>
+    <div class="form-group inline sfa-xlarge-top-margin">
         @if (Model.VacancyType == VacancyType.Apprenticeship)
         {
             <button class="button" type="submit">Close vacancy</button>
@@ -67,7 +68,6 @@ else
         {
             <button class="button" type="submit">Close opportunity</button>
         }
-
 
         @{
             var viewModel = new
@@ -79,7 +79,7 @@ else
                 RecruitmentRouteNames.VacancyApplications :
                 RecruitmentRouteNames.PreviewVacancy;
 
-            @Html.RouteLink("Cancel", routeName, viewModel), new { @class = "button sfa-button-secondary" }
+            @Html.RouteLink("Cancel", routeName, viewModel, new { @class = "button sfa-button-secondary" });
         }
     </div>
 }

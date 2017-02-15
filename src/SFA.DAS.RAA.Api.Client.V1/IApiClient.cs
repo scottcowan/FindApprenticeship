@@ -49,6 +49,11 @@ namespace SFA.DAS.RAA.Api.Client.V1
         IEmployer Employer { get; }
 
         /// <summary>
+        /// Gets the IFrameworkOperations.
+        /// </summary>
+        IFrameworkOperations FrameworkOperations { get; }
+
+        /// <summary>
         /// Gets the IPublicVacancyOperations.
         /// </summary>
         IPublicVacancyOperations PublicVacancyOperations { get; }
@@ -62,6 +67,11 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// Gets the IReference.
         /// </summary>
         IReference Reference { get; }
+
+        /// <summary>
+        /// Gets the IStandardOperations.
+        /// </summary>
+        IStandardOperations StandardOperations { get; }
 
         /// <summary>
         /// Gets the IVacancyOperations.

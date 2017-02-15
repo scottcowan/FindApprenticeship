@@ -149,6 +149,7 @@
                         return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors,
                             vacancyViewModel, validationResult, VacancyViewModelMessages.VacancyAuthoredInApi, UserMessageLevel.Info);
                     case VacancySource.Raa:
+                    case VacancySource.Api:
                         return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.FailedValidation,
                             vacancyViewModel, validationResult);
                     default:
@@ -166,6 +167,7 @@
                     return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApi, vacancyViewModel,
                         VacancyViewModelMessages.VacancyAuthoredInApi, UserMessageLevel.Info);
                 case VacancySource.Raa:
+                case VacancySource.Api:
                     return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.Ok, vacancyViewModel);
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -242,27 +244,27 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetTrainingDetails.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<TrainingDetailsViewModel> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel)
+        public async Task<MediatorResponse<TrainingDetailsViewModel>> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel)
         {
             viewModel.TrainingType = TrainingType.Frameworks;
             viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
             viewModel.FrameworkCodeName = null;
             viewModel.SectorCodeName = null;
             viewModel.Standards = _vacancyQaProvider.GetStandards();
-            viewModel.SectorsAndFrameworks = _vacancyQaProvider.GetSectorsAndFrameworks();
+            viewModel.SectorsAndFrameworks = await _vacancyQaProvider.GetSectorsAndFrameworks();
             viewModel.Sectors = _vacancyQaProvider.GetSectors();
 
             return GetMediatorResponse(VacancyMediatorCodes.SelectFrameworkAsTrainingType.Ok, viewModel);
         }
 
-        public MediatorResponse<TrainingDetailsViewModel> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel)
+        public async Task<MediatorResponse<TrainingDetailsViewModel>> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel)
         {
             viewModel.TrainingType = TrainingType.Standards;
             viewModel.StandardId = null;
             viewModel.SectorCodeName = null;
             viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
             viewModel.Standards = _vacancyQaProvider.GetStandards();
-            viewModel.SectorsAndFrameworks = _vacancyQaProvider.GetSectorsAndFrameworks();
+            viewModel.SectorsAndFrameworks = await _vacancyQaProvider.GetSectorsAndFrameworks();
             viewModel.Sectors = _vacancyQaProvider.GetSectors();
 
             return GetMediatorResponse(VacancyMediatorCodes.SelectStandardAsTrainingType.Ok, viewModel);
@@ -439,7 +441,7 @@
                 var sectorsAndFrameworks = _vacancyQaProvider.GetSectorsAndFrameworks();
                 var standards = _vacancyQaProvider.GetStandards();
                 var sectors = _vacancyQaProvider.GetSectors();
-                viewModel.SectorsAndFrameworks = sectorsAndFrameworks;
+                viewModel.SectorsAndFrameworks = await sectorsAndFrameworks;
                 viewModel.Standards = standards;
                 viewModel.Sectors = sectors;
 
@@ -496,7 +498,7 @@
 
             await _providerQaProvider.ConfirmVacancyOwnerRelationship(viewModel);
 
-            existingVacancy.VacancyLocationType = viewModel.VacancyLocationType;
+            existingVacancy.VacancyLocationType = viewModel.VacancyLocationType ?? VacancyLocationType.Unknown;
             existingVacancy.NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
                 viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions;
             existingVacancy.VacancyGuid = viewModel.VacancyGuid;

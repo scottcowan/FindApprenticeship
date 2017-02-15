@@ -36,15 +36,14 @@ else
                 var webTrendItemPositionTracker = "Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/results/itemposition/" + vacancy.Id + "', 'WT.dl', '99', 'WT.ti', 'Traineeships Search – Item Position Clicked', 'DCSext.ipos', '" + itemPosition + "'] })";
                 var escapedVacancyTitle = HtmlExtensions.EscapeHtmlEncoding(Html, vacancy.Title).ToString();
                     <li class="search-result sfa-section-bordered">
-                            <h2 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude })</h2>
+                            <h2 class="heading-medium vacancy-title-link">@Html.ActionLink(escapedVacancyTitle, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude })</h2>
                            new
                            {
                                data_vacancy_id = vacancy.Id,
                                onclick = webTrendItemPositionTracker,
                                data_lat = vacancy.Location.Latitude,
                                data_lon = vacancy.Location.Longitude
-                           })
-                        </h2>
+                           })                        
                                 <span id="posted-date-@vacancy.Id">
                                     (Added @vacancy.PostedDate.ToFriendlyDaysAgo()
                                 </span>
@@ -61,8 +60,7 @@ else
                                         <span>- @vacancy.NumberOfPositions positions available)</span>
                                     }
                                 </span>
-                            </li>
-                        </ul>
+                            </li>                       
                     <p class="@vacancy.Description.GetPreserveFormattingCssClass()">@vacancy.Description</p>
                         <div class="grid-row">
                             <div class="column-two-thirds">
@@ -89,12 +87,11 @@ else
                             </ul>
                         </div>
                             <div class="column-one-third map-container hide-nojs sfa-small-bottom-margin toggle-content--mob">
-                            <a href="https://www.google.com/maps/dir/LocationLatLon/'@vacancy.Location.Latitude,@vacancy.Location.Longitude'" target="_blank" rel="external" class="map-links fake-link font-xxsmall view-googlemaps">Open map</a>
+                            <a href="https://www.google.com/maps/dir/LocationLatLon/'@vacancy.Location.Latitude,@vacancy.Location.Longitude'"   class="map-links fake-link font-xxsmall view-googlemaps">Open map</a>
                                 <div class="map-placeholder"></div>
                                 <img class="static-map" src="@vacancy.GoogleStaticMapsUrl" />
                         </div>
-                    </div>
-                </li>
+                    </div>                
                 itemPosition++;
             }
         }

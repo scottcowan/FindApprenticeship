@@ -13,18 +13,17 @@
     @Html.HiddenFor(m => m.ApplicationSelection.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.ApplicationSelection.FilterType)
     @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
-    <div>
-        <div class="hgroup">
-            <h1 class="heading-xlarge sfa-medium-bottom-margin">Select @Model.ApplicantDetails.Name for this role</h1>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <h1 class="heading-xlarge">Select @Model.ApplicantDetails.Name for this role</h1>
+
+            <p> An automated message will now be sent to the candidate to inform them that their @Model.Vacancy.Title application has been successful.</p>
         </div>
-        <p> An automated message will now be sent to the candidate to inform them that their @Model.Vacancy.Title application has been successful.</p>        
-        <section>
-            <div class="form-group inline">
-                <button type="submit" class="button" name="SendSuccessfulDecision" value="SendSuccessfulDecision">
-                    Confirm and send
-                </button>                
-                @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, Model.ApplicationSelection.RouteValues, new { @class = "button sfa-button-secondary" })                
-            </div>
-        </section>
+    </div>
+    <div class="form-group inline sfa-xlarge-top-margin">
+        <button type="submit" class="button" name="SendSuccessfulDecision" value="SendSuccessfulDecision">
+            Confirm and send
+        </button>
+        @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, Model.ApplicationSelection.RouteValues, new { @class = "button sfa-button-secondary" })
     </div>
 }

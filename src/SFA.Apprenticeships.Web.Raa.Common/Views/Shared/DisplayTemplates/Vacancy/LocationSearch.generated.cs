@@ -888,7 +888,7 @@ WriteLiteral("            ");
 
             
             #line 170 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-       Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"}));
+       Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "form-control-3-4p", type = "text", size = 12, rows= 5}, labelHtmlAttributes: new {@class = "bold-small"}));
 
             
             #line default

@@ -3,6 +3,7 @@
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation;
+    using Infrastructure.Presentation;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
     using Web.Common.ViewModels;
@@ -204,7 +205,7 @@
                 .When(x => x.VacancyType != VacancyType.Traineeship)
                 .When(
                     x =>
-                        x.VacancySource == VacancySource.Raa || x.Duration.HasValue ||
+                        x.VacancySource.IsRaa() || x.Duration.HasValue ||
                         x.Wage.Classification == WageClassification.ApprenticeshipMinimum || x.Wage.Classification == WageClassification.NationalMinimum);
 
             validator.RuleFor(x => x.Wage.HoursPerWeek)
@@ -227,19 +228,19 @@
             validator.RuleFor(x => x.Duration)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText)
-                .When(x => x.VacancySource == VacancySource.Raa);
+                .When(x => x.VacancySource.IsRaa());
 
             validator.RuleFor(x => x.Duration)
                 .Must(HaveAValidApprenticeshipDuration)
                 .WithMessage(VacancyViewModelMessages.Duration.DurationCantBeLessThan12Months)
                 .When(x => x.VacancyType != VacancyType.Traineeship)
-                .When(x => x.VacancySource == VacancySource.Raa || x.Wage.HoursPerWeek.HasValue);
+                .When(x => x.VacancySource.IsRaa() || x.Wage.HoursPerWeek.HasValue);
 
             validator.RuleFor(x => x.Duration)
                 .Must(HaveAValidTraineeshipDuration)
                 .WithMessage(VacancyViewModelMessages.Duration.DurationMustBeBetweenSixWeeksAndSixMonths)
                 .When(x => x.VacancyType == VacancyType.Traineeship)
-                .When(x => x.VacancySource == VacancySource.Raa);
+                .When(x => x.VacancySource.IsRaa());
 
             AddVacancySummaryViewModelDatesServerCommonRules(validator, parentPropertyName);
 

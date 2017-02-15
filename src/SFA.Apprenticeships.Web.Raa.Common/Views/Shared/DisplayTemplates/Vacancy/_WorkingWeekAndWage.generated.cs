@@ -367,7 +367,7 @@ WriteLiteral("\r\n                </span>\r\n");
             #line hidden
 WriteLiteral("        </h3>\r\n        <div");
 
-WriteLiteral(" class=\"sfa-p-margin-bottom\"");
+WriteLiteral(" class=\"sfa-p-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p");
 
@@ -423,16 +423,7 @@ WriteLiteral("</div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            ");
-
-            
-            #line 68 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-       Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("            \r\n\r\n");
 
             
             #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
@@ -510,10 +501,21 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        </div>\r\n    </li>\r\n");
+WriteLiteral("        </div>\r\n");
+
+WriteLiteral("        ");
 
             
-            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 83 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+   Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </li>\r\n");
+
+            
+            #line 85 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
 }
             
             #line default

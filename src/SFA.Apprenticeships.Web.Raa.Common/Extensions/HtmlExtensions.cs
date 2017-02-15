@@ -63,14 +63,14 @@
             return commentViewModel;
         }
 
-        public static EditLinkViewModel GetEditLinkViewModel<TModel, TProperty>(this HtmlHelper<TModel> html, VacancyViewModel vacancyViewModel, Expression<Func<TModel, TProperty>> propertyExpression, string editUrl, string comment)
+        public static EditLinkViewModel GetEditLinkViewModel<TModel, TProperty>(this HtmlHelper<TModel> html, VacancyViewModel vacancyViewModel, Expression<Func<TModel, TProperty>> propertyExpression, string editUrl, string comment, bool isUnderParagraph = true)
         {
             var propertyName = ExpressionHelper.GetExpressionText(propertyExpression);
 
             var anchorName = propertyName.Replace(".", "_").ToLower();
             editUrl = $"{editUrl}#{propertyName.Substring(propertyName.LastIndexOf(".", StringComparison.Ordinal) + 1).ToLower()}";
 
-            var editLinkViewModel = new EditLinkViewModel(vacancyViewModel.Status, anchorName, editUrl, comment);
+            var editLinkViewModel = new EditLinkViewModel(vacancyViewModel.Status, anchorName, editUrl, comment, isUnderParagraph);
 
             return editLinkViewModel;
         }

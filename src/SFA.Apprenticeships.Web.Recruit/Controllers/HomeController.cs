@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using Application.Interfaces;
+    using Attributes;
     using Common.Constants;
     using Common.Framework;
     using Common.Mediators;
@@ -21,6 +22,7 @@
             _homeMediator = homeMediator;
         }
 
+        [SiteRootRedirect]
         public ActionResult Index()
         {
             return View();

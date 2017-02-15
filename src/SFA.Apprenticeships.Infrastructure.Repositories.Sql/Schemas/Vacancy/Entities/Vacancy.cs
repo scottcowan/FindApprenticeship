@@ -317,9 +317,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public int EmployerId { get; set; }
 
         [Write(false)]
-        public string LocalAuthorityCode { get; set; }
-
-        [Write(false)]
         public bool? IsMultiLocation { get; set; }
 
         [Write(false)]

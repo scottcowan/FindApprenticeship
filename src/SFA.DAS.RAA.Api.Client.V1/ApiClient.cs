@@ -48,6 +48,11 @@ namespace SFA.DAS.RAA.Api.Client.V1
         public virtual IEmployer Employer { get; private set; }
 
         /// <summary>
+        /// Gets the IFrameworkOperations.
+        /// </summary>
+        public virtual IFrameworkOperations FrameworkOperations { get; private set; }
+
+        /// <summary>
         /// Gets the IPublicVacancyOperations.
         /// </summary>
         public virtual IPublicVacancyOperations PublicVacancyOperations { get; private set; }
@@ -61,6 +66,11 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// Gets the IReference.
         /// </summary>
         public virtual IReference Reference { get; private set; }
+
+        /// <summary>
+        /// Gets the IStandardOperations.
+        /// </summary>
+        public virtual IStandardOperations StandardOperations { get; private set; }
 
         /// <summary>
         /// Gets the IVacancyOperations.
@@ -279,9 +289,11 @@ namespace SFA.DAS.RAA.Api.Client.V1
         private void Initialize()
         {
             this.Employer = new Employer(this);
+            this.FrameworkOperations = new FrameworkOperations(this);
             this.PublicVacancyOperations = new PublicVacancyOperations(this);
             this.PublicVacancySummaryOperations = new PublicVacancySummaryOperations(this);
             this.Reference = new Reference(this);
+            this.StandardOperations = new StandardOperations(this);
             this.VacancyOperations = new VacancyOperations(this);
             this.VacancySummaryOperations = new VacancySummaryOperations(this);
             this.VacancyManagement = new VacancyManagement(this);

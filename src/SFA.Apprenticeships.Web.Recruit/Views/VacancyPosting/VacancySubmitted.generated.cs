@@ -66,51 +66,124 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     ViewBag.Title = "Recruit an Apprentice - Confirmation of submission";
 
     var vacancyText = Model.VacancyText;
+    var vacancyRef = Model.VacancyReferenceNumber.GetVacancyReference();
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"success-banner\"");
+WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(">\r\n    <h1");
+WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"heading-large sfa-no-bottom-margin\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
-WriteLiteral(">\r\n        <i");
+WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"fa fa-check\"");
+WriteLiteral(" class=\"govuk-box-highlight sfa-govuk-box-highlight\"");
 
-WriteLiteral("></i>\r\n");
+WriteLiteral(">\r\n            <h1");
+
+WriteLiteral(" class=\"bold-large\"");
+
+WriteLiteral(">\r\n");
 
             
-            #line 14 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 16 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+                
+            
+            #line default
+            #line hidden
+            
+            #line 16 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+                 if (Model.Resubmitted)
+                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    ");
+
+            
+            #line 18 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+                  Write(vacancyText);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" resubmitted for approval\r\n");
+
+            
+            #line 19 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+                }
+                else
+                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    ");
+
+            
+            #line 22 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+                  Write(vacancyText);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" submitted for approval\r\n");
+
+            
+            #line 23 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            </h1>\r\n            <p>The vacancy reference number is\r\n              " +
+"  <br/>\r\n                <strong");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(">");
+
+            
+            #line 27 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+                                          Write(vacancyRef);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</strong>\r\n            </p>\r\n        </div>\r\n        \r\n        <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(">Next steps</h2>\r\n\r\n");
+
+            
+            #line 33 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-         if (Model.Resubmitted)
+            #line 33 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+         if (Model.IsMultiLocationVacancy)
         {
 
             
             #line default
             #line hidden
-WriteLiteral("            <span>");
+WriteLiteral("            <p>\r\n                Once your vacancy has been reviewed and approved" +
+" by a Skills Funding Agency adviser, it will be split into separate adverts for " +
+"each location.\r\n            </p>\r\n");
+
+WriteLiteral("            <p>\r\n                You\'ll be notified via your recruitment homepage" +
+" if any changes are necessary before the adverts go live.\r\n            </p>\r\n");
 
             
-            #line 16 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-             Write(vacancyText);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" resubmitted for approval</span>\r\n");
-
-            
-            #line 17 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 41 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
         }
         else
         {
@@ -118,162 +191,90 @@ WriteLiteral(" resubmitted for approval</span>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            <span>");
+WriteLiteral("            <p>\r\n");
 
             
-            #line 20 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-             Write(vacancyText);
+            #line 45 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+                
+            
+            #line default
+            #line hidden
+            
+            #line 45 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+                 if (Model.VacancyType == VacancyType.Traineeship)
+                {
 
             
             #line default
             #line hidden
-WriteLiteral(" submitted for approval</span>\r\n");
+WriteLiteral("                    ");
+
+WriteLiteral("Your traineeship opportunity will now be reviewed by a Skills Funding Agency advi" +
+"ser.\r\n");
 
             
-            #line 21 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 48 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+                }
+                else
+                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    ");
+
+WriteLiteral("Your vacancy advert will now be reviewed by a Skills Funding Agency adviser.\r\n");
+
+            
+            #line 52 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                You’ll be notified via your recruitment home page if any changes " +
+"are\r\n                necessary before the advert goes live.\r\n            </p>\r\n");
+
+            
+            #line 56 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
         }
 
             
             #line default
             #line hidden
-WriteLiteral("    </h1>\r\n</div>\r\n<section>\r\n    <hgroup");
+WriteLiteral("        <div");
 
-WriteLiteral(" class=\"hgroup-medium text\"");
+WriteLiteral(" class=\"form-group inline sfa-xlarge-top-margin\"");
 
-WriteLiteral(">\r\n        <h2");
+WriteLiteral(">\r\n            <a");
 
-WriteLiteral(" class=\"heading-medium\"");
-
-WriteLiteral(">Next steps</h2>\r\n    </hgroup>\r\n");
-
+WriteAttribute("href", Tuple.Create(" href=\"", 2223), Tuple.Create("\"", 2336)
             
-            #line 28 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-    
+            #line 58 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+, Tuple.Create(Tuple.Create("", 2230), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
             
             #line default
             #line hidden
-            
-            #line 28 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-     if (Model.IsMultiLocationVacancy)
-    {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <p>\r\n            Once your vacancy has been reviewed and approved by a Sk" +
-"ills Funding Agency adviser, it will be split into separate adverts for each loc" +
-"ation.\r\n        </p>\r\n");
-
-WriteLiteral("        <p>\r\n            You\'ll be notified via your recruitment homepage if any " +
-"changes are necessary before the adverts go live.\r\n        </p>\r\n");
-
-            
-            #line 36 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-    }
-    else
-    {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <p>\r\n");
-
-            
-            #line 40 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-            
-            
-            #line default
-            #line hidden
-            
-            #line 40 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-             if (Model.VacancyType == VacancyType.Traineeship)
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <span>Your traineeship opportunity will now be reviewed by a Skil" +
-"ls Funding Agency adviser.</span>\r\n");
-
-            
-            #line 43 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-            }
-            else
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <span>Your vacancy advert will now be reviewed by a Skills Fundin" +
-"g Agency adviser.</span>\r\n");
-
-            
-            #line 47 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-            }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            You’ll be notified via your recruitment home page if any changes are\r" +
-"\n            necessary before the advert goes live.\r\n        </p>\r\n");
-
-            
-            #line 51 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-    }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</section>\r\n<section");
-
-WriteLiteral(" class=\"sfa-section-bordered\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"hgroup-medium text\"");
-
-WriteLiteral(">\r\n        <h2");
-
-WriteLiteral(" class=\"heading-medium\"");
-
-WriteLiteral(">Create another apprenticeship vacancy or traineeship opportunity</h2>\r\n        <" +
-"span");
-
-WriteLiteral(" class=\"heading-secondary \"");
-
-WriteLiteral(">Use a fresh template or continue with a draft</span>\r\n    </div>\r\n    <div");
-
-WriteLiteral(" class=\"form-group inline\"");
-
-WriteLiteral(">\r\n        <a");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 2138), Tuple.Create("\"", 2251)
-            
-            #line 59 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 2145), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
-            
-            #line default
-            #line hidden
-, 2145), false)
+, 2230), false)
 );
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Start new opportunity or vacancy</a>\r\n        <a");
+WriteLiteral(">Start new opportunity or vacancy</a>\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2316), Tuple.Create("\"", 2375)
+WriteAttribute("href", Tuple.Create(" href=\"", 2405), Tuple.Create("\"", 2464)
             
-            #line 60 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 2323), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+            #line 59 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+, Tuple.Create(Tuple.Create("", 2412), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 2323), false)
+, 2412), false)
 );
 
 WriteLiteral(" class=\"button sfa-button-secondary\"");
 
-WriteLiteral(">Return to recruitment home</a>\r\n    </div>\r\n</section>\r\n");
+WriteLiteral(">Return to recruitment home</a>\r\n        </div>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

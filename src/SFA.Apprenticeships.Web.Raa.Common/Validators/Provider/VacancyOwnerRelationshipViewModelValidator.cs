@@ -40,6 +40,13 @@
                 .WithMessage(VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.LengthErrorText)
                 .When(x => x.VacancyLocationType == VacancyLocationType.SpecificLocation);
 
+            RuleFor(x => x.NumberOfPositionsNationwide)
+                .NotEmpty()
+                .WithMessage(VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsNationwide.RequiredErrorText)
+                .GreaterThanOrEqualTo(1)
+                .WithMessage(VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsNationwide.LengthErrorText)
+                .When(x => x.VacancyLocationType == VacancyLocationType.Nationwide);
+
             RuleFor(x => x.IsAnonymousEmployer)
                 .NotNull()
                 .WithMessage(VacancyOwnerRelationshipViewModelMessages.IsAnonymousEmployer.RequiredErrorText);

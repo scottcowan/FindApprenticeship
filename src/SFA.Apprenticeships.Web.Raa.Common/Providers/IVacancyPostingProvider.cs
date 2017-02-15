@@ -46,7 +46,7 @@
 
         Task<VacancyViewModel> SubmitVacancy(int vacancyReferenceNumber);
 
-        List<SelectListItem> GetSectorsAndFrameworks();
+        Task<List<SelectListItem>> GetSectorsAndFrameworks();
 
         List<StandardViewModel> GetStandards();
 
@@ -69,7 +69,7 @@
         Task<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel);
 
         Task EmptyVacancyLocation(int vacancyReferenceNumber);
-        void CreateVacancy(VacancyMinimumData vacancyMinimumData);
+        Task CreateVacancy(VacancyMinimumData vacancyMinimumData);
         Task TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel);
         Task<FurtherVacancyDetailsViewModel> CloseVacancy(FurtherVacancyDetailsViewModel viewModel);
     }

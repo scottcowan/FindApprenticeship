@@ -10,10 +10,11 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using System.Text;
     using System.Threading.Tasks;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
-    using Apprenticeships.Domain.Entities.Vacancies;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
     using Constants;
     using Extensions;
     using Factories;
@@ -55,6 +56,10 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 .With(vor => vor.ProviderSiteID, 24)
                 .Create();
 
+            var employer = new Fixture().Build<Employer>()
+                .With(e => e.EmployerId, vorOwned.EmployerId)
+                .Create();
+
             var providerSite = new Fixture().Build<ProviderSite>()
                 .With(ps => ps.ProviderSiteId, ProviderSiteId)
                 .Create();
@@ -86,7 +91,25 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 m => m.Query<int>(ReferenceNumberRepository.GetNextVacancyReferenceNumberSql, null, null, null))
                 .Returns(new [] {450987});
 
-            RaaMockFactory.GetMockGetOpenConnection().Setup(m => m.Insert(It.IsAny<DbVacancy>(), null)).Returns(3453);
+            RaaMockFactory.GetMockGetOpenConnection().Setup(m => m.Insert(It.IsAny<DbVacancy>(), null)).Returns(3453).Callback<DbVacancy, int?>(
+                (v, ct) =>
+                {
+                    RaaMockFactory.GetMockGetOpenConnection()
+                        .Setup(
+                            m =>
+                                m.Query<DbVacancy>(VacancyRepository.SelectByIdSql,
+                                    It.Is<object>(o => o.GetHashCode() == new {vacancyId = 3453}.GetHashCode()), null,
+                                    null))
+                        .Returns(new[] {v});
+                });
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<Employer>(It.Is<string>(s => s.StartsWith(EmployerRepository.BasicQuery)), It.Is<object>(o => o.GetHashCode() == new {vorOwned.EmployerId }.GetHashCode()), null, null))
+                .Returns(new[] { employer });
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<Employer>(It.Is<string>(s => s.StartsWith(EmployerRepository.BasicQuery)), It.Is<object>(o => o.GetHashCode() == new {employer.EdsUrn }.GetHashCode()), null, null))
+                .Returns(new[] { employer });
 
             var vacancy = GetVacancy(vacancyLocationType, vacancyOwnerRelationshipId, positions);
 
@@ -124,7 +147,9 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
                 VacancyGuid = Guid.NewGuid(),
                 VacancyLocationType = vacancyLocationType,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
-                NumberOfPositions = positions
+                NumberOfPositions = positions,
+                ContractOwnerId = RaaApiUserFactory.SkillsFundingAgencyProviderId,
+                Status = VacancyStatus.Live
             };
             return vacancy;
         }
@@ -138,7 +163,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             responseVacancy.VacancyReferenceNumber.Should().NotBe(0);
             responseVacancy.VacancySource.Should().Be(VacancySource.Api);
             var expectedVacancy = GetVacancy(vacancyLocationType, vacancyOwnerRelationshipId, positions);
-            expectedVacancy.Status = VacancyStatus.Draft;
+            expectedVacancy.Status = responseVacancy.Status;
             expectedVacancy.VacancyId = responseVacancy.VacancyId;
             expectedVacancy.VacancyReferenceNumber = responseVacancy.VacancyReferenceNumber;
             expectedVacancy.VacancyGuid = responseVacancy.VacancyGuid;
@@ -149,6 +174,11 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             expectedVacancy.DeliveryOrganisationId = ProviderSiteId;
             expectedVacancy.Wage = responseVacancy.Wage;
             expectedVacancy.EditedInRaa = responseVacancy.EditedInRaa;
+            expectedVacancy.EmployerWebsiteUrl = responseVacancy.EmployerWebsiteUrl;
+            expectedVacancy.EmployerDescription = responseVacancy.EmployerDescription;
+            expectedVacancy.Address = responseVacancy.Address;
+            expectedVacancy.VacancyLocations = new List<VacancyLocation>();
+            expectedVacancy.IsMultiLocation = false;
 
             var compareLogic = new CompareLogic();
             var result = compareLogic.Compare(responseVacancy, expectedVacancy);

@@ -70,37 +70,55 @@
         /// <summary>
         /// The primary identifier for the county of the address
         /// </summary>
-        [Required]
         public int CountyId { get; set; }
         /// <summary>
         /// The name of the county
         /// </summary>
-        [Required]
         public string County { get; set; }
         /// <summary>
         /// The primary identifier for the local authority the address is part of
         /// </summary>
-        [Required]
         public int LocalAuthorityId { get; set; }
         /// <summary>
         /// The secondary code identifier for the local authority the address is part of
         /// </summary>
-        [Required]
         public string LocalAuthorityCodeName { get; set; }
         /// <summary>
         /// The local authority's name
         /// </summary>
-        [Required]
         public string LocalAuthority { get; set; }
         /// <summary>
         /// The global geopoint for the address
         /// </summary>
-        [Required]
         public GeoPoint GeoPoint { get; set; }
 
         public override string ToString()
         {
             return AddressLine4 ?? AddressLine3 ?? AddressLine2 ?? AddressLine1 ?? Postcode;
+        }
+
+        public PostalAddress Clone()
+        {
+            return new PostalAddress
+            {
+                PostalAddressId = PostalAddressId,
+                AddressLine1 = AddressLine1,
+                AddressLine2 = AddressLine2,
+                AddressLine3 = AddressLine3,
+                AddressLine4 = AddressLine4,
+                AddressLine5 = AddressLine5,
+                Town = Town,
+                Postcode = Postcode,
+                ValidationSourceCode = ValidationSourceCode,
+                ValidationSourceKeyValue = ValidationSourceKeyValue,
+                DateValidated = DateValidated,
+                CountyId = CountyId,
+                County = County,
+                LocalAuthorityId = LocalAuthorityId,
+                LocalAuthorityCodeName = LocalAuthorityCodeName,
+                LocalAuthority = LocalAuthority,
+                GeoPoint = GeoPoint?.Clone()
+            };
         }
 
         protected bool Equals(PostalAddress other)

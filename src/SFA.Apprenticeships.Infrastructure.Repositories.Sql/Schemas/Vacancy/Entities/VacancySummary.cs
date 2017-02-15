@@ -26,6 +26,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public string AddressLine5 { get; set; }
         public string Town { get; set; }
         public int CountyId { get; set; }
+        public int LocalAuthorityId { get; set; }
         public string PostCode { get; set; }
         public DateTime? ApplicationClosingDate { get; set; }
         public string EmployerName { get; set; }

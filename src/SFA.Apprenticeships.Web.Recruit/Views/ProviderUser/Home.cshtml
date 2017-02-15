@@ -112,47 +112,43 @@
             @Html.RouteLink("Traineeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Traineeship).RouteValues, new { @class = "tabbed-tab no-js" + traineeshipsTabControlClass })
         </nav>
 
-        <section class="sfa-section-bordered">
-            <div class="grid-row grid-row-padded">
-                <div class="column-one-half">
-                    <h2 class="heading-large sfa-no-margins">
-                        Your @vacanciesLabel
-                        @if (filterType != VacanciesSummaryFilterTypes.All || !string.IsNullOrEmpty(searchString))
-                        {
-                            <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All, null).RouteValues)" class="font-small vacancy-filter">Show all</a></span>
-                        }
-                    </h2>
-                </div>
-                <div class="column-one-half">
-                    <div class="search-bar">
-                        @Html.DropDownListFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchMode, Model.VacanciesSummary.VacanciesSummarySearch.SearchModes, new { @class = "form-control" })
-                        <div class="search-input-wrapper">
-                            @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new { title = "Search", placeholder = "Search vacancies", @class = "form-control", aria_label = "Search your " + vacanciesLabel })
-                        </div>
-                        @if (!string.IsNullOrEmpty(searchString))
-                        {
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome,
-                                         new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, filterType, null)
-                                             .RouteValues)" class="vacancy-filter reset-search close-icon">
-                                <i class="fa fa-times-circle" aria-hidden="true">
-                                </i><span>Reset search</span>
-                            </a>
-                        }
-                        <button id="search-vacancies-button" type="submit" class="button search-btn sfa-no-margins" name="SearchVacanciesAction" value="SearchVacancies">
-                            <i class="icon icon-search"></i><span>Search</span>
-                        </button>
+        <div class="grid-row sfa-filter-table-header sfa-section-border-bottom">
+            <div class="column-half">
+                <h2 class="heading-large sfa-no-margins sfa-display-inline">Your @vacanciesLabel</h2>
+                @if (filterType != VacanciesSummaryFilterTypes.All || !string.IsNullOrEmpty(searchString))
+                    {
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All, null).RouteValues)" class="font-small vacancy-filter sfa-show-all">Show all</a>
+                }
+            </div>
+            <div class="column-half">
+                <div class="search-bar">
+                    @Html.DropDownListFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchMode, Model.VacanciesSummary.VacanciesSummarySearch.SearchModes, new { @class = "form-control" })
+                    <div class="search-input-wrapper">
+                        @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new { title = "Search", placeholder = "Search vacancies", @class = "form-control", aria_label = "Search your " + vacanciesLabel })
                     </div>
+                    @if (!string.IsNullOrEmpty(searchString))
+                    {
+                        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome,
+                                        new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, filterType, null)
+                                            .RouteValues)" class="vacancy-filter reset-search close-icon">
+                            <i class="fa fa-times-circle" aria-hidden="true">
+                            </i><span>Reset search</span>
+                        </a>
+                    }
+                    <button id="search-vacancies-button" type="submit" class="button search-btn sfa-no-margins" name="SearchVacanciesAction" value="SearchVacancies">
+                        <i class="icon icon-search"></i><span>Search</span>
+                    </button>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="sfa-medium-bottom-padding sfa-xlarge-top-padding sfa-section-bordered">
+        <div class="sfa-filter-container sfa-section-border-bottom">
             @{
                 var newApplicationsCount = Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount;
             }
             <div class="grid-row">
                 <div class="column-one-quarter">
-                    <div class="data">
+                    <div class="data sfa-data">
                         @if (filterType == VacanciesSummaryFilterTypes.Live)
                     {
                             <h2 class="bold-xlarge">@Model.VacanciesSummary.LiveCount</h2>
@@ -168,7 +164,7 @@
                     </div>
                 </div>
                 <div class="column-one-quarter">
-                    <div class="data">
+                    <div class="data sfa-data">
                         @{
                             var applicationCaption = newApplicationsCount == 1 ? "New application" : "New applications";
                         }
@@ -188,7 +184,7 @@
                     </div>
                 </div>
                 <div class="column-one-quarter">
-                    <div class="data">
+                    <div class="data sfa-data">
                         @if (filterType == VacanciesSummaryFilterTypes.Rejected)
                     {
                             <h2 class="bold-xlarge">@Model.VacanciesSummary.RejectedCount</h2>
@@ -204,7 +200,7 @@
                     </div>
                 </div>
                 <div class="column-one-quarter">
-                    <div class="data">
+                    <div class="data sfa-data">
                         @if (filterType == VacanciesSummaryFilterTypes.ClosingSoon)
                     {
                             <h2 class="bold-xlarge">@Model.VacanciesSummary.ClosingSoonCount</h2>
@@ -222,7 +218,7 @@
             </div>
             <div class="grid-row">
                 <div class="column-one-quarter">
-                    <div class="data">
+                    <div class="data sfa-data">
                         @if (filterType == VacanciesSummaryFilterTypes.Draft)
                         {
                             <h2 class="bold-xlarge">@Model.VacanciesSummary.DraftCount</h2>
@@ -238,7 +234,7 @@
                     </div>
                 </div>
                 <div class="column-one-quarter">
-                    <div class="data">
+                    <div class="data sfa-data">
                         @if (filterType == VacanciesSummaryFilterTypes.Submitted)
                         {
                             <h2 class="bold-xlarge">@Model.VacanciesSummary.SubmittedCount</h2>
@@ -254,7 +250,7 @@
                     </div>
                 </div>
                 <div class="column-one-quarter">
-                    <div class="data">
+                    <div class="data sfa-data">
                         @if (filterType == VacanciesSummaryFilterTypes.Closed)
                         {
                             <h2 class="bold-xlarge">@Model.VacanciesSummary.ClosedCount</h2>
@@ -271,7 +267,7 @@
 
                 </div>
                 <div class="column-one-quarter">
-                    <div class="data">
+                    <div class="data sfa-data">
                         @if (filterType == VacanciesSummaryFilterTypes.Completed)
                         {
                             <h2 class="bold-xlarge">@Model.VacanciesSummary.CompletedCount</h2>
@@ -288,18 +284,18 @@
 
                 </div>
             </div>
-        </section>
+        </div>
 
         <div class="grid-row">
-            <section class="column-full">
+            <div class="column-full">
                 <table id="vacancies-table" class="sfa-table">
                     <colgroup>
-                        <col class="t25">
-                        <col class="t15">
-                        <col class="t15">
-                        <col class="t15">
-                        <col class="t15">
-                        <col class="t15">
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
                     </colgroup>
                     <thead>
                         <tr>
@@ -526,50 +522,41 @@
                                                 }
                     </tbody>
                 </table>
-            </section>
-
-            @if (Model.VacanciesSummary.HasVacancies)
-            {
-                <div class="page-navigation">
-
-                    @{
-                        var currentPage = Model.VacanciesSummary.Vacancies.CurrentPage;
-                        var totalNumberOfPages = Model.VacanciesSummary.Vacancies.TotalNumberOfPages;
-                        var prevLink = Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, currentPage - 1).RouteValues);
-                        var nextLink = Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, currentPage + 1).RouteValues);
-                    }
-
-                    <a href="@prevLink"
-                       style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 33.333333333%"
-                       class="page-navigation__btn previous grid column-one-third">
-                        <i class="arrow-button fa fa-angle-left"></i>
-                        <span class="description">Previous <span class="sfa-hide-mobile">page</span></span>
-                        <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
-                    </a>
-
-                    <div id="page-size-container" class="column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
-                        <label for="page-size" class="heading-small inline">Display results</label>
-                        @Html.DropDownListFor(m => m.VacanciesSummary.VacanciesSummarySearch.PageSize, Model.VacanciesSummary.VacanciesSummarySearch.PageSizes, new { id = "page-size", @class = "form-control" })
-                        <noscript>
-                            <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
-                        </noscript>
-                    </div>
-
-                    <a href="@nextLink"
-                       style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 33.333333333%"
-                       class="page-navigation__btn next grid column-one-third">
-                        <i class="arrow-button fa fa-angle-right"></i>
-                        <span class="description">Next <span class="sfa-hide-mobile">page</span></span>
-                        <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
-                    </a>
-
-                </div>
-                        }
-
+            </div>
         </div>
-                            }
-                        }
+        if (Model.VacanciesSummary.HasVacancies)
+        {
+            <div class="grid-row page-navigation">
+                @{
+                    var currentPage = Model.VacanciesSummary.Vacancies.CurrentPage;
+                    var totalNumberOfPages = Model.VacanciesSummary.Vacancies.TotalNumberOfPages;
+                    var prevLink = Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, currentPage - 1).RouteValues);
+                    var nextLink = Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, currentPage + 1).RouteValues);
+                }
 
+                <a href="@prevLink" style="visibility: @(currentPage == 1 ? "hidden" : "visible");" class="page-navigation__btn previous column-one-third">
+                    <i class="arrow-button fa fa-angle-left"></i>
+                    <span class="description">Previous <span class="sfa-hide-mobile">page</span></span>
+                    <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
+                </a>
+
+                <div id="page-size-container" class="column-one-third page-navigation__results">
+                    <label for="page-size" class="heading-small inline">Display results</label>
+                    @Html.DropDownListFor(m => m.VacanciesSummary.VacanciesSummarySearch.PageSize, Model.VacanciesSummary.VacanciesSummarySearch.PageSizes, new { id = "page-size", @class = "form-control" })
+                    <noscript>
+                        <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
+                    </noscript>
+                </div>
+
+                <a href="@nextLink" style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible");" class="page-navigation__btn next column-one-third">
+                    <i class="arrow-button fa fa-angle-right"></i>
+                    <span class="description">Next <span class="sfa-hide-mobile">page</span></span>
+                    <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
+                </a>
+            </div>
+        }
+    }
+}
 <div class="sfa-saving-prompt toggle-content hide-nojs" id="ajaxLoading">
     Loading
 </div>

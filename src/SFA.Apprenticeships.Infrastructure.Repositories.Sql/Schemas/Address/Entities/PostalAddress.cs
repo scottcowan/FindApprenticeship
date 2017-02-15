@@ -48,5 +48,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Address.En
         public decimal? Latitude { get; set; }
 
         public int? CountyId { get; set; }
+
+        public int? LocalAuthorityId { get; set; }
     }
 }

@@ -86,7 +86,7 @@
     {
         <div id="planned-outage-message" class="sfa-maintenance-banner">
             <p>@Html.Raw(ViewBag.PlannedOutageMessage)</p>
-            <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new {isJavascript = false})" class="maintenance-close">
+            <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new {isJavascript = false})" class="sfa-maintenance-close">
                 Dismiss
             </a>
         </div>
@@ -117,10 +117,9 @@
                     </nav>
                 </div>
             </div>
-
-
         </div>
     </header>
+
     <div id="global-header-bar"></div>
     <div id="content" role="main" tabindex="-1">
         <main id="main">
@@ -129,7 +128,7 @@
                 <div class="column-one-half">
                     <p>
                         <strong class="phase-tag">BETA</strong>
-                        <span>This is a new service - your <a href="https://www.surveymonkey.co.uk/r/LB5ZJRM" target="_blank">feedback</a> helps improve it.</span>
+                        <span>This is a new service - your <a href="https://www.surveymonkey.co.uk/r/LB5ZJRM" >feedback</a> helps improve it.</span>
                     </p>
                 </div>
                 <div class="column-one-half sfa-navigation">
@@ -273,6 +272,10 @@
 
                 @Html.Partial("_AboutDisguised")
             </div>
+        </div>
+        <div class="sfa-print-only">
+            <h3 class="heading-small">Contact the Skills Funding Agency helpdesk</h3>
+            <p class="sfa-small-margin-bottom">Telephone (free): 0800 015 0400</p>            
         </div>
     </footer>
 

@@ -157,7 +157,7 @@
             view.GetElementbyId("apprenticeship-minimum-wage").Should().NotBeNull();
             var wage = view.GetElementbyId("Wage_Amount");
             wage.Should().NotBeNull();
-            wage.Attributes["type"].Value.Should().Be("tel");
+            wage.Attributes["type"].Value.Should().Be("text");
             var wageUnit = view.GetElementbyId("Wage_Unit");
             wageUnit.Should().NotBeNull();
             wageUnit.Name.Should().Be("select");
@@ -182,7 +182,7 @@
             view.GetElementbyId("apprenticeship-minimum-wage").Should().NotBeNull();
             var wage = view.GetElementbyId("Wage_Amount");
             wage.Should().NotBeNull();
-            wage.Attributes["type"].Value.Should().Be("tel");
+            wage.Attributes["type"].Value.Should().Be("text");
             var wageUnit = view.GetElementbyId("Wage_Unit");
             wageUnit.Should().NotBeNull();
             wageUnit.Name.Should().Be("select");

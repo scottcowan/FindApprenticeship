@@ -1,8 +1,11 @@
 ﻿namespace SFA.DAS.RAA.Api.UnitTests.Validators
 {
     using System;
+    using System.Collections.Generic;
     using Api.Validators;
+    using Apprenticeships.Domain.Entities.Raa.Locations;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using FluentAssertions;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
 
@@ -161,6 +164,215 @@
             {
                 _vacancyValidator.ShouldHaveValidationErrorFor(v => v.EmployerDescription, vacancy).WithErrorMessage(expectedErrorMessage);
             }
+        }
+
+        [TestCase(null, null, true)]
+        [TestCase(false, null, true)]
+        [TestCase(true, null, false)]
+        [TestCase(null, "", true)]
+        [TestCase(false, "", true)]
+        [TestCase(true, "", false)]
+        [TestCase(null, " ", true)]
+        [TestCase(false, " ", true)]
+        [TestCase(true, " ", false)]
+        public void EmployerAnonymousNameRequired(bool? isAnonymousEmployer, string anonymousAboutTheEmployer, bool expectValid)
+        {
+            var vacancy = new Vacancy
+            {
+                IsAnonymousEmployer = isAnonymousEmployer,
+                EmployerAnonymousName = anonymousAboutTheEmployer
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.EmployerAnonymousName, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.EmployerAnonymousName, vacancy).WithErrorMessage("Please supply an anonymous name for the employer as you have specified that the employer for this vacancy should be anonymous (IsAnonymousEmployer = true)");
+            }
+        }
+
+        [TestCase("Employer anonymous name", true, null)]
+        [TestCase("<p>Employer anonymous name</p>", true, null)]
+        [TestCase("|Employer anonymous name|", false, "The anonymous name for the employer contains some invalid characters")]
+        [TestCase("<script>Employer anonymous name</script>", false, "The anonymous name for the employer contains some invalid tags")]
+        [TestCase("<input>Employer anonymous name</input>", false, "The anonymous name for the employer contains some invalid tags")]
+        [TestCase("<object>Employer anonymous name</object>", false, "The anonymous name for the employer contains some invalid tags")]
+        public void EmployerAnonymousNameInputValidation(string anonymousAboutTheEmployer, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                IsAnonymousEmployer = true,
+                EmployerAnonymousName = anonymousAboutTheEmployer
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.EmployerAnonymousName, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.EmployerAnonymousName, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        [TestCase(null, null, true)]
+        [TestCase(false, null, true)]
+        [TestCase(true, null, false)]
+        [TestCase(null, "", true)]
+        [TestCase(false, "", true)]
+        [TestCase(true, "", false)]
+        [TestCase(null, " ", true)]
+        [TestCase(false, " ", true)]
+        [TestCase(true, " ", false)]
+        public void EmployerAnonymousReasonRequired(bool? isAnonymousEmployer, string employerAnonymousReason, bool expectValid)
+        {
+            var vacancy = new Vacancy
+            {
+                IsAnonymousEmployer = isAnonymousEmployer,
+                EmployerAnonymousReason = employerAnonymousReason
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.EmployerAnonymousReason, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.EmployerAnonymousReason, vacancy).WithErrorMessage("Please supply a reason for keeping the employer anonymous as you have specified that the employer for this vacancy should be anonymous (IsAnonymousEmployer = true)");
+            }
+        }
+
+        [TestCase("Employer anonymous reason", true, null)]
+        [TestCase("<p>Employer anonymous reason</p>", true, null)]
+        [TestCase("|Employer anonymous reason|", false, "The reason for keeping the employer anonymous contains some invalid characters")]
+        [TestCase("<script>Employer anonymous reason</script>", false, "The reason for keeping the employer anonymous contains some invalid tags")]
+        [TestCase("<input>Employer anonymous reason</input>", false, "The reason for keeping the employer anonymous contains some invalid tags")]
+        [TestCase("<object>Employer anonymous reason</object>", false, "The reason for keeping the employer anonymous contains some invalid tags")]
+        public void EmployerAnonymousReasonInputValidation(string employerAnonymousReason, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                IsAnonymousEmployer = true,
+                EmployerAnonymousReason = employerAnonymousReason
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.EmployerAnonymousReason, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.EmployerAnonymousReason, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        [TestCase(null, null, true)]
+        [TestCase(false, null, true)]
+        [TestCase(true, null, false)]
+        [TestCase(null, "", true)]
+        [TestCase(false, "", true)]
+        [TestCase(true, "", false)]
+        [TestCase(null, " ", true)]
+        [TestCase(false, " ", true)]
+        [TestCase(true, " ", false)]
+        public void AnonymousAboutTheEmployerRequired(bool? isAnonymousEmployer, string anonymousAboutTheEmployer, bool expectValid)
+        {
+            var vacancy = new Vacancy
+            {
+                IsAnonymousEmployer = isAnonymousEmployer,
+                AnonymousAboutTheEmployer = anonymousAboutTheEmployer
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.AnonymousAboutTheEmployer, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.AnonymousAboutTheEmployer, vacancy).WithErrorMessage("Please supply anonymous information about the employer as you have specified that the employer for this vacancy should be anonymous (IsAnonymousEmployer = true)");
+            }
+        }
+
+        [TestCase("Anonymous about the employer", true, null)]
+        [TestCase("<p>Anonymous about the employer</p>", true, null)]
+        [TestCase("|Anonymous about the employer|", false, "The anonymous information about the employer contains some invalid characters")]
+        [TestCase("<script>Anonymous about the employer</script>", false, "The anonymous information about the employer contains some invalid tags")]
+        [TestCase("<input>Anonymous about the employer</input>", false, "The anonymous information about the employer contains some invalid tags")]
+        [TestCase("<object>Anonymous about the employer</object>", false, "The anonymous information about the employer contains some invalid tags")]
+        public void AnonymousAboutTheEmployerInputValidation(string anonymousAboutTheEmployer, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                IsAnonymousEmployer = true,
+                AnonymousAboutTheEmployer = anonymousAboutTheEmployer
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.AnonymousAboutTheEmployer, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.AnonymousAboutTheEmployer, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        [Test]
+        public void MultipleLocationsVacancyLocationsRequired()
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
+                VacancyLocations = null
+            };
+
+            _vacancyValidator.ShouldHaveValidationErrorFor(v => v.VacancyLocations, vacancy).WithErrorMessage("You must supply at least one vacancy location when the vacancy location type is MultipleLocations.");
+        }
+
+        [Test]
+        public void VacancyLocationPropertiesRequired()
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
+                VacancyLocations = new List<VacancyLocation>
+                {
+                    new VacancyLocation
+                    {
+                        EmployersWebsite = "null"
+                    }
+                }
+            };
+
+            var result = _vacancyValidator.Validate(vacancy);
+
+            result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].Address" && e.ErrorMessage == "Please supply an address for this vacancy location.");
+            result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].NumberOfPositions" && e.ErrorMessage == "There must be at least 1 position for this vacancy location.");
+            result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].EmployersWebsite" && e.ErrorMessage == "Please supply a valid website url for the employer. This is the link that will be used to apply on the employer's website if the vacancy is set as offline.");
+        }
+
+        [Test]
+        public void VacancyLocationAddressPropertiesRequired()
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
+                VacancyLocations = new List<VacancyLocation>
+                {
+                    new VacancyLocation
+                    {
+                        Address = new PostalAddress()
+                    }
+                }
+            };
+
+            var result = _vacancyValidator.Validate(vacancy);
+
+            result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].Address.AddressLine1" && e.ErrorMessage == "Please supply the first line of the address.");
+            result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].Address.Town" && e.ErrorMessage == "Please supply a value for the town property of the address.");
+            result.Errors.Should().Contain(e => e.PropertyName == "VacancyLocations[0].Address.Postcode" && e.ErrorMessage == "Please supply a value for the postcode property of the address.");
         }
     }
 }

@@ -10,29 +10,24 @@
     ViewBag.Title = "Recruit an Apprentice - View application";
 }
 
-<div>
-    <div class="hgroup">
-        <h1 class="heading-xlarge sfa-medium-bottom-margin">Vacancy application</h1>
-        <p class="heading-secondary ">@Model.Vacancy.Title</p>
-    </div>
-    <div class="grid-row">
-        <div class="column-two-thirds">
-            @Html.DisplayFor(m => m.AnonymousApplicantDetails, AnonymisedApplicantDetailsViewModel.PartialView)
-        </div>
-        <div class="column-one-third">
-        </div>
-    </div>
-    @Html.DisplayFor(m => m.AboutYou, AboutYouViewModel.PartialView)
-    @Html.DisplayFor(m => m.Education, EducationViewModel.PartialView)
-    @Html.DisplayFor(m => m.Qualifications, QualificationViewModel.PartialView)
-    @Html.DisplayFor(m => m.WorkExperience, WorkExperienceViewModel.PartialView)
-    @Html.DisplayFor(m => m.TrainingCourses, TrainingCourseViewModel.PartialView)
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">
+            Vacancy application
+            <span class="heading-secondary">@Model.Vacancy.Title</span>
+        </h1>
+        @Html.DisplayFor(m => m.AnonymousApplicantDetails, AnonymisedApplicantDetailsViewModel.PartialView)
+        @Html.DisplayFor(m => m.AboutYou, AboutYouViewModel.PartialView)
+        @Html.DisplayFor(m => m.Education, EducationViewModel.PartialView)
+        @Html.DisplayFor(m => m.Qualifications, QualificationViewModel.PartialView)
+        @Html.DisplayFor(m => m.WorkExperience, WorkExperienceViewModel.PartialView)
+        @Html.DisplayFor(m => m.TrainingCourses, TrainingCourseViewModel.PartialView)
 
-    <section class="sfa-section-bordered">
         <h2 class="heading-large">
             Answers to employer questions
         </h2>
         @Html.DisplayFor(m => m, "Application/EmployerQuestionAnswers")
         @Html.DisplayFor(m => m, "Application/MonitoringInformation")
-    </section>
+        <hr/>
+    </div>
 </div>

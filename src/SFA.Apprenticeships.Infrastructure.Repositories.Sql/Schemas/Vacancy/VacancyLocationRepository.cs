@@ -5,9 +5,9 @@
     using System.Linq;
     using Common;
     using dbo;
-    using Domain.Entities.Raa.Locations;
     using Domain.Raa.Interfaces.Repositories;
     using Application.Interfaces;
+    using Domain.Entities.Raa.Vacancies;
 
     public class VacancyLocationRepository : IVacancyLocationReadRepository, IVacancyLocationWriteRepository
     {
@@ -34,7 +34,6 @@
             return vacancyLocations.Select(vl =>
             {
                 var vacancyLocation = _mapper.Map<Entities.VacancyLocation, VacancyLocation>(vl);
-                MapLocalAuthorityCode(vl, vacancyLocation);
                 MapCountyId(vl, vacancyLocation);
 
                 return vacancyLocation;
@@ -52,7 +51,6 @@
             return vacancyLocations.Select(vl =>
             {
                 var vacancyLocation = _mapper.Map<Entities.VacancyLocation, VacancyLocation>(vl);
-                MapLocalAuthorityCode(vl, vacancyLocation);
                 MapCountyId(vl, vacancyLocation);
 
                 return vacancyLocation;
@@ -121,7 +119,11 @@
 
         private void PopulateLocalAuthorityId(VacancyLocation entity, Entities.VacancyLocation dbVacancyLocation)
         {
-            if (!string.IsNullOrWhiteSpace(entity.LocalAuthorityCode))
+            if (entity.Address.LocalAuthorityId != 0)
+            {
+                dbVacancyLocation.LocalAuthorityId = entity.Address.LocalAuthorityId;
+            }
+            else if (!string.IsNullOrWhiteSpace(entity.Address.LocalAuthorityCodeName))
             {
                 dbVacancyLocation.LocalAuthorityId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT LocalAuthorityId
@@ -129,31 +131,12 @@ FROM   dbo.LocalAuthority
 WHERE  CodeName = @LocalAuthorityCode",
                     new
                     {
-                        entity.LocalAuthorityCode
+                        entity.Address.LocalAuthorityCodeName
                     }).Single();
             }
             else
             {
                 dbVacancyLocation.LocalAuthorityId = null;
-            }
-        }
-
-        private void MapLocalAuthorityCode(Entities.VacancyLocation dbVacancyLocation, VacancyLocation result)
-        {
-            if (dbVacancyLocation.LocalAuthorityId.HasValue)
-            {
-                result.LocalAuthorityCode = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
-SELECT CodeName
-FROM   dbo.LocalAuthority
-WHERE  LocalAuthorityId = @LocalAuthorityId",
-                    new
-                    {
-                        dbVacancyLocation.LocalAuthorityId
-                    }).Single();
-            }
-            else
-            {
-                result.LocalAuthorityCode = null;
             }
         }
 

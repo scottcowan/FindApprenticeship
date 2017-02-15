@@ -68,7 +68,7 @@
             MockVacancyPostingService.Setup(mock => mock.GetVacancyByReferenceNumber(It.IsAny<int>()))
                 .Returns(Task.FromResult(_existingVacancy));
             MockVacancyPostingService.Setup(mock => mock.CreateVacancy(It.IsAny<Vacancy>()))
-                .Returns<Vacancy>(v => v);
+                .Returns<Vacancy>(Task.FromResult);
             MockReferenceDataService.Setup(mock => mock.GetSectors())
                 .Returns(new List<Sector>
                 {

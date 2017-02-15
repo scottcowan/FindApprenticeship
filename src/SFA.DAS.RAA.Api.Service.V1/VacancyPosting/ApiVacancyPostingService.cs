@@ -7,7 +7,6 @@
     using Apprenticeships.Application.Interfaces.Api;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Apprenticeships.Application.VacancyPosting.Strategies;
-    using Apprenticeships.Domain.Entities.Raa.Locations;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories.Models;
     using Mappers;
@@ -19,6 +18,7 @@
         private static readonly IMapper ApiClientMappers = new ApiClientMappers();
 
         private readonly ICreateVacancyStrategy _createVacancyStrategy;
+        private readonly IPublishVacancySummaryUpdateStrategy _publishVacancySummaryUpdateStrategy;
         private readonly IUpdateVacancyStrategy _updateVacancyStrategy;
         private readonly IArchiveVacancyStrategy _archiveVacancyStrategy;
         private readonly IGetNextVacancyReferenceNumberStrategy _getNextVacancyReferenceNumberStrategy;
@@ -31,6 +31,7 @@
 
         public ApiVacancyPostingService(
             ICreateVacancyStrategy createVacancyStrategy,
+            IPublishVacancySummaryUpdateStrategy publishVacancySummaryUpdateStrategy,
             IUpdateVacancyStrategy updateVacancyStrategy,
             IArchiveVacancyStrategy archiveVacancyStrategy,
             IGetNextVacancyReferenceNumberStrategy getNextVacancyReferenceNumberStrategy,
@@ -42,6 +43,7 @@
             ILogService logService)
         {
             _createVacancyStrategy = createVacancyStrategy;
+            _publishVacancySummaryUpdateStrategy = publishVacancySummaryUpdateStrategy;
             _updateVacancyStrategy = updateVacancyStrategy;
             _archiveVacancyStrategy = archiveVacancyStrategy;
             _getNextVacancyReferenceNumberStrategy = getNextVacancyReferenceNumberStrategy;
@@ -53,8 +55,34 @@
             _logService = logService;
         }
 
-        public Vacancy CreateVacancy(Vacancy vacancy)
+        public async Task<Vacancy> CreateVacancy(Vacancy vacancy)
         {
+            if (_apiClientProvider.IsEnabled())
+            {
+                var apiClient = _apiClientProvider.GetApiClient();
+
+                try
+                {
+                    vacancy.VacancySource = VacancySource.Raa;
+                    var apiVacancy = ApiClientMappers.Map<Vacancy, ApiVacancy>(vacancy);
+                    var apiVacancyResult = await apiClient.VacancyOperations.CreateVacancyWithHttpMessagesAsync(apiVacancy);
+                    var createdApiVacancy = apiVacancyResult.Body;
+                    var createdVacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(createdApiVacancy);
+                    _publishVacancySummaryUpdateStrategy.PublishVacancySummaryUpdate(createdVacancy);
+                    return createdVacancy;
+                }
+                catch (HttpOperationException ex)
+                {
+                    _logService.Warn(ex);
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    _logService.Error(ex);
+                    throw;
+                }
+            }
+
             return _createVacancyStrategy.CreateVacancy(vacancy);
         }
 
@@ -87,8 +115,13 @@
                 }
                 catch (HttpOperationException ex)
                 {
-                    _logService.Info(ex.ToString());
+                    _logService.Warn(ex);
                     return null;
+                }
+                catch (Exception ex)
+                {
+                    _logService.Error(ex);
+                    throw;
                 }
             }
 
@@ -109,8 +142,13 @@
                 }
                 catch (HttpOperationException ex)
                 {
-                    _logService.Info(ex.ToString());
+                    _logService.Warn(ex);
                     return null;
+                }
+                catch (Exception ex)
+                {
+                    _logService.Error(ex);
+                    throw;
                 }
             }
 
@@ -131,8 +169,13 @@
                 }
                 catch (HttpOperationException ex)
                 {
-                    _logService.Info(ex.ToString());
+                    _logService.Warn(ex);
                     return null;
+                }
+                catch (Exception ex)
+                {
+                    _logService.Error(ex);
+                    throw;
                 }
             }
 

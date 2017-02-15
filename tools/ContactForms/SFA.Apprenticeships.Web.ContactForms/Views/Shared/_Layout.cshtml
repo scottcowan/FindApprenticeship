@@ -1,7 +1,6 @@
 ﻿@using SFA.Apprenticeships.Web.ContactForms.Constants
 @using SFA.Apprenticeships.Web.ContactForms.Controllers
 @using SFA.Apprenticeships.Web.ContactForms.Framework
-
 <!DOCTYPE html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
@@ -25,16 +24,33 @@
     <!--[if gte IE 9]><!-->@Styles.Render(Url.CdnContent("css/fonts.css", "~/Content/_assets"))<!--<![endif]-->
     <link rel="shortcut icon" href="@Url.CdnContent("img/favicon.ico", "~/Content/_assets")" type="image/x-icon">
     @Styles.Render(Url.CdnContent("css/font-awesome/css/font-awesome.min.css", "~/Content/_assets"))
-    @Html.Partial("_Scripts")
 
+    <!-- Google Tag Manager -->
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push(
+            { 'gtm.start': new Date().getTime(), event: 'gtm.js' }
+            ); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-T3CZC2');</script>
+    <!-- End Google Tag Manager -->
 
-      ga('create', 'UA-63979465-1', 'auto');
-      ga('send', 'pageview');
+    @Html.Partial("_Scripts")
+    <script>
+        (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-63979465-1', 'auto');
+        ga('send', 'pageview');
     </script>
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T3CZC2"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
     @if (!string.IsNullOrEmpty(ViewBag.PlannedOutageMessage))
     {
@@ -49,7 +65,6 @@
             </div>
         </div>
     }
-
     <div class="skiplink-container">
         <div>
             <a href="#main" class="skiplink">Skip to main content</a>
@@ -72,7 +87,7 @@
 
                 if (controller != null && ViewBag.UserMessageLevel != null)
                 {
-                    switch ((UserMessageLevel)ViewBag.UserMessageLevel)
+                    switch ((UserMessageLevel) ViewBag.UserMessageLevel)
                     {
                         case UserMessageLevel.Info:
                             string infoMessage = ViewBag.ConfirmationMessage;
@@ -116,7 +131,6 @@
             @RenderBody()
         </main>
     </div>
-
     <footer class="gov-border" role="contentinfo">
         <div class="footer__wrapper">
             <div class="footer__meta">
@@ -131,16 +145,14 @@
             </div>
         </div>
     </footer>
-    <!-- Placed at the end of the document so the pages load faster -->
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/fastclick")
-    @Scripts.Render("~/bundles/underscore")
-    @Scripts.Render("~/bundles/nascript")
-    @Scripts.Render("~/bundles/vendor")
-    @Scripts.Render("~/bundles/nas")
-    @Scripts.Render("~/bundles/lookupservice")
-
-    @RenderSection("scripts", required: false)
-
+<!-- Placed at the end of the document so the pages load faster -->
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/fastclick")
+@Scripts.Render("~/bundles/underscore")
+@Scripts.Render("~/bundles/nascript")
+@Scripts.Render("~/bundles/vendor")
+@Scripts.Render("~/bundles/nas")
+@Scripts.Render("~/bundles/lookupservice")
+@RenderSection("scripts", required: false)
 </body>
 </html>

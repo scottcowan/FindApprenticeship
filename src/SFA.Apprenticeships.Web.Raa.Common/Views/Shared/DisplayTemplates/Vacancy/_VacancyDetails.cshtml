@@ -130,13 +130,15 @@
                     </h3>
                     @if (string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactName) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactNumber) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactEmail))
                 {
-                        <span>None specified. This message will not appear on the vacancy when it goes live</span>
+                        <p class="secondary-text">None specified. This message will not appear on the vacancy when it goes live</p>
                     }
                     else
                     {
-                        <p class="sfa-small-bottom-margin">@Model.TrainingDetailsViewModel.ContactName</p>
-                        <p class="sfa-small-bottom-margin">@Model.TrainingDetailsViewModel.ContactNumber</p>
-                        <p class="sfa-small-bottom-margin">@Model.TrainingDetailsViewModel.ContactEmail</p>
+                        <ul class="list">
+                            <li>@Model.TrainingDetailsViewModel.ContactName</li>
+                            <li>@Model.TrainingDetailsViewModel.ContactNumber</li>
+                            <li>@Model.TrainingDetailsViewModel.ContactEmail</li>
+                        </ul>
                     }
                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ContactDetailsComment))
                 </li>
@@ -160,7 +162,7 @@
             </h3>
             }
                 <div id="vacancy-full-descrpition" class="sfa-text-editor-generated @Model.FurtherVacancyDetailsViewModel.LongDescription.GetPreserveFormattingCssClass()">
-                    @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FurtherVacancyDetailsViewModel.LongDescription))
+                    <p>@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FurtherVacancyDetailsViewModel.LongDescription))</p>
                 </div>
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment))
             </div>

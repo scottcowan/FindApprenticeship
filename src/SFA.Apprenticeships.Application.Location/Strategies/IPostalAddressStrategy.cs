@@ -4,6 +4,8 @@
 
     public interface IPostalAddressStrategy
     {
-        PostalAddress GetPostalAddresses(string companyName, string primaryAddressableObject, string secondaryAddressableObject, string street, string town, string postcode);
+        PostalAddress GetPostalAddress(string companyName, string primaryAddressableObject, string secondaryAddressableObject, string street, string town, string postcode);
+
+        PostalAddress GetPostalAddress(PostalAddress postalAddress);
     }
 }

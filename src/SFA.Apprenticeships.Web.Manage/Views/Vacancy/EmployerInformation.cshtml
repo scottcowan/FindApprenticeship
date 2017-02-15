@@ -9,6 +9,8 @@
     var saveButtonText = Model.VacancyLocationType == VacancyLocationType.SpecificLocation ? "Save" : "Save and continue";
 }
 
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
 <div class="grid-row">
     <div class="column-two-thirds">
         <h1 class="heading-xlarge">
@@ -22,7 +24,7 @@
     @Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView)
 
     <div class="grid-row">
-        <div class="column-full inline">
+        <div class="column-full inline sfa-xlarge-top-margin">
             <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
             @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" })
         </div>

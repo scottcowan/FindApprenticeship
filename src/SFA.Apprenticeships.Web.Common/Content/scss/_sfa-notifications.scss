@@ -113,3 +113,13 @@ $success-colour:$turquoise;
     color: $success-colour;
   }
 }
+
+// ==========================================================================
+// This is a modifiation of the GDS pattern .govuk-box.highlight to include
+// padding on inside the box, incase of a long title being used
+// ==========================================================================
+
+.sfa-govuk-box-highlight {
+    padding-left:0.5em;
+    padding-right:0.5em;
+}

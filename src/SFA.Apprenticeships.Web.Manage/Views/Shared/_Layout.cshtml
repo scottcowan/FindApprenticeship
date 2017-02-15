@@ -78,7 +78,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {
         <div id="planned-outage-message" class="sfa-maintenance-banner">
             <p>@Html.Raw(ViewBag.PlannedOutageMessage)</p>
-            <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })" class="maintenance-close">
+            <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })" class="sfa-maintenance-close">
                 Dismiss
             </a>
         </div>
@@ -120,7 +120,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="column-half">
                         <p>
                             <strong class="phase-tag">BETA</strong>
-                            <span>This is a new service - your <a href="https://www.surveymonkey.co.uk/r/QLQTJQC" target="_blank">feedback</a> helps improve it.</span>
+                            <span>This is a new service - your <a href="https://www.surveymonkey.co.uk/r/QLQTJQC" >feedback</a> helps improve it.</span>
                         </p>
                     </div>
                     <div class="column-half sfa-navigation">
@@ -241,7 +241,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <ul>
                         <li><a href="@Url.RouteUrl(ManagementRouteNames.ContactUs)">Contact</a></li>
                         <li><a href="@Url.RouteUrl(ManagementRouteNames.Privacy)">Privacy and cookies</a></li>
-                    	<li><a href="@Url.RouteUrl(ManagementRouteNames.TermsAndConditions)">Terms and conditions</a></li>
+                        <li><a href="@Url.RouteUrl(ManagementRouteNames.TermsAndConditions)">Terms and conditions</a></li>
                         <li>
                             Built by the <a href="https://www.gov.uk/sfa">Skills Funding Agency</a>
                         </li>
@@ -265,6 +265,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 @Html.Partial("_AboutDisguised")
             </div>
+        </div>
+        <div class="sfa-print-only">
+            <h3 class="heading-small">Contact the Skills Funding Agency helpdesk</h3>
+            <p class="sfa-small-margin-bottom">Telephone (free): 0800 015 0400</p>            
         </div>
     </footer>
 

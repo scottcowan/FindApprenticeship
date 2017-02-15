@@ -6,35 +6,38 @@
     ViewBag.Title = "Candidates with applications report";
 }
 
-<h1 id="heading" class="heading-xlarge">Candidates with applications</h1>
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    <div>
-        <fieldset>
-            <a name="@Html.NameFor(m => m.FromDate).ToString().Replace(".", "_").ToLower()"></a>
-            @Html.EditorFor(m => m.FromDate)
-        </fieldset>
+    <div class="grid-row">
+        <div class="column-two-thirds">
 
-        <fieldset>
-            <a name="@Html.NameFor(m => m.ToDate).ToString().Replace(".", "_").ToLower()"></a>
-            @Html.EditorFor(m => m.ToDate)
-        </fieldset>
+            <h1 id="heading" class="heading-xlarge">Candidates with applications</h1>
 
-        <div class="form-group">
-            <button id="ValidateReportParameters" type="submit" class="button" name="CandidatesWithApplications" value="ValidateCandidatesWithApplications">Export CSV</button>
-            @if (Model.IsValid)
-            {
-                <button id="DownloadReport" type="submit" class="button sfa-button-secondary hidden" name="CandidatesWithApplications" value="DownloadCandidatesWithApplications">Download CSV</button>
-                <noscript>
-                    <button id="DownloadReportNoJs" type="submit" class="button sfa-button-secondary" name="CandidatesWithApplications" value="DownloadCandidatesWithApplications">Download CSV</button>
-                </noscript>
-            }
-            @Html.RouteLink("Back to List", RecruitmentRouteNames.ReportList, null, new {@class="button sfa-button-secondary" })
+            <fieldset>
+                <a name="@Html.NameFor(m => m.FromDate).ToString().Replace(".", "_").ToLower()"></a>
+                @Html.EditorFor(m => m.FromDate)
+            </fieldset>
+
+            <fieldset>
+                <a name="@Html.NameFor(m => m.ToDate).ToString().Replace(".", "_").ToLower()"></a>
+                @Html.EditorFor(m => m.ToDate)
+            </fieldset>
         </div>
+    </div>
+
+    <div class="form-group">
+        <button id="ValidateReportParameters" type="submit" class="button" name="CandidatesWithApplications" value="ValidateCandidatesWithApplications">Export CSV</button>
+        @if (Model.IsValid)
+        {
+            <button id="DownloadReport" type="submit" class="button sfa-button-secondary hidden" name="CandidatesWithApplications" value="DownloadCandidatesWithApplications">Download CSV</button>
+            <noscript>
+                <button id="DownloadReportNoJs" type="submit" class="button sfa-button-secondary" name="CandidatesWithApplications" value="DownloadCandidatesWithApplications">Download CSV</button>
+            </noscript>
+        }
+        @Html.RouteLink("Back to List", RecruitmentRouteNames.ReportList, null, new { @class = "button sfa-button-secondary" })
     </div>
 }
 

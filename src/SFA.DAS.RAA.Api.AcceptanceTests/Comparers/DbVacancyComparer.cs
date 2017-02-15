@@ -111,7 +111,6 @@
                 && string.Equals(object1.FutureProspectsComment, object2.FutureProspectsComment) 
                 //Ignored in mapper
                 //&& object1.LastEditedById == object2.LastEditedById 
-                && string.Equals(object1.LocalAuthorityCode, object2.LocalAuthorityCode) 
                 && string.Equals(object1.LocationAddressesComment, object2.LocationAddressesComment) 
                 && string.Equals(object1.Description, object2.LongDescription) 
                 && string.Equals(object1.LongDescriptionComment, object2.LongDescriptionComment) 

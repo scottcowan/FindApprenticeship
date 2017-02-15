@@ -4,11 +4,11 @@
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model TrainingDetailsViewModel
 
-@using (Html.BeginRouteForm(ManagementRouteNames.TrainingDetails, FormMethod.Post, new { id = "vacancy-training-details-form" }))
+@using (Html.BeginRouteForm(ManagementRouteNames.TrainingDetails, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, FormMethod.Post, new { id = "vacancy-training-details-form" }}))
 {
     @Html.DisplayFor(m => m, TrainingDetailsViewModel.PartialView)
 
-    <div class="form-group inline">
+    <div class="form-group inline sfa-xlarge-top-margin">
         <button type="submit" class="button">Save</button>
         @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" })
     </div>

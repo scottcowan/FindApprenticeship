@@ -1,14 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
-    using Domain.Raa.Interfaces.Repositories;
-    using System.Collections.Generic;
-    using System.Linq;
     using Application.ReferenceData;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using Domain.Raa.Interfaces.Repositories;
     using Presentation;
     using Strategies;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class ReferenceDataProvider : IReferenceDataProvider
     {
@@ -146,6 +146,11 @@
             return standardSubjectAreaTierOnes;
         }
 
+        public Standard GetStandardById(int standardId)
+        {
+            return _referenceRepository.GetStandardById(standardId);
+        }
+
         public IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication)
         {
             return _getReleaseNotesStrategy.GetReleaseNotes(dasApplication);
@@ -194,6 +199,11 @@
         public Region GetRegionById(int regionId)
         {
             return _referenceRepository.GetRegionById(regionId);
+        }
+
+        public Framework GetFrameworkById(int frameworkId)
+        {
+            return _referenceRepository.GetFrameworkById(frameworkId);
         }
 
         public Region GetRegionByCode(string regionCode)

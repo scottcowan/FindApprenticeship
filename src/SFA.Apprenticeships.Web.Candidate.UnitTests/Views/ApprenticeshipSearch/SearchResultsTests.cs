@@ -152,7 +152,6 @@
                 var disabledLink = view.GetElementbyId(string.Format("positive-about-disabled-{0}", vacancy.Id));
                 disabledLink.Should().NotBeNull();
                 disabledLink.GetAttributeValue("href", null).Should().Be("https://www.gov.uk/looking-for-work-if-disabled");
-                disabledLink.GetAttributeValue("target", null).Should().Be("_blank");
             }
         }
 

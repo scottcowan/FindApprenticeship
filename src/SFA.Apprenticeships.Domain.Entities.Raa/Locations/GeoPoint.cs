@@ -49,6 +49,17 @@
             return !Equals(NotSet);
         }
 
+        public GeoPoint Clone()
+        {
+            return new GeoPoint
+            {
+                Latitude = Latitude,
+                Longitude = Longitude,
+                Easting = Easting,
+                Northing = Northing
+            };
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;

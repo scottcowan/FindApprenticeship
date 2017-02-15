@@ -88,7 +88,13 @@
         public async Task<ActionResult> BulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             var response = await _applicationMediator.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
-            return View(response.ViewModel);
+            return View("BulkDeclineCandidates", response.ViewModel);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> BulkDeclineCandidatesSearch(VacancyApplicationsSearchViewModel viewModel)
+        {
+            return await BulkDeclineCandidates(new BulkDeclineCandidatesViewModel() {VacancyApplicationsSearch = viewModel});
         }
 
         [HttpPost]

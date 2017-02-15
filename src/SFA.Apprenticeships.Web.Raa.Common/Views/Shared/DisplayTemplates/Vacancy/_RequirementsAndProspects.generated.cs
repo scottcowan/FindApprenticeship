@@ -130,8 +130,12 @@ WriteLiteral("\r\n                </h3>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                    <span>None specified. This message will not appear on the vac" +
-"ancy when it goes live</span>\r\n");
+WriteLiteral("                    <p");
+
+WriteLiteral(" class=\"secondary-text\"");
+
+WriteLiteral(">None specified. This message will not appear on the vacancy when it goes live</p" +
+">\r\n");
 
             
             #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
@@ -148,29 +152,27 @@ WriteLiteral(" id=\"vacancy-skills-required\"");
 
 WriteLiteral(" itemprop=\"skills\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1244), Tuple.Create("\"", 1368)
-, Tuple.Create(Tuple.Create("", 1252), Tuple.Create("sfa-text-editor-generated", 1252), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1261), Tuple.Create("\"", 1385)
+, Tuple.Create(Tuple.Create("", 1269), Tuple.Create("sfa-text-editor-generated", 1269), true)
             
             #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                        , Tuple.Create(Tuple.Create(" ", 1277), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.DesiredSkills.GetPreserveFormattingCssClass()
+                        , Tuple.Create(Tuple.Create(" ", 1294), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.DesiredSkills.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 1278), false)
+, 1295), false)
 );
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
+WriteLiteral(">\r\n                        <p>");
 
             
             #line 27 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.DesiredSkills));
+                       Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.DesiredSkills));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </div>\r\n");
+WriteLiteral("</p>\r\n                    </div>\r\n");
 
             
             #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
@@ -190,15 +192,15 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1870), Tuple.Create("\"", 1909)
+WriteAttribute("class", Tuple.Create(" class=\"", 1894), Tuple.Create("\"", 1933)
             
             #line 32 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-, Tuple.Create(Tuple.Create("", 1878), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 1902), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1878), false)
-, Tuple.Create(Tuple.Create(" ", 1896), Tuple.Create("sfa-if-first", 1897), true)
+, 1902), false)
+, Tuple.Create(Tuple.Create(" ", 1920), Tuple.Create("sfa-if-first", 1921), true)
 );
 
 WriteLiteral(">\r\n                <h3");
@@ -232,8 +234,12 @@ WriteLiteral("\r\n                </h3>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                    <span>None specified. This message will not appear on the vac" +
-"ancy when it goes live</span>\r\n");
+WriteLiteral("                    <p");
+
+WriteLiteral(" class=\"secondary-text\"");
+
+WriteLiteral(">None specified. This message will not appear on the vacancy when it goes live</p" +
+">\r\n");
 
             
             #line 40 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
@@ -250,29 +256,27 @@ WriteLiteral(" id=\"vacancy-qualities-required\"");
 
 WriteLiteral(" itemprop=\"qualities\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2664), Tuple.Create("\"", 2792)
-, Tuple.Create(Tuple.Create("", 2672), Tuple.Create("sfa-text-editor-generated", 2672), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 2705), Tuple.Create("\"", 2833)
+, Tuple.Create(Tuple.Create("", 2713), Tuple.Create("sfa-text-editor-generated", 2713), true)
             
             #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                              , Tuple.Create(Tuple.Create(" ", 2697), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.PersonalQualities.GetPreserveFormattingCssClass()
+                              , Tuple.Create(Tuple.Create(" ", 2738), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.PersonalQualities.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 2698), false)
+, 2739), false)
 );
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
+WriteLiteral(">\r\n                        <p>");
 
             
             #line 44 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.PersonalQualities));
+                       Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.PersonalQualities));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </div>\r\n");
+WriteLiteral("</p>\r\n                    </div>\r\n");
 
             
             #line 46 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
@@ -292,14 +296,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3306), Tuple.Create("\"", 3332)
+WriteAttribute("class", Tuple.Create(" class=\"", 3354), Tuple.Create("\"", 3380)
             
             #line 49 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-, Tuple.Create(Tuple.Create("", 3314), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 3362), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 3314), false)
+, 3362), false)
 );
 
 WriteLiteral(">\r\n            <div>\r\n                <h3");
@@ -333,8 +337,12 @@ WriteLiteral("\r\n                </h3>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                    <span>None specified. This message will not appear on the vac" +
-"ancy when it goes live</span>\r\n");
+WriteLiteral("                    <p");
+
+WriteLiteral(" class=\"secondary-text\"");
+
+WriteLiteral(">None specified. This message will not appear on the vacancy when it goes live</p" +
+">\r\n");
 
             
             #line 58 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
@@ -351,29 +359,27 @@ WriteLiteral(" id=\"vacancy-qualifications-required\"");
 
 WriteLiteral(" itemprop=\"qualifications\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4133), Tuple.Create("\"", 4265)
-, Tuple.Create(Tuple.Create("", 4141), Tuple.Create("sfa-text-editor-generated", 4141), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4198), Tuple.Create("\"", 4330)
+, Tuple.Create(Tuple.Create("", 4206), Tuple.Create("sfa-text-editor-generated", 4206), true)
             
             #line 61 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                                        , Tuple.Create(Tuple.Create(" ", 4166), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications.GetPreserveFormattingCssClass()
+                                        , Tuple.Create(Tuple.Create(" ", 4231), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 4167), false)
+, 4232), false)
 );
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
+WriteLiteral(">\r\n                        <p>");
 
             
             #line 62 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.DesiredQualifications));
+                       Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.DesiredQualifications));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </div>\r\n");
+WriteLiteral("</p>\r\n                    </div>\r\n");
 
             
             #line 64 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
@@ -413,15 +419,15 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5065), Tuple.Create("\"", 5104)
+WriteAttribute("class", Tuple.Create(" class=\"", 5137), Tuple.Create("\"", 5176)
             
             #line 72 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-, Tuple.Create(Tuple.Create("", 5073), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 5145), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 5073), false)
-, Tuple.Create(Tuple.Create(" ", 5091), Tuple.Create("sfa-if-first", 5092), true)
+, 5145), false)
+, Tuple.Create(Tuple.Create(" ", 5163), Tuple.Create("sfa-if-first", 5164), true)
 );
 
 WriteLiteral(">\r\n                    <h3");
@@ -455,8 +461,12 @@ WriteLiteral("\r\n                    </h3>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                        <span>None specified. This message will not appear on the" +
-" vacancy when it goes live</span>\r\n");
+WriteLiteral("                        <p");
+
+WriteLiteral(" class=\"secondary-text\"");
+
+WriteLiteral(">None specified. This message will not appear on the vacancy when it goes live</p" +
+">\r\n");
 
             
             #line 80 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
@@ -473,29 +483,27 @@ WriteLiteral(" id=\"vacancy-future-prospects\"");
 
 WriteLiteral(" itemprop=\"incentives\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5894), Tuple.Create("\"", 6020)
-, Tuple.Create(Tuple.Create("", 5902), Tuple.Create("sfa-text-editor-generated", 5902), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 5983), Tuple.Create("\"", 6109)
+, Tuple.Create(Tuple.Create("", 5991), Tuple.Create("sfa-text-editor-generated", 5991), true)
             
             #line 83 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                                 , Tuple.Create(Tuple.Create(" ", 5927), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.FutureProspects.GetPreserveFormattingCssClass()
+                                 , Tuple.Create(Tuple.Create(" ", 6016), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.FutureProspects.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 5928), false)
+, 6017), false)
 );
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
+WriteLiteral(">\r\n                            <p>");
 
             
             #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                        Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.FutureProspects));
+                           Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.FutureProspects));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        </div>\r\n");
+WriteLiteral("</p>\r\n                        </div>\r\n");
 
             
             #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
@@ -534,15 +542,15 @@ WriteLiteral("        ");
             #line hidden
 WriteLiteral("            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6714), Tuple.Create("\"", 6753)
+WriteAttribute("class", Tuple.Create(" class=\"", 6810), Tuple.Create("\"", 6849)
             
             #line 92 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-, Tuple.Create(Tuple.Create("", 6722), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 6818), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 6722), false)
-, Tuple.Create(Tuple.Create(" ", 6740), Tuple.Create("sfa-if-first", 6741), true)
+, 6818), false)
+, Tuple.Create(Tuple.Create(" ", 6836), Tuple.Create("sfa-if-first", 6837), true)
 );
 
 WriteLiteral(">\r\n                    <h3");
@@ -576,8 +584,12 @@ WriteLiteral("\r\n                    </h3>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                        <span>None specified. This message will not appear on the" +
-" vacancy when it goes live</span>\r\n");
+WriteLiteral("                        <p");
+
+WriteLiteral(" class=\"secondary-text\"");
+
+WriteLiteral(">None specified. This message will not appear on the vacancy when it goes live</p" +
+">\r\n");
 
             
             #line 100 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
@@ -594,29 +606,27 @@ WriteLiteral(" id=\"vacancy-reality-check\"");
 
 WriteLiteral(" itemprop=\"incentives\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 7545), Tuple.Create("\"", 7672)
-, Tuple.Create(Tuple.Create("", 7553), Tuple.Create("sfa-text-editor-generated", 7553), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 7658), Tuple.Create("\"", 7785)
+, Tuple.Create(Tuple.Create("", 7666), Tuple.Create("sfa-text-editor-generated", 7666), true)
             
             #line 103 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                              , Tuple.Create(Tuple.Create(" ", 7578), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider.GetPreserveFormattingCssClass()
+                              , Tuple.Create(Tuple.Create(" ", 7691), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 7579), false)
+, 7692), false)
 );
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
+WriteLiteral(">\r\n                            <p>");
 
             
             #line 104 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                       Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.ThingsToConsider));
+                          Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.ThingsToConsider));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        </div>\r\n");
+WriteLiteral("</p>\r\n                        </div>\r\n");
 
             
             #line 106 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
