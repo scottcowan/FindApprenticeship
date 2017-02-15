@@ -94,7 +94,6 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<IEncryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
-            For<IVacancySummaryService>().Use<VacancySummaryService>();
         }
 
         private void RegisterStrategies()

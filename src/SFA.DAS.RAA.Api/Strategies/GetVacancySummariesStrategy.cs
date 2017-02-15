@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace SFA.DAS.RAA.Api.Strategies
 {
     using System;
@@ -20,47 +22,39 @@ namespace SFA.DAS.RAA.Api.Strategies
             _vacancySummaryRepository = vacancySummaryRepository;
         }
 
-        public VacancySummariesPage GetVacancySummaries(string ukprn, VacanciesSummaryFilterTypes filterType, int page, int pageSize)
+        public async Task<ListWithTotalCount<VacancySummary>> GetVacancySummaries(string ukprn, string searchString, VacanciesSummaryFilterTypes filterType, VacancySearchMode searchMode, VacancyType vacancyType, Order order, VacancySummaryOrderByColumn orderBy, int page, int pageSize)
         {
             //TODO: Support employer access
 
             if (page < 1)
-            {
                 page = 1;
-            }
-            if (pageSize > 50)
-            {
+            
+            if (pageSize == 0)
                 pageSize = 50;
-            }
+            else if (pageSize > 200)
+                pageSize = 200;
 
             var provider = _providerReadRepository.GetByUkprn(ukprn);
             var providerSites = _providerSiteReadRepository.GetByProviderId(provider.ProviderId);
             var providerSiteId = providerSites.First().ProviderSiteId;
-
+            
             var query = new VacancySummaryQuery
             {
                 ProviderId = provider.ProviderId,
                 ProviderSiteId = providerSiteId,
-                OrderByField = VacancySummaryOrderByColumn.Title,
+                OrderByField = orderBy,
                 Filter = filterType,
                 PageSize = pageSize,
                 RequestedPage = page,
-                //SearchMode = vacanciesSummarySearch.SearchMode,
-                //SearchString = searchString,
-                Order = Order.Ascending,
-                VacancyType = VacancyType.Apprenticeship
+                SearchMode = searchMode,
+                SearchString = searchString,
+                Order = order,
+                VacancyType = vacancyType
             };
-            int totalRecords;
-            var vacancySummaries = _vacancySummaryRepository.GetSummariesForProvider(query, out totalRecords);
+            
+            var vacancySummaries = await _vacancySummaryRepository.GetSummariesForProvider(query);
 
-            var vacancySummariesPage = new VacancySummariesPage
-            {
-                CurrentPage = page,
-                TotalCount = totalRecords,
-                TotalPages = totalRecords == 0 ? 1 : (int)Math.Ceiling((double)totalRecords / (double)pageSize),
-                VacancySummaries = vacancySummaries
-            };
-            return vacancySummariesPage;
+            return vacancySummaries;
         }
     }
 }

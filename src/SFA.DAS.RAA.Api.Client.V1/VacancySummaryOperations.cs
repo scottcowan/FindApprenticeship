@@ -35,6 +35,23 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// </summary>
         public ApiClient Client { get; private set; }
 
+        /// <param name='searchString'>
+        /// </param>
+        /// <param name='searchMode'>
+        /// Possible values include: 'All', 'ReferenceNumber', 'VacancyTitle',
+        /// 'EmployerName', 'Postcode'
+        /// </param>
+        /// <param name='vacancyType'>
+        /// Possible values include: 'Unknown', 'Apprenticeship', 'Traineeship'
+        /// </param>
+        /// <param name='order'>
+        /// Possible values include: 'Ascending', 'Descending'
+        /// </param>
+        /// <param name='orderBy'>
+        /// Possible values include: 'OrderByFilter', 'Title', 'Employer', 'Location',
+        /// 'Applications', 'Provider', 'DateSubmitted', 'ClosingDate',
+        /// 'SubmissionCount', 'VacancyLocation'
+        /// </param>
         /// <param name='filterType'>
         /// Possible values include: 'All', 'Live', 'Submitted', 'Rejected',
         /// 'ClosingSoon', 'Closed', 'Draft', 'NewApplications', 'Withdrawn',
@@ -60,7 +77,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<VacancySummariesPage>> GetVacancySummariesWithHttpMessagesAsync(string filterType = default(string), int? page = default(int?), int? pageSize = default(int?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<VacancySummariesPage>> GetVacancySummariesWithHttpMessagesAsync(string searchString = default(string), string searchMode = default(string), string vacancyType = default(string), string order = default(string), string orderBy = default(string), string filterType = default(string), int? page = default(int?), int? pageSize = default(int?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -69,6 +86,11 @@ namespace SFA.DAS.RAA.Api.Client.V1
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
+                tracingParameters.Add("searchString", searchString);
+                tracingParameters.Add("searchMode", searchMode);
+                tracingParameters.Add("vacancyType", vacancyType);
+                tracingParameters.Add("order", order);
+                tracingParameters.Add("orderBy", orderBy);
                 tracingParameters.Add("filterType", filterType);
                 tracingParameters.Add("page", page);
                 tracingParameters.Add("pageSize", pageSize);
@@ -77,8 +99,28 @@ namespace SFA.DAS.RAA.Api.Client.V1
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "vacancysummaries").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "vacancies").ToString();
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
+            if (searchString != null)
+            {
+                _queryParameters.Add(string.Format("searchString={0}", System.Uri.EscapeDataString(searchString)));
+            }
+            if (searchMode != null)
+            {
+                _queryParameters.Add(string.Format("searchMode={0}", System.Uri.EscapeDataString(searchMode)));
+            }
+            if (vacancyType != null)
+            {
+                _queryParameters.Add(string.Format("vacancyType={0}", System.Uri.EscapeDataString(vacancyType)));
+            }
+            if (order != null)
+            {
+                _queryParameters.Add(string.Format("order={0}", System.Uri.EscapeDataString(order)));
+            }
+            if (orderBy != null)
+            {
+                _queryParameters.Add(string.Format("orderBy={0}", System.Uri.EscapeDataString(orderBy)));
+            }
             if (filterType != null)
             {
                 _queryParameters.Add(string.Format("filterType={0}", System.Uri.EscapeDataString(filterType)));

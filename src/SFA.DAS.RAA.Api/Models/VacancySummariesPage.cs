@@ -1,4 +1,6 @@
-﻿namespace SFA.DAS.RAA.Api.Models
+﻿using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models;
+
+namespace SFA.DAS.RAA.Api.Models
 {
     using System.Collections.Generic;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;

@@ -128,7 +128,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             _getOpenConnection = getOpenConnection;
         }
 
-        public IList<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query, out int totalRecords)
+        public async Task<ListWithTotalCount<VacancySummary>> GetSummariesForProvider(VacancySummaryQuery query)
         {
             var sqlParams = new
             {
@@ -213,14 +213,14 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     OFFSET (@skip) ROWS FETCH NEXT (@take) ROWS ONLY";
 
 
-            var vacancies = _getOpenConnection.Query<DbVacancySummary>(sql, sqlParams);
+            var vacancies = await _getOpenConnection.QueryAsync<DbVacancySummary>(sql, sqlParams);
 
             // return the total record count as well
-            totalRecords = vacancies.Any() ? vacancies.First().TotalResultCount : 0;
+            var totalRecords = vacancies.Any() ? vacancies.First().TotalResultCount : 0;
 
             var mapped = Mapper.Map<IList<DbVacancySummary>, IList<VacancySummary>>(vacancies);
 
-            return mapped;
+            return new ListWithTotalCount<VacancySummary>(mapped, totalRecords);
         }
 
         public VacancyCounts GetLotteryCounts(VacancySummaryQuery query)
@@ -300,7 +300,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
             var mapped = Mapper.Map<IList<DbVacancySummary>, IList<VacancySummary>>(vacancies);
 
-            return new ListWithTotalCount<VacancySummary> {List = mapped, TotalCount = totalRecords.Single()};
+            return new ListWithTotalCount<VacancySummary> (mapped, totalRecords.Single());
         }
 
         private static object GetByStatusSqlParams(VacancySummaryByStatusQuery query)

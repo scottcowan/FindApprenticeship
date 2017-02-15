@@ -4,10 +4,10 @@
 	I want to retrieve all live vacancies
 
 @RA584
-Scenario: Get second page of live vacancy summaries
-	When I request page 2 of the list of 13 live vacancy summaries with page size: 5
+Scenario: Get second page of public live vacancy summaries
+	When I request page 2 of the list of 13 public live vacancy summaries with page size: 5
 	Then The response status is: OK
-	And I see 5 vacancy summaries on page 2 from a total of 13 and 3 total pages
+	And I see 5 public vacancy summaries on page 2 from a total of 13 and 3 total pages
 
 @RA584
 Scenario: Get public live vacancy

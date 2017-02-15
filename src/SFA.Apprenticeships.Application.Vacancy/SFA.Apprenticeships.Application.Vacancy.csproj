@@ -104,6 +104,7 @@
     <Compile Include="VacancyManagementServiceCodes.cs" />
     <Compile Include="VacancySearchService.cs" />
     <Compile Include="VacancySummaryService.cs" />
+    <Compile Include="VacancySummaryServiceCodes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

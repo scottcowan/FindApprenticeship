@@ -2,6 +2,7 @@
 {
     using Raa.Common.ViewModels.ProviderUser;
     using System.Security.Claims;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -124,9 +125,9 @@
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Faa)]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
-        public ActionResult Home(VacanciesSummarySearchViewModel vacanciesSummarySearch)
+        public async Task<ActionResult> Home(VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
-            var response = _providerUserMediator.GetHomeViewModel(User.Identity.Name, User.GetUkprn(), vacanciesSummarySearch);
+            var response = await _providerUserMediator.GetHomeViewModel(User.Identity.Name, User.GetUkprn(), vacanciesSummarySearch);
 
             ModelState.Clear();
 

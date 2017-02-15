@@ -86,6 +86,7 @@
     <Compile Include="ReferenceData\ApiReferenceDataService.cs" />
     <Compile Include="VacancyPosting\ApiVacancyPostingService.cs" />
     <Compile Include="Vacancy\ApiVacancyManagementService.cs" />
+    <Compile Include="Vacancy\ApiVacancySummaryService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

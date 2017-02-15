@@ -3,6 +3,7 @@
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
 {
     using System.Security.Claims;
+    using System.Threading.Tasks;
     using Common.Mediators;
     using Common.Models.Azure.AccessControlService;
     using ViewModels.Home;
@@ -24,7 +25,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
 
         MediatorResponse<VerifyEmailViewModel> ResendVerificationCode(string username);
 
-        MediatorResponse<HomeViewModel> GetHomeViewModel(string username, string ukprn, VacanciesSummarySearchViewModel vacanciesSummarySearch);
+        Task<MediatorResponse<HomeViewModel>> GetHomeViewModel(string username, string ukprn, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 
         MediatorResponse<HomeViewModel> ChangeProviderSite(string username, string ukprn, HomeViewModel viewModel);
 

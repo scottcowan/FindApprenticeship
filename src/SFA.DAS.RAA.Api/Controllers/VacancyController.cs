@@ -54,7 +54,7 @@
         /// </summary>
         /// <param name="vacancy">The vacancy or partial vacancy to create</param>
         /// <returns>Either the created vacancy or a set of model errors explaining why the vacancy couldn't be created.</returns>
-        [Route("vacancies")]
+        [Route("vacancy")]
         [ResponseType(typeof(Vacancy))]
         [HttpPost]
         public IHttpActionResult CreateVacancy(Vacancy vacancy)

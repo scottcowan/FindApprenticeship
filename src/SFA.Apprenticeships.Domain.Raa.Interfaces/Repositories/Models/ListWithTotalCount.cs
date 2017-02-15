@@ -2,10 +2,12 @@
 {
     using System.Collections.Generic;
 
-    public class ListWithTotalCount<T>
+    public class ListWithTotalCount<T> : List<T>
     {
-        public IList<T> List { get; set; }
-
+        public ListWithTotalCount(IEnumerable<T> list, int totalCount) : base(list)
+        {
+            TotalCount = totalCount;
+        }
         public int TotalCount { get; set; }
     }
 }

@@ -79,14 +79,14 @@ namespace SFA.DAS.RAA.Api.Client.V1
         IVacancyOperations VacancyOperations { get; }
 
         /// <summary>
-        /// Gets the IVacancyManagement.
-        /// </summary>
-        IVacancyManagement VacancyManagement { get; }
-
-        /// <summary>
         /// Gets the IVacancySummaryOperations.
         /// </summary>
         IVacancySummaryOperations VacancySummaryOperations { get; }
+
+        /// <summary>
+        /// Gets the IVacancyManagement.
+        /// </summary>
+        IVacancyManagement VacancyManagement { get; }
 
     }
 }

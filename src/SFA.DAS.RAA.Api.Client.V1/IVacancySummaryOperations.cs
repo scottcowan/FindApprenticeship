@@ -11,6 +11,23 @@ namespace SFA.DAS.RAA.Api.Client.V1
     /// </summary>
     public partial interface IVacancySummaryOperations
     {
+        /// <param name='searchString'>
+        /// </param>
+        /// <param name='searchMode'>
+        /// Possible values include: 'All', 'ReferenceNumber', 'VacancyTitle',
+        /// 'EmployerName', 'Postcode'
+        /// </param>
+        /// <param name='vacancyType'>
+        /// Possible values include: 'Unknown', 'Apprenticeship', 'Traineeship'
+        /// </param>
+        /// <param name='order'>
+        /// Possible values include: 'Ascending', 'Descending'
+        /// </param>
+        /// <param name='orderBy'>
+        /// Possible values include: 'OrderByFilter', 'Title', 'Employer',
+        /// 'Location', 'Applications', 'Provider', 'DateSubmitted',
+        /// 'ClosingDate', 'SubmissionCount', 'VacancyLocation'
+        /// </param>
         /// <param name='filterType'>
         /// Possible values include: 'All', 'Live', 'Submitted', 'Rejected',
         /// 'ClosingSoon', 'Closed', 'Draft', 'NewApplications', 'Withdrawn',
@@ -33,6 +50,6 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<VacancySummariesPage>> GetVacancySummariesWithHttpMessagesAsync(string filterType = default(string), int? page = default(int?), int? pageSize = default(int?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<VacancySummariesPage>> GetVacancySummariesWithHttpMessagesAsync(string searchString = default(string), string searchMode = default(string), string vacancyType = default(string), string order = default(string), string orderBy = default(string), string filterType = default(string), int? page = default(int?), int? pageSize = default(int?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

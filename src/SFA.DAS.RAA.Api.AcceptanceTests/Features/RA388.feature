@@ -3,13 +3,6 @@
 	As a vacancy manager
 	I want to be able to increase the wage of a vacancy
 
-@RA388 @GetVacancy
-Scenario: Get vacancy details with no identifier
-	When I authorize my request with a Provider API key
-	And I request the vacancy details for the vacancy with no identifier
-	Then The response status is: NotFound
-	And I do not see the vacancy details for the vacancy with no identifier
-
 @RA388 @GetVacancyById
 Scenario: Get vacancy details by id without authorization
 	When I request the vacancy details for the vacancy with id: 1

@@ -1,78 +1,87 @@
-﻿using TechTalk.SpecFlow;
+﻿using System.Net;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
+using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models;
+using SFA.DAS.RAA.Api.AcceptanceTests.Builders;
+using SFA.DAS.RAA.Api.AcceptanceTests.Constants;
+using SFA.DAS.RAA.Api.AcceptanceTests.Contexts;
+using SFA.DAS.RAA.Api.AcceptanceTests.Extensions;
+using SFA.DAS.RAA.Api.AcceptanceTests.MockProviders;
+using SFA.DAS.RAA.Api.AcceptanceTests.Models;
+using SFA.DAS.RAA.Api.Models;
+using TechTalk.SpecFlow;
 
 namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
-    using System.Net;
-    using System.Threading.Tasks;
-    using Api.Models;
-    using Apprenticeships.Domain.Entities.Raa.Vacancies;
-    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
-    using Comparers;
-    using Constants;
-    using Extensions;
-    using Factories;
-    using FluentAssertions;
-    using Models;
-    using Moq;
-    using Newtonsoft.Json;
-    using Ploeh.AutoFixture;
-    using DbVacancySummary = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.VacancySummary;
-
     [Binding]
     public class GetVacancySummarySteps
     {
-        [When(@"I request page (.*) of the list of (.*) live vacancy summaries with page size: (.*)")]
-        public async Task WhenIRequestPageOfTheListOfLiveVacancySummaries(int page, int totalCount, int pageSize)
+        private readonly VacancySummaryContext _context;
+        private readonly VacancySummaryBuilder _builder;
+
+        public GetVacancySummarySteps(VacancySummaryContext context, VacancySummaryBuilder builder)
         {
-            var vacancySummariesUri = string.Format(UriFormats.PublicVacancySummariesUriFormat, page, pageSize);
-            await GetVacancySummaries(vacancySummariesUri, page, totalCount, pageSize);
+            _context = context;
+            _builder = builder;
         }
 
-        [Then(@"I see (.*) vacancy summaries on page (.*) from a total of (.*) and (.*) total pages")]
-        public void ThenISeeVacancySummariesAndTotalPages(int expectedCount, int expectedPage, int expectedTotalCount, int expectedPageCount)
+        [Given(@"There are (.*) vacancy summaries in the database")]
+        public void GivenThereAreVacancySummariesInTheDatabase(int totalCount)
         {
-            var vacancySummaries = ScenarioContext.Current.Get<List<DbVacancySummary>>("vacancySummaries");
-            var responseVacancySummaries = ScenarioContext.Current.Get<VacancySummariesPage>("responseVacancySummaries");
-
-            responseVacancySummaries.Should().NotBeNull();
-            responseVacancySummaries.VacancySummaries.Should().NotBeNullOrEmpty();
-            responseVacancySummaries.VacancySummaries.Count.Should().Be(expectedCount);
-            responseVacancySummaries.TotalCount.Should().Be(expectedTotalCount);
-            responseVacancySummaries.CurrentPage.Should().Be(expectedPage);
-            responseVacancySummaries.TotalPages.Should().Be(expectedPageCount);
-
-            var comparer = new DbPublicVacancySummaryComparer();
-            for (var i = 0; i < vacancySummaries.Count; i++)
-            {
-                var vacancySummary = vacancySummaries[i];
-                var responseVacancySummary = responseVacancySummaries.VacancySummaries[i];
-
-                vacancySummary.Should().NotBeNull();
-                responseVacancySummary.Should().NotBeNull();
-
-                comparer.Equals(vacancySummary, responseVacancySummary).Should().BeTrue();
-            }
+            _builder.TotalCount = totalCount;
         }
 
-        private static async Task GetVacancySummaries(string vacancySummariesUri, int page, int totalCount, int pageSize)
+        [When(@"I request page (.*) of the vacancy summaries with page size: (.*)")]
+        public async Task WhenIRequestPageOfTheListOfVacancySummaries(int page, int pageSize)
         {
-            var vacancySummaries = new Fixture().Build<DbVacancySummary>()
-                .With(v => v.TotalResultCount, totalCount)
-                .With(v => v.VacancyStatusId, VacancyStatus.Live)
-                .CreateMany(pageSize).ToList();
+            _builder.Page = page;
+            _builder.PageSize = pageSize;
 
-            ScenarioContext.Current.Add("vacancySummaries", vacancySummaries);
+            await GetVacancySummaries(_builder.BuildUrl(), _builder);
+        }
 
-            RaaMockFactory.GetMockGetOpenConnection().Setup(
-                    m => m.QueryAsync<DbVacancySummary>(It.Is<string>(s => s.StartsWith(VacancySummaryRepository.CoreQuery)), It.IsAny<object>(), It.IsAny<int?>(), It.IsAny<CommandType?>()))
-                .Returns(Task.FromResult((IList<DbVacancySummary>)new List<DbVacancySummary>(vacancySummaries)));
+        [When(@"I filter the results with the query '(.*)'")]
+        public void WhenIFilterTheResultsWithTheQuery(string searchQuery)
+        {
+            _builder.SearchQuery = searchQuery;
+        }
 
-            RaaMockFactory.GetMockGetOpenConnection().Setup(
-                    m => m.QueryAsync<int>("SELECT Count(VacancyId) FROM Vacancy WHERE VacancyStatusId = 2", It.IsAny<object>(), It.IsAny<int?>(), It.IsAny<CommandType?>()))
-                .Returns(Task.FromResult((IList<int>)new List<int> { totalCount }));
+        [When(@"I search all fields")]
+        public void WhenISearchAllFields()
+        {
+            _builder.SearchMode = VacancySearchMode.All;
+        }
+
+        [When(@"I only search the (.*) field")]
+        public void WhenISeearchField(VacancySearchMode field)
+        {
+            _builder.SearchMode = field;
+        }
+
+        [When(@"I filter the results to the (.*) vacancy type")]
+        public void WhenIFilterTheResultsToTheVacancyType(VacancyType type)
+        {
+            _builder.VacancyType = type;
+        }
+
+        [When(@"The results are ordered by (.*), (.*)")]
+        public void WhenTheResultsAreOrderedBy(Order order, VacancySummaryOrderByColumn orderedBy)
+        {
+            _builder.Order = order;
+            _builder.OrderBy = orderedBy;
+        }
+
+        [When(@"I filter the results to (.*) status")]
+        public void WhenIFilterTheResultsToStatus(VacanciesSummaryFilterTypes status)
+        {
+            _builder.Status = status;
+        }
+
+        public async Task GetVacancySummaries(string vacancySummariesUri, VacancySummaryBuilder builder)
+        {
+            VacancySummaryMockProvider.MockAssortedVacancySummaries(builder.TotalCount ?? 50, builder.PageSize ?? 50);
+            VacancySummaryMockProvider.MockProviderSites();
 
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
             httpClient.SetAuthorization();

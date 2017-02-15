@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Application.Vacancy
+﻿using System.Threading.Tasks;
+using SFA.Apprenticeships.Application.Interfaces.Service;
+
+namespace SFA.Apprenticeships.Application.Vacancy
 {
     using System.Collections.Generic;
     using Domain.Entities.Raa.Vacancies;
@@ -16,9 +19,10 @@
             _vacancySummaryRepository = vacancySummaryRepository;
         }
 
-        public IList<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query, out int totalRecords)
+        public async Task<IServiceResult<ListWithTotalCount<VacancySummary>>> GetSummariesForProvider(VacancySummaryQuery query)
         {
-            return _vacancySummaryRepository.GetSummariesForProvider(query, out totalRecords);
+            return new ServiceResult<ListWithTotalCount<VacancySummary>>(
+                VacancySummaryServiceCodes.GetByProvider.Ok, await _vacancySummaryRepository.GetSummariesForProvider(query));
         }
 
         public VacancyCounts GetLotteryCounts(VacancySummaryQuery query)

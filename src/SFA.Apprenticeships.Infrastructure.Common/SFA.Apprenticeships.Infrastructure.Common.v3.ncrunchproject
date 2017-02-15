@@ -1,8 +1,6 @@
 ﻿<ProjectConfiguration>
   <Settings>
-    <HiddenComponentWarnings>
-      <Value>AssemblyReferenceToBuildOutputDirectory</Value>
-    </HiddenComponentWarnings>
+    <CopyReferencedAssembliesToWorkspace>True</CopyReferencedAssembliesToWorkspace>
     <IgnoredTests>
       <AllTestsSelector />
     </IgnoredTests>

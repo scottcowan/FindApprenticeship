@@ -15,6 +15,23 @@ namespace SFA.DAS.RAA.Api.Client.V1
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='searchString'>
+            /// </param>
+            /// <param name='searchMode'>
+            /// Possible values include: 'All', 'ReferenceNumber', 'VacancyTitle',
+            /// 'EmployerName', 'Postcode'
+            /// </param>
+            /// <param name='vacancyType'>
+            /// Possible values include: 'Unknown', 'Apprenticeship', 'Traineeship'
+            /// </param>
+            /// <param name='order'>
+            /// Possible values include: 'Ascending', 'Descending'
+            /// </param>
+            /// <param name='orderBy'>
+            /// Possible values include: 'OrderByFilter', 'Title', 'Employer', 'Location',
+            /// 'Applications', 'Provider', 'DateSubmitted', 'ClosingDate',
+            /// 'SubmissionCount', 'VacancyLocation'
+            /// </param>
             /// <param name='filterType'>
             /// Possible values include: 'All', 'Live', 'Submitted', 'Rejected',
             /// 'ClosingSoon', 'Closed', 'Draft', 'NewApplications', 'Withdrawn',
@@ -25,13 +42,30 @@ namespace SFA.DAS.RAA.Api.Client.V1
             /// </param>
             /// <param name='pageSize'>
             /// </param>
-            public static VacancySummariesPage GetVacancySummaries(this IVacancySummaryOperations operations, string filterType = default(string), int? page = default(int?), int? pageSize = default(int?))
+            public static VacancySummariesPage GetVacancySummaries(this IVacancySummaryOperations operations, string searchString = default(string), string searchMode = default(string), string vacancyType = default(string), string order = default(string), string orderBy = default(string), string filterType = default(string), int? page = default(int?), int? pageSize = default(int?))
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVacancySummaryOperations)s).GetVacancySummariesAsync(filterType, page, pageSize), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVacancySummaryOperations)s).GetVacancySummariesAsync(searchString, searchMode, vacancyType, order, orderBy, filterType, page, pageSize), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='searchString'>
+            /// </param>
+            /// <param name='searchMode'>
+            /// Possible values include: 'All', 'ReferenceNumber', 'VacancyTitle',
+            /// 'EmployerName', 'Postcode'
+            /// </param>
+            /// <param name='vacancyType'>
+            /// Possible values include: 'Unknown', 'Apprenticeship', 'Traineeship'
+            /// </param>
+            /// <param name='order'>
+            /// Possible values include: 'Ascending', 'Descending'
+            /// </param>
+            /// <param name='orderBy'>
+            /// Possible values include: 'OrderByFilter', 'Title', 'Employer', 'Location',
+            /// 'Applications', 'Provider', 'DateSubmitted', 'ClosingDate',
+            /// 'SubmissionCount', 'VacancyLocation'
             /// </param>
             /// <param name='filterType'>
             /// Possible values include: 'All', 'Live', 'Submitted', 'Rejected',
@@ -46,9 +80,9 @@ namespace SFA.DAS.RAA.Api.Client.V1
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<VacancySummariesPage> GetVacancySummariesAsync(this IVacancySummaryOperations operations, string filterType = default(string), int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<VacancySummariesPage> GetVacancySummariesAsync(this IVacancySummaryOperations operations, string searchString = default(string), string searchMode = default(string), string vacancyType = default(string), string order = default(string), string orderBy = default(string), string filterType = default(string), int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetVacancySummariesWithHttpMessagesAsync(filterType, page, pageSize, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetVacancySummariesWithHttpMessagesAsync(searchString, searchMode, vacancyType, order, orderBy, filterType, page, pageSize, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
