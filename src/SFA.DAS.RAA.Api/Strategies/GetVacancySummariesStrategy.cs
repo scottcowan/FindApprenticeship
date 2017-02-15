@@ -31,8 +31,8 @@ namespace SFA.DAS.RAA.Api.Strategies
             
             if (pageSize == 0)
                 pageSize = 50;
-            else if (pageSize > 200)
-                pageSize = 200;
+            else if (pageSize > 250)
+                pageSize = 250;
 
             var provider = _providerReadRepository.GetByUkprn(ukprn);
             var providerSites = _providerSiteReadRepository.GetByProviderId(provider.ProviderId);
