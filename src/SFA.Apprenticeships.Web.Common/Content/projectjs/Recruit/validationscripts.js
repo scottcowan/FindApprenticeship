@@ -6,9 +6,9 @@
         if (validator === undefined) return;
 
         var settings = validator.settings;
-        var oldErrorFunction = settings.errorPlacement;
+        var oldErrorFunction = settings.highlight;
         var oldSuccessFunction = settings.success;
-        settings.errorPlacement = function (error, element) {
+        settings.highlight = function(element, errorClass) {
             $(element).removeClass('error');
 
             if ($(element).parents('.form-date').length === 0)
@@ -16,7 +16,7 @@
             else
                 $(element).parents('form-group').last().addClass('error');
 
-            oldErrorFunction(error, element);
+            //oldErrorFunction(element, errorClass);
         };
         settings.success = function (label, element) {
             $(element).parent('.form-group').removeClass("error");
@@ -25,7 +25,8 @@
         };
         settings.showErrors = function (errorMap, errorList) {
             //See http://stackoverflow.com/questions/7935568/jquery-validation-show-validation-summary-during-eager-validation
-            this.defaultShowErrors();
+            if (errorList && errorList.length !== 0)
+                this.defaultShowErrors();
         };
     });
 

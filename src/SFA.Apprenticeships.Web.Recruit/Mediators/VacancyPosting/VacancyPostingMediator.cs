@@ -303,7 +303,7 @@
             var vacancyMinimumData = new VacancyMinimumData
             {
                 VacancyLocationType =
-                    viewModel.VacancyLocationType,
+                    viewModel.VacancyLocationType ?? VacancyLocationType.Unknown,
                 NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
                 viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions,
                 Ukprn = ukprn,
@@ -334,7 +334,7 @@
                 var vacancyData = new VacancyMinimumData
                 {
                     VacancyLocationType =
-                        viewModel.VacancyLocationType,
+                        viewModel.VacancyLocationType ?? VacancyLocationType.Unknown,
                     NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
                     viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions,
                     Ukprn = ukprn,
@@ -630,7 +630,7 @@
 
             if (!validationResult.IsValid)
             {
-                UpdateReferenceDataFor(viewModel);
+                await UpdateReferenceDataFor(viewModel);
                 return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
@@ -645,7 +645,7 @@
 
             if (!validationResult.IsValid)
             {
-                UpdateReferenceDataFor(viewModel);
+                await UpdateReferenceDataFor(viewModel);
                 return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
@@ -654,7 +654,7 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
-        private async void UpdateReferenceDataFor(TrainingDetailsViewModel trainingDetailsViewModel)
+        private async Task UpdateReferenceDataFor(TrainingDetailsViewModel trainingDetailsViewModel)
         {
             trainingDetailsViewModel.SectorsAndFrameworks = await _vacancyPostingProvider.GetSectorsAndFrameworks();
             trainingDetailsViewModel.Standards = _vacancyPostingProvider.GetStandards();

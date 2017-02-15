@@ -9,6 +9,8 @@
     var saveButtonText = Model.VacancyLocationType == VacancyLocationType.SpecificLocation ? "Save" : "Save and continue";
 }
 
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
 <div class="grid-row">
     <div class="column-two-thirds">
         <h1 class="heading-xlarge">

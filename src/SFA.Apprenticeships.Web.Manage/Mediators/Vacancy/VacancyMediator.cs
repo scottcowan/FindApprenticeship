@@ -496,7 +496,7 @@
 
             await _providerQaProvider.ConfirmVacancyOwnerRelationship(viewModel);
 
-            existingVacancy.VacancyLocationType = viewModel.VacancyLocationType;
+            existingVacancy.VacancyLocationType = viewModel.VacancyLocationType ?? VacancyLocationType.Unknown;
             existingVacancy.NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
                 viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions;
             existingVacancy.VacancyGuid = viewModel.VacancyGuid;

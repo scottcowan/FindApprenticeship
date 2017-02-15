@@ -9,7 +9,6 @@
     using System.Web.Mvc;
     using Validators.Provider;
 
-    [Validator(typeof(VacancyOwnerRelationshipViewModelValidator))]
     public class VacancyOwnerRelationshipViewModel
     {
         public const string PartialView = "Vacancy/EmployerDetails";
@@ -54,7 +53,7 @@
 
         public Guid VacancyGuid { get; set; }
 
-        public VacancyLocationType VacancyLocationType { get; set; }
+        public VacancyLocationType? VacancyLocationType { get; set; }
 
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.LabelText)]
         public int? NumberOfPositions { get; set; }
