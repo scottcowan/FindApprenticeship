@@ -16,13 +16,13 @@ Scenario: Get vacancy details by id without authorization
 	Then The response status is: Unauthorized
 
 @RA388 @GetVacancyById
-Scenario: Get vacancy details by id with an invalid api key
+Scenario: Get vacancy details by id with an invalid API key
 	When I authorize my request with an invalid API key
 	And I request the vacancy details for the vacancy with id: 1
 	Then The response status is: Unauthorized
 
 @RA388 @GetVacancyById
-Scenario: Get vacancy details by id with an unknown api key
+Scenario: Get vacancy details by id with an unknown API key
 	When I authorize my request with an unknown API key
 	And I request the vacancy details for the vacancy with id: 1
 	Then The response status is: Unauthorized
@@ -54,13 +54,13 @@ Scenario: Get vacancy details by reference number without authorization
 	Then The response status is: Unauthorized
 
 @RA388 @GetVacancyByReferenceNumber
-Scenario: Get vacancy details by reference number with an invalid api key
+Scenario: Get vacancy details by reference number with an invalid API key
 	When I authorize my request with an invalid API key
 	And I request the vacancy details for the vacancy with reference number: 1
 	Then The response status is: Unauthorized
 
 @RA388 @GetVacancyByReferenceNumber
-Scenario: Get vacancy details by reference number with an unknown api key
+Scenario: Get vacancy details by reference number with an unknown API key
 	When I authorize my request with an unknown API key
 	And I request the vacancy details for the vacancy with reference number: 1
 	Then The response status is: Unauthorized
@@ -87,42 +87,42 @@ Scenario: Get vacancy by reference number that doesn't exist
 	And I do not see the vacancy details for the vacancy with reference number: 3
 
 @RA388 @GetVacancyByGuid
-Scenario: Get vacancy details by guid without authorization
-	When I request the vacancy details for the vacancy with guid: 1
+Scenario: Get vacancy details by GUID without authorization
+	When I request the vacancy details for the vacancy with GUID: 1
 	Then The response status is: Unauthorized
 
 @RA388 @GetVacancyByGuid
-Scenario: Get vacancy details by guid with an invalid api key
+Scenario: Get vacancy details by GUID with an invalid API key
 	When I authorize my request with an invalid API key
-	And I request the vacancy details for the vacancy with guid: 1
+	And I request the vacancy details for the vacancy with GUID: 1
 	Then The response status is: Unauthorized
 
 @RA388 @GetVacancyByGuid
-Scenario: Get vacancy details by guid with an unknown api key
+Scenario: Get vacancy details by GUID with an unknown API key
 	When I authorize my request with an unknown API key
-	And I request the vacancy details for the vacancy with guid: 1
+	And I request the vacancy details for the vacancy with GUID: 1
 	Then The response status is: Unauthorized
 
 @RA388 @GetVacancyByGuid
-Scenario: Get vacancy details by guid
+Scenario: Get vacancy details by GUID
 	When I authorize my request with a Provider API key
-	And I request the vacancy details for the vacancy with guid: 1
+	And I request the vacancy details for the vacancy with GUID: 1
 	Then The response status is: OK
-	And I see the vacancy details for the vacancy with guid: 1
+	And I see the vacancy details for the vacancy with GUID: 1
 
 @RA388 @GetVacancyByGuid
-Scenario: Get vacancy details by guid for different provider
+Scenario: Get vacancy details by GUID for different provider
 	When I authorize my request with a Provider API key
-	And I request the vacancy details for the vacancy with guid: 2
+	And I request the vacancy details for the vacancy with GUID: 2
 	Then The response status is: Unauthorized
-	And I do not see the vacancy details for the vacancy with guid: 2
+	And I do not see the vacancy details for the vacancy with GUID: 2
 
 @RA388 @GetVacancyByGuid
-Scenario: Get vacancy by guid that doesn't exist
+Scenario: Get vacancy by GUID that doesn't exist
 	When I authorize my request with a Provider API key
-	And I request the vacancy details for the vacancy with guid: 3
+	And I request the vacancy details for the vacancy with GUID: 3
 	Then The response status is: NotFound
-	And I do not see the vacancy details for the vacancy with guid: 3
+	And I do not see the vacancy details for the vacancy with GUID: 3
 
 @RA388 @GetVacancyByReferenceNumber @AgencyUser
 Scenario: Get vacancy details by reference number for an agency user
@@ -190,7 +190,7 @@ Scenario: Decrease fixed wage by £20 per week
 	And I do not see the edited vacancy wage details for the vacancy with id: 42
 
 @RA388 @EditWage
-Scenario: Change fixed wage to national minumum wage
+Scenario: Change fixed wage to national minimum wage
 	Given I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly
 	When I authorize my request with a Provider API key
 	And I request to change the wage for the vacancy with id: 42 to NationalMinimum

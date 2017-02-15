@@ -139,11 +139,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 25
 this.ScenarioSetup(scenarioInfo);
 #line 26
- testRunner.When("I request the public vacancy details for the vacancy with guid: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request the public vacancy details for the vacancy with GUID: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 27
  testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 28
- testRunner.And("I do not see the public vacancy details for the vacancy with guid: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I do not see the public vacancy details for the vacancy with GUID: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

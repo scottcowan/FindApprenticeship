@@ -4,8 +4,13 @@
 	I want to be able to populate all the text fields in a vacancy
 
 @RA609
-Scenario: Add two numbers
-	Given I have entered 50 into the calculator
-	And I have entered 70 into the calculator
-	When I press add
-	Then the result should be 120 on the screen
+Scenario: Basic vacancy details text
+	Given I am creating a vacancy
+	When I authorize my request with a Provider API key
+	And I specify a location type of SpecificLocation
+	And I specify vacancy owner relationship with id: 42
+	And I specify the vacancy has 3 positions
+	And I POST the vacancy to the API
+	Then The response status is: OK
+	And I see that the vacancy's status is Live
+	And I see the SpecificLocation vacancy for vacancy owner relationship with id: 42 and 3 positions

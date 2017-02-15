@@ -182,6 +182,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Builders\VacancyBuilder.cs" />
     <Compile Include="Comparers\DbPublicVacancySummaryComparer.cs" />
     <Compile Include="Comparers\DbVacancySummaryComparer.cs" />
     <Compile Include="Comparers\DbVacancyComparer.cs" />

@@ -15,6 +15,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
+    using Builders;
     using Constants;
     using Extensions;
     using Factories;
@@ -34,14 +35,38 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     {
         private const int ProviderSiteId = 24;
 
-        [When(@"I request to create a (.*) vacancy for employer identified with EDSURN: (.*) and provider site identified with EDSURN: (.*) with description: (.*) and website: (.*)")]
-        public void WhenIRequestToCreateAVacancyForEmployerAndProviderSite(string vacancyLocationTypeString, int employerEdsUrn, int providerSiteEdsUrn, string description, string website)
+        private VacancyBuilder _vacancyBuilder;
+
+        [Given(@"I am creating a vacancy")]
+        public void GivenIAmCreatingAVacancy()
         {
-            ScenarioContext.Current.Pending();
+            _vacancyBuilder = new VacancyBuilder();
         }
-        
-        [Then(@"I see the (.*) vacancy for employer identified with EDSURN: (.*) and provider site identified with EDSURN: (.*) with description: (.*) and website: (.*)")]
-        public void ThenISeeTheVacancyForEmployerAndProviderSite(string vacancyLocationTypeString, int employerEdsUrn, int providerSiteEdsUrn, string description, string website)
+
+        #region Builder methods
+
+        [When(@"I specify a location type of (.*)")]
+        public void WhenISpecifyALocationTypeOfSpecificLocation(VacancyLocationType vacancyLocationType)
+        {
+            _vacancyBuilder.VacancyLocationType = vacancyLocationType;
+        }
+
+        [When(@"I specify vacancy owner relationship with id: (.*)")]
+        public void WhenISpecifyVacancyOwnerRelationshipWithId(int vacancyOwnerRelationshipId)
+        {
+            _vacancyBuilder.VacancyOwnerRelationshipId = vacancyOwnerRelationshipId;
+        }
+
+        [When(@"I specify the vacancy has (.*) positions")]
+        public void WhenISpecifyTheVacancyHasPositions(int positions)
+        {
+            _vacancyBuilder.NumberOfPositions = positions;
+        }
+
+        #endregion
+
+        [When(@"I POST the vacancy to the API")]
+        public void WhenIPostTheVacancyToTheApi()
         {
             ScenarioContext.Current.Pending();
         }

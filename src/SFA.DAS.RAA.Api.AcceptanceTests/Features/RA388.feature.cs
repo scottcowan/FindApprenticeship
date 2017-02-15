@@ -113,13 +113,13 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by id with an invalid api key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by id with an invalid API key")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyById")]
-        public virtual void GetVacancyDetailsByIdWithAnInvalidApiKey()
+        public virtual void GetVacancyDetailsByIdWithAnInvalidAPIKey()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id with an invalid api key", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id with an invalid API key", new string[] {
                         "RA388",
                         "GetVacancyById"});
 #line 19
@@ -135,13 +135,13 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by id with an unknown api key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by id with an unknown API key")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyById")]
-        public virtual void GetVacancyDetailsByIdWithAnUnknownApiKey()
+        public virtual void GetVacancyDetailsByIdWithAnUnknownAPIKey()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id with an unknown api key", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id with an unknown API key", new string[] {
                         "RA388",
                         "GetVacancyById"});
 #line 25
@@ -251,13 +251,13 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by reference number with an invalid api key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by reference number with an invalid API key")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByReferenceNumber")]
-        public virtual void GetVacancyDetailsByReferenceNumberWithAnInvalidApiKey()
+        public virtual void GetVacancyDetailsByReferenceNumberWithAnInvalidAPIKey()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number with an invalid api key", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number with an invalid API key", new string[] {
                         "RA388",
                         "GetVacancyByReferenceNumber"});
 #line 57
@@ -273,13 +273,13 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by reference number with an unknown api key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by reference number with an unknown API key")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByReferenceNumber")]
-        public virtual void GetVacancyDetailsByReferenceNumberWithAnUnknownApiKey()
+        public virtual void GetVacancyDetailsByReferenceNumberWithAnUnknownAPIKey()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number with an unknown api key", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number with an unknown API key", new string[] {
                         "RA388",
                         "GetVacancyByReferenceNumber"});
 #line 63
@@ -367,19 +367,19 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by guid without authorization")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by GUID without authorization")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByGuid")]
-        public virtual void GetVacancyDetailsByGuidWithoutAuthorization()
+        public virtual void GetVacancyDetailsByGUIDWithoutAuthorization()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid without authorization", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by GUID without authorization", new string[] {
                         "RA388",
                         "GetVacancyByGuid"});
 #line 90
 this.ScenarioSetup(scenarioInfo);
 #line 91
- testRunner.When("I request the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request the vacancy details for the vacancy with GUID: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 92
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -387,13 +387,13 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by guid with an invalid api key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by GUID with an invalid API key")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByGuid")]
-        public virtual void GetVacancyDetailsByGuidWithAnInvalidApiKey()
+        public virtual void GetVacancyDetailsByGUIDWithAnInvalidAPIKey()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid with an invalid api key", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by GUID with an invalid API key", new string[] {
                         "RA388",
                         "GetVacancyByGuid"});
 #line 95
@@ -401,7 +401,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 96
  testRunner.When("I authorize my request with an invalid API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 97
- testRunner.And("I request the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I request the vacancy details for the vacancy with GUID: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 98
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -409,13 +409,13 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by guid with an unknown api key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by GUID with an unknown API key")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByGuid")]
-        public virtual void GetVacancyDetailsByGuidWithAnUnknownApiKey()
+        public virtual void GetVacancyDetailsByGUIDWithAnUnknownAPIKey()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid with an unknown api key", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by GUID with an unknown API key", new string[] {
                         "RA388",
                         "GetVacancyByGuid"});
 #line 101
@@ -423,7 +423,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 102
  testRunner.When("I authorize my request with an unknown API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 103
- testRunner.And("I request the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I request the vacancy details for the vacancy with GUID: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 104
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -431,13 +431,13 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by guid")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by GUID")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByGuid")]
-        public virtual void GetVacancyDetailsByGuid()
+        public virtual void GetVacancyDetailsByGUID()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by GUID", new string[] {
                         "RA388",
                         "GetVacancyByGuid"});
 #line 107
@@ -445,23 +445,23 @@ this.ScenarioSetup(scenarioInfo);
 #line 108
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 109
- testRunner.And("I request the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I request the vacancy details for the vacancy with GUID: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 110
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 111
- testRunner.And("I see the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I see the vacancy details for the vacancy with GUID: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by guid for different provider")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by GUID for different provider")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByGuid")]
-        public virtual void GetVacancyDetailsByGuidForDifferentProvider()
+        public virtual void GetVacancyDetailsByGUIDForDifferentProvider()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid for different provider", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by GUID for different provider", new string[] {
                         "RA388",
                         "GetVacancyByGuid"});
 #line 114
@@ -469,23 +469,23 @@ this.ScenarioSetup(scenarioInfo);
 #line 115
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 116
- testRunner.And("I request the vacancy details for the vacancy with guid: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I request the vacancy details for the vacancy with GUID: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 117
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 118
- testRunner.And("I do not see the vacancy details for the vacancy with guid: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I do not see the vacancy details for the vacancy with GUID: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy by guid that doesn\'t exist")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy by GUID that doesn\'t exist")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByGuid")]
-        public virtual void GetVacancyByGuidThatDoesntExist()
+        public virtual void GetVacancyByGUIDThatDoesntExist()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy by guid that doesn\'t exist", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy by GUID that doesn\'t exist", new string[] {
                         "RA388",
                         "GetVacancyByGuid"});
 #line 121
@@ -493,11 +493,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 122
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 123
- testRunner.And("I request the vacancy details for the vacancy with guid: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I request the vacancy details for the vacancy with GUID: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 124
  testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 125
- testRunner.And("I do not see the vacancy details for the vacancy with guid: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I do not see the vacancy details for the vacancy with GUID: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -724,13 +724,13 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Change fixed wage to national minumum wage")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Change fixed wage to national minimum wage")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("EditWage")]
-        public virtual void ChangeFixedWageToNationalMinumumWage()
+        public virtual void ChangeFixedWageToNationalMinimumWage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Change fixed wage to national minumum wage", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Change fixed wage to national minimum wage", new string[] {
                         "RA388",
                         "EditWage"});
 #line 193

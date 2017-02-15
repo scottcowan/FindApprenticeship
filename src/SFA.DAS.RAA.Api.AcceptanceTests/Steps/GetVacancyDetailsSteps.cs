@@ -35,7 +35,7 @@
             await GetVacancy(vacancyUri, vacancyReferenceNumber, vacancyReferenceNumber * 100000, Guid.Empty);
         }
 
-        [When(@"I request the vacancy details for the vacancy with guid: (.*)")]
+        [When(@"I request the vacancy details for the vacancy with GUID: (.*)")]
         public async Task WhenIRequestTheVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
         {
             var vacancyUri = string.Format(UriFormats.VacancyGuidUriFormat, vacancyGuid);
@@ -63,7 +63,7 @@
             await GetVacancy(vacancyUri, vacancyReferenceNumber, vacancyReferenceNumber * 100000, Guid.Empty);
         }
 
-        [When(@"I request the public vacancy details for the vacancy with guid: (.*)")]
+        [When(@"I request the public vacancy details for the vacancy with GUID: (.*)")]
         public async Task WhenIRequestThePublicVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
         {
             var vacancyUri = string.Format(UriFormats.PublicVacancyGuidUriFormat, vacancyGuid);
@@ -87,7 +87,7 @@
             ValidateVacancy(vacancy, vacancyUri, new DbVacancyComparer());
         }
 
-        [Then(@"I see the vacancy details for the vacancy with guid: (.*)")]
+        [Then(@"I see the vacancy details for the vacancy with GUID: (.*)")]
         public void ThenISeeTheVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
         {
             var vacancy = ScenarioContext.Current.Get<DbVacancy>($"vacancyGuid: {vacancyGuid}");
@@ -111,7 +111,7 @@
             ValidateVacancy(vacancy, vacancyUri, new DbPublicVacancyComparer());
         }
 
-        [Then(@"I see the public vacancy details for the vacancy with guid: (.*)")]
+        [Then(@"I see the public vacancy details for the vacancy with GUID: (.*)")]
         public void ThenISeeThePublicVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
         {
             var vacancy = ScenarioContext.Current.Get<DbVacancy>($"vacancyGuid: {vacancyGuid}");
@@ -135,7 +135,7 @@
             responseVacancy.Should().BeNull();
         }
 
-        [Then(@"I do not see the vacancy details for the vacancy with guid: (.*)")]
+        [Then(@"I do not see the vacancy details for the vacancy with GUID: (.*)")]
         public void ThenIDoNotSeeTheVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
         {
             var vacancyUri = string.Format(UriFormats.VacancyGuidUriFormat, vacancyGuid);
@@ -166,7 +166,7 @@
             responseVacancy.Should().BeNull();
         }
 
-        [Then(@"I do not see the public vacancy details for the vacancy with guid: (.*)")]
+        [Then(@"I do not see the public vacancy details for the vacancy with GUID: (.*)")]
         public void ThenIDoNotSeeThePublicVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
         {
             var vacancyUri = string.Format(UriFormats.PublicVacancyGuidUriFormat, vacancyGuid);
@@ -213,7 +213,7 @@
                 m => m.QueryCached<int?>(It.IsAny<TimeSpan>(), VacancyRepository.SelectVacancyIdFromReferenceNumberSql, It.Is<object>(o => o.GetHashCode() == new { vacancyReferenceNumber }.GetHashCode()), null, null))
                 .Returns(new int?[] { vacancyId });
 
-            //Setup vacancy guid to vacancy id mapping
+            //Setup vacancy GUID to vacancy id mapping
             RaaMockFactory.GetMockGetOpenConnection().Setup(
                 m => m.QueryCached<int?>(It.IsAny<TimeSpan>(), VacancyRepository.SelectVacancyIdFromGuidSql, It.Is<object>(o => o.GetHashCode() == new { vacancyGuid }.GetHashCode()), null, null))
                 .Returns(new int?[] { vacancyId });

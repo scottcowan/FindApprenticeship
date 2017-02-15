@@ -23,6 +23,6 @@ Scenario: Get public closed vacancy
 
 @RA584
 Scenario: Get public not found vacancy
-	When I request the public vacancy details for the vacancy with guid: 3
+	When I request the public vacancy details for the vacancy with GUID: 3
 	Then The response status is: NotFound
-	And I do not see the public vacancy details for the vacancy with guid: 3
+	And I do not see the public vacancy details for the vacancy with GUID: 3
