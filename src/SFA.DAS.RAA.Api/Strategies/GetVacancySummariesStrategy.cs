@@ -30,7 +30,7 @@ namespace SFA.DAS.RAA.Api.Strategies
                 page = 1;
             
             if (pageSize == 0)
-                pageSize = 50;
+                pageSize = 25;
             else if (pageSize > 250)
                 pageSize = 250;
 
