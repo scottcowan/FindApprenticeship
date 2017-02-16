@@ -134,5 +134,17 @@
             public const string TraineeshipTooLongErrorText = "The weekly hours must not be more than 250 characters";
             public const string TraineeshipWhiteListErrorText = "The weekly hours " + Whitelists.FreetextWhitelist.ErrorText;
         }
+
+        public static class LongDescription
+        {
+            public const string RequiredErrorText = "Enter the long description";
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "The long description " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "The long description " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+            public const string TraineeshipRequiredErrorText = "Enter the work placement description";
+            public const string TraineeshipWhiteListInvalidCharacterErrorText = "The work placement description " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string TraineeshipWhiteListInvalidTagErrorText = "The work placement description " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
     }
 }

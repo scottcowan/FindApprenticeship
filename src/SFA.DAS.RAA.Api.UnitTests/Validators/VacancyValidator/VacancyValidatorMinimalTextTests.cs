@@ -300,6 +300,59 @@
             }
         }
 
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", true, null)]
+        [TestCase("Ascii Start of character", false, "The long description contains some invalid characters")]
+        [TestCase("Desired Skill", true, null)]
+        [TestCase(Samples.ValidFreeHtmlText, true, null)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false, "The long description contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false, "The long description contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false, "The long description contains some invalid tags")]
+        public void LongDescriptionTest(string longDescription, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                LongDescription = longDescription
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.LongDescription, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.LongDescription, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", true, null)]
+        [TestCase("Ascii Start of character", false, "The work placement description contains some invalid characters")]
+        [TestCase("Desired Skill", true, null)]
+        [TestCase(Samples.ValidFreeHtmlText, true, null)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false, "The work placement description contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false, "The work placement description contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false, "The work placement description contains some invalid tags")]
+        public void LongDescriptionTraineeshipTest(string longDescription, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyType = VacancyType.Traineeship,
+                LongDescription = longDescription
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.LongDescription, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.LongDescription, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
         #endregion
     }
 }

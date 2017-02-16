@@ -163,6 +163,20 @@
                 .WithMessage(VacancyMessages.WorkingWeek.TraineeshipWhiteListErrorText)
                 .When(x => !string.IsNullOrEmpty(x.WorkingWeek) && x.VacancyType == VacancyType.Traineeship);
 
+            RuleFor(viewModel => viewModel.LongDescription)
+                .Matches(VacancyMessages.LongDescription.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyMessages.LongDescription.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyMessages.LongDescription.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.LongDescription) && x.VacancyType != VacancyType.Traineeship);
+
+            RuleFor(viewModel => viewModel.LongDescription)
+                .Matches(VacancyMessages.LongDescription.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyMessages.LongDescription.TraineeshipWhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyMessages.LongDescription.TraineeshipWhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.LongDescription) && x.VacancyType == VacancyType.Traineeship);
+
             #endregion
         }
 
