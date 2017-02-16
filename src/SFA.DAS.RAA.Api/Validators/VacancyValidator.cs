@@ -96,6 +96,13 @@
                 .WithMessage(VacancyMessages.ShortDescription.WhiteListErrorText)
                 .When(v => !string.IsNullOrEmpty(v.ShortDescription));
 
+            RuleFor(x => x.OfflineApplicationUrl)
+                .Length(0, 256)
+                .WithMessage(VacancyMessages.OfflineApplicationUrl.TooLongErrorText)
+                .Must(Common.IsValidUrl)
+                .WithMessage(VacancyMessages.OfflineApplicationUrl.InvalidUrlText)
+                .When(x => !string.IsNullOrEmpty(x.OfflineApplicationUrl));
+
             #endregion
         }
 

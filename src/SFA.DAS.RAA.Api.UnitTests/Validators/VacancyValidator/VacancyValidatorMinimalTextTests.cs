@@ -56,5 +56,51 @@
                 _vacancyValidator.ShouldHaveValidationErrorFor(v => v.ShortDescription, vacancy).WithErrorMessage(expectedErrorMessage);
             }
         }
+
+        [TestCase(null, true)]
+        [TestCase("", true)]
+        [TestCase("www.google.com", true)]
+        [TestCase("http://www.google.com", true)]
+        [TestCase("https://www.google.com", true)]
+        [TestCase("www\\asdf\\com", false)]
+        [TestCase("cantbemissingdot", false)]
+        [TestCase("canbeanythingwithcorrect.chars", true)]
+        [TestCase("cantbeincorrechars@%", false)]
+        [TestCase("www.me-you.com", true)]
+        public void OfflineApplicationUrlTests(string websiteUrl, bool expectValid)
+        {
+            var vacancy = new Vacancy
+            {
+                OfflineApplicationUrl = websiteUrl
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.OfflineApplicationUrl, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.OfflineApplicationUrl, vacancy).WithErrorMessage("Please supply a valid website url for candidates to apply for this vacancy on your website");
+            }
+        }
+
+        [TestCase("https://recruit.findapprenticeship.service.gov.uk/vacancy/create?vacancyOwnerRelationshipId=-29&vacancyGuid=1ae20e2a-5710-43c6-8208-3e0b25e7c80b&numberOfPositions=2&comeFromPreview=False&VacancyType=Apprenticeship&FilterType=Live&SearchMode=All&Order=Ascen", true)]
+        [TestCase("https://recruit.findapprenticeship.service.gov.uk/vacancy/create?vacancyOwnerRelationshipId=-29&vacancyGuid=1ae20e2a-5710-43c6-8208-3e0b25e7c80b&numberOfPositions=2&comeFromPreview=False&VacancyType=Apprenticeship&FilterType=Live&SearchMode=All&Order=Ascend", false)]
+        public void OfflineApplicationUrlLengthTests(string websiteUrl, bool expectValid)
+        {
+            var vacancy = new Vacancy
+            {
+                OfflineApplicationUrl = websiteUrl
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.OfflineApplicationUrl, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.OfflineApplicationUrl, vacancy).WithErrorMessage("The website address must not be more than 256 characters");
+            }
+        }
     }
 }

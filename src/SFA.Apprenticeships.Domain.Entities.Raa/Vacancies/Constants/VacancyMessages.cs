@@ -81,5 +81,11 @@
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The short description " + Whitelists.FreetextWhitelist.ErrorText;
         }
+
+        public static class OfflineApplicationUrl
+        {
+            public const string InvalidUrlText = "Please supply a valid website url for candidates to apply for this vacancy on your website";
+            public const string TooLongErrorText = "The website address must not be more than 256 characters";
+        }
     }
 }
