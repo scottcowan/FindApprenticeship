@@ -360,12 +360,12 @@
         [TestCase(null, true, null)]
         [TestCase("", true, null)]
         [TestCase(" ", true, null)]
-        [TestCase("Ascii Start of character", false, "The long description contains some invalid characters")]
+        [TestCase("Ascii Start of character", false, "Desired skills contains some invalid characters")]
         [TestCase("Long Description", true, null)]
         [TestCase(Samples.ValidFreeHtmlText, true, null)]
-        [TestCase(Samples.InvalidHtmlTextWithInput, false, "The long description contains some invalid tags")]
-        [TestCase(Samples.InvalidHtmlTextWithObject, false, "The long description contains some invalid tags")]
-        [TestCase(Samples.InvalidHtmlTextWithScript, false, "The long description contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false, "Desired skills contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false, "Desired skills contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false, "Desired skills contains some invalid tags")]
         public void DesiredSkillsTest(string desiredSkills, bool expectValid, string expectedErrorMessage)
         {
             var vacancy = new Vacancy
@@ -380,6 +380,110 @@
             else
             {
                 _vacancyValidator.ShouldHaveValidationErrorFor(v => v.DesiredSkills, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", true, null)]
+        [TestCase("Ascii Start of character", false, "Personal qualities contains some invalid characters")]
+        [TestCase("Long Description", true, null)]
+        [TestCase(Samples.ValidFreeHtmlText, true, null)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false, "Personal qualities contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false, "Personal qualities contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false, "Personal qualities contains some invalid tags")]
+        public void DesiredPersonalQualitiesTest(string personalQualities, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                PersonalQualities = personalQualities
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.PersonalQualities, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.PersonalQualities, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", true, null)]
+        [TestCase("Ascii Start of character", false, "Desired qualifications contains some invalid characters")]
+        [TestCase("Long Description", true, null)]
+        [TestCase(Samples.ValidFreeHtmlText, true, null)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false, "Desired qualifications contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false, "Desired qualifications contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false, "Desired qualifications contains some invalid tags")]
+        public void DesiredQualificationsQualitiesTest(string desiredQualifications, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                DesiredQualifications = desiredQualifications
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.DesiredQualifications, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.DesiredQualifications, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", true, null)]
+        [TestCase("Ascii Start of character", false, "Future prospects contains some invalid characters")]
+        [TestCase("Long Description", true, null)]
+        [TestCase(Samples.ValidFreeHtmlText, true, null)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false, "Future prospects contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false, "Future prospects contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false, "Future prospects contains some invalid tags")]
+        public void FutureProspectsTest(string futureProspects, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                FutureProspects = futureProspects
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.FutureProspects, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.FutureProspects, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", true, null)]
+        [TestCase("Ascii Start of character", false, "Things to consider contains some invalid characters")]
+        [TestCase("Long Description", true, null)]
+        [TestCase(Samples.ValidFreeHtmlText, true, null)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false, "Things to consider contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false, "Things to consider contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false, "Things to consider contains some invalid tags")]
+        public void ThingsToConsiderTest(string thingsToConsider, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                ThingsToConsider = thingsToConsider
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.ThingsToConsider, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.ThingsToConsider, vacancy).WithErrorMessage(expectedErrorMessage);
             }
         }
 

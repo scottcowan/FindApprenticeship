@@ -181,7 +181,40 @@
 
             #region Requirements and prospects
 
+            RuleFor(x => x.DesiredSkills)
+                .Matches(VacancyMessages.DesiredSkills.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyMessages.DesiredSkills.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyMessages.DesiredSkills.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.DesiredSkills));
 
+            RuleFor(x => x.PersonalQualities)
+                .Matches(VacancyMessages.PersonalQualities.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyMessages.PersonalQualities.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyMessages.PersonalQualities.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.PersonalQualities));
+
+            RuleFor(x => x.DesiredQualifications)
+                .Matches(VacancyMessages.DesiredQualifications.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyMessages.DesiredQualifications.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyMessages.DesiredQualifications.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.DesiredQualifications));
+
+            RuleFor(x => x.FutureProspects)
+                .Matches(VacancyMessages.FutureProspects.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyMessages.FutureProspects.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyMessages.FutureProspects.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.FutureProspects));
+
+            RuleFor(x => x.ThingsToConsider)
+                .Matches(VacancyMessages.ThingsToConsider.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyMessages.ThingsToConsider.WhiteListInvalidCharacterErrorText)
+                .When(x => !string.IsNullOrEmpty(x.ThingsToConsider)) //Migrated vacancies can contain just the empty string
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyMessages.ThingsToConsider.WhiteListInvalidTagErrorText);
 
             #endregion
         }

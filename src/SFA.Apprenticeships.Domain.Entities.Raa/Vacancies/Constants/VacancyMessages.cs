@@ -146,5 +146,53 @@
             public const string TraineeshipWhiteListInvalidCharacterErrorText = "The work placement description " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
             public const string TraineeshipWhiteListInvalidTagErrorText = "The work placement description " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
+
+        public static class DesiredSkills
+        {
+            public const string RequiredErrorText = "Enter the desired skills";
+            public const string TooLongErrorText = "Desired skills must not be more than 4000 characters";
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Desired skills " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Desired skills " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
+
+        public static class PersonalQualities
+        {
+            public const string RequiredErrorText = "Enter the personal qualities";
+            public const string TooLongErrorText = "Personal qualities must not be more than 4000 characters";
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Personal qualities " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Personal qualities " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
+
+        public static class DesiredQualifications
+        {
+            public const string RequiredErrorText = "Enter the desired qualifications";
+            public const string TooLongErrorText = "Desired qualifications must not be more than 4000 characters";
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Desired qualifications " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Desired qualifications " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
+
+        public static class FutureProspects
+        {
+            public const string RequiredErrorText = "Enter the future prospects";
+            public const string TooLongErrorText = "Future prospects must not be more than 4000 characters";
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Future prospects " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Future prospects " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
+
+        public static class ThingsToConsider
+        {
+            public const string TooLongErrorText = "Things to consider must not be more than 4000 characters";
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Things to consider " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Things to consider " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
     }
 }
