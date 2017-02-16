@@ -72,10 +72,12 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Basic vacancy details text")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA609")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA609")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("BasicVacancyDetails")]
         public virtual void BasicVacancyDetailsText()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Basic vacancy details text", new string[] {
-                        "RA609"});
+                        "RA609",
+                        "BasicVacancyDetails"});
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
@@ -89,12 +91,19 @@ this.ScenarioSetup(scenarioInfo);
 #line 12
  testRunner.And("I specify the vacancy has 3 positions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
- testRunner.And("I POST the vacancy to the API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I specify Plumbing Apprenticeship as the vacancy title", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
- testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I specify <p>Plumbing is hard</p> as the short description", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
- testRunner.And("I see that the vacancy\'s status is Draft", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I specify http://offline.com as the offline URL with Apply offline here as the of" +
+                    "fline application instructions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
+ testRunner.And("I POST the vacancy to the API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 18
+ testRunner.And("I see that the vacancy\'s status is Draft", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 19
  testRunner.And("I see created vacancy matches the posted vacancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

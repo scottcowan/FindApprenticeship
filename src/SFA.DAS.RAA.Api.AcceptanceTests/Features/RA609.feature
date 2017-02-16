@@ -3,13 +3,16 @@
 	As an API user
 	I want to be able to populate all the text fields in a vacancy
 
-@RA609
+@RA609 @BasicVacancyDetails
 Scenario: Basic vacancy details text
 	Given I am creating a vacancy
 	When I authorize my request with a Provider API key
 	And I specify a location type of SpecificLocation
 	And I specify vacancy owner relationship with id: 42
 	And I specify the vacancy has 3 positions
+	And I specify Plumbing Apprenticeship as the vacancy title
+	And I specify <p>Plumbing is hard</p> as the short description
+	And I specify http://offline.com as the offline URL with Apply offline here as the offline application instructions
 	And I POST the vacancy to the API
 	Then The response status is: OK
 	And I see that the vacancy's status is Draft

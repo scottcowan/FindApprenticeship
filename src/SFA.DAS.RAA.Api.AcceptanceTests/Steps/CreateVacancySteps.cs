@@ -65,6 +65,25 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             _vacancyBuilder.ContractOwnerId = contractOwnerId;
         }
 
+        [When(@"I specify (.*) as the vacancy title")]
+        public void WhenISpecifyAsTheVacancyTitle(string title)
+        {
+            _vacancyBuilder.Title = title;
+        }
+
+        [When(@"I specify (.*) as the short description")]
+        public void WhenISpecifyAsTheShortDescription(string shortDescription)
+        {
+            _vacancyBuilder.ShortDescription = shortDescription;
+        }
+
+        [When(@"I specify (.*) as the offline URL with (.*) as the offline application instructions")]
+        public void WhenISpecifyAsTheOfflineUrlWithAsTheOfflineApplicationInstructions(string offlineApplicationUrl, string offlineApplicationInstructions)
+        {
+            _vacancyBuilder.OfflineApplicationUrl = offlineApplicationUrl;
+            _vacancyBuilder.OfflineApplicationInstructions = offlineApplicationInstructions;
+        }
+
         #endregion
 
         [When(@"I POST the vacancy to the API")]
