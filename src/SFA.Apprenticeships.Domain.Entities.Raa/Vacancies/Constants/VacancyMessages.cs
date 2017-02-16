@@ -94,12 +94,45 @@
             public const string WhiteListErrorText = "The instructions for candidates to apply for this vacancy on your website " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
-        public static class TrainingProvidedMessages
+        public static class TrainingProvided
         {
             public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
             public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListInvalidCharacterErrorText = "Training to be provided " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
             public const string WhiteListInvalidTagErrorText = "Training to be provided " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
+
+        public static class ContactName
+        {
+            public const string TooLongErrorText = "Contact name must not be more than 100 characters";
+            public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
+            public const string FreeTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Contact name " + Whitelists.FreetextWhitelist.ErrorText;
+        }
+
+        public static class ContactNumber
+        {
+            public const string LengthErrorText = "Contact number must be between 8 and 16 digits or not specified";
+            public const string WhiteListRegularExpression = Whitelists.PhoneNumberWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Contact number " + Whitelists.PhoneNumberWhitelist.ErrorText;
+        }
+
+        public static class ContactEmail
+        {
+            public const string TooLongErrorText = "Contact email address must not be more than 100 characters";
+            public const string WhiteListRegularExpression = Whitelists.EmailAddressWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Contact email address " + Whitelists.EmailAddressWhitelist.ErrorText;
+        }
+
+        public static class WorkingWeek
+        {
+            public const string RequiredErrorText = "Enter the working week";
+            public const string TooLongErrorText = "The working week must not be more than 250 characters";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "The working week " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string TraineeshipRequiredErrorText = "Enter the weekly hours";
+            public const string TraineeshipTooLongErrorText = "The weekly hours must not be more than 250 characters";
+            public const string TraineeshipWhiteListErrorText = "The weekly hours " + Whitelists.FreetextWhitelist.ErrorText;
         }
     }
 }

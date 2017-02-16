@@ -24,5 +24,23 @@
             public const string RegularExpression = "^(([gG][iI][rR] {0,}0[aA]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))$"; //"^(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) [0-9][A-Z-[CIKMOV]]{2})$";
             public const string ErrorText = @" is not a valid format";
         }
+
+        public static class NameWhitelist
+        {
+            public const string RegularExpression = @"^[a-zA-Z()',+\-\s]+$";
+            public const string ErrorText = "contains some invalid characters";
+        }
+
+        public static class EmailAddressWhitelist
+        {
+            public const string RegularExpression = @"^[a-zA-Z0-9\u0080-\uFFA7?$#()""'!,+\-=_:;.&€£*%\s\/]+@[a-zA-Z0-9\u0080-\uFFA7?$#()""'!,+\-=_:;.&€£*%\s\/]+\.([a-zA-Z0-9\u0080-\uFFA7]{2,10})$";
+            public const string ErrorText = @"must be a valid email address";
+        }
+
+        public static class PhoneNumberWhitelist
+        {
+            public const string RegularExpression = @"^[0-9+\s-()]{8,16}$";
+            public const string ErrorText = @"must only contain digits, and at most 16 digits";
+        }
     }
 }

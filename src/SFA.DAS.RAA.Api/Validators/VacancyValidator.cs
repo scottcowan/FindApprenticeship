@@ -118,11 +118,50 @@
             #region Training details
 
             RuleFor(m => m.TrainingProvided)
-                .Matches(VacancyMessages.TrainingProvidedMessages.WhiteListHtmlRegularExpression)
-                .WithMessage(VacancyMessages.TrainingProvidedMessages.WhiteListInvalidCharacterErrorText)
+                .Matches(VacancyMessages.TrainingProvided.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyMessages.TrainingProvided.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyMessages.TrainingProvidedMessages.WhiteListInvalidTagErrorText)
+                .WithMessage(VacancyMessages.TrainingProvided.WhiteListInvalidTagErrorText)
                 .When(x => Common.IsNotEmpty(x.TrainingProvided));
+
+            RuleFor(m => m.ContactName)
+                .Length(0, 100)
+                .WithMessage(VacancyMessages.ContactName.TooLongErrorText)
+                .Matches(VacancyMessages.ContactName.WhiteListRegularExpression)
+                .WithMessage(VacancyMessages.ContactName.WhiteListErrorText)
+                .When(x => !string.IsNullOrEmpty(x.ContactName));
+
+            RuleFor(x => x.ContactNumber)
+                .Length(8, 16)
+                .WithMessage(VacancyMessages.ContactNumber.LengthErrorText)
+                .Matches(VacancyMessages.ContactNumber.WhiteListRegularExpression)
+                .WithMessage(VacancyMessages.ContactNumber.WhiteListErrorText)
+                .When(x => !string.IsNullOrEmpty(x.ContactNumber));
+
+            RuleFor(m => m.ContactEmail)
+                .Length(0, 100)
+                .WithMessage(VacancyMessages.ContactEmail.TooLongErrorText)
+                .Matches(VacancyMessages.ContactEmail.WhiteListRegularExpression)
+                .WithMessage(VacancyMessages.ContactEmail.WhiteListErrorText)
+                .When(x => !string.IsNullOrEmpty(x.ContactEmail));
+
+            #endregion
+
+            #region Further vacancy details
+
+            RuleFor(viewModel => viewModel.WorkingWeek)
+                .Length(0, 250)
+                .WithMessage(VacancyMessages.WorkingWeek.TooLongErrorText)
+                .Matches(VacancyMessages.WorkingWeek.WhiteListRegularExpression)
+                .WithMessage(VacancyMessages.WorkingWeek.WhiteListErrorText)
+                .When(x => !string.IsNullOrEmpty(x.WorkingWeek) && x.VacancyType != VacancyType.Traineeship);
+
+            RuleFor(viewModel => viewModel.WorkingWeek)
+                .Length(0, 250)
+                .WithMessage(VacancyMessages.WorkingWeek.TraineeshipTooLongErrorText)
+                .Matches(VacancyMessages.WorkingWeek.WhiteListRegularExpression)
+                .WithMessage(VacancyMessages.WorkingWeek.TraineeshipWhiteListErrorText)
+                .When(x => !string.IsNullOrEmpty(x.WorkingWeek) && x.VacancyType == VacancyType.Traineeship);
 
             #endregion
         }

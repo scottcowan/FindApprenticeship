@@ -177,6 +177,129 @@
             }
         }
 
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", true, null)]
+        [TestCase("One hundred character string One hundred character string One hundred character string One hundred c", true, null)]
+        [TestCase("String over one hundred characters String over one hundred characters String over one hundred charact", false, "Contact name must not be more than 100 characters")]
+        [TestCase("<p>Invalid characters</p>", false, "Contact name contains some invalid characters")]
+        public void ContactNameTest(string contactName, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                ContactName = contactName
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.ContactName, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.ContactName, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", false, "Contact number must only contain digits, and at most 16 digits")]
+        [TestCase("www.google.com", false, "Contact number must only contain digits, and at most 16 digits")]
+        [TestCase("0123456789", true, null)]
+        [TestCase("+447894223", true, null)]
+        [TestCase("+44(0)7894223", true, null)]
+        [TestCase("01234567890123456", false, "Contact number must be between 8 and 16 digits or not specified")]
+        public void ContactNumberTests(string contactNumber, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                ContactNumber = contactNumber
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.ContactNumber, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.ContactNumber, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", false, "Contact email address must be a valid email address")]
+        [TestCase("www.google.com", false, "Contact email address must be a valid email address")]
+        [TestCase("test@test.com", true, null)]
+        [TestCase("test@test.co.uk", true, null)]
+        [TestCase("emailaddressover100charactersemailaddressover100charactersemailaddr@emailaddressover100characters.com", false, "Contact email address must not be more than 100 characters")]
+        public void ContactEmailTests(string contactEmail, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                ContactEmail = contactEmail
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.ContactEmail, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.ContactEmail, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        #endregion
+
+        #region Further vacancy details
+
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", true, null)]
+        [TestCase("250 character string 250 character string 250 character string 250 character string 250 character string 250 character string 250 character string 250 character string 250 character string 250 character string 250 character string 250 character strin", true, null)]
+        [TestCase("String over 250 characters String over 250 characters String over 250 characters String over 250 characters String over 250 characters String over 250 characters String over 250 characters String over 250 characters String over 250 characters String o", false, "The working week must not be more than 250 characters")]
+        [TestCase("<p>Invalid characters</p>", false, "The working week contains some invalid characters")]
+        public void WorkingWeekApprenticeshipTest(string workingWeek, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                WorkingWeek = workingWeek
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.WorkingWeek, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.WorkingWeek, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", true, null)]
+        [TestCase("250 character string 250 character string 250 character string 250 character string 250 character string 250 character string 250 character string 250 character string 250 character string 250 character string 250 character string 250 character strin", true, null)]
+        [TestCase("String over 250 characters String over 250 characters String over 250 characters String over 250 characters String over 250 characters String over 250 characters String over 250 characters String over 250 characters String over 250 characters String o", false, "The weekly hours must not be more than 250 characters")]
+        [TestCase("<p>Invalid characters</p>", false, "The weekly hours contains some invalid characters")]
+        public void WorkingWeekTraineeshipTest(string workingWeek, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyType = VacancyType.Traineeship,
+                WorkingWeek = workingWeek
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.WorkingWeek, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.WorkingWeek, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
         #endregion
     }
 }
