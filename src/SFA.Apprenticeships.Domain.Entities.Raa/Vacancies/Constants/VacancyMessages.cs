@@ -87,5 +87,11 @@
             public const string InvalidUrlText = "Please supply a valid website url for candidates to apply for this vacancy on your website";
             public const string TooLongErrorText = "The website address must not be more than 256 characters";
         }
+
+        public static class OfflineApplicationInstructions
+        {
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "The instructions for candidates to apply for this vacancy on your website " + Whitelists.FreetextWhitelist.ErrorText;
+        }
     }
 }

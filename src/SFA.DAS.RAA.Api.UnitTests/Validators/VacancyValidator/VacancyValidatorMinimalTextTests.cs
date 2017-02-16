@@ -57,6 +57,27 @@
             }
         }
 
+        [TestCase(null, false)]
+        [TestCase("", false)]
+        [TestCase("www.google.com", true)]
+        public void OfflineApplicationUrlRequired(string websiteUrl, bool expectValid)
+        {
+            var vacancy = new Vacancy
+            {
+                OfflineVacancy = true,
+                OfflineApplicationUrl = websiteUrl
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.OfflineApplicationUrl, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.OfflineApplicationUrl, vacancy).WithErrorMessage("Please supply a valid website url for candidates to apply for this vacancy on your website");
+            }
+        }
+
         [TestCase(null, true)]
         [TestCase("", true)]
         [TestCase("www.google.com", true)]
@@ -100,6 +121,27 @@
             else
             {
                 _vacancyValidator.ShouldHaveValidationErrorFor(v => v.OfflineApplicationUrl, vacancy).WithErrorMessage("The website address must not be more than 256 characters");
+            }
+        }
+
+        [TestCase(null, true)]
+        [TestCase("", true)]
+        [TestCase(" ", true)]
+        [TestCase("<p>Invalid characters</p>", false)]
+        public void TitleTest(string offlineApplicationInstructions, bool expectValid)
+        {
+            var vacancy = new Vacancy
+            {
+                OfflineApplicationInstructions = offlineApplicationInstructions
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.OfflineApplicationInstructions, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.OfflineApplicationInstructions, vacancy).WithErrorMessage("The instructions for candidates to apply for this vacancy on your website contains some invalid characters");
             }
         }
     }

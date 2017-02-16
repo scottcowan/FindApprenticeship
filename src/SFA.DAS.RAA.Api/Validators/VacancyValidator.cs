@@ -96,12 +96,22 @@
                 .WithMessage(VacancyMessages.ShortDescription.WhiteListErrorText)
                 .When(v => !string.IsNullOrEmpty(v.ShortDescription));
 
+            RuleFor(m => m.OfflineApplicationUrl)
+                .NotEmpty()
+                .WithMessage(VacancyMessages.OfflineApplicationUrl.InvalidUrlText)
+                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value && viewModel.OfflineVacancyType != OfflineVacancyType.MultiUrl);
+
             RuleFor(x => x.OfflineApplicationUrl)
                 .Length(0, 256)
                 .WithMessage(VacancyMessages.OfflineApplicationUrl.TooLongErrorText)
                 .Must(Common.IsValidUrl)
                 .WithMessage(VacancyMessages.OfflineApplicationUrl.InvalidUrlText)
                 .When(x => !string.IsNullOrEmpty(x.OfflineApplicationUrl));
+
+            RuleFor(viewModel => viewModel.OfflineApplicationInstructions)
+                .Matches(VacancyMessages.OfflineApplicationInstructions.WhiteListRegularExpression)
+                .WithMessage(VacancyMessages.OfflineApplicationInstructions.WhiteListErrorText)
+                .When(v => !string.IsNullOrEmpty(v.OfflineApplicationInstructions));
 
             #endregion
         }
