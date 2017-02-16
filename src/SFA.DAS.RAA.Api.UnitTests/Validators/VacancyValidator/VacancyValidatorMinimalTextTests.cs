@@ -155,7 +155,7 @@
         [TestCase("", true, null)]
         [TestCase(" ", true, null)]
         [TestCase("Ascii Start of character", false, "Training to be provided contains some invalid characters")]
-        [TestCase("Desired Skill", true, null)]
+        [TestCase("Training Provided", true, null)]
         [TestCase(Samples.ValidFreeHtmlText, true, null)]
         [TestCase(Samples.InvalidHtmlTextWithInput, false, "Training to be provided contains some invalid tags")]
         [TestCase(Samples.InvalidHtmlTextWithObject, false, "Training to be provided contains some invalid tags")]
@@ -304,16 +304,16 @@
         [TestCase("", true, null)]
         [TestCase(" ", true, null)]
         [TestCase("Ascii Start of character", false, "The long description contains some invalid characters")]
-        [TestCase("Desired Skill", true, null)]
+        [TestCase("Long Description", true, null)]
         [TestCase(Samples.ValidFreeHtmlText, true, null)]
         [TestCase(Samples.InvalidHtmlTextWithInput, false, "The long description contains some invalid tags")]
         [TestCase(Samples.InvalidHtmlTextWithObject, false, "The long description contains some invalid tags")]
         [TestCase(Samples.InvalidHtmlTextWithScript, false, "The long description contains some invalid tags")]
-        public void LongDescriptionTest(string longDescription, bool expectValid, string expectedErrorMessage)
+        public void LongDescriptionTest(string desiredSkills, bool expectValid, string expectedErrorMessage)
         {
             var vacancy = new Vacancy
             {
-                LongDescription = longDescription
+                LongDescription = desiredSkills
             };
 
             if (expectValid)
@@ -330,7 +330,7 @@
         [TestCase("", true, null)]
         [TestCase(" ", true, null)]
         [TestCase("Ascii Start of character", false, "The work placement description contains some invalid characters")]
-        [TestCase("Desired Skill", true, null)]
+        [TestCase("Long Description", true, null)]
         [TestCase(Samples.ValidFreeHtmlText, true, null)]
         [TestCase(Samples.InvalidHtmlTextWithInput, false, "The work placement description contains some invalid tags")]
         [TestCase(Samples.InvalidHtmlTextWithObject, false, "The work placement description contains some invalid tags")]
@@ -350,6 +350,36 @@
             else
             {
                 _vacancyValidator.ShouldHaveValidationErrorFor(v => v.LongDescription, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        #endregion
+
+        #region Requirements and prospects
+
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", true, null)]
+        [TestCase("Ascii Start of character", false, "The long description contains some invalid characters")]
+        [TestCase("Long Description", true, null)]
+        [TestCase(Samples.ValidFreeHtmlText, true, null)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false, "The long description contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false, "The long description contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false, "The long description contains some invalid tags")]
+        public void DesiredSkillsTest(string desiredSkills, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                DesiredSkills = desiredSkills
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.DesiredSkills, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.DesiredSkills, vacancy).WithErrorMessage(expectedErrorMessage);
             }
         }
 

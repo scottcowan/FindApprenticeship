@@ -178,6 +178,12 @@
                 .When(x => Common.IsNotEmpty(x.LongDescription) && x.VacancyType == VacancyType.Traineeship);
 
             #endregion
+
+            #region Requirements and prospects
+
+
+
+            #endregion
         }
 
         private static bool IsAnonymousEmployer(Vacancy vacancy)
