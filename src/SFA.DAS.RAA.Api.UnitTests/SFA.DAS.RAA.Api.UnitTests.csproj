@@ -80,6 +80,7 @@
     <Compile Include="Strategies\CreateVacancyTests.cs" />
     <Compile Include="Strategies\EditWageStrategyTests.cs" />
     <Compile Include="Strategies\GetAllLiveVacancySummariesStrategyTests.cs" />
+    <Compile Include="Strategies\GetVacancySummariesStrategyTests.cs" />
     <Compile Include="Validators\EmployerProviderSiteLinkValidatorTests.cs" />
     <Compile Include="Validators\PostalAddressValidatorTests.cs" />
     <Compile Include="Validators\VacancyLocationValidatorTests.cs" />
@@ -159,7 +160,7 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
-      </ProjectReference>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Provider\SFA.Apprenticeships.Application.Provider.csproj">
       <Project>{920F5834-459D-4E20-9B17-AAD52D2CC8FE}</Project>
       <Name>SFA.Apprenticeships.Application.Provider</Name>
