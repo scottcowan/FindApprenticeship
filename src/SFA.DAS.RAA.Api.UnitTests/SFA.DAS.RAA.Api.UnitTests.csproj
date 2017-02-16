@@ -82,6 +82,7 @@
     <Compile Include="Strategies\GetAllLiveVacancySummariesStrategyTests.cs" />
     <Compile Include="Validators\EmployerProviderSiteLinkValidatorTests.cs" />
     <Compile Include="Validators\PostalAddressValidatorTests.cs" />
+    <Compile Include="Validators\Samples.cs" />
     <Compile Include="Validators\VacancyLocationValidatorTests.cs" />
     <Compile Include="Validators\VacancyValidator\VacancyValidatorMinimalTests.cs" />
     <Compile Include="Validators\VacancyValidator\VacancyValidatorMinimalTextTests.cs" />

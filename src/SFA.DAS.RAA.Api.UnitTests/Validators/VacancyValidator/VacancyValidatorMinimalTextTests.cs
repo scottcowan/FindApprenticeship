@@ -11,6 +11,8 @@
     {
         private readonly VacancyValidator _vacancyValidator = new VacancyValidator();
 
+        #region Basic vacancy details
+
         [TestCase(null, true, null)]
         [TestCase("", true, null)]
         [TestCase(" ", true, null)]
@@ -144,5 +146,37 @@
                 _vacancyValidator.ShouldHaveValidationErrorFor(v => v.OfflineApplicationInstructions, vacancy).WithErrorMessage("The instructions for candidates to apply for this vacancy on your website contains some invalid characters");
             }
         }
+
+        #endregion
+
+        #region Training details
+
+        [TestCase(null, true, null)]
+        [TestCase("", true, null)]
+        [TestCase(" ", true, null)]
+        [TestCase("Ascii Start of character", false, "Training to be provided contains some invalid characters")]
+        [TestCase("Desired Skill", true, null)]
+        [TestCase(Samples.ValidFreeHtmlText, true, null)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false, "Training to be provided contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false, "Training to be provided contains some invalid tags")]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false, "Training to be provided contains some invalid tags")]
+        public void TrainingProvidedTest(string trainingProvided, bool expectValid, string expectedErrorMessage)
+        {
+            var vacancy = new Vacancy
+            {
+                TrainingProvided = trainingProvided
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.TrainingProvided, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.TrainingProvided, vacancy).WithErrorMessage(expectedErrorMessage);
+            }
+        }
+
+        #endregion
     }
 }

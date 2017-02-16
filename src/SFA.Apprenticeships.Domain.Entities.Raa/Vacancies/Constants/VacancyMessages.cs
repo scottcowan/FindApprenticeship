@@ -93,5 +93,13 @@
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The instructions for candidates to apply for this vacancy on your website " + Whitelists.FreetextWhitelist.ErrorText;
         }
+
+        public static class TrainingProvidedMessages
+        {
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Training to be provided " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Training to be provided " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
     }
 }

@@ -114,6 +114,17 @@
                 .When(v => !string.IsNullOrEmpty(v.OfflineApplicationInstructions));
 
             #endregion
+
+            #region Training details
+
+            RuleFor(m => m.TrainingProvided)
+                .Matches(VacancyMessages.TrainingProvidedMessages.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyMessages.TrainingProvidedMessages.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyMessages.TrainingProvidedMessages.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.TrainingProvided));
+
+            #endregion
         }
 
         private static bool IsAnonymousEmployer(Vacancy vacancy)
