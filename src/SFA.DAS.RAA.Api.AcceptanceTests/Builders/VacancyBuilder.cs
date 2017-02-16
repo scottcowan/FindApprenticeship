@@ -8,6 +8,8 @@
         public int VacancyOwnerRelationshipId { get; set; }
         public VacancyLocationType VacancyLocationType { get; set; }
         public int NumberOfPositions { get; set; }
+        public VacancyStatus VacancyStatus { get; set; }
+        public int ContractOwnerId { get; set; }
 
         public Vacancy Build()
         {
@@ -16,7 +18,10 @@
                 VacancyGuid = Guid.NewGuid(),
                 VacancyLocationType = VacancyLocationType,
                 VacancyOwnerRelationshipId = VacancyOwnerRelationshipId,
-                NumberOfPositions = NumberOfPositions
+                NumberOfPositions = NumberOfPositions,
+                Status = VacancyStatus,
+                ContractOwnerId = ContractOwnerId,
+                OriginalContractOwnerId = ContractOwnerId
             };
             return vacancy;
         }

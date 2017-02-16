@@ -4,32 +4,21 @@ using TechTalk.SpecFlow;
 namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
-    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo;
-    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities;
-    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
-    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
-    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
     using Builders;
     using Constants;
     using Extensions;
-    using Factories;
     using FluentAssertions;
     using KellermanSoftware.CompareNetObjects;
     using MockProviders;
     using Models;
-    using Moq;
     using Newtonsoft.Json;
-    using Ploeh.AutoFixture;
     using UnitTests.Factories;
-    using DbVacancy = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.Vacancy;
     using VacancyLocationType = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyLocationType;
-    using VacancyOwnerRelationship = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities.VacancyOwnerRelationship;
 
     [Binding]
     public class CreateVacancySteps
@@ -64,6 +53,18 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             _vacancyBuilder.NumberOfPositions = positions;
         }
 
+        [When(@"I specify the vacancy status is (.*)")]
+        public void WhenISpecifyTheVacancyStatusIs(VacancyStatus vacancyStatus)
+        {
+            _vacancyBuilder.VacancyStatus = vacancyStatus;
+        }
+
+        [When(@"I specify contract owner with id: (.*)")]
+        public void WhenISpecifyContractOwnerWithId(int contractOwnerId)
+        {
+            _vacancyBuilder.ContractOwnerId = contractOwnerId;
+        }
+
         #endregion
 
         [When(@"I POST the vacancy to the API")]
@@ -78,9 +79,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         }
 
         [Then(@"I see that the vacancy's status is (.*)")]
-        public void ThenISeeThatTheVacancySStatusIs(string vacancyStatusString)
+        public void ThenISeeThatTheVacancySStatusIs(VacancyStatus vacancyStatus)
         {
-            var vacancyStatus = (VacancyStatus)Enum.Parse(typeof(VacancyStatus), vacancyStatusString);
             var responseVacancy = ScenarioContext.Current.Get<Vacancy>("responseVacancy");
             responseVacancy.Status.Should().Be(vacancyStatus);
         }

@@ -61,6 +61,8 @@ Scenario: QA Create a vacancy at the employer's location
 	And I specify a location type of SpecificLocation
 	And I specify vacancy owner relationship with id: 42
 	And I specify the vacancy has 3 positions
+	And I specify the vacancy status is Live
+	And I specify contract owner with id: 1170
 	And I POST the vacancy to the API
 	Then The response status is: OK
 	And I see that the vacancy's status is Live
