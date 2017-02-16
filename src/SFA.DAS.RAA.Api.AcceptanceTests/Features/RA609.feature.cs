@@ -93,7 +93,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 13
  testRunner.And("I specify Plumbing Apprenticeship as the vacancy title", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
- testRunner.And("I specify <p>Plumbing is hard</p> as the short description", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I specify Plumbing is hard as the short description", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
  testRunner.And("I specify http://offline.com as the offline URL with Apply offline here as the of" +
                     "fline application instructions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

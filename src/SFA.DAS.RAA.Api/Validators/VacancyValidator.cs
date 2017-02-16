@@ -9,6 +9,8 @@
     {
         public VacancyValidator()
         {
+            #region Choose employer
+
             RuleFor(v => v.VacancyOwnerRelationshipId)
                 .NotEqual(0)
                 .WithMessage(VacancyMessages.VacancyOwnerRelationshipId.RequiredErrorText);
@@ -75,6 +77,26 @@
 
             RuleFor(x => x.VacancyLocations)
                 .SetCollectionValidator(new VacancyLocationValidator());
+
+            #endregion
+
+            #region Basic vacancy details
+
+            RuleFor(m => m.Title)
+                .Length(0, 100)
+                .WithMessage(VacancyMessages.Title.TooLongErrorText)
+                .Matches(VacancyMessages.Title.WhiteListRegularExpression)
+                .WithMessage(VacancyMessages.Title.WhiteListErrorText)
+                .When(v => !string.IsNullOrEmpty(v.Title));
+
+            RuleFor(x => x.ShortDescription)
+                .Length(0, 350)
+                .WithMessage(VacancyMessages.ShortDescription.TooLongErrorText)
+                .Matches(VacancyMessages.ShortDescription.WhiteListRegularExpression)
+                .WithMessage(VacancyMessages.ShortDescription.WhiteListErrorText)
+                .When(v => !string.IsNullOrEmpty(v.ShortDescription));
+
+            #endregion
         }
 
         private static bool IsAnonymousEmployer(Vacancy vacancy)

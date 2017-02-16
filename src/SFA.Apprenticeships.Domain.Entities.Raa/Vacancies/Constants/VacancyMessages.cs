@@ -65,5 +65,21 @@
         {
             public const string RequiredErrorText = "You must supply at least one vacancy location when the vacancy location type is MultipleLocations.";
         }
+
+        public static class Title
+        {
+            public const string RequiredErrorText = "Please supply a title for the vacancy";
+            public const string TooLongErrorText = "The title must not be more than 100 characters";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "The title " + Whitelists.FreetextWhitelist.ErrorText;
+        }
+
+        public static class ShortDescription
+        {
+            public const string RequiredErrorText = "Please supply the short description for the vacancy";
+            public const string TooLongErrorText = "The short description must not be more than 350 characters";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "The short description " + Whitelists.FreetextWhitelist.ErrorText;
+        }
     }
 }

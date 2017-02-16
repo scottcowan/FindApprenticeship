@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.RAA.Api.UnitTests.Validators
+﻿namespace SFA.DAS.RAA.Api.UnitTests.Validators.VacancyValidator
 {
     using System;
     using System.Collections.Generic;
