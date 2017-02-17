@@ -1,11 +1,12 @@
 ﻿namespace SFA.DAS.RAA.Api.Controllers
 {
-    using System.Web.Http;
-    using System.Web.Http.Description;
     using Apprenticeships.Domain.Entities.Raa;
+    using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Web.Common.Extensions;
     using Models;
     using Strategies;
+    using System.Web.Http;
+    using System.Web.Http.Description;
 
     [Authorize(Roles = Roles.Provider)]
     [RoutePrefix("employer")]
@@ -31,5 +32,25 @@
         {
             return Ok(_linkEmployerStrategy.LinkEmployer(employerProviderSiteLinkRequest, edsUrn, User.GetUkprn()));
         }
+
+        [Route("edsurn/{edsUrn}")]
+        [ResponseType(typeof(Employer))]
+        [HttpGet]
+        public IHttpActionResult FindEmployerByEdsUrn(int edsUrn)
+        {
+            return Ok();
+        }
+
+        [Route("employersummaries")]
+        [ResponseType(typeof(EmployerSummariesPage))]
+        [HttpGet]
+        public IHttpActionResult FindEmployer(string name, string location, int page = 1, int pageSize = 10)
+        {
+            return Ok();
+        }
+    }
+
+    public class EmployerSummariesPage
+    {
     }
 }

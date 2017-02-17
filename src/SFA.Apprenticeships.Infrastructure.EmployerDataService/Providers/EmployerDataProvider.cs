@@ -1,10 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.Providers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Application.Interfaces;
     using Application.Interfaces.Locations;
-    using SFA.Infrastructure.Interfaces;
     using Application.Organisation;
     using Configuration;
     using Domain.Entities.Exceptions;
@@ -12,9 +9,9 @@
     using Domain.Entities.Raa.Parties;
     using EmployerDataService;
     using Mappers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using WebServices.Wcf;
     using ErrorCodes = ErrorCodes;
 
@@ -54,10 +51,8 @@
             {
                 _logger.Debug("Calling EmployerDataService.ByUrn with reference number='{0}'", referenceNumber);
 
-                DetailedEmployerStructure employer = null;
-
-                _service.Use(EndpointConfigurationName, client =>
-                    employer = client.Fetch(Convert.ToInt32(referenceNumber), false, Credentials));
+                var employer = _service.Use(EndpointConfigurationName, client => client
+                    .Fetch(Convert.ToInt32(referenceNumber), false, Credentials));
 
                 if (employer == null)
                 {
@@ -66,7 +61,7 @@
                 }
 
                 _logger.Debug("EmployerDataService.ByUrn found employer with reference number='{0}'", referenceNumber);
-                
+
                 return GetVerifiedOrganisationSummary(employer);
             }
             catch (BoundaryException e)
@@ -93,13 +88,11 @@
             {
                 _logger.Debug($"Calling EmployerDataService.ByFreeText with reference number='{employerName}', post code or town='{postcodeOrTown}'");
 
-                ConciseEmployerStructure[] employers = null;
-
                 const bool isPhonetic = false;
                 const string orgWorkplace = null;
                 const string region = null;
 
-                _service.Use(EndpointConfigurationName, client =>
+                ConciseEmployerStructure[] employers = _service.Use(EndpointConfigurationName, client =>
                     employers = client.ByOrganisationAndTrading(employerName, postcodeOrTown, isPhonetic, orgWorkplace, region, Credentials));
 
                 if (employers == null || employers.Length == 0)

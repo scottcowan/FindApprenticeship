@@ -33,9 +33,11 @@
 
         public const string GetFrameworksUri = "frameworks";
         public const string GetStandardssUri = "standards";
-        public const string GetFrameworksByIdUri = "framework/{0}";
-        public const string GetStandardssByIdUri = "standard/{0}";
-		
-		public const string VacancySummariesUriFormat = "vacancies";
+        public const string GetFrameworkByIdUri = "framework/{0}";
+        public const string GetStandardByIdUri = "standard/{0}";
+
+        public const string VacancySummariesUriFormat = "vacancies";
+
+        public const string GetEmployerByEdsUriUri = "/employer/edsurn/{0}";
     }
 }

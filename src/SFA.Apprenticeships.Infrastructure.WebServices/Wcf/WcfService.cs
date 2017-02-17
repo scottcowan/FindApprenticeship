@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.WebServices.Wcf
 {
+    using Domain.Entities.Exceptions;
+    using SFA.Apprenticeships.Application.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using System;
     using System.Configuration;
     using System.ServiceModel;
     using System.ServiceModel.Configuration;
-    using SFA.Infrastructure.Interfaces;
-    using Domain.Entities.Exceptions;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class WcfService<T> : IWcfService<T>
     {
@@ -56,6 +55,16 @@
             CallServiceAction(action, configChannelFactory);
         }
 
+        public TOut Use<TOut>(string endpointConfigurationName, Func<T, TOut> func)
+        {
+            var configChannelFactory = new ConfigurationChannelFactory<T>(endpointConfigurationName, _configuration, null);
+
+            var toReturn = default(TOut);
+            CallServiceAction(client => toReturn = func(client), configChannelFactory);
+
+            return toReturn;
+        }
+
         protected virtual void CallServiceAction(Action<T> action, ChannelFactory<T> factory)
         {
             var client = factory.CreateChannel();
@@ -98,7 +107,7 @@
         {
             try
             {
-                ((IClientChannel) client).Abort();
+                ((IClientChannel)client).Abort();
             }
             catch (Exception e)
             {

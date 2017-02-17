@@ -199,7 +199,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [Given(@"I request the framework with id: (.*)")]
         public async Task GivenIRequestTheFrameworkWithId(int frameworkId)
         {
-            var requestUri = string.Format(UriFormats.GetFrameworksByIdUri, frameworkId);
+            var requestUri = string.Format(UriFormats.GetFrameworkByIdUri, frameworkId);
             await GetFrameworkById(requestUri);
         }
 
@@ -282,7 +282,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [Then(@"I do not see the information for the framework with id: (.*)")]
         public void ThenIDoNotSeeTheInformationForTheFrameworkWithId(int frameworkId)
         {
-            var requestUri = string.Format(UriFormats.GetFrameworksByIdUri, frameworkId);
+            var requestUri = string.Format(UriFormats.GetFrameworkByIdUri, frameworkId);
             var responseFramework = ScenarioContext.Current.Get<Framework>(requestUri);
             responseFramework.Should().BeNull();
         }
@@ -290,7 +290,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [Then(@"I see the information for the framework with id: (.*)")]
         public void ThenISeeTheInformationForTheFrameworkWithId(int frameworkId)
         {
-            var requestUri = string.Format(UriFormats.GetFrameworksByIdUri, frameworkId);
+            var requestUri = string.Format(UriFormats.GetFrameworkByIdUri, frameworkId);
             var frameworkWithId = ScenarioContext.Current.Get<ApprenticeshipFramework>("frameworkWithId");
             var occupationWithId = ScenarioContext.Current.Get<ApprenticeshipOccupation>("occupationWithId");
 
@@ -314,7 +314,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [Given(@"I request the standard with id: (.*)")]
         public async Task GivenIRequestTheStandardWithId(int standardId)
         {
-            var requestUri = string.Format(UriFormats.GetStandardssByIdUri, standardId);
+            var requestUri = string.Format(UriFormats.GetStandardByIdUri, standardId);
             await GetStandardById(requestUri);
         }
 
@@ -374,7 +374,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [Then(@"I see the information for the standard with id: (.*)")]
         public void ThenISeeTheInformationForTheStandardWithId(int standardId)
         {
-            var requestUri = string.Format(UriFormats.GetStandardssByIdUri, standardId);
+            var requestUri = string.Format(UriFormats.GetStandardByIdUri, standardId);
             var responseStandard = ScenarioContext.Current.Get<DomainStandard>(requestUri);
             var standard = ScenarioContext.Current.Get<DbStandard>("standard");
             responseStandard.Should().NotBeNull();
@@ -390,7 +390,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [Then(@"I see do not see the information for the framework with id: (.*)")]
         public void ThenISeeDoNotSeeTheInformationForTheFrameworkWithId(int standardId)
         {
-            var requestUri = string.Format(UriFormats.GetStandardssByIdUri, standardId);
+            var requestUri = string.Format(UriFormats.GetStandardByIdUri, standardId);
             var responseStandard = ScenarioContext.Current.Get<DomainStandard>(requestUri);
             responseStandard.Should().BeNull();
         }
@@ -398,14 +398,14 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
         [Given(@"I request the framework whose status is ceased: (.*)")]
         public async Task GivenIRequestTheFrameworkWhoseStatusIsCeased(int frameworkId)
         {
-            var requestUri = string.Format(UriFormats.GetFrameworksByIdUri, frameworkId);
+            var requestUri = string.Format(UriFormats.GetFrameworkByIdUri, frameworkId);
             await GetFrameworkById(requestUri);
         }
 
         [Given(@"I request the standard whose status is ceased: (.*)")]
         public async Task GivenIRequestTheStandardWhoseStatusIsCeased(int standardId)
         {
-            var requestUri = string.Format(UriFormats.GetStandardssByIdUri, standardId);
+            var requestUri = string.Format(UriFormats.GetStandardByIdUri, standardId);
             await GetStandardById(requestUri);
         }
 

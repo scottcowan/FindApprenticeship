@@ -1,9 +1,5 @@
 ﻿namespace SFA.DAS.RAA.Api.AcceptanceTests.Factories
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Domain.Entities.Raa.RaaApi;
     using Apprenticeships.Domain.Entities.Raa.Reference;
@@ -13,7 +9,6 @@
     using Apprenticeships.Infrastructure.EmployerDataService.EmployerDataService;
     using Apprenticeships.Infrastructure.Postcode.Configuration;
     using Apprenticeships.Infrastructure.Repositories.Sql.Common;
-    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
@@ -25,6 +20,10 @@
     using Infrastructure.Interfaces;
     using Moq;
     using Ploeh.AutoFixture;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     using UnitTests.Factories;
 
     public class RaaMockFactory
@@ -58,7 +57,7 @@
                 FindServiceEndpoint = "http://localhost",
                 RetrieveServiceEndpoint = "http://localhost"
             });
-            
+
             //Setup mock for unknown user
             MockGetOpenConnection.Setup(m => m.Query<RaaApiUser>(It.IsAny<string>(), It.IsAny<object>(), null, null)).Returns(new List<RaaApiUser>());
 
@@ -66,19 +65,19 @@
             var validProviderApiUser = RaaApiUserFactory.GetValidProviderApiUser(ApiKeys.ProviderApiKey);
             MockGetOpenConnection.Setup(
                 m => m.Query<RaaApiUser>(RaaApiUserRepository.SelectSql, It.Is<object>(o => o.GetHashCode() == new { ApiKey = ApiKeys.ProviderApiKey }.GetHashCode()), null, null))
-                .Returns(new [] {validProviderApiUser});
+                .Returns(new[] { validProviderApiUser });
 
             MockGetOpenConnection.Setup(
                 m => m.Query<RaaApiUser>(RaaApiUserRepository.SelectSql, It.Is<object>(o => o.GetHashCode() == new { ApiKey = ApiKeys.EmployerApiKey }.GetHashCode()), null, null))
-                .Returns(new [] { RaaApiUserFactory.GetValidEmployerApiUser(ApiKeys.EmployerApiKey) });
+                .Returns(new[] { RaaApiUserFactory.GetValidEmployerApiUser(ApiKeys.EmployerApiKey) });
 
             MockGetOpenConnection.Setup(
                 m => m.Query<RaaApiUser>(RaaApiUserRepository.SelectSql, It.Is<object>(o => o.GetHashCode() == new { ApiKey = ApiKeys.AgencyApiKey }.GetHashCode()), null, null))
-                .Returns(new [] { RaaApiUserFactory.GetValidAgencyApiUser(ApiKeys.AgencyApiKey) });
+                .Returns(new[] { RaaApiUserFactory.GetValidAgencyApiUser(ApiKeys.AgencyApiKey) });
 
             //Setup mock for unknown provider
             MockGetOpenConnection.Setup(m => m.Query<Provider>(It.IsAny<string>(), It.IsAny<object>(), null, null)).Returns(new List<Provider>());
-            
+
             //Setup provider information for user
             MockGetOpenConnection.Setup(
                 m => m.Query<Provider>(ProviderRepository.SelectByUkprnSql, It.Is<object>(o => o.GetHashCode() == new { ukprn = validProviderApiUser.ReferencedEntitySurrogateId.ToString(), providerStatusTypeID = ProviderStatuses.Activated }.GetHashCode()), null, null))

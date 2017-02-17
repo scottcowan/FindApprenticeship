@@ -221,6 +221,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RA609.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\RA644.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RA644.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\VacancySummaryFeatures.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -229,6 +234,7 @@
     <Compile Include="MockProviders\VacancyMockProvider.cs" />
     <Compile Include="MockProviders\VacancySummaryMockProvider.cs" />
     <Compile Include="Steps\CreateVacancySteps.cs" />
+    <Compile Include="Steps\GetLinkEmployerSteps.cs" />
     <Compile Include="Steps\GetRegionsSteps.cs" />
     <Compile Include="Steps\GetLocalAuthoritySteps.cs" />
     <Compile Include="Steps\GetCountiesSteps.cs" />
@@ -313,6 +319,10 @@
     <None Include="Features\RA607.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RA607.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\RA644.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>RA644.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\VacancySummaryFeatures.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

@@ -7,5 +7,6 @@
         void Use(Action<T> action);
         void Use(string endpointConfigurationName, string endpointAddress, Action<T> action);
         void Use(string endpointConfigurationName, Action<T> action);
+        TOut Use<TOut>(string endpointConfigurationName, Func<T, TOut> func);
     }
 }

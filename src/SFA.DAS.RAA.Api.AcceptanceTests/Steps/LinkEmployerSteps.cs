@@ -1,17 +1,10 @@
 ﻿namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
-    using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Text;
-    using System.Threading.Tasks;
     using Api.Models;
-    using Apprenticeships.Domain.Entities.Raa.Reference;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
-    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference;
     using Constants;
     using Extensions;
     using Factories;
@@ -20,6 +13,10 @@
     using Moq;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
+    using System.Net;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading.Tasks;
     using TechTalk.SpecFlow;
     using UnitTests.Factories;
 
@@ -69,7 +66,7 @@
                 {
                     RaaMockFactory.GetMockGetOpenConnection().Setup(
                         m => m.Query<VacancyOwnerRelationship>(It.Is<string>(s => s.StartsWith(VacancyOwnerRelationshipRepository.SelectByIdsSql)), It.IsAny<object>(), null, null))
-                        .Returns(new[] {vor});
+                        .Returns(new[] { vor });
                 })
                 .Returns(42);
 
@@ -114,7 +111,7 @@
             var responseEmployerProviderSiteLink = ScenarioContext.Current.Get<EmployerProviderSiteLink>(linkEmployerUri);
             responseEmployerProviderSiteLink.Should().NotBeNull();
 
-            var employer =  ScenarioContext.Current.Get<Employer>($"employer_{employerEdsUrn}");
+            var employer = ScenarioContext.Current.Get<Employer>($"employer_{employerEdsUrn}");
             var providerSite = ScenarioContext.Current.Get<ProviderSite>($"providerSite_{providerSiteEdsUrn}");
 
             var expectedLink = new EmployerProviderSiteLink
