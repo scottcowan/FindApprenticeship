@@ -593,6 +593,413 @@ WriteLiteral(@" />
             </td>
         </tr>
     </table>
+</section>
+
+<section");
+
+WriteLiteral(" class=\"text\"");
+
+WriteLiteral(">\r\n    <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(">Multi-language Appnexus</h2>\r\n    <table>\r\n        <colgroup>\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t60\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(@" />
+            <col />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Purpose
+                </th>
+                <th>
+                    Expires
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                pll_language
+            </td>
+            <td>
+                Used for remembering selected language option.
+            </td>
+            <td>
+                1 year
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section");
+
+WriteLiteral(" class=\"text\"");
+
+WriteLiteral(">\r\n    <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(">Appnexus</h2>\r\n    <table>\r\n        <colgroup>\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t60\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(@" />
+            <col />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Purpose
+                </th>
+                <th>
+                    Expires
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                uuid2
+            </td>
+            <td>
+                This cookie contains a unique randomly-generated value that enables the Platform to distinguish browsers and devices. It is matched against information – such as advertising interest segments and histories of ads shown in the browser or device – provided by clients or other third parties and stored on the Platform. This information is used by clients to select advertisements for delivery by the Platform, and to measure the performance of, and attribute payment for, those advertisements. In addition, to enable clients to use non-PII they collect outside the Platform or acquire from other third parties, this cookie is sometimes matched to clients’ or other third parties’ cookies that contain such non-PII. For more information about information collected and used on the Platform, see our <a");
+
+WriteLiteral(" href=\"https://www.appnexus.com/en/company/platform-privacy-policy\"");
+
+WriteLiteral(@">platform privacy page</a>. 
+            </td>
+            <td>
+                18 months
+            </td>
+        </tr>
+        <tr>
+            <td>
+                uuid2 (opt out)
+            </td>
+            <td>
+                When a user opts out of having the Platform used to select ads based on online behaviour, the unique value in uuid2 is deleted and replaced with the non-unique value “-1”. For more information about the Platform opt out, <a");
+
+WriteLiteral(" href=\"https://www.appnexus.com/en/company/platform-privacy-policy\"");
+
+WriteLiteral(">click here</a>. \r\n            </td>\r\n            <td>\r\n                18 months" +
+"\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n            " +
+"    sess\r\n            </td>\r\n            <td>\r\n                The sess cookie c" +
+"ontains a single non-unique value: “1”. It is used by the Platform to test wheth" +
+"er a browser is configured to accept cookies from AppNexus.\r\n            </td>\r\n" +
+"            <td>\r\n                18 months\r\n            </td>\r\n        </tr>\r\n " +
+"       <tr>\r\n            <td>\r\n                icu\r\n            </td>\r\n         " +
+"   <td>\r\n                The icu cookie is used to select ads and limit the numb" +
+"er of times a user sees a particular ad. It contains information such as the num" +
+"ber of times an ad has been shown, how recently an ad has been shown, or how man" +
+"y total ads have been shown.\r\n            </td>\r\n            <td>\r\n             " +
+"   18 months\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n" +
+"                anj\r\n            </td>\r\n            <td>\r\n                The an" +
+"j cookie contains data denoting whether a cookie ID is synced with our partners." +
+" ID syncing enables our partners to use their data from outside the Platform on " +
+"the Platform. \r\n            </td>\r\n            <td>\r\n                18 months\r\n" +
+"            </td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n              " +
+"  token\r\n            </td>\r\n            <td>\r\n                Cookies that start" +
+" with token are helper cookies used as a security measure with industry opt-out " +
+"pages. They contain a unique value only to verify the origin of opt-out requests" +
+".\r\n            </td>\r\n            <td>\r\n                18 months\r\n            <" +
+"/td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n                acb\r\n      " +
+"      </td>\r\n            <td>\r\n                Cookies that begin with acb have " +
+"a value unique to a particular ad and are used to indicate to the Platform which" +
+" ad to\r\n            </td>\r\n            <td>\r\n                18 months\r\n        " +
+"    </td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n                PHPSES" +
+"SID\r\n            </td>\r\n            <td>\r\n                This cookie is used fo" +
+"r managing sessions of visitors to the www.adnxs.com website, which is intended " +
+"for use by AppNexus employees. This cookie is used for administrative purposes. " +
+"It is not set by the Platform or used for advertising purposes.\r\n            </t" +
+"d>\r\n            <td>\r\n                18 months\r\n            </td>\r\n        </tr" +
+">\r\n    </table>\r\n</section>\r\n\r\n<section");
+
+WriteLiteral(" class=\"text\"");
+
+WriteLiteral(">\r\n    <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(">Double click</h2>\r\n    <table>\r\n        <colgroup>\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t60\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(" />\r\n            <col />\r\n        </colgroup>\r\n        <thead>\r\n            <tr>\r" +
+"\n                <th>\r\n                    Name\r\n                </th>\r\n        " +
+"        <th>\r\n                    Purpose\r\n                </th>\r\n              " +
+"  <th>\r\n                    Expires\r\n                </th>\r\n            </tr>\r\n " +
+"       </thead>\r\n        <tr>\r\n            <td>\r\n                Preferences\r\n  " +
+"          </td>\r\n            <td>\r\n                These cookies allow our websi" +
+"tes to remember information that changes the way the site behaves or looks, such" +
+" as your preferred language or the region you are in. For instance, by rememberi" +
+"ng your region, a website may be able to provide you with local weather reports " +
+"or traffic news. These cookies can also assist you in changing text size, font, " +
+"and other parts of web pages that you can personalize.\r\n                Loss of " +
+"the information stored in a preference cookie may make the website experience le" +
+"ss functional but should not prevent it from working.\r\n                Most Goog" +
+"le users will have a preferences cookie called ‘NID’ in their browsers. A browse" +
+"r sends this cookie with requests to Google’s sites. The NID cookie contains a u" +
+"nique ID Google uses to remember your preferences and other information, such as" +
+" your preferred language (e.g. English), how many search results you wish to hav" +
+"e shown per page (e.g. 10 or 20), and whether or not you wish to have Google’s S" +
+"afeSearch filter turned on.\r\n            </td>\r\n            <td>\r\n              " +
+"  30 Days\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n   " +
+"             Security\r\n            </td>\r\n            <td>\r\n                We u" +
+"se security cookies to authenticate users, prevent fraudulent use of login crede" +
+"ntials, and protect user data from unauthorized parties.\r\n                For ex" +
+"ample, we use cookies called ‘SID’ and ‘HSID’ which contain digitally signed and" +
+" encrypted records of a user’s Google account ID and most recent sign-in time. T" +
+"he combination of these two cookies allows us to block many types of attack, suc" +
+"h as attempts to steal the content of forms that you complete on web pages.\r\n   " +
+"         </td>\r\n            <td>\r\n                30 Days\r\n            </td>\r\n  " +
+"      </tr>\r\n        <tr>\r\n            <td>\r\n                Processes\r\n        " +
+"    </td>\r\n            <td>\r\n                Process cookies help make the websi" +
+"te work and deliver services that the website visitor expects, like navigating a" +
+"round web pages or accessing secure areas of the website. Without these cookies," +
+" the website cannot function properly.\r\n                For example, we use a co" +
+"okie called ‘lbcs’ which makes it possible for Google Docs to open many Docs in " +
+"one browser. Blocking this cookie would prevent Google Docs from operating corre" +
+"ctly.\r\n            </td>\r\n            <td>\r\n                30 Days\r\n           " +
+" </td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n                Advertisi" +
+"ng\r\n            </td>\r\n            <td>\r\n                We use cookies to make " +
+"advertising more engaging to users and more valuable to publishers and advertise" +
+"rs. Some common applications of cookies are to select advertising based on what’" +
+"s relevant to a user; to improve reporting on campaign performance; and to avoid" +
+" showing ads the user has already seen.\r\n                Google uses cookies lik" +
+"e NID and SID to help customize ads on Google properties, like Google Search. Fo" +
+"r example, we use such cookies to remember your most recent searches, your previ" +
+"ous interactions with an advertiser’s ads or search results, and your visits to " +
+"an advertiser’s website. This helps us to show you customized ads on Google.\r\n  " +
+"              We also use cookies for advertising we serve across the web. Our m" +
+"ain advertising cookie on non-Google sites is named ‘id’ or ‘IDE‘ and is stored " +
+"in browsers under the domain doubleclick.net. We use other cookies with names su" +
+"ch as DSID, FLC, AID, TAID, and exchange_uid. Other Google properties, like YouT" +
+"ube, may also use these cookies to show you more relevant ads.\r\n                " +
+"Sometimes an advertising cookie may be set on the domain of the site you\'re visi" +
+"ting. In the case of our DoubleClick product, a cookie named ‘__gads’ may be set" +
+" on the domain of the site you\'re visiting. Unlike cookies that are set on Googl" +
+"e\'s own domains, this cookie can\'t be read by Google when you\'re on other sites." +
+" It serves purposes such as measuring interactions with the ads on that domain a" +
+"nd preventing the same ads from being shown to you too many times.\r\n            " +
+"    Google also uses conversion cookies, whose main purpose is to help advertise" +
+"rs determine how many times people who click on their ads end up purchasing thei" +
+"r products. These cookies allow Google and the advertiser to determine that you " +
+"clicked the ad and later visited the advertiser\'s site. Conversion cookies are n" +
+"ot used by Google for personalized ad targeting and persist for a limited time o" +
+"nly. A cookie named ‘Conversion‘ is dedicated to this purpose. It\'s generally se" +
+"t in the googleadservices.com domain (you can find a list of domains we use for " +
+"advertising cookies at the foot of this page). Some of our other cookies may be " +
+"used to measure conversion events as well. For example, DoubleClick and Google A" +
+"nalytics cookies may also be used for this purpose.\r\n                We also use" +
+" cookies named ‘AID‘ and ‘TAID‘, which are used to link your activity across dev" +
+"ices if you’ve previously signed in to your Google Account on another device. We" +
+" do this to coordinate the ads you see across devices and measure conversion eve" +
+"nts. These cookies may be set on the domains google.com/ads, google.com/ads/meas" +
+"urement, or googleadservices.com. If you don\'t want the ads you see to be coordi" +
+"nated across your devices, you can opt out of Ads Personalization using Ads Sett" +
+"ings.\r\n            </td>\r\n            <td>\r\n                30 Days\r\n           " +
+" </td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n                Session S" +
+"tate\r\n            </td>\r\n            <td>\r\n                Websites often collec" +
+"t information about how users interact with a website. This may include the page" +
+"s users visit most often and whether users get error messages from certain pages" +
+". We use these so-called ‘session state cookies’ to help us improve our services" +
+", in order to improve our users’ browsing experience. Blocking or deleting these" +
+" cookies will not render the website unusable. These cookies may also be used to" +
+" anonymously measure the effectiveness of PPC (pay per click) and affiliate adve" +
+"rtising. For example, we use a cookie called ‘recently_watched_video_id_list’ so" +
+" that YouTube can record the videos most recently watched by a particular browse" +
+"r.\r\n            </td>\r\n            <td>\r\n                30 Days\r\n            </" +
+"td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n                Analytics\r\n " +
+"           </td>\r\n            <td>\r\n                Google Analytics is Google’s" +
+" analytics tool that helps website and app owners to understand how their visito" +
+"rs engage with their properties. It may use a set of cookies to collect informat" +
+"ion and report website usage statistics without personally identifying individua" +
+"l visitors to Google. The main cookie used by Google Analytics is the ‘__ga’ coo" +
+"kie.\r\n                In addition to reporting website usage statistics, Google " +
+"Analytics can also be used, together with some of the advertising cookies descri" +
+"bed above, to help show more relevant ads on Google properties (like Google Sear" +
+"ch) and across the web. Learn more about Analytics cookies and privacy informati" +
+"on.\r\n            </td>\r\n            <td>\r\n                30 Days\r\n            <" +
+"/td>\r\n        </tr>\r\n    </table>\r\n</section>\r\n\r\n<section");
+
+WriteLiteral(" class=\"text\"");
+
+WriteLiteral(">\r\n    <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(">Facebook</h2>\r\n    <table>\r\n        <colgroup>\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t60\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(@" />
+            <col />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Purpose
+                </th>
+                <th>
+                    Expires
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                Facebook Pixel (ID:603196216546448)
+            </td>
+            <td>
+                To track the effectiveness of our online advertising
+            </td>
+            <td>
+                30 Days
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section");
+
+WriteLiteral(" class=\"text\"");
+
+WriteLiteral(">\r\n    <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(">LinkedIn</h2>\r\n    <table>\r\n        <colgroup>\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t60\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(@" />
+            <col />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Purpose
+                </th>
+                <th>
+                    Expires
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                LinkedIn Insight Tag/Pixel
+            </td>
+            <td>
+                To track the effectiveness of our online advertising
+            </td>
+            <td>
+                30 Days
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section");
+
+WriteLiteral(" class=\"text\"");
+
+WriteLiteral(">\r\n    <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(">Radium One</h2>\r\n    <table>\r\n        <colgroup>\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t60\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(@" />
+            <col />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Purpose
+                </th>
+                <th>
+                    Expires
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                gwallet.com
+            </td>
+            <td>
+                Build up audience segment based on those who visit landing page
+            </td>
+            <td>
+                1 year
+            </td>
+        </tr>
+    </table>
 </section>");
 
         }
