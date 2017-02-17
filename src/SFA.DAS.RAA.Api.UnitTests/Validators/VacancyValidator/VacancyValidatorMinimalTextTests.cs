@@ -59,6 +59,28 @@
             }
         }
 
+        [TestCase(-1, false)]
+        [TestCase(VacancyType.Unknown, true)]
+        [TestCase(VacancyType.Apprenticeship, true)]
+        [TestCase(VacancyType.Traineeship, true)]
+        [TestCase(3, false)]
+        public void VacancyTypeTest(VacancyType vacancyType, bool expectValid)
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyType = vacancyType
+            };
+
+            if (expectValid)
+            {
+                _vacancyValidator.ShouldNotHaveValidationErrorFor(v => v.VacancyType, vacancy);
+            }
+            else
+            {
+                _vacancyValidator.ShouldHaveValidationErrorFor(v => v.VacancyType, vacancy).WithErrorMessage("Please specify a valid vacancy type");
+            }
+        }
+
         [TestCase(null, false)]
         [TestCase("", false)]
         [TestCase("www.google.com", true)]

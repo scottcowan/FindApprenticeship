@@ -82,6 +82,11 @@
             public const string WhiteListErrorText = "The short description " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
+        public static class VacancyType
+        {
+            public const string RequiredErrorText = "Please specify a valid vacancy type";
+        }
+
         public static class OfflineApplicationUrl
         {
             public const string InvalidUrlText = "Please supply a valid website url for candidates to apply for this vacancy on your website";

@@ -96,6 +96,10 @@
                 .WithMessage(VacancyMessages.ShortDescription.WhiteListErrorText)
                 .When(v => !string.IsNullOrEmpty(v.ShortDescription));
 
+            RuleFor(viewModel => viewModel.VacancyType)
+                .IsInEnum()
+                .WithMessage(VacancyMessages.VacancyType.RequiredErrorText);
+
             RuleFor(m => m.OfflineApplicationUrl)
                 .NotEmpty()
                 .WithMessage(VacancyMessages.OfflineApplicationUrl.InvalidUrlText)
@@ -122,7 +126,7 @@
                 .WithMessage(VacancyMessages.TrainingProvided.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyMessages.TrainingProvided.WhiteListInvalidTagErrorText)
-                .When(x => Common.IsNotEmpty(x.TrainingProvided));
+                .When(x => !string.IsNullOrEmpty(x.TrainingProvided));
 
             RuleFor(m => m.ContactName)
                 .Length(0, 100)
@@ -168,14 +172,14 @@
                 .WithMessage(VacancyMessages.LongDescription.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyMessages.LongDescription.WhiteListInvalidTagErrorText)
-                .When(x => Common.IsNotEmpty(x.LongDescription) && x.VacancyType != VacancyType.Traineeship);
+                .When(x => !string.IsNullOrEmpty(x.LongDescription) && x.VacancyType != VacancyType.Traineeship);
 
             RuleFor(viewModel => viewModel.LongDescription)
                 .Matches(VacancyMessages.LongDescription.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyMessages.LongDescription.TraineeshipWhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyMessages.LongDescription.TraineeshipWhiteListInvalidTagErrorText)
-                .When(x => Common.IsNotEmpty(x.LongDescription) && x.VacancyType == VacancyType.Traineeship);
+                .When(x => !string.IsNullOrEmpty(x.LongDescription) && x.VacancyType == VacancyType.Traineeship);
 
             #endregion
 
@@ -186,35 +190,35 @@
                 .WithMessage(VacancyMessages.DesiredSkills.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyMessages.DesiredSkills.WhiteListInvalidTagErrorText)
-                .When(x => Common.IsNotEmpty(x.DesiredSkills));
+                .When(x => !string.IsNullOrEmpty(x.DesiredSkills));
 
             RuleFor(x => x.PersonalQualities)
                 .Matches(VacancyMessages.PersonalQualities.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyMessages.PersonalQualities.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyMessages.PersonalQualities.WhiteListInvalidTagErrorText)
-                .When(x => Common.IsNotEmpty(x.PersonalQualities));
+                .When(x => !string.IsNullOrEmpty(x.PersonalQualities));
 
             RuleFor(x => x.DesiredQualifications)
                 .Matches(VacancyMessages.DesiredQualifications.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyMessages.DesiredQualifications.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyMessages.DesiredQualifications.WhiteListInvalidTagErrorText)
-                .When(x => Common.IsNotEmpty(x.DesiredQualifications));
+                .When(x => !string.IsNullOrEmpty(x.DesiredQualifications));
 
             RuleFor(x => x.FutureProspects)
                 .Matches(VacancyMessages.FutureProspects.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyMessages.FutureProspects.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyMessages.FutureProspects.WhiteListInvalidTagErrorText)
-                .When(x => Common.IsNotEmpty(x.FutureProspects));
+                .When(x => !string.IsNullOrEmpty(x.FutureProspects));
 
             RuleFor(x => x.ThingsToConsider)
                 .Matches(VacancyMessages.ThingsToConsider.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyMessages.ThingsToConsider.WhiteListInvalidCharacterErrorText)
-                .When(x => !string.IsNullOrEmpty(x.ThingsToConsider)) //Migrated vacancies can contain just the empty string
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyMessages.ThingsToConsider.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyMessages.ThingsToConsider.WhiteListInvalidTagErrorText)
+                .When(x => !string.IsNullOrEmpty(x.ThingsToConsider));
 
             #endregion
         }
