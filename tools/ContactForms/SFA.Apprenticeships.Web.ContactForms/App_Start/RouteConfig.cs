@@ -62,6 +62,12 @@
                );
 
             routes.MapRoute(
+               name: EmployerRouteNames.Cookies,
+               url: "cookies",
+               defaults: new { controller = "Cookies", action = "Index" }
+               );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "EmployerEnquiry", action = "SubmitEmployerEnquiry", id = UrlParameter.Optional }

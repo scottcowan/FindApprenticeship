@@ -12,5 +12,6 @@
         public const string AccessRequestThankYou = "AccessRequestThankYou";
         public const string Helpdesk = "Helpdesk";
         public const string Maintenance = "Maintenance";
+        public const string Cookies = "Cookies";
     }
 }
