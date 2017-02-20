@@ -547,7 +547,11 @@ WriteLiteral(">\r\n                    <li");
 
 WriteLiteral(" class=\"footer__link\"");
 
-WriteLiteral(">Built by the <a");
+WriteLiteral("><a");
+
+WriteLiteral(" href=\"/cookies\"");
+
+WriteLiteral(">Cookies</a> Built by the <a");
 
 WriteLiteral(" href=\"http://gov.uk/sfa\"");
 
@@ -579,14 +583,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 7627), Tuple.Create("\"", 7695)
+WriteAttribute("src", Tuple.Create(" src=\"", 7658), Tuple.Create("\"", 7726)
             
             #line 142 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 7633), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 7664), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 7633), false)
+, 7664), false)
 );
 
 WriteLiteral(" width=\"125\"");

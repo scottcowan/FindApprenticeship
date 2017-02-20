@@ -163,6 +163,7 @@
     <Compile Include="Constants\UserMessageLevel.cs" />
     <Compile Include="Constants\Whitelists.cs" />
     <Compile Include="Controllers\ContactFormsControllerBase.cs" />
+    <Compile Include="Controllers\CookiesController.cs" />
     <Compile Include="Controllers\EmployerEnquiryController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
@@ -422,6 +423,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>GlaThankYou.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Cookies\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
